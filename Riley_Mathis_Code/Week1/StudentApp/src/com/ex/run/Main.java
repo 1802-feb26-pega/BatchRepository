@@ -26,6 +26,8 @@ public class Main {
 		for(Student s : students) {
 			System.out.println(s.getName() + " is " + s.getAge() + " years old.");
 		}
+		
+		getNewStudent();
 	
 	}
 	
@@ -37,8 +39,10 @@ public class Main {
 		int age = scan.nextInt();
 		
 		//instantiate student with scanned values and return it
-		Student student = new Student(name, age);
+		Student s = new Student(name, age);
+		System.out.println(s.getName() + " is " + s.getAge() + " years old.");
 		//student.
+		scan.close();
 	}
 	
 }
