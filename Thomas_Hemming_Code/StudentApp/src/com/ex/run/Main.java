@@ -32,6 +32,8 @@ public class Main {
 	}
 	
 	static void getNewStudent() {
+		// TODO: input validation
+		
 		Scanner scan = new Scanner(System.in);
 		  
 		System.out.println("Enter your name:");		  
@@ -43,6 +45,8 @@ public class Main {
 		StudentIO io = new StudentIO();
 		
 		io.writeStudent(new Student(name, age));
+		
+		scan.close();
 		
 		System.out.println("\nAdded student, " + name + ", to file.");
 	}
