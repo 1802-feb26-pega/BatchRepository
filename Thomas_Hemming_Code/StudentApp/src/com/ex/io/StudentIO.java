@@ -1,0 +1,27 @@
+package com.ex.io;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ex.pogo.Student;
+
+public class StudentIO {
+	
+	static String filename = "src/data/students.txt";
+	
+	public void writeStudent(Student student) {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename, true))){
+			bw.write(student.toString());
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	List<Student> readStudents() {
+		List<Student> students = new ArrayList<Student>();
+		return students;
+	}
+}

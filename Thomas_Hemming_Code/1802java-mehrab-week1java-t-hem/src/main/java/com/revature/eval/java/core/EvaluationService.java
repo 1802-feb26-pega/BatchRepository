@@ -4,6 +4,7 @@ import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.lang.IllegalArgumentException;
 
 public class EvaluationService {
 
@@ -176,9 +177,28 @@ public class EvaluationService {
 	 * Note: As this exercise only deals with telephone numbers used in
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
-	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+	public static String cleanPhoneNumber(String string) {
+		
+		
+		if ((string.matches("-?\\d+(.\\d+)-+()?")) == false) {
+			throw new IllegalArgumentException();
+		}
+		//System.out.println(string.matches("-?\\d+(.\\d+)?"));
+		
+		String x = string.replaceAll("[^0-9]", "");
+		
+		if (x.length() > 11) {
+			throw new IllegalArgumentException();
+		}
+		
+		if (x.length() > 10) {
+			x = x.substring(1);
+		}
+		
+		
+		
+		//System.out.println(x);
+		return x;
 	}
 
 	/**
@@ -564,6 +584,10 @@ public class EvaluationService {
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
 		return 0;
+	}
+	
+	public static void main(String[] args) {
+		cleanPhoneNumber("123-abc-7890");
 	}
 
 }
