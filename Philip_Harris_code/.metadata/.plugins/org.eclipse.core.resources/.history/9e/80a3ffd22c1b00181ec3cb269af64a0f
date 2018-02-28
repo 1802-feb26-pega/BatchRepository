@@ -1,0 +1,9 @@
+package com.revature.store;
+
+public class IceCreamSandwhich {
+
+	String flavor;
+	String expDate;
+	float Price;
+	
+}

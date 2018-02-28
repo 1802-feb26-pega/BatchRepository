@@ -1,0 +1,52 @@
+/**
+ * 
+ */
+
+/**
+ * @author philip
+ *
+ */
+
+import java.util.*;
+
+public class Beginning {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			
+		int a,b,c;
+		
+		a = 14;
+		b = 56;
+		
+		Scanner keyboard = new Scanner(System.in);
+		
+		/* System.out.println("Please enter a number:");
+		int x = keyboard.nextInt();
+		int y = keyboard.nextInt();
+		int z = keyboard.nextInt();
+		*/
+		
+		System.out.println("a = " + a);
+		System.out.println("b = " + b);
+		System.out.println("Now the swap:");
+		
+		c = a;
+		a = b;
+		b = c;
+		
+		
+		
+		
+		
+				
+		
+		
+
+		
+	}
+
+}

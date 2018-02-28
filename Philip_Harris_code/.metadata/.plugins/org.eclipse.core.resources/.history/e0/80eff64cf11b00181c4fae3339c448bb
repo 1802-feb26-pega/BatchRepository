@@ -1,0 +1,42 @@
+package com.ex.workclass;
+
+public class Zuellers {
+	
+	static int h, j, k,q,m;
+	
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public enum Day {
+	    SUNDAY, MONDAY, TUESDAY, WEDNESDAY,
+	    THURSDAY, FRIDAY, SATURDAY 
+	}
+	
+	public enum months{
+		
+	}
+	
+	public static String getNextDay() {
+		
+		String[] weekday = new String[6];
+		Day day;
+		
+		System.out.println(day.valueOf(0));
+		
+		int a = (26*(m+1))/10;
+		int b = k/4;
+		int c = j/4;
+		int d = 5*j;
+		
+		
+		
+		
+		
+		return null;
+		
+	}
+
+}

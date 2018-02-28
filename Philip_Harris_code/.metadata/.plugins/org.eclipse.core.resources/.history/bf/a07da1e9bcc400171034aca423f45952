@@ -1,0 +1,34 @@
+/**
+ * 
+ */
+
+/**
+ * @author philip
+ *
+ */
+
+import java.util.*;
+
+public class Beginning {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			
+		Scanner keyboard = new Scanner(System.in);
+		
+		System.out.println("Please enter a number:");
+		//int x = keyboard.nextInt();
+		
+		System.out.println("What is the output of this expression?");
+		System.out.println("((25.5 * 3.5 - 3.5 * 3.5) / (40.5 - 4.5)) = "
+				+ "" + ((25.5 * 3.5 - 3.5 * 3.5) / (40.5 - 4.5)) );
+		
+		
+
+		
+	}
+
+}

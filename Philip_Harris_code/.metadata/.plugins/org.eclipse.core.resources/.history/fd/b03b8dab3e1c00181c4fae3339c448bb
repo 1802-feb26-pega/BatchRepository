@@ -1,0 +1,5 @@
+
+public class OtherClass {
+	static int f = 0;
+	int g = 1;
+}

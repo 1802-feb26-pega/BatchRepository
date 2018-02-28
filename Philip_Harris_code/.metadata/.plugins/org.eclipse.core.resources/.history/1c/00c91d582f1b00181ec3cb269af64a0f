@@ -1,0 +1,15 @@
+package com.revature.store;
+
+public class Dessert {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			
+			IceCreamSandwhich ics = new IceCreamSandwhich();
+			
+			ics.setFlavor("Strawberry");
+			System.out.println(ics.toString());
+		
+	}
+
+}

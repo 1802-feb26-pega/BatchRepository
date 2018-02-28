@@ -1,0 +1,41 @@
+/**
+ * 
+ */
+
+/**
+ * @author philip
+ *
+ */
+
+import java.util.*;
+
+public class Beginning {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			
+		double r = 7.5;
+		
+		Scanner keyboard = new Scanner(System.in);
+		
+		System.out.println("Please enter a number:");
+		int x = keyboard.nextInt();
+		int y = keyboard.nextInt();
+		int z = keyboard.nextInt();
+		
+		System.out.println("Avg for " + x + "," +y+ ","+z+" is "+ (x+y+z/3));
+		
+		
+		
+		
+				
+		
+		
+
+		
+	}
+
+}

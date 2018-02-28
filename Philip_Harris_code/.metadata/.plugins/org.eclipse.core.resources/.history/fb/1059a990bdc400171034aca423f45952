@@ -1,0 +1,36 @@
+/**
+ * 
+ */
+
+/**
+ * @author philip
+ *
+ */
+
+import java.util.*;
+
+public class Beginning {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			
+		int r = 7.5;
+		
+		Scanner keyboard = new Scanner(System.in);
+		
+		System.out.println("Please enter a number:");
+		//int x = keyboard.nextInt();
+		
+		System.out.println("What is the Radius and Perimeter of this circle?");
+		System.out.println("Area = " + Math.PI*Math.pow(r,2));
+				
+		
+		
+
+		
+	}
+
+}

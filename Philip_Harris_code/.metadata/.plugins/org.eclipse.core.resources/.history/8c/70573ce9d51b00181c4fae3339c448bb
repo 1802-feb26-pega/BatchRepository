@@ -1,0 +1,16 @@
+package com.ex.datatypes;
+
+public class Primitives {
+	
+	/* 
+	 * int, char, long, double, boolean, short, byte, float
+	 * Integer, Character, Long, Boolean, Double Float short and Byte are wrappers for the raw data types
+	 * 
+	 */
+	
+	
+	
+	
+	
+	
+}

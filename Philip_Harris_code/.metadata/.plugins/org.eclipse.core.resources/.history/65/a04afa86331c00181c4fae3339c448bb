@@ -1,0 +1,42 @@
+/**
+ * 
+ */
+
+/**
+ * @author philip
+ *
+ */
+
+import java.util.*;
+
+public class Beginning {
+
+	
+		static int x = 5;
+		int y = 10;
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Beginning a = new Beginning();
+		OtherClass z = new OtherClass();
+		
+		System.out.println(x);
+		System.out.println(a.y);
+		System.out.println("After the method call");
+		a.test();
+		System.out.println(a.x);
+		System.out.println(a.y);
+		System.out.println("Other class");
+		System.out.println(z.f);
+		System.out.println(z.g);
+		
+		
+	}
+	public void test() {
+		y = 20;
+		x = 100;
+	}
+
+}

@@ -1,0 +1,16 @@
+package com.revature.store;
+
+public class IceCreamSandwhich {
+
+	private String flavor;
+	private String expDate;
+	private float Price;
+	
+	public String getFlavor() {
+		return this.flavor;
+	}
+	public void setFlavor(String flavor) {
+		this.flavor = flavor;
+		
+	}
+}
