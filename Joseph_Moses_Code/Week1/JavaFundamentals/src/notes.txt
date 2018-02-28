@@ -1,0 +1,38 @@
+Access Levels:
+- Public - visible everywhere - any class in any package can access
+	   - can apply to classes, methods, and fields
+- (default) - no access modifier - accessible within the same package
+ 		  	- can apply to classes, methods, and fields
+- protected - accessible only through inheritance
+ 			- can only apply to fields and methods
+- private	- accessible only within same class
+			- can only apply to methods and fields
+	--> if a class is not accessible, neither are its members
+	--> a child class can be equally or less restrictive than its parent class	
+	
+Keywords:
+- static
+	- associated with the class and not the instance of the class
+	- can only be applied to classes if nested
+	- instance methods can access static methods and fields, but NOT the other way around	
+	
+- final*  
+	- var - cannot be reassigned; essentially a constant
+	- method - cannot be overridden; CAN BE OVERLOADED
+	- class - cannot be extended
+	
+Constructors
+	- create instance of a class
+	- no return type
+	- can be overloaded
+	- first line is implicitly super(); can be explicitly super() or this()
+	- if no constructor is defined, classes have a default constructor (no args)
+	- if constructor is defined, no default one exits, so must explicitly define no args
+	
+Interfaces
+	- type of class which cannot be instantiated
+	- considered a "contract" - "anything that implements me can do this"
+	- an implemented class MUST implement all abstract methods in the interface
+	- can extend other interfaces 
+	- cannot extend classes; classes IMPLEMENT interfaces
+	 
