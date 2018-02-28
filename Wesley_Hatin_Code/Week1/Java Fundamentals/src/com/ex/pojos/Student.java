@@ -5,6 +5,10 @@ import java.io.Serializable;
 //pojo = plain-old java object - used to represent our day to day entities
 public class Student implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -812029385295181278L;
 	private String name;
 	private int age;
 	
@@ -34,7 +38,7 @@ public class Student implements Serializable{
 
 	@Override
 	public String toString() {
-		return name + ";" + age;
+		return name + ";" + age + "\n";
 	}
 	
 	
