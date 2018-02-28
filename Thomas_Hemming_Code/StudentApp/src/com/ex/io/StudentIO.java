@@ -29,7 +29,7 @@ public class StudentIO {
 		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
 			String line = null;
 			while ((line = br.readLine()) != null) {
-				String[] data = line.split(":");
+				String[] data = line.split(" : ");
 				students.add(new Student(data[0], Integer.parseInt(data[1])));
 			}
 		} catch (FileNotFoundException e) {

@@ -27,7 +27,9 @@ public class Main {
 			System.out.println(s.getName() + " is " + s.getAge() + " years old.");
 		}*/
 		
-		getNewStudent();
+		//getNewStudent();
+		
+		printCurrentStudents();
 		
 	}
 	
@@ -49,6 +51,17 @@ public class Main {
 		scan.close();
 		
 		System.out.println("\nAdded student, " + name + ", to file.");
+	}
+	
+	static void printCurrentStudents() {
+		StudentIO io = new StudentIO();
+		
+		List<Student> students = io.readStudents();
+		
+		for(Student s : students) {
+			System.out.println("Name: " + s.getName() + "," +  " Age: " + s.getAge());
+		}
+		
 	}
 
 }
