@@ -1,5 +1,8 @@
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Moved the coding challenges around a bit, added serializable stuff. Pretty sure I get it, but a review sometime would be nice.
 Genesis;55
  
 Rick James;22
@@ -8,8 +11,11 @@ Beyonce;35
 Wesley Hatin;22
 Wesley Hatin;23
 Johnny Cash;34
+<<<<<<< HEAD
 =======
  Genesis;55
  Rick James;22
  Beyonce;35
 >>>>>>> I/O junk
+=======
+>>>>>>> Moved the coding challenges around a bit, added serializable stuff. Pretty sure I get it, but a review sometime would be nice.
