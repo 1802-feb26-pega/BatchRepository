@@ -1,4 +1,9 @@
 
- Genesis;55
- Rick James;22
- Beyonce;35
+Genesis;55
+ 
+Rick James;22
+ 
+Beyonce;35
+Wesley Hatin;22
+Wesley Hatin;23
+Johnny Cash;34
