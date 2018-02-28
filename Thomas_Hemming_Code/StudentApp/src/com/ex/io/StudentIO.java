@@ -1,6 +1,9 @@
 package com.ex.io;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,12 +19,26 @@ public class StudentIO {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename, true))){
 			bw.write(student.toString());
 		} catch(IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	List<Student> readStudents() {
+	public List<Student> readStudents() {
 		List<Student> students = new ArrayList<Student>();
+		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				String[] data = line.split(":");
+				students.add(new Student(data[0], Integer.parseInt(data[1])));
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return students;
 	}
 }

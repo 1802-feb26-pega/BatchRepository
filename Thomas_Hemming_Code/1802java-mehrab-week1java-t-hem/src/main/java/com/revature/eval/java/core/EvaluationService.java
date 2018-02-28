@@ -180,9 +180,9 @@ public class EvaluationService {
 	public static String cleanPhoneNumber(String string) {
 		
 		
-		if ((string.matches("-?\\d+(.\\d+)-+()?")) == false) {
+		/*if ((string.matches("-?\\d+(.\\d+)-+()?")) == false) {
 			throw new IllegalArgumentException();
-		}
+		}*/
 		//System.out.println(string.matches("-?\\d+(.\\d+)?"));
 		
 		String x = string.replaceAll("[^0-9]", "");
