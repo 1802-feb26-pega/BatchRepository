@@ -1,0 +1,10 @@
+
+public class PairProgram1 {	
+	public static void main(String[] args) {
+		String str = "The cat-jumped_over,the.log;to:eat";
+		
+		String[] tokens = str.split("([ .,;:_-])");
+		
+
+	}
+}

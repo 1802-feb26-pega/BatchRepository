@@ -1,0 +1,16 @@
+import java.util.Scanner;
+
+public class PairProgram1 {
+	
+	
+	enum Day { saturday, sunday, monday, tuesday, wednesday, thursday, friday }
+	
+	public static void main(String[] args) {
+		String str = "The cat-jumped_over,the.log;to:eat";
+		
+		String[] tokens = str.split("([ _-','])");
+		
+		for (String s : tokens)
+			System.out.println(s);
+	}
+}
