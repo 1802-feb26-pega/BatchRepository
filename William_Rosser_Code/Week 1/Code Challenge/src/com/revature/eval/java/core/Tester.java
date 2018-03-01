@@ -96,7 +96,14 @@ public class Tester {
 //		System.out.println(rs.rotate("Gur dhvpx oebja sbk whzcf bire gur ynml qbt."));
 		
 		//#12
+//		System.out.println(es.calculateNthPrime(10001));
 		
+		//#13
+//		EvaluationService.AtbashCipher ac = new EvaluationService.AtbashCipher();
+//		System.out.println(ac.encode("The quick brown fox jumps over the lazy dog."));
+		
+		//#14
+//		System.out.println(ac.decode("gsvjf rxpyi ldmul cqfnk hlevi gsvoz abwlt"));
 		
 		
 		

@@ -416,7 +416,7 @@ public class EvaluationService {
 		return primeFactors;
 	}
 
-	private ArrayList<Integer> getPrimesList(long l) {
+	private static ArrayList<Integer> getPrimesList(long l) {
 		boolean[] primes = new boolean[(int) l];
 		for (int i = 0; i < l; i++) {
 			primes[i] = true;
@@ -513,9 +513,16 @@ public class EvaluationService {
 	 * @param i
 	 * @return
 	 */
+	//Done
 	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		ArrayList<Integer> primes;
+		int j = i*6;
+		primes = getPrimesList(j); //See question #10
+		while (primes.size() < i) {
+			j *= 2;
+			primes = getPrimesList(j);
+		}
+		return primes.get(i-1);
 	}
 
 	/**
@@ -551,8 +558,28 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			return codeString(string, true);
+		}
+		
+		private static String codeString(String string, boolean encode) {
+			string = string.toLowerCase();
+			String[] words = string.split("\\W");
+			string = "";
+			for (String w:words) {
+				string += w;
+			}
+			char[] chars = string.toCharArray();
+			String code = "";
+			for (int i = 0; i < chars.length; i++) {
+				char letter = chars[i];
+				int letternum = letter;
+				if (letternum >= 97 && letternum <= 122) {
+					letternum = (25 - (letternum - 97)) + 97;
+				}
+				code += (char) letternum;
+				if (encode && (i+1)%5==0) {code += " ";}
+			}
+			return code;
 		}
 
 		/**
@@ -562,8 +589,7 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			return codeString(string, false);
 		}
 	}
 
