@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -215,17 +216,21 @@ public class EvaluationService {
 	 * Note: As this exercise only deals with telephone numbers used in
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
-	public String cleanPhoneNumber(String string) {
+	
+	public String cleanPhoneNumber(String string) throws IllegalArgumentException{
 		
 		String cleaned = string.replaceAll("[^0-9]", "");
+		StringBuilder output = new StringBuilder(cleaned);
 		
-		if(cleaned.length() < 10 || cleaned.length() >11) {
+		if(cleaned.length() < 10 || cleaned.length() > 11) {
 			throw new IllegalArgumentException();
 		}
 		else if(cleaned.length() == 11) {
-			cleaned.replace(cleaned.charAt(0), );
+			
+			output.deleteCharAt(0);
 		}
-		
+
+		return output.toString();
 
 	}
 
@@ -239,8 +244,26 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		string = string.replaceAll("[\\s]", " ");
+		String[] input = string.split("[^A-Za-z0-9]");
+		Map<String, Integer> output = new HashMap<String, Integer>();
+		
+		for(String word : input) {
+			
+			if(word.length() < 1) {
+				//do nothing with it. The word is blank.
+			}
+			else if(output.containsKey(word)) {
+				output.put(word, output.get(word) + 1);
+			}
+			else {
+				output.put(word, 1);
+			}
+		}
+		
+		return output;
+		
 	}
 
 	/**
@@ -278,12 +301,31 @@ public class EvaluationService {
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
-	static class BinarySearch<T> {
+	static class BinarySearch<T extends Comparable<T>>{
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
-			return 0;
+			
+			int low = 0;
+			int high = sortedList.size()-1;
+			
+			/*while(low <= high) {
+				int mid = (low + high)/2;
+				T midVal = sortedList.get(mid);
+				int comparison = t.compareTo(midVal);
+				
+				if(comparison < 0) {
+					high = mid + 1;
+				}
+				else if(comparison > 0) {
+					low = mid - 1;
+				}
+				else {
+					return mid;
+				}
+				
+			}*/
+			return -1;
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -298,6 +340,8 @@ public class EvaluationService {
 		public void setSortedList(List<T> sortedList) {
 			this.sortedList = sortedList;
 		}
+		
+
 
 	}
 
@@ -319,8 +363,53 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		string = string.toLowerCase();
+		String[] input = string.split(" ");
+		StringBuilder output = new StringBuilder("");
+		String vowels = "aeiou";
+		
+		for(String s : input) {
+			
+			StringBuilder temp = new StringBuilder(s);
+			
+			int firstVowel = -1;
+			
+			for(int i = 0; i < s.length(); i++) {
+				
+				String letter = new Character(s.charAt(i)).toString();
+				if(vowels.indexOf(s.charAt(i)) != -1) {
+					firstVowel = i;
+					break;
+				}
+			}
+
+			System.out.println(firstVowel);
+			
+			if(firstVowel == 0) {
+				temp.append("ay");
+			}
+			else {
+				if(s.charAt(0) == 'q') {
+					temp.append(temp.subSequence(0, firstVowel + 1) + "ay");
+					temp.delete(0, firstVowel + 1);
+				}
+				else {
+					temp.append(temp.subSequence(0, firstVowel) + "ay");
+					temp.delete(0, firstVowel);
+				}
+			}
+			
+			if(!s.equals(input[input.length - 1])) {
+				temp.append(" ");
+			}
+			
+			output.append(temp.toString());
+			
+		}
+		
+		return output.toString();
+		
 	}
 
 	/**
