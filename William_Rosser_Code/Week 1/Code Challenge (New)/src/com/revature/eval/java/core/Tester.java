@@ -84,7 +84,19 @@ public class Tester {
 //		System.out.println(es.toPigLatin("quick fast run"));
 		
 		//#9
-		System.out.println(es.isArmstrongNumber(9474));
+		//System.out.println(es.isArmstrongNumber(9474));
+		
+		//#10
+//		System.out.println(es.calculatePrimeFactorsOf(901255L));
+//		System.out.println(es.calculatePrimeFactorsOf(12));
+		
+		//#11
+		
+		
+		
+		
+		
+		
 		
 	}
 

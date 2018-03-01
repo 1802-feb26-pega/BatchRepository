@@ -2,6 +2,7 @@ package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -390,11 +391,53 @@ public class EvaluationService {
 	 * @param l
 	 * @return
 	 */
+	//Done
 	public List<Integer> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		ArrayList<Integer> primes = getPrimesList(2*l);
+		ArrayList<Integer> primeFactors = new ArrayList<Integer>();
+		for (Integer p:primes) {
+			if ((p < l && l % p == 0) || (p==l && primes.contains((int) l))) {
+				primeFactors.add(p);
+			}
+		}
+		if (l < 2) {
+			return primeFactors;
+		}
+		int mult = 1;
+		for (Integer i:primeFactors) {
+			mult *= i;
+		}
+		int diff = -1;
+		if (mult != l) {
+			diff = (int) l/mult;
+			primeFactors.addAll(calculatePrimeFactorsOf(diff));
+		}
+		Collections.sort(primeFactors);
+		return primeFactors;
 	}
 
+	private ArrayList<Integer> getPrimesList(long l) {
+		boolean[] primes = new boolean[(int) l];
+		for (int i = 0; i < l; i++) {
+			primes[i] = true;
+		}
+		for (int i = 2; i < Math.sqrt(l); i++) {
+			if (primes[i]) {
+				for (int j = (i)*(i); j < l; j += (i)) {
+					primes[j] = false;
+				}
+			}
+		}
+		ArrayList<Integer> primesAL = new ArrayList<Integer>();
+		for(int i = 2; i < l; i++) {
+			if (primes[i]) {
+				primesAL.add(i);
+			}
+		}
+		return primesAL;
+	}
+	
+	
 	/**
 	 * 11. Create an implementation of the rotational cipher, also sometimes called
 	 * the Caesar cipher.
