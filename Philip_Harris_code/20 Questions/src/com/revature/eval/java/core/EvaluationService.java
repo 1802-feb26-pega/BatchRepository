@@ -577,6 +577,24 @@ public class EvaluationService {
 	 */
 	public boolean isValidIsbn(String string) {
 		// TODO Write an implementation for this method declaration
+		string = string.replace("-","");
+		
+		int sum = 0;
+		int place = 10;
+		for(int i = 0; i < string.length(); i++) {
+			if(string.charAt(i) == 'X') {
+				sum += (int) 10 * place;
+			}
+			else {
+				char s = string.charAt(i);
+				int c = Character.getNumericValue(s);
+				sum += (c * place);
+			}
+			place--;
+			
+		}
+		
+		if(sum%11==0) return true;		
 		return false;
 	}
 
@@ -595,7 +613,8 @@ public class EvaluationService {
 	 */
 	public boolean isPangram(String string) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		
+		
 	}
 
 	/**

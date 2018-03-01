@@ -63,42 +63,28 @@ public class Execute {
 		//EvaluationService q12 = new EvaluationService();
 		//System.out.println("The 100th prime number is: " + q12.calculateNthPrime(100));
 		
-		EvaluationService q13 = new EvaluationService();
-		System.out.println(encode("test"));
-		EvaluationService q14 = new EvaluationService();
-		System.out.println(decode(encode("test")));
-	
-	}
-	public static String encode(String string) {
-		// TODO Write an implementation for this method declaration
+		//EvaluationService q13 = new EvaluationService();
+		//System.out.println(encode("test"));
+		//EvaluationService q14 = new EvaluationService();
+		//System.out.println(decode(encode("test")));
 		
-		String msg = "";
-		for(int i = 0; i < string.length(); i++) {
-			int ascii = (int) string.charAt(i);				
-			ascii = ascii - 97;
-			ascii = 122 - ascii;
-			msg += (char) ascii;
-		}
-		
-		return msg;
-	}
+		String string = "Jived fox nymph grabs quick walt.";
+		Boolean flag = true;
+		ArrayList check = new ArrayList();
+		for(int i = 0; i < string.length();i++) {			
 
-	/**
-	 * Question 14
-	 * 
-	 * @param string
-	 * @return
-	 */
-	public static String decode(String string) {
-		// TODO Write an implementation for this method declaration
-		String msg = "";
-		for(int i = 0; i < string.length(); i++) {
-			int ascii = (int) string.charAt(i);				
-			ascii = 122 - ascii;
-			ascii = ascii + 97;
-			msg += (char) ascii;
+			if(check.contains(Character.toLowerCase(string.charAt(i)))|check.contains(Character.toUpperCase(string.charAt(i)))){
+				flag = false;
+				if(flag)System.out.println("This is not an pangram");
+				//return false;
+				break;
+			}
+			else check.add(string.charAt(0));
+							
 		}
-		 return msg;
+		System.out.println("This is a pangram");
+		//return true;
+		
 	}
 	
 }
