@@ -37,7 +37,7 @@ public class Zuellers {
 			  {  
 				  System.out.println("Please enter a number");
 				  System.out.println();
-				  num = scan.nextLine();
+				  //num = scan.nextLine();
 			  }  
 			}
 		  
