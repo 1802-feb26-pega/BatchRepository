@@ -83,6 +83,9 @@ public class Tester {
 		//#8
 //		System.out.println(es.toPigLatin("quick fast run"));
 		
+		//#9
+		System.out.println(es.isArmstrongNumber(9474));
+		
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -353,8 +354,8 @@ public class EvaluationService {
 	 * 
 	 * For example:
 	 * 
-	 * 9 is an Armstrong number, because 9 = 9^1 = 9 10 is not an Armstrong number,
-	 * because 10 != 1^2 + 0^2 = 2 153 is an Armstrong number, because: 153 = 1^3 +
+	 * 9 is an Armstrong number, because 9 = 9^1 = 9. 10 is not an Armstrong number,
+	 * because 10 != 1^2 + 0^2 = 2. 153 is an Armstrong number, because: 153 = 1^3 +
 	 * 5^3 + 3^3 = 1 + 125 + 27 = 153 154 is not an Armstrong number, because: 154
 	 * != 1^3 + 5^3 + 4^3 = 1 + 125 + 64 = 190 Write some code to determine whether
 	 * a number is an Armstrong number.
@@ -362,9 +363,21 @@ public class EvaluationService {
 	 * @param input
 	 * @return
 	 */
+	//Done
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		ArrayList<Integer> nums = new ArrayList<Integer>();
+		int temp = input;
+		while (temp != 0) {
+			nums.add(temp % 10);
+			temp = temp / 10;
+		}
+		int armstrong = 0;
+		int size = nums.size();
+		for (int i = 0; i < size; i++) {
+			armstrong += Math.pow(nums.get(i), size);
+		}
+		System.out.println(armstrong);
+		return input == armstrong;
 	}
 
 	/**
