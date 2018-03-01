@@ -5,7 +5,7 @@ public class AboutStrings
 	/*
 	 * In Java, String is basically an object that represents a sequence of char values
 	 * 
-	 * Strings are immutable - once initialized they do not chance -- reference just points to another string
+	 * Strings are immutable - once initialized they do not change -- reference just points to another string
 	 * 
 	 * StringBuffer and StringBuilder are MUTABLE
 	 * StringBuffer is the thread-safe/synchronized version of StringBuilder

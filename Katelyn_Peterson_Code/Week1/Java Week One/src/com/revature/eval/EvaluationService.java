@@ -4,9 +4,12 @@ package com.revature.eval;
 // Date: Feb. 27th, 2018
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class EvaluationService
 {
@@ -68,12 +71,12 @@ public class EvaluationService
 		// TODO Write an implementation for this method declaration
 		
 		// 1. Variables & 2. Input
-		String[] initial = phrase.split(" ");
+		String[] initial = phrase.split(" |-");
 		char[] transfer = new char[initial.length];
 		String acron;
 		
-		/*TESTING
-		 * System.out.println(initial.length);
+		//TESTING
+		/*System.out.println(initial.length);
 		for (String x : initial)
 		{
 			System.out.println(x);
@@ -82,7 +85,8 @@ public class EvaluationService
 		// 3. Calculation
 		for (int x = 0; x < initial.length; x++)
 		{
-			transfer[x] = initial[x].charAt(0);
+			transfer[x] = Character.toUpperCase(initial[x].charAt(0));
+			
 		}
 		
 		/*TESTING
@@ -396,15 +400,61 @@ public class EvaluationService
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
 		
-		// 1. Variables
+		// 1. Variables & 2. Input
+		String temp = string.trim();
+		char[] input = temp.toCharArray();
+		ArrayList<Character> cleanData = new ArrayList<>();
+		int count = 0;
+		String returnData = null;
 		
-		// 2. Input
+		//char[] numTransfer = new char[10];
 		
-		// 3. Calculation
+		// 3. Calculation		
+		// Test for any illegal characters
+		for (char x : input)
+		{
+			//System.out.println(x);
+			if (Character.isDigit(x) | x == ' ' | x == '.' | x == '(' | x == ')' | x == '-')
+			{
+				//System.out.println(x);
+			}
+			else
+			{
+				throw new IllegalArgumentException();
+			}
+		}
+		
+		for (char x : input)
+		{
+			if(Character.isDigit((x)))
+			{
+				cleanData.add(x);
+			}
+		}
+		
+		input = new char[cleanData.size()];
+				
+		Iterator<Character> iter = cleanData.iterator();
+		
+		while (iter.hasNext())
+		{
+			input[count] = iter.next();
+			count++;
+			if (count > 10)
+			{
+				throw new IllegalArgumentException();
+			}
+		}
+		
+		//System.out.println(input);
+		returnData = new String(input);
+		
+
 		
 		// 4. Output
+		//System.out.println(returnData);
 		
-		return null;
+		return returnData;
 	}
 	
 	/**
@@ -419,15 +469,45 @@ public class EvaluationService
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
 		
-		// 1. Variables
-		
-		// 2. Input
+		// 1. Variables & 2. Input
+		String regex = " |,\\n|,";
+		String[] initial = string.split(regex);
+		TreeMap<String, Integer> data = new TreeMap<>();
 		
 		// 3. Calculation
-		
-		// 4. Output
-		
-		return null;
+		if (initial.length > 0)
+		{
+			data.put(initial[0], 1);
+			//System.out.println("0 " + initial[0]);
+			
+			for (int x = 1; x < initial.length; x++)
+			{
+				//System.out.println(x + " " + initial[x]);
+				if (data.containsKey(initial[x]))
+				{
+					// Trying to add new value to map
+					data.replace(initial[x], data.get(initial[x]), data.get(initial[x]) + 1);
+					//System.out.println(data.get(initial[x]));
+				}
+				/*else if (initial[x] == "\\n")
+				{
+					
+				}*/
+				else
+				{
+					data.put(initial[x], 1);
+					//System.out.println(data.get(initial[x]));
+				}
+			}
+			//System.out.println(data.toString());
+			
+			return data;
+		}
+		else
+		{
+			// 4. Output
+			return null;
+		}
 	}
 	
 	/**
@@ -465,24 +545,63 @@ public class EvaluationService
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
-	static class BinarySearch<T> {
+	static class BinarySearch<T>
+	{
 		private List<T> sortedList;
 
-		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
-			return 0;
+		public int indexOf(T t)
+		{
+			if (!sortedList.isEmpty())
+			{
+				// COME BACK TO THIS TODO Write an implementation for this method declaration
+				
+				// 1. Variables & 2. Input
+				int high = sortedList.size() - 1;
+				int low = 0;
+				int mid = 0;
+				String transfer = (String) t;
+				Integer search = Integer.parseInt(transfer);
+				
+				while (low <= high)
+				{
+					mid = (low + high) / 2;
+					
+					// 3. Calculation & Output
+					if (sortedList.get(mid).equals(search))
+					{
+						return mid;
+						//high = mid - 1;
+					}
+					else if (search > mid)
+					{
+						low = mid + 1;
+					}
+					else
+					{
+						return mid;
+					}
+				}
+				return 0;
+			}
+			else
+			{
+				return 0;
+			}
 		}
 
-		public BinarySearch(List<T> sortedList) {
+		public BinarySearch(List<T> sortedList)
+		{
 			super();
 			this.sortedList = sortedList;
 		}
 
-		public List<T> getSortedList() {
+		public List<T> getSortedList()
+		{
 			return sortedList;
 		}
 
-		public void setSortedList(List<T> sortedList) {
+		public void setSortedList(List<T> sortedList)
+		{
 			this.sortedList = sortedList;
 		}
 
@@ -508,15 +627,53 @@ public class EvaluationService
 	public String toPigLatin(String string) {
 		// TODO Write an implementation for this method declaration
 		
-		// 1. Variables
-		
-		// 2. Input
+		// 1. Variables & 2. Input
+		String[] initial = string.split(" ");
+		//String[] output = new String[initial.length];
+		String answer = "";
 		
 		// 3. Calculation
+		for (int x = 0; x < initial.length; x++)
+		{
+			//System.out.println(x);
+			if (initial[x].startsWith("a") | initial[x].startsWith("e") | initial[x].startsWith("i") | 
+					initial[x].startsWith("o") | initial[x].startsWith("u"))
+			{
+				answer = answer + initial[x].concat("ay");
+			}
+			else if (initial[x].substring(0, 3).matches("sch"))
+			{
+				String temp = "sch";
+				answer = answer + initial[x].substring(3) + temp + "ay";
+				//System.out.println(answer);
+			}
+			else if (initial[x].substring(0, 2).matches("th"))
+			{
+				String temp = "th";
+				answer = answer + initial[x].substring(2) + temp + "ay";
+				//System.out.println(answer);
+			}
+			else if (initial[x].substring(0, 2).matches("qu"))
+			{
+				String temp = "qu";
+				answer = answer + initial[x].substring(2) + temp + "ay";
+				//System.out.println(answer);
+			}
+			else
+			{
+				char temp = initial[x].charAt(0);
+				answer = answer + initial[x].substring(1) + temp + "ay";
+			}
+			
+			if (initial.length > 1 & x < (initial.length - 1))
+			{
+				answer = answer + " ";
+			}
+		}
 		
 		// 4. Output
-		
-		return null;
+		//System.out.println(answer);
+		return answer;
 	}
 	
 	/**
@@ -625,7 +782,8 @@ public class EvaluationService
 	 * @param i
 	 * @return
 	 */
-	public int calculateNthPrime(int i) {
+	public int calculateNthPrime(int i)
+	{
 		// TODO Write an implementation for this method declaration
 		
 		// 1. Variables

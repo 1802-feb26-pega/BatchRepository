@@ -33,14 +33,21 @@ public class Operators
 		--count;
 	}
 	
-	// - 2's compliment n = -(n+1)
+	// ~ 2's complement n = -(n+1)
 	/*
 	 * Bitwise complement is denoted by ~
 	 * It inverts the bit pattern
 	 * 
 	 * 35 = 00100011
+	 * ~
+	 * 		11011100 = 220 
 	 * 
-	 */
+	 * The compiler, however, gives us the 2's complement of the number
+	 * For any int n, 2's complement of n = -(n+1)	 
+	 * 
+	 * If placed in front of a string, it will convert that string to a
+	 * number for the calculation 
+	 * https://www.joezimjs.com/javascript/great-mystery-of-the-tilde/*/
 	static int complement(int y)
 	{
 		return ~y;
@@ -49,6 +56,8 @@ public class Operators
 	static void moreOperator(int x)
 	{
 		int y = -x;
+		y = +4;
+		boolean a = !true;
 	}
 	
 	// Binary
@@ -61,18 +70,35 @@ public class Operators
 		return even;
 	}
 	
+	// shift operators - left to right << >> >>>
+	/* Signed Left Shift is denoted by <<
+	 * It shifts a bit pattern to the left by a certain number of specified bits,
+	 * and zero bits are shifted into the low order positions
+	 * 
+	 * 212	 = 	  11010100
+	 * 212 << 1 = 110101000    = 424
+	 * 212 << 0 = 11010100     = 212
+	 * 212 << 4 = 110101000000 = 3392 	 */
 	static int leftShift(int num, int shift)
 	{
 		return num << shift;
 	}
 	
-	static int unsignedRightShift (int num, int shift)
+	/* Signed Right Shift is denoted by >>
+	 * Shifts a bit pattern to the right
+	 * If the number is a 2's complement signed number, the sign bit
+	 * is shifted to the high order positions 	 */
+	public int rightShift(int num, int shift)
+	{
+		return num >> shift;
+	}
+	
+	public int unsignedRightShift (int num, int shift)
 	{
 		return num >>> shift;
 	}
 	
 	// relational - > < >= <= instanceof
-	
 	static int relational(int x, int y)
 	{
 		String hi = "hi";
@@ -91,6 +117,14 @@ public class Operators
 		else return false;
 	}
 	
+	/* Bitwise OR is a binary operator denoted by |
+	 * It compares corresponding bits of two operands. If either of 
+	 * the bits is 1, it gives 1. if not it gives 0. For example
+	 * 
+	 * 12 = 00001100	|
+	 * 25 = 00011001
+	 * 
+	 * 		00011101 = 29  */
 	static int bitwiseOR(int x, int y)
 	{
 		return x | y;
@@ -114,6 +148,10 @@ public class Operators
 		return x & y;
 	}
 	
+	/* Short circuit operators 
+	 * doesn't necessarily evaluate all of its operands
+	 * https://users.drew.edu/bburd/JavaForDummies4/ShortCircuitEval.pdf
+	 */
 	public String shortCiruit(boolean first, boolean second)
 	{
 		if (first && second)

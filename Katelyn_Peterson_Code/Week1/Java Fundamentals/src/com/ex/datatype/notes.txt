@@ -16,7 +16,7 @@ Keywords:
 
 - final
 	- All caps
-	- var - cannot be reassigned; essentially a constant
+	- variable - cannot be reassigned; essentially a constant
 	- function - cannot be overridden; CAN BE OVERLOADED
 	- class - cannot be extended
 	
