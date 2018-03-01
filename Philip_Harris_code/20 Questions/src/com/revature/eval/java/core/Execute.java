@@ -3,7 +3,7 @@
  */
 package com.revature.eval.java.core;
 
-import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * @author phili
@@ -41,7 +41,7 @@ public class Execute {
 		
 		*/
 		
-		EvaluationService q4 = new EvaluationService();
+		//EvaluationService q4 = new EvaluationService();
 		
 		//System.out.println(q4.getScrabbleScore("cabbage"));
 		
@@ -56,10 +56,50 @@ public class Execute {
 
 
 		//EvaluationService q9 = new EvaluationService();
-		//System.out.println("Is " + 154 + " a Armstrong Number: " + q9.isArmstrongNumber(154));
+		//System.out.println("Is " + 153 + " a Armstrong Number: " + q9.isArmstrongNumber(153));
 		
+		//EvaluationService q10 = new EvaluationService();
+		
+		//EvaluationService q12 = new EvaluationService();
+		//System.out.println("The 100th prime number is: " + q12.calculateNthPrime(100));
+		
+		EvaluationService q13 = new EvaluationService();
+		System.out.println(encode("test"));
+		EvaluationService q14 = new EvaluationService();
+		System.out.println(decode(encode("test")));
+	
+	}
+	public static String encode(String string) {
+		// TODO Write an implementation for this method declaration
+		
+		String msg = "";
+		for(int i = 0; i < string.length(); i++) {
+			int ascii = (int) string.charAt(i);				
+			ascii = ascii - 97;
+			ascii = 122 - ascii;
+			msg += (char) ascii;
+		}
+		
+		return msg;
+	}
+
+	/**
+	 * Question 14
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public static String decode(String string) {
+		// TODO Write an implementation for this method declaration
+		String msg = "";
+		for(int i = 0; i < string.length(); i++) {
+			int ascii = (int) string.charAt(i);				
+			ascii = 122 - ascii;
+			ascii = ascii + 97;
+			msg += (char) ascii;
+		}
+		 return msg;
 	}
 	
-
 }
 

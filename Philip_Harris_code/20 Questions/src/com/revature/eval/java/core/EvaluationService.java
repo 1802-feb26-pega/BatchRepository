@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -403,10 +404,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Integer> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		if(l % 2 == 0) System.out.println( "Nope");
-		else if(l % 3 == 0) System.out.println( "Nope");
-		else System.out.println( "Yes");
+		// TODO Write an implementation for this method declaration		
 		return null;
 	}
 
@@ -463,9 +461,29 @@ public class EvaluationService {
 	 * @param i
 	 * @return
 	 */
-	public int calculateNthPrime(int i) {
+	public int calculateNthPrime(int n) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		int num;
+		int i = 1;
+		int numOfPrimes = 0;
+		ArrayList list = new ArrayList();
+		//for(i = 1; i < n;i++) {
+		while(true) {
+			int counter=0; 	  
+	          for(num =i; num>=1; num--)
+	          {
+	             if(i%num==0){ counter = counter + 1; }
+	          }
+	          if (counter ==2) {
+	        	  list.add(i);
+	        	  numOfPrimes++;
+	          }	
+	          if(numOfPrimes==n) break;
+	        i++;
+		}
+		return (int) list.get(n-1);
+		
+		
 	}
 
 	/**
@@ -502,7 +520,16 @@ public class EvaluationService {
 		 */
 		public static String encode(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			
+			String msg = "";
+			for(int i = 0; i < string.length(); i++) {
+				int ascii = (int) string.charAt(i);				
+				ascii = ascii - 97;
+				ascii = 122 - ascii;
+				msg += (char) ascii;
+			}
+			
+			return msg;
 		}
 
 		/**
@@ -513,8 +540,17 @@ public class EvaluationService {
 		 */
 		public static String decode(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			String msg = "";
+			for(int i = 0; i < string.length(); i++) {
+				int ascii = (int) string.charAt(i);				
+				ascii = 122 - ascii;
+				ascii = ascii + 97;
+				msg += (char) ascii;
+			}
+			 return msg;
 		}
+		
+		
 	}
 
 	/**
