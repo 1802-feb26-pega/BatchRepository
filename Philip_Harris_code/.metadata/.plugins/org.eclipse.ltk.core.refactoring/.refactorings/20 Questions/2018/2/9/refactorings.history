@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename type &apos;com.revature.eval.java.core.Questions&apos; to &apos;EvaluationService&apos;&#x0D;&#x0A;- Original project: &apos;20 Questions&apos;&#x0D;&#x0A;- Original element: &apos;com.revature.eval.java.core.Questions&apos;&#x0D;&#x0A;- Renamed element: &apos;com.revature.eval.java.core.EvaluationService&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Questions&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;com.revature.eval.java.core{Questions.java[Questions" matchStrategy="1" name="EvaluationService" qualified="false" references="true" similarDeclarations="false" stamp="1519685202659" textual="false" version="1.0"/>
-</session>

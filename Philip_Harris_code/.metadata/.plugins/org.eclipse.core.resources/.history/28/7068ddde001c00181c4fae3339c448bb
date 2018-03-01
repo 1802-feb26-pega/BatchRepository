@@ -1,9 +1,0 @@
-package com.ex.inheritance;
-
-public abstract class Animal {
-	
-	void breath() {
-		System.out.println(x);
-	}
-	 abstract public void eat();
-}
