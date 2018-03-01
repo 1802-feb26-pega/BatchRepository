@@ -81,7 +81,7 @@ public class Tester {
 //		System.out.println(searchInt.indexOf(11));
 		
 		//#8
-		
+//		System.out.println(es.toPigLatin("quick fast run"));
 		
 	}
 

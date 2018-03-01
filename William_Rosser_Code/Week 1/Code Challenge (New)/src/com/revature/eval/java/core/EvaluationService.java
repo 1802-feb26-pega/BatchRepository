@@ -328,9 +328,23 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
+	//done
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String[] words = string.split("\\s");
+		String piggy = "";
+		for (String word : words) {
+			String firstLetter = word.substring(0,1);
+			switch(firstLetter.toUpperCase()) {
+			case "A":
+			case "E":
+			case "I":
+			case "O":
+			case "U":
+			case "Y": piggy += word + "ay "; break;
+			default: piggy += word.substring(1) + firstLetter + "ay "; break;
+			}
+		}
+		return piggy;
 	}
 
 	/**
