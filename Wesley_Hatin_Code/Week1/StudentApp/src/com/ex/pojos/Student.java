@@ -9,7 +9,10 @@ public class Student implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -812029385295181278L;
+<<<<<<< HEAD
 
+=======
+>>>>>>> bde3637ef286a9547842d7635b76b8e7232f2eeb
 	private String name;
 	private int age;
 	
