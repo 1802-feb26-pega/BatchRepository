@@ -68,23 +68,13 @@ public class Execute {
 		//EvaluationService q14 = new EvaluationService();
 		//System.out.println(decode(encode("test")));
 		
-		String string = "Jived fox nymph grabs quick walt.";
-		Boolean flag = true;
-		ArrayList check = new ArrayList();
-		for(int i = 0; i < string.length();i++) {			
-
-			if(check.contains(Character.toLowerCase(string.charAt(i)))|check.contains(Character.toUpperCase(string.charAt(i)))){
-				flag = false;
-				if(flag)System.out.println("This is not an pangram");
-				//return false;
-				break;
-			}
-			else check.add(string.charAt(0));
-							
-		}
-		System.out.println("This is a pangram");
-		//return true;
+	
+		//EvaluationService q16 = new EvaluationService();
+		//System.out.println("Is this a pangram? " + q16.isPangram("Jived fox nymph grabs quick waltz."));
 		
+		//EvaluationService q18 = new EvaluationService();
+		//int[] a = {3,5};
+		//System.out.println(q18.getSumOfMultiples(20,a));
 	}
 	
 }

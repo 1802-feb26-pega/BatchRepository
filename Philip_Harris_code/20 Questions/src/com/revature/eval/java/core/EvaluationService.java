@@ -613,7 +613,29 @@ public class EvaluationService {
 	 */
 	public boolean isPangram(String string) {
 		// TODO Write an implementation for this method declaration
+		string = string.replace(" ", "");
+		System.out.println(string);
+		ArrayList<Character> check = new ArrayList<>();
+		for(int i = 0; i < string.length();i++) {			
+			check.add(string.charAt(i));							
+		}
 		
+			int u = 65;
+			int l = 97;
+		
+			while(true) {
+				if(check.contains((char)u)|check.contains((char)l)) {}
+				else {
+					return false;
+				}
+				if(u == 91 | l == 122) {
+					break;
+					}
+				u++;
+				l++;
+			}
+
+		return true;
 		
 	}
 
@@ -645,7 +667,26 @@ public class EvaluationService {
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		
+		int sum = 0;
+		int l = set.length;
+		
+		ArrayList<Integer> m = new ArrayList<>();
+		for(int z = 1;z < i; z++) {
+			for(int s = 0; s < l; s++) {
+				if(z%set[s]==0) {
+					if(m.contains(z)) {}
+					else {
+						m.add(z);
+						sum+= z;
+					}
+					
+				}
+			}			
+		}
+		for(int x: m)
+			System.out.println(x);
+		return sum;
 	}
 
 	/**
