@@ -159,7 +159,7 @@ public class EvaluationService {
 			for(Character idx : keys) {
 				
 				if((string.charAt(i)== idx)) {
-					//sum += map.get(key);
+					sum += map.get(idx);
 					if(multiplier.containsKey(idx)) {
 						int count = multiplier.get(idx);
 						multiplier.put(idx, count + 1);

@@ -41,9 +41,9 @@ public class Execute {
 		
 		*/
 		
-		//EvaluationService q4 = new EvaluationService();
+		EvaluationService q4 = new EvaluationService();
 		
-		//System.out.println(q4.getScrabbleScore("cabbage"));
+		System.out.println(q4.getScrabbleScore("cabbage"));
 		
 		//EvaluationService q5 = new EvaluationService();
 		//System.out.println(q5.cleanPhoneNumber("613.995.0253"));
