@@ -464,17 +464,39 @@ public class EvaluationService {
 	 * gur ynml qbt. ROT13 Gur dhvpx oebja sbk whzcf bire gur ynml qbt. gives The
 	 * quick brown fox jumps over the lazy dog.
 	 */
+	//Done
 	static class RotationalCipher {
 		private int key;
+		private ArrayList<String> uppercase;
+		private ArrayList<String> lowercase;
 
 		public RotationalCipher(int key) {
 			super();
 			this.key = key;
+			uppercase = new ArrayList<String>();
+			lowercase = new ArrayList<String>();
+			String[] lttr = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+			for (String l:lttr) {
+				uppercase.add(l);
+				lowercase.add(l.toLowerCase());
+			}
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			String cypher = "";
+			for (int c = 0; c < string.length(); c++) {
+				String letter = string.substring(c, c+1);
+				boolean upper = false;
+				int i = uppercase.indexOf(letter);
+				if (i!=-1) {
+					upper = true;
+				} else {
+					i = lowercase.indexOf(letter);
+				}
+				if (i != -1) i = (i + key) % 26;
+				cypher += (i==-1)? letter : ((upper)?uppercase.get(i):lowercase.get(i));
+			}
+			return cypher;
 		}
 
 	}

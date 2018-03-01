@@ -24,6 +24,10 @@ public class ListDemo {
 		myList.addAll(1, myOtherList);
 		System.out.println(myList);
 		myList.remove(1);
+		
+		System.out.println(myList.get(3));
+		myList.set(0,12);
+		System.out.println(myList);
 
 	}
 

@@ -92,7 +92,10 @@ public class Tester {
 		
 		//#11
 		
+//		EvaluationService.RotationalCipher rs = new EvaluationService.RotationalCipher(13);
+//		System.out.println(rs.rotate("Gur dhvpx oebja sbk whzcf bire gur ynml qbt."));
 		
+		//#12
 		
 		
 		
