@@ -1,11 +1,15 @@
 package com.revature.eval.java.core;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class Tester {
 
 	public static void main(String[] args) {
 		EvaluationService es = new EvaluationService();
+		
 		//#1
 //		System.out.println(es.reverse(""));
 //		System.out.println(es.reverse("!yrgnuh m'I"));
@@ -65,6 +69,18 @@ public class Tester {
 //			System.out.println(map.get(s));
 //		}
 		
+		//#7
+//		List<String> sortedList = Collections.unmodifiableList(Arrays.asList("1", "3", "4", "6", "8", "9", "11"));
+//
+//		EvaluationService.BinarySearch<String> searchStr = new EvaluationService.BinarySearch<>(sortedList);
+//		System.out.println(searchStr.indexOf("3"));
+//		
+//		List<Integer> sortedList2 = Collections.unmodifiableList(Arrays.asList(1, 3, 4, 6, 8, 9, 11, 27));
+//		EvaluationService.BinarySearch<Integer> searchInt = new EvaluationService.BinarySearch<>(sortedList2);
+//		
+//		System.out.println(searchInt.indexOf(11));
+		
+		//#8
 		
 		
 	}
