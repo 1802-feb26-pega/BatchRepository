@@ -1,5 +1,7 @@
 package com.revature.eval.java.core;
 
+import java.util.Map;
+
 public class Tester {
 
 	public static void main(String[] args) {
@@ -32,12 +34,36 @@ public class Tester {
 //		System.out.println(triangle.isScalene());
 //		//scalene = true
 		
-		System.out.println(es.getScrabbleScore("f"));
-		System.out.println(es.getScrabbleScore("zoo"));
-		System.out.println(es.getScrabbleScore("street"));
-		System.out.println(es.getScrabbleScore("quirky"));
-		System.out.println(es.getScrabbleScore("OxyphenButazone"));
+		//#4
+//		System.out.println(es.getScrabbleScore("f"));
+//		System.out.println(es.getScrabbleScore("zoo"));
+//		System.out.println(es.getScrabbleScore("street"));
+//		System.out.println(es.getScrabbleScore("quirky"));
+//		System.out.println(es.getScrabbleScore("OxyphenButazone"));
 		
+		//#5
+//		System.out.println(es.cleanPhoneNumber("(223)-456.7890"));
+//		System.out.println(es.cleanPhoneNumber("1(223)  456-7890"));
+//		System.out.println(es.cleanPhoneNumber("+1(223) 456-7890"));
+//		try {
+//			System.out.println(es.cleanPhoneNumber("(223) 156-7890"));
+//		} catch (IllegalArgumentException e) {
+//			e.printStackTrace();
+//		}
+//		try {
+//			System.out.println(es.cleanPhoneNumber("65654684654684168118"));
+//		} catch (IllegalArgumentException e) {
+//			e.printStackTrace();
+//		}
+		
+		//#6
+//		String test = "word,word\npie cat dog dog cat"
+//				+ "";
+//		Map<String, Integer> map = es.wordCount(test);
+//		for (String s : map.keySet()) {
+//			System.out.print(s + " ");
+//			System.out.println(map.get(s));
+//		}
 		
 		
 		
