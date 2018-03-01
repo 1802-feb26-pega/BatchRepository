@@ -23,6 +23,7 @@ public class ListDemo {
 		
 		myList.addAll(1, myOtherList);
 		System.out.println(myList);
+		myList.remove(1);
 
 	}
 
