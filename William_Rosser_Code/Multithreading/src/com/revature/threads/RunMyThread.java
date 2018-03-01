@@ -1,6 +1,7 @@
 package com.revature.threads;
 
 class ImplementingRunnableExample implements Runnable {
+	//Same as extending thread
 	public static int myCount = 0;
 	
 	public ImplementingRunnableExample() {
@@ -16,7 +17,7 @@ class ImplementingRunnableExample implements Runnable {
 		while(ImplementingRunnableExample.myCount <= 10) {
 			try {
 				System.out.println("Example thread: " + (++myCount));
-				Thread.sleep(100L);
+				Thread.sleep(1000L);
 			} catch (InterruptedException iex) {
 				System.out.println("Exception in thread: " + iex.getMessage());
 			}
@@ -36,7 +37,7 @@ public class RunMyThread {
 		while (ImplementingRunnableExample.myCount <= 10) {
 			try {
 				System.out.println("Main thread: " + (++ImplementingRunnableExample.myCount));
-				Thread.sleep(100);
+				Thread.sleep(1000L);
 			} catch (InterruptedException iex) {
 				System.out.println("Exception in mainthread: " + iex.getMessage());
 			}
