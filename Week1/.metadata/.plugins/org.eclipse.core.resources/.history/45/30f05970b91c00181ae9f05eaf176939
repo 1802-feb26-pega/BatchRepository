@@ -1,0 +1,17 @@
+package com.ex.io;
+
+import java.util.List;
+
+import com.ex.pojos.Student;
+
+public class StudentIO {
+	
+	void writeStudent(Student student) {
+		
+	}
+	
+	List<Student> readStudents(){
+		
+	}
+
+}

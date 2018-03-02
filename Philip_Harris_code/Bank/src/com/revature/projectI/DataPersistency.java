@@ -10,31 +10,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataPersistency {
-	static final String file = "src/data/students.txt";
+	static final String file = "src/database/Accounts.txt";
 	static DataPersistency data = new DataPersistency();
 	
 
-	public void writeCustomer(String accountInfo) {
+	public void writeCustomer(Client Customer,Account a) {
 		
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))){
-			bw.write(accountInfo);
+			bw.write(Customer.toString() + "," + a.getBalance() + "\n");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
-public String readCustomer(String accountInfo){
+public boolean readCustomer(Client customer,Account account,String username, String password){
 		
-		List<String> students = new ArrayList<String>();
+		String[] textData = null;
+		
 		try(BufferedReader br = new BufferedReader(new FileReader(file))){
 				String line = null;
-				while((line=br.readLine()) != null) {
-					String[] data = line.split(":");
-					Student temp = new Student();
-					temp.setName(data[0]);
-					temp.setAge(Integer.parseInt(data[1]));
-					students.add(temp);
+				
+				while((line = br.readLine()) != null) {
+						textData = line.split(",");											
+						if(username.equals(textData[3]) | username.equals((textData[4]))) {
+							customer.setfName(textData[0]);
+							customer.setlName(textData[1]);
+							customer.setSsn(Integer.parseInt(textData[2]));
+							customer.setUsrName(textData[3]);
+							customer.setPassword(textData[4]);
+							account.setBalance(Integer.parseInt(textData[5]));
+							return true;
+						}	
 				}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -43,7 +50,7 @@ public String readCustomer(String accountInfo){
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return students;
+		return false;
 		
 	}
 }
