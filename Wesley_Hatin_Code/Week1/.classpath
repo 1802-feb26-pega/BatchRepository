@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Collections/src"/>
+	<classpathentry kind="src" path="IceCreamStore/src"/>
+	<classpathentry kind="src" path="Java Fundamentals/src"/>
+	<classpathentry kind="src" path="StudentApp/src"/>
+	<classpathentry kind="output" path="Collections/bin"/>
+</classpath>
