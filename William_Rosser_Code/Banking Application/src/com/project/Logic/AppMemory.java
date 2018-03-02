@@ -5,7 +5,11 @@ import java.util.ArrayList;
 
 public class AppMemory implements Serializable {
 	private User user;
-	private ArrayList<User> userDatabase;
+	private ArrayList<User> userList;
+	
+	public AppMemory() {
+		userList = new ArrayList<User>();
+	}
 	
 	public User getUser() {
 		return user;
@@ -13,11 +17,16 @@ public class AppMemory implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public ArrayList<User> getUserDatabase() {
-		return userDatabase;
+	public ArrayList<User> getUserList() {
+		return userList;
 	}
-	public void setUserDatabase(ArrayList<User> userDatabase) {
-		this.userDatabase = userDatabase;
+	public void setUserList(ArrayList<User> userList) {
+		this.userList = userList;
+	}
+
+	@Override
+	public String toString() {
+		return "AppMemory [user=" + user + ", userList=" + userList + "]";
 	}
 	
 	

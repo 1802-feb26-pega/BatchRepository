@@ -1,7 +1,14 @@
 package com.project.UI;
 
+import java.util.Scanner;
+
+import com.project.Logic.User;
+
 public class ApplicationUI {
-	
+	private Scanner sc;
+	public ApplicationUI() {
+		sc = new Scanner(System.in);
+	}
 	
 	/**
 	 * Prompts the user to register for an account. Returns a String array with the following format:
@@ -31,51 +38,48 @@ public class ApplicationUI {
 	 * Prompts a returning user from a previous session to log in.
 	 * Returns none if the user does not choose to log into the previous account.
 	 * 
-	 * @param user The birth name of the user.
-	 * @param username The account username of the user.
-	 * @return the password of the user, or none if they choose to log into 
+	 * @param user The reference to the user.
+	 * @return the password of the user, or null if they choose to log into 
 	 * a different account.
 	 */
-	public String returningUserLogIn(String user, String username) {
+	public String returningUserLogIn(User user) {
 		return null;
 	}
 	
 	/**
 	 * Prompts the user via the UI if they want to log out.
-	 * @param user The username of the current user.
+	 * @param user The reference to the current user.
 	 * @return True if the user wants to log out, or false if they want to stay logged in.
 	 */
-	public boolean userLogOut(String user) {
+	public boolean userLogOut(User user) {
 		return false;
 	}
 	
 	/**
 	 * Prompts the user to deposit money into their account.
-	 * @param user The username of the current user.
+	 * @param user The reference to the current user.
 	 * @param currentBalance The current money balance in their account.
 	 * @return The amount the user deposits, or -1 if the input is invalid.
 	 */
-	public float depositMoney(String user, float currentBalance) {
-		return -1f;
+	public double depositMoney(User user) {
+		return -1;
 	}
 
 	/**
 	 * Prompts the user to withdraw money from their account.
-	 * @param user The username of the current user.
-	 * @param currentBalance The current money balance in their account.
+	 * @param user The reference to the current user.
 	 * @return The amount they wish to withdraw, regardless of their actual balance. Returns -1 if the input is invalid.
 	 */
-	public float withdrawMoney(String user, float currentBalance) {
-		return -1f;
+	public double withdrawMoney(User user) {
+		return -1;
 	}
 	
 	/**
 	 * Prints out a formatted string of the user's name and their current balance.
 	 * @param user
-	 * @param currentBalance
 	 */
-	public void viewBalance(String user, float currentBalance) {
-		String out = String.format("%1$s,\nYour current balance is: $%2$.2f.", user, currentBalance);
+	public void viewBalance(User user) {
+		String out = String.format("%1$s,\nYour current balance is: $%2$.2f.", user.getWholeName(), user.getBalance());
 		System.out.println(out);
 	}
 }

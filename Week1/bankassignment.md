@@ -19,3 +19,10 @@ input validated? Do I have to log back in after each transaction? All important
 things to consider. 
 
 Good luck!
+
+
+-----
+
+Will's Notes:
+
+Can Serialize/Deserialize application memory, as well as saving it all in a text file.
