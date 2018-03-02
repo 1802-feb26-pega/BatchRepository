@@ -174,7 +174,6 @@ public class SimpleATM {
         }
 
         System.out.println("Ending program.");
-
         System.out.print("Saving user data...");
         UA.writeAll();
         System.out.print("done!\n");
