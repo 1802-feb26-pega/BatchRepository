@@ -1,5 +1,8 @@
 package com.revature.eval.java.core;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -615,9 +618,25 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
+	//Done
 	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		String cleaned[] = string.split("[\\D&&[^Xx]]");
+		string = "";
+		for (String c:cleaned) {
+			string += c;
+		}
+		if (string.length() != 10) return false;
+		int sum = 0;
+		for(int i = 0; i < 10; i++) {
+			String  digit = string.substring(i, i+1);
+			if (digit.equalsIgnoreCase("x")) {
+				sum += 10 * (10-i);
+			} else {
+				sum += Integer.parseInt(digit) * (10-i);
+			}
+		}
+		
+		return sum % 11 == 0;
 	}
 
 	/**
@@ -633,8 +652,18 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
+	//Done
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
+		String alphabet = "abcdefghijklmnopqrstuvwxyz ";
+		string = string.toLowerCase();
+		for (char c:string.toCharArray()) {
+			if (c == ' ') continue;
+			String[] split = alphabet.split(c + "");
+			alphabet = (split.length > 1) ? split[0] + split[1] : split[0];
+			if (alphabet.equals(" ")) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -647,8 +676,11 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		LocalDateTime now = LocalDateTime.now();
+		if (given instanceof LocalDate) given = ((LocalDate) given).atTime(21,8);
+		long timeElapsed = given.until(now, ChronoUnit.SECONDS);
+		long timeRemaining = 1000000000 - timeElapsed;
+		return now.plus(timeRemaining, ChronoUnit.SECONDS).withNano(0);
 	}
 
 	/**
@@ -664,9 +696,22 @@ public class EvaluationService {
 	 * @param set
 	 * @return
 	 */
+	//Done
 	public int getSumOfMultiples(int i, int[] set) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		ArrayList<Integer> multiples = new ArrayList<Integer>();
+		for (int j = 1; j < i; j++) {
+			for (int k=0; k < set.length; k++) {
+				if (j % set[k] == 0 && multiples.indexOf(j) == -1) {
+					multiples.add(j);
+				}
+			}
+		}
+		System.out.println(multiples);
+		int sum = 0;
+		for (Integer m : multiples) {
+			sum += m;
+		}
+		return sum;
 	}
 
 	/**
@@ -705,9 +750,32 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
+	//Done
 	public boolean isLuhnValid(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		if (string.matches(".*[\\D&&\\S].*")) {
+			System.out.println("Invalid String");
+			return false;
+		}
+		String justNums[] = string.split("\\D");
+		string = "";
+		for (String num : justNums) {
+			string += num;
+		}
+		if (string.length() <= 1) return false;
+		
+		char[] digitChars = string.toCharArray();
+		int[] digits = new int[digitChars.length];
+		for (int i = digits.length-1; i >= 0 ; i--) {
+			int digit = Integer.parseInt(digitChars[i] + "");
+			digits[i] = ((digits.length-i)%2==0) ? digit * 2 : digit;
+			if (digits[i] > 9) digits[i] -= 9;
+		}
+		int sum = 0;
+		for (int d : digits) {
+			System.out.print(d);
+			sum += d;
+		}
+		return sum % 10 == 0;
 	}
 
 	/**
@@ -737,9 +805,28 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
+	//Done!
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		string = string.substring(8, string.length()-1);
+//		System.out.println(string);
+		String[] split = string.split("\\s");
+//		for (String s:split) {
+//			System.out.println(s);
+//		}
+		try {
+			int a = Integer.parseInt(split[0]);
+			switch(split[1]) {
+				case "plus": return a + Integer.parseInt(split[2]);
+				case "minus": return a - Integer.parseInt(split[2]);
+				case "multiplied": return a * Integer.parseInt(split[3]);
+				case "divided": return a / Integer.parseInt(split[3]);
+				default: return 0;
+			}
+		} catch (NumberFormatException e) {
+			System.out.println("Could not parse question.");
+			return 0;
+		}
 	}
 
 }

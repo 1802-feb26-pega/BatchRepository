@@ -1,9 +1,7 @@
 package com.revature.eval.java.core;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.Month;
 
 public class Tester {
 
@@ -105,9 +103,43 @@ public class Tester {
 		//#14
 //		System.out.println(ac.decode("gsvjf rxpyi ldmul cqfnk hlevi gsvoz abwlt"));
 		
+		//#15
+//		System.out.println(es.isValidIsbn("3-598-21508-8"));
+//		System.out.println(es.isValidIsbn("3-598-21508-9"));
+//		System.out.println(es.isValidIsbn("3-598-21507-X"));
+//		System.out.println(es.isValidIsbn("3-598-21507-A"));
 		
+		//#16
+//		System.out.println(es.isPangram("a quick movement of the enemy will jeopardize five gunboats"));
+//		System.out.println(es.isPangram("the quick brown fox jumps over the lazy dog"));
 		
-		
+//		//#17
+//		LocalDate time = LocalDate.of(1996,Month.APRIL, 9);
+//		System.out.println(es.getGigasecondDate(time));
+	
+		//#18
+//		int set[] = {5,6,8};
+//		System.out.println(es.getSumOfMultiples(150, set));
+
+		//#19
+		//System.out.println(es.isLuhnValid("046 454 286"));
+	
+		//#20
+		System.out.println(es.solveWordProblem("What is 21 divided by -7?"));
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	}
 
 }
