@@ -6,7 +6,9 @@ package com.revature.eval;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -553,35 +555,40 @@ public class EvaluationService
 		{
 			if (!sortedList.isEmpty())
 			{
-				// COME BACK TO THIS TODO Write an implementation for this method declaration
-				
 				// 1. Variables & 2. Input
 				int high = sortedList.size() - 1;
 				int low = 0;
 				int mid = 0;
-				String transfer = (String) t;
-				Integer search = Integer.parseInt(transfer);
+				String transfer = String.valueOf(t);
+				int search = Integer.valueOf(transfer);
 				
 				while (low <= high)
 				{
-					mid = (low + high) / 2;
+					mid = low + (high - low)/2;
+					
+					// TESTING
+					/*System.out.println("Search " + search);
+					System.out.println("Mid " + mid);
+					System.out.println("List " + sortedList.get(mid));
+					System.out.println(Integer.valueOf(String.valueOf(sortedList.get(mid))));
+					System.out.println();*/
 					
 					// 3. Calculation & Output
-					if (sortedList.get(mid).equals(search))
+					if (Integer.valueOf(String.valueOf(sortedList.get(mid))).equals(search))
 					{
 						return mid;
 						//high = mid - 1;
 					}
-					else if (search > mid)
+					else if (search > Integer.valueOf(String.valueOf(sortedList.get(mid))))
 					{
 						low = mid + 1;
 					}
 					else
 					{
-						return mid;
+						high = mid - 1;
 					}
 				}
-				return 0;
+				return mid;
 			}
 			else
 			{
@@ -694,15 +701,42 @@ public class EvaluationService
 	public boolean isArmstrongNumber(int input) {
 		// TODO Write an implementation for this method declaration
 		
-		// 1. Variables
-		
-		// 2. Input
+		// 1. Variables & 2. Input
+		int digits = (int)(Math.log10(input)+1);
+		int digitTrans = input;
+		ArrayList<Integer> transfer = new ArrayList<>();
+		int sum = 0;
 		
 		// 3. Calculation
+		// Extracting the digits from the input via digitTrans
+		LinkedList<Integer> stack = new LinkedList<>();
+		while (digitTrans > 0)
+		{
+		    stack.push( digitTrans % 10 );
+		    digitTrans = digitTrans / 10;
+		}
+		
+		// Reordering digits
+		while (!stack.isEmpty())
+		{
+		    transfer.add(stack.pop());
+		}
+		
+		for(Integer x : transfer)
+		{
+			sum = sum + (int)Math.pow(x, digits);
+		}
 		
 		// 4. Output
+		if (sum == input)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 		
-		return false;
 	}
 	
 	/**
@@ -715,18 +749,93 @@ public class EvaluationService
 	 * @param l
 	 * @return
 	 */
-	public List<Integer> calculatePrimeFactorsOf(long l) {
+	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
 		
-		// 1. Variables
-		
-		// 2. Input
+		// 1. Variables & 2. Input
+		long input = l;
+		long remainder;
+		long currPrime;
+		LinkedList<Long> primes = new LinkedList<>();
+		ArrayList<Long> nums = new ArrayList<>();
 		
 		// 3. Calculation
+		// Populate the primes
+		for (int x = 2; x < (input + 1); x++)
+		{
+			if (input % x == 0)
+			{
+				primes.add((long) x);
+			}
+		}
+		
+		// TESTING
+		//System.out.println("Primes: " + primes);
+		
+		// Begin with lowest number.  If num X % Prime = 0, then add prime to nums list.  
+		// While num != any primes, keep running
+		//while(!primes.isEmpty() && !primes.contains(input))
+		//{
+			
+			do
+			{
+				// Set current Prime to be checked
+				currPrime = primes.peekFirst();
+				remainder = input % currPrime;
+				
+				// TESTING
+				/*System.out.println("Before If");
+				System.out.println("Input: " + input);
+				System.out.println("currPrime: " + currPrime);
+				System.out.println("Remainder: " + remainder);
+				System.out.println();*/
+				
+				if (remainder == 0)
+				{
+					// TESTING
+					/*System.out.println("In If");
+					System.out.println("Input: " + input);
+					System.out.println("currPrime: " + currPrime);
+					System.out.println("Remainder: " + remainder);
+					System.out.println();*/
+					
+					// Add prime to nums
+					nums.add((currPrime));
+					
+					// reduce input
+					input = input / currPrime;
+					
+					// TESTING
+					/*System.out.println("In If, after input update");
+					System.out.println("Input: " + input);
+					System.out.println("currPrime: " + currPrime);
+					System.out.println("Remainder: " + remainder);
+					System.out.println();*/
+				}
+				else
+				{
+					primes.removeFirst();
+					
+					// TESTING
+					//System.out.println("In Else");
+				}
+				
+			} while(!primes.isEmpty());
+		//}
 		
 		// 4. Output
+		// TESTING
+		//System.out.println("Nums: " + nums);
 		
-		return null;
+		if (nums.size() == 1)
+		{
+			List<Long> oneNum = new ArrayList<>();
+			oneNum = Collections.singletonList(nums.get(0));
+			
+			return oneNum;
+		}
+		
+		return nums;
 	}
 	
 	/**
@@ -755,17 +864,90 @@ public class EvaluationService
 	 * gur ynml qbt. ROT13 Gur dhvpx oebja sbk whzcf bire gur ynml qbt. gives The
 	 * quick brown fox jumps over the lazy dog.
 	 */
-	static class RotationalCipher {
+	static class RotationalCipher
+	{
 		private int key;
+		private List<Character> alphabet = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 
+				'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 
+				'y', 'z');
 
-		public RotationalCipher(int key) {
+		public RotationalCipher(int key)
+		{
 			super();
 			this.key = key;
 		}
 
-		public String rotate(String string) {
+		public String rotate(String string)
+		{
 			// TODO Write an implementation for this method declaration
-			return null;
+			
+			// 1. Variables & 2. Input
+			char[] input = string.toCharArray();
+			char[] output = new char[input.length];
+			int inKey;
+			int newKey;
+			String result;
+			
+			// TESTING
+			System.out.println("Before Loop");
+			System.out.print("Input: ");
+			for (char x : input)
+			{
+				System.out.print(x);
+			}
+			System.out.println();
+			System.out.println();
+			
+			// 3. Calculation
+			for(int x = 0; x < input.length; x++)
+			{
+				if (Character.isLetter(input[x]))
+				{
+					// Set keys
+					inKey = alphabet.indexOf(Character.toLowerCase(input[x]));
+					newKey = inKey + key;
+					
+					if (newKey >= alphabet.size())
+					{
+						newKey = newKey - 26;
+					}
+					
+					if (Character.isUpperCase(input[x]))
+					{
+						output[x] = Character.toUpperCase(alphabet.get(newKey));
+					}
+					else
+					{
+						output[x] = alphabet.get(newKey);
+					}
+				}
+				else
+				{
+					output[x] = input[x];
+				}
+			}
+			
+			// 4. Output
+			result = new String(output);
+			
+			// TESTING
+			System.out.println("After Loop");
+			System.out.print("Input: ");
+			for (char x : input)
+			{
+				System.out.print(x);
+			}
+			System.out.println();
+			System.out.print("Output: ");
+			for (char x : output)
+			{
+				System.out.print(x);
+			}
+			System.out.println();
+			System.out.println("Result: " + result);
+			System.out.println();
+			
+			return result;
 		}
 
 	}
@@ -782,19 +964,59 @@ public class EvaluationService
 	 * @param i
 	 * @return
 	 */
-	public int calculateNthPrime(int i)
+	public int calculateNthPrime(int input)
 	{
 		// TODO Write an implementation for this method declaration
+		// So, need to run a loop, calculating primes until we have calculated N primes
+		// Also, need to throw an IllegalArgument exception if N is 0
 		
-		// 1. Variables
+		// Throwing exception is N is 0
+		if (input == 0)
+		{
+			throw new IllegalArgumentException();
+		}
 		
-		// 2. Input
+		// 1. Variables & 2. Input
+		//int [] primeNums = new int [input];
+		// Adjust to deal with ArrayList
+		ArrayList<Integer> primeNums = new ArrayList<>();
+		int counter = 0;
+		int prime = 2;
 		
 		// 3. Calculation
+		do
+		{
+			if (prime == 2)
+			{
+				//primeNums[counter] = prime;
+				primeNums.add(prime);
+				counter = counter + 1;
+			}
+			else if (!(prime % 2 == 0))
+			{
+				
+				/*if((prime % counter) == 0)
+				{
+					// Add prime to primeNums
+					primeNums[counter] = prime;
+					counter = counter + 1;
+				}*/
+			}
+			
+			// increment prime
+			prime = prime + 1;
+			
+		} while (counter < primeNums.size());
 		
 		// 4. Output
+		System.out.println("primeNums: ");
+		for (int x : primeNums)
+		{
+			System.out.println(x);
+		}
+		System.out.println();
 		
-		return 0;
+		return primeNums.get(input - 1);
 	}
 	
 	/**

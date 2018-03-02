@@ -36,7 +36,22 @@ Interfaces
 	- cannot extend classes; classes IMPLEMENT interfaces
 	
 Coding Wars for practice
-	
+
+Resources
+https://beginnersbook.com/java-tutorial-for-beginners-with-examples/
+http://www.mkyong.com/tutorials/java-8-tutorials/
+http://tutorials.jenkov.com
+http://www.baeldung.com
+https://www.javaworld.com
+https://www.geeksforgeeks.org/java/
+https://stackoverflow.com/questions/tagged/java
+https://www.tutorialspoint.com/java/index.htm
+https://docs.oracle.com/javase/tutorial/
+
+To Do:
+20 Questions: On 12 (yay)
+Banking App (Last Chance Bank (and Diner))
+java fundamentals exam on enthuware
 	
 	
 	

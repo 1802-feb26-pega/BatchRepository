@@ -7,28 +7,33 @@ public class QueueDemo
 {
 	public static void main(String[] args)
 	{
-		Deque<String> queueNames = new ArrayDeque<>();
+		Deque<String> sample = new ArrayDeque<>();
 		 
-		queueNames.offer("Katherine");
-		queueNames.offer("Bob");
+		sample.offer("Pidge");
+		sample.offer("Allura");
 		 
-		queueNames.addFirst("Jim");
-		queueNames.addLast("Tom");
+		sample.addFirst("Keith");
+		sample.addLast("Lance");
+		sample.addLast("Yellow Lion");
 		 
-		System.out.println(queueNames);
+		System.out.println(sample);
 		
-		queueNames.offer("Bill");
-		queueNames.offer("Kim");
-		queueNames.offer("Lee");
-		queueNames.offer("Peter");
-		queueNames.offer("Sam");
+		sample.offer("Hunk");
+		sample.offer("Red Lion");
+		sample.offer("Blue Lion");
+		sample.offer("Green Lion");
+		sample.offer("Black Lion");
 		 
-		System.out.println("Queue before: " + queueNames);
-		System.out.println("First comes: " + queueNames.pollFirst());
-		System.out.println("Last comes: " + queueNames.pollLast());
-		System.out.println("Queue after: " + queueNames);
+		System.out.println("Queue before: " + sample);
+		System.out.println("First comes: " + sample.pollFirst());
+		System.out.println("Last comes: " + sample.pollLast());
+		System.out.println("Queue after: " + sample);
 		
-		System.out.println("first: " + queueNames.getFirst());
-		System.out.println("last: " + queueNames.peekLast());
+		sample.removeFirst();
+		sample.removeLast();
+		System.out.println(sample);
+		
+		System.out.println("first: " + sample.getFirst());
+		System.out.println("last: " + sample.peekLast());
 	}
 }

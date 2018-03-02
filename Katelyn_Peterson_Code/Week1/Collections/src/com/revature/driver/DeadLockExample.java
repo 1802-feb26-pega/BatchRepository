@@ -8,7 +8,18 @@ public class DeadLockExample
 		Object obj2 = new Object();
 		Object obj3 = new Object();
 		
+		Thread t1 = new Thread(new SynchroThread(obj1, obj2));
+		Thread t2 = new Thread(new SynchroThread(obj2, obj3));
+		Thread t3 = new Thread(new SynchroThread(obj1, obj3));
 		
+		t1.start();
+		Thread.sleep(5000);
+		
+		t2.start();
+		Thread.sleep(5000);
+		
+		t3.start();
+		Thread.sleep(5000);
 	}
 }
 
@@ -27,5 +38,37 @@ class SynchroThread implements Runnable
 	public void run()
 	{
 		String name = Thread.currentThread().getName();
+		System.out.println(name + " acquiring lock on " + obj1);
+		
+		synchronized (obj1)
+		{
+			System.out.println(name + " acquiring lock on " + obj1);
+			work();
+			
+			
+			System.out.println(name + " acquiring lock on " + obj2);
+			synchronized (obj2)
+			{
+				System.out.println(name + " acquiring lock on " + obj2);
+				work();
+			}
+			
+			System.out.println(name + " released lock on " + obj2);
+		}
+		
+		System.out.println(name + " released lock on " + obj1);
+		System.out.println(name + " finished our execution!");
+	}
+	
+	private void work()
+	{
+		try
+		{
+			Thread.sleep(5000);
+		}
+		catch(InterruptedException iex)
+		{
+			iex.printStackTrace();
+		}
 	}
 }

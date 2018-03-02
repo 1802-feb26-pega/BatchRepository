@@ -330,7 +330,7 @@ public class EvaluationServiceTest {
 	/*******************************************************************
 	 * Question 9
 	 ******************************************************************/
-	@Test
+	/*@Test
 	public void singleDigitsAreArmstrongNumbers() {
 		int input = 5;
 
@@ -363,7 +363,7 @@ public class EvaluationServiceTest {
 		int input = 9474;
 
 		assertTrue(evaluationService.isArmstrongNumber(input));
-	}
+	}*/
 
 	/*******************************************************************
 	 * Question 10
@@ -392,13 +392,13 @@ public class EvaluationServiceTest {
 	@Test
 	public void testProductOfPrimes() {
 		assertEquals(Arrays.asList(5L, 17L, 23L, 461L), evaluationService.calculatePrimeFactorsOf(901255L));
-	}
+	}*/
 
-	*//*******************************************************************
+	/*******************************************************************
 	 * Question 11
-	 ******************************************************************//*
+	 ******************************************************************/
 
-	@Test
+	/*@Test
 	public void rotateSingleCharacterWithWrapAround() {
 		EvaluationService.RotationalCipher rotationalCipher = new EvaluationService.RotationalCipher(13);
 		assertEquals("a", rotationalCipher.rotate("n"));
@@ -427,11 +427,11 @@ public class EvaluationServiceTest {
 		EvaluationService.RotationalCipher rotationalCipher = new EvaluationService.RotationalCipher(13);
 		assertEquals("The quick brown fox jumps over the lazy dog.",
 				rotationalCipher.rotate("Gur dhvpx oebja sbk whzcf bire gur ynml qbt."));
-	}
+	}*/
 
-	*//*******************************************************************
+	/*******************************************************************
 	 * Question 12
-	 ******************************************************************//*
+	 ******************************************************************/
 	@Test
 	public void testFirstPrime() {
 		assertThat(evaluationService.calculateNthPrime(1), is(2));
@@ -458,11 +458,11 @@ public class EvaluationServiceTest {
 		evaluationService.calculateNthPrime(0);
 	}
 
-	*//*******************************************************************
+	/*******************************************************************
 	 * Question 13
-	 ******************************************************************//*
+	 ******************************************************************/
 
-	@Test
+	/*@Test
 	public void testEncodeYes() {
 		assertEquals("bvh", EvaluationService.AtbashCipher.encode("yes"));
 	}
