@@ -8,8 +8,7 @@ import java.util.List;
 
 public class UserAccessImplText implements UserAccess {
 
-    public static final String FILE_ALL = "data/users.txt",
-                               FILEONE_DIR = "data/singles/";
+    public static final String FILE_ALL = "users.txt";
 
     private List<User> allUsers;
 
@@ -32,7 +31,6 @@ public class UserAccessImplText implements UserAccess {
         }
     }
 
-    @Override
     public void restore() {
         List<User> sts = new ArrayList<>();
 
@@ -55,12 +53,12 @@ public class UserAccessImplText implements UserAccess {
 
     @Override
     public void saveUser(User u) {
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(FILEONE_DIR + u.getFirstname() + ".txt", false))){
+        /*try(BufferedWriter bw = new BufferedWriter(new FileWriter(FILEONE_DIR + u.getFirstname() + ".txt", false))){
 
             bw.write(u.toString());
 
         } catch(IOException ioe){
             ioe.printStackTrace();
-        }
+        }*/
     }
 }

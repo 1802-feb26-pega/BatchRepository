@@ -29,7 +29,7 @@ public class UserAccessImplSerialize implements UserAccess {
         return null;
     }
 
-    public void restore() throws FileNotFoundException{
+    private void restore() throws FileNotFoundException{
         List<User> users = null;
         try(ObjectInputStream o = new ObjectInputStream(new FileInputStream(FILE_ALL))) {
             users = (List<User>) o.readObject();
