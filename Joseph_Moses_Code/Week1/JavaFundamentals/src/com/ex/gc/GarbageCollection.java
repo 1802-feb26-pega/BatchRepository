@@ -1,7 +1,12 @@
 package com.ex.gc;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class GarbageCollection {
 
@@ -35,63 +40,65 @@ public class GarbageCollection {
 		*/
 		
 		
-		
-		System.out.println(toPigLatin("quick fast run"));
-		
-		
-		
+
+		System.out.println(solveWordProblem("What is 1 plus 1?"));
 		}
 		
-
-static String toPigLatin(String string) {
-
-	string = string.toLowerCase();
-	String[] input = string.split(" ");
-	StringBuilder output = new StringBuilder("");
-	String vowels = "aeiouy";
+static int solveWordProblem(String string) {
 	
-	for(String s : input) {
+	int output = 0;
+	ArrayList<Integer> numbers = new ArrayList<>();
+	String operation = null;
+	
+	string = string.replaceAll("[^a-zA-Z0-9- ]", "");
+	System.out.println(string);
+	Scanner scan = new Scanner(string);
+	scan.useDelimiter(" ");
+	
+	while(scan.hasNext()) {
 		
-		StringBuilder temp = new StringBuilder(s);
-		
-		int firstVowel = -1;
-		
-		for(int i = 0; i < s.length(); i++) {
-			
-			String letter = new Character(s.charAt(i)).toString();
-			if(vowels.indexOf(s.charAt(i)) != -1) {
-				firstVowel = i;
-				break;
-			}
+		if(scan.hasNextInt()) {
+			numbers.add(scan.nextInt());
 		}
-
-		System.out.println(firstVowel);
-		
-		if(firstVowel == 0) {
-			temp.append("ay");
+		else if(scan.hasNext("plus")) {
+			operation = scan.next(); 
+		}
+		else if(scan.hasNext("minus")) {
+			operation = scan.next(); 
+		}
+		else if(scan.hasNext("multiplied")) {
+			operation = scan.next(); 
+		}
+		else if(scan.hasNext("divided")) {
+			operation = scan.next(); 
 		}
 		else {
-			
-			if(s.charAt(0) == 'q') {
-				temp.append(temp.subSequence(0, firstVowel + 1) + "ay");
-				temp.delete(0, firstVowel + 1);
-			}
-			else {
-				temp.append(temp.subSequence(0, firstVowel) + "ay");
-				temp.delete(0, firstVowel);
-			}
-		}
-		
-		if(!s.equals(input[input.length - 1])) {
-			temp.append(" ");
-		}
-		
-		output.append(temp.toString());
-		
+			scan.next();
+		}	
+	}
+	scan.close();
+	System.out.println(numbers);
+	System.out.println(operation);
+	if(operation.equals("plus")) {
+		output = numbers.get(0) + numbers.get(1);
+	}
+	else if(operation.equals("minus")) {
+		output = numbers.get(0) - numbers.get(1);
+	}
+	else if(operation.equals("multiplied")) {
+		output = numbers.get(0) * numbers.get(1);
+	}
+	else if(operation.equals("divided")) {
+		output = numbers.get(0) / numbers.get(1);
 	}
 	
-	return output.toString();
+	return output;
+	
+	
 }
+
+
+
 	
 	/*
 	 * (non-Javadoc)
