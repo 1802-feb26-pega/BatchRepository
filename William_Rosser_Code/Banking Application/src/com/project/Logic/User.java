@@ -111,6 +111,16 @@ public class User implements Serializable {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
+	
+	public double addBalance(double toAdd) {
+		this.balance += toAdd;
+		return this.balance;
+	}
+	
+	public double subtractBalance(double toSubtract) {
+		this.balance -= toSubtract;
+		return this.balance;
+	}
 
 	public String getWholeName() {
 		return firstName + " " + middleInitial + " " + lastName;
@@ -138,7 +148,6 @@ public class User implements Serializable {
 	 */
 	public static User instantiateUser(String[] args) {
 		if (args.length != 7) return null;
-		//TODO: Check for float errors
 		return new User(args[0],args[1],args[2],args[3],args[4],args[5],Double.parseDouble(args[6]));
 	}
 	

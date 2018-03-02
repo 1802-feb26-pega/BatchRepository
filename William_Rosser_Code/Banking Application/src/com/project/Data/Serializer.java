@@ -24,7 +24,7 @@ public class Serializer {
 	}
 	
 	public static AppMemory deserialize() {
-		AppMemory am = new AppMemory();
+		AppMemory am = null;
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
 			am = (AppMemory) ois.readObject();
 		} catch (FileNotFoundException e) {

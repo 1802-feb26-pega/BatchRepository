@@ -23,8 +23,39 @@ public class ApplicationUI {
 	 * @return String array of user input (length 5), or null.
 	 */
 	public String[] register() {
-		//TODO: REGISTRATION!
-		return null;
+		System.out.println("Welcome to Willbank! We are glad you chose to bank with us.");
+		System.out.println("Would you like to register a new account? (Y/N)");
+		if (sc.nextLine().equalsIgnoreCase("n")) {
+			System.out.println("You will be taken back to the login screen.");
+			return null;
+		}
+		do {
+			System.out.print("Please enter your first or personal name:");
+			String first = sc.nextLine();
+			System.out.println("Please enter your middle name. If you do not have a middle name, leave it blank.");
+			System.out.print("Middle name: ");
+			String middle = sc.nextLine();
+			if (!middle.equals("")) {
+				middle = middle.substring(0, 1);
+			}
+			System.out.print("Please enter your last or family name:");
+			String last = sc.nextLine();
+			System.out.print("Enter your email address: ");
+			String email = sc.nextLine();
+			System.out.print("Enter a username for your account:");
+			String un = sc.nextLine();
+			System.out.print("Enter a password for your account:");
+			String pw = sc.nextLine();
+			
+			System.out.println("\n" + first + " " + middle + ((middle.length() == 1) ? ". " : " ") + last);
+			System.out.println(email);
+			System.out.println("username = " + un + ", password = " + pw);
+			System.out.println("Does this look correct? (Y/N)");
+			if (sc.nextLine().equalsIgnoreCase("y")) {
+				String info[] = {first, middle, last, email, un, pw};
+				return info;
+			}
+		} while (true);
 	}
 
 	/**
@@ -34,7 +65,7 @@ public class ApplicationUI {
 	public String[] userLogIn() {
 		String[] creds = new String[2];
 		boolean unCorrect = false;
-		System.out.print("Please enter your username: ");
+		System.out.print("Please enter your username or email address: ");
 		creds[0] = sc.nextLine();
 		System.out.print("Please enter your password: ");
 		creds[1] = sc.nextLine();
@@ -57,7 +88,7 @@ public class ApplicationUI {
 			response = sc.nextLine();
 		}
 		if (again || response.equalsIgnoreCase("y")) {
-			System.out.println((again ? "" : "Hello, " + user.getFirstName() + ".") + "Please re-enter your password: ");
+			System.out.print((again ? "" : "Hello, " + user.getFirstName() + ". ") + "Please re-enter your password: ");
 			String pass = sc.nextLine();
 			return pass;
 		}
@@ -70,12 +101,13 @@ public class ApplicationUI {
 	 * @return True if the user wants to log out, or false if they want to stay logged in.
 	 */
 	public boolean userLogOut(User user) {
-		//TODO: Logout
-		boolean log = false;
+		System.out.println("Do you want to log out? (Y/N)");
+		String temp = sc.nextLine();
+		boolean log = temp.equalsIgnoreCase("y");
 		if (log) {
-			System.out.println("You have been sucessfully logged out.");
+			System.out.println("You have been sucessfully logged out.\n");
 		} else {
-			System.out.println("You have not been logged out, " + user.getFirstName() + ".");
+			System.out.println("You have not been logged out, " + user.getFirstName() + ".\n");
 		}
 		return log;
 	}
@@ -87,8 +119,19 @@ public class ApplicationUI {
 	 * @return The amount the user deposits, or -1 if the input is invalid.
 	 */
 	public double depositMoney(User user) {
-		//TODO: deposit money
-		return -1;
+		System.out.println("How much would you like to deposit?");
+		System.out.print("$");
+		double dep = -1;
+		while (dep == -1) {
+			try {
+				String temp = sc.nextLine();
+				if (temp.equals("")) return -1;
+				else dep = Double.parseDouble(temp);
+			} catch (NumberFormatException e) {
+				System.out.println("Please enter a valid dollar amount.");
+			}
+		}
+		return dep;
 	}
 
 	/**
@@ -97,8 +140,25 @@ public class ApplicationUI {
 	 * @return The amount they wish to withdraw, regardless of their actual balance. Returns -1 if the input is invalid.
 	 */
 	public double withdrawMoney(User user) {
-		//TODO: withdraw money
-		return -1;
+		viewBalance(user);
+		System.out.println("Would you like to withdraw? (Y/N)");
+		if (sc.nextLine().equalsIgnoreCase("y")) {
+			System.out.println("How much would you like to withdraw?");
+			System.out.print("Withdraw $");
+			while (true) {
+				try {
+					return Double.parseDouble(sc.nextLine());
+				} catch (NumberFormatException e) {
+					System.out.println("Please input a valid dollar amount.");
+					System.out.println("You have $" + user.getBalance() + ".");
+					System.out.print("Withdraw $");
+				}
+			}
+			
+		} else {
+			System.out.println("Withdrawl cancled.");
+			return -1;
+		}
 	}
 	
 	/**
@@ -106,7 +166,7 @@ public class ApplicationUI {
 	 * @param user
 	 */
 	public void viewBalance(User user) {
-		String out = String.format("%1$s,\nYour current balance is: $%2$.2f.", user.getWholeName(), user.getBalance());
+		String out = String.format("\n%1$s,\nYour current balance is: $%2$.2f.\n", user.getWholeName(), user.getBalance());
 		System.out.println(out);
 	}
 }

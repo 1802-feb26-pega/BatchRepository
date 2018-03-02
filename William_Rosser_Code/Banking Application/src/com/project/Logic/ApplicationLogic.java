@@ -40,72 +40,76 @@ public class ApplicationLogic {
 			}
 		}
 		
-		//If no previous session, log in/register.
-		if (user == null) {
-			//Print generic welcome statement.
-			//Ask if user wants to register or log in.
-			boolean logged = false;
-			while (!logged) {
-				System.out.println("Welcome to Willbank, valued customer. Do you wish to log in or register?");
-				System.out.println("Please choose an option:");
-				System.out.println("Press 1 to log in.");
-				System.out.println("Press 2 to register as a new customer.");
-				int choice = 0;
-				try {
-					choice = Integer.parseInt(sc.nextLine());
-					if (choice < 1 || choice > 2) {
-						System.out.println("Please enter either 1 or 2.");
-					}
-				} catch (NumberFormatException e) {
-					System.out.println("Please enter either 1 or 2.");
-				}
-				
-				if (choice == 1) { //Log in
-					String[] credentials = aui.userLogIn();
-					for (User u: app.getUserList()) {
-						if (logged) break;
-						boolean umatch = u.getUsername().equals(credentials[0]);
-						boolean pmatch = u.getPassword().equals(credentials[1]);
-						if (umatch && pmatch) {
-							user = u;
-							System.out.println("\nWelcome to Willbank, " + user.getWholeName() + ".");
-							logged = true;
-							break;
-						} else if (umatch && !pmatch) {
-							System.out.println("Incorrect password.");
-							do {
-								System.out.println("Please re-enter your password.");
-								String pass = sc.nextLine();
-								pmatch = u.getPassword().equals(pass);
-								if (!pmatch) {
-									System.out.println("Incorrect password.");
-								} else {
-									user = u;
-									System.out.println("\nWelcome to Willbank, " + u.getWholeName() + ".");
-									logged = true;
-								}
-							} while (!pmatch);
-							break;
-						}
-					}
-					if (!logged) System.out.println("We could not find your username in the system.\n");
-				} else if (choice == 2) {
-					String[] accountDetails = aui.register();
-					//TODO: Register
-				}
-			}
-		}
-		save();
-		
 		//Main program loop.
 		boolean quit = false;
 		while (!quit) {
+			//If no previous session, log in/register.
+			if (user == null) {
+				//Print generic welcome statement.
+				//Ask if user wants to register or log in.
+				boolean logged = false;
+				while (!logged) {
+					System.out.println("Welcome to Willbank, valued customer. Do you wish to log in or register?");
+					System.out.println("Please choose an option:");
+					System.out.println("Press 1 to log in.");
+					System.out.println("Press 2 to register as a new customer.");
+					int choice = 0;
+					try {
+						choice = Integer.parseInt(sc.nextLine());
+						if (choice < 1 || choice > 2) {
+							System.out.println("Please enter either 1 or 2.");
+						}
+					} catch (NumberFormatException e) {
+						System.out.println("Please enter either 1 or 2.");
+					}
+					
+					if (choice == 1) { //Log in
+						String[] credentials = aui.userLogIn();
+						for (User u: app.getUserList()) {
+							if (logged) break;
+							boolean umatch = u.getUsername().equals(credentials[0]) || u.getEmailAddress().equals(credentials[0]);
+							boolean pmatch = u.getPassword().equals(credentials[1]);
+							if (umatch && pmatch) {
+								user = u;
+								System.out.println("\nWelcome to Willbank, " + user.getWholeName() + ".");
+								logged = true;
+								break;
+							} else if (umatch && !pmatch) {
+								System.out.println("Incorrect password.");
+								do {
+									System.out.println("Please re-enter your password.");
+									String pass = sc.nextLine();
+									pmatch = u.getPassword().equals(pass);
+									if (!pmatch) {
+										System.out.println("Incorrect password.");
+									} else {
+										user = u;
+										System.out.println("\nWelcome to Willbank, " + u.getWholeName() + ".");
+										logged = true;
+									}
+								} while (!pmatch);
+								break;
+							}
+						}
+						if (!logged) System.out.println("We could not find your username in the system.\n");
+					} else if (choice == 2) {
+						String[] temp = aui.register();
+						user = new User(temp[0],temp[1],temp[2],temp[3],temp[4],temp[5]);
+						app.getUserList().add(user);
+						logged = true;
+						save();
+					}
+				}
+			}
+			save();
+			
+		
 			//Ask if user wants to:
 				//Deposit Money
 				//View Balance
 				//Withdraw money
 				//Log out
-			System.out.println("Please choose an option:");
+			System.out.println(user.getWholeName() + ", please choose an option:");
 			System.out.println("Press 1 to deposit money.");
 			System.out.println("Press 2 to view your balance.");
 			System.out.println("Press 3 to withdraw money from your account.");
@@ -123,14 +127,33 @@ public class ApplicationLogic {
 			if (choice == 1) {
 				//Deposit
 				double deposit = aui.depositMoney(user);
-				//TODO: Deposit logic
+				if (deposit >= 0) {
+					user.addBalance(deposit);
+					System.out.println(String.format("Successfully added $%.2f", deposit) + " to your account.");
+					System.out.println(String.format("Your Balance is now $%.2f.\n", user.getBalance()));
+				} else {
+					System.out.println("No change was made to your account.\n");
+				}
 			} else if (choice == 2) {
 				// View Balance
 				aui.viewBalance(user);
 			} else if (choice == 3) {
 				//Withdraw Money
 				double withdraw = aui.withdrawMoney(user);
-				//TODO: withdraw logic.
+				if (withdraw <= 0) {
+					continue;
+				} else if(withdraw > user.getBalance()) {
+					System.out.println("You cannot withdraw $" +withdraw 
+							+ ". You only have $" + user.getBalance() + " in your account");
+				} else if (withdraw == user.getBalance()) {
+					System.out.println("You have withdrawn everything you have, $" + withdraw +".");
+					System.out.println("You now have $0.00 in your account.");
+					user.subtractBalance(withdraw);
+				} else {
+					System.out.println("You have withdrawn $" + withdraw + ".");
+					user.subtractBalance(withdraw);
+					System.out.println("Your remaining balance is $" + user.getBalance() + ".\n");
+				}
 			} else if (choice == 4) {
 				//Log out
 				boolean log = aui.userLogOut(user);
@@ -156,13 +179,36 @@ public class ApplicationLogic {
 	}
 	
 	private static boolean load() {
-		AppMemory temp = Serializer.deserialize();
-		if (temp == null) {
-			return false;
+//		System.out.println("Trying to load.");
+		try {
+//			System.out.println("Trying to deserialize.");
+			AppMemory temp = Serializer.deserialize();
+			if (temp == null) {
+//				System.out.println("Failed to deserialize.");
+				return load2();
+			}
+			app = temp;
+			user = app.getUser();
+			return true;
+		} catch (Exception e) {
+			System.err.println("Failed to deserialize.");
+			System.err.println("Something went wrong.\n" + e.getMessage());
 		}
-		app = temp;
-		user = app.getUser();
-		return true;
+		return false;
 	}
 
+	private static boolean load2() {
+		try {
+//			System.out.println("Loading from text archive.");
+			app.setUserList(Archiver.readUsers());
+//			System.out.println(app.getUserList());
+			user = null;
+			app.setUser(null);
+//			System.out.println("Loaded from archive.");
+			return true;
+		} catch (Exception e) {
+			System.err.println("Something went horribly wrong.\n" + e.getMessage());
+		}
+		return false;
+	}
 }

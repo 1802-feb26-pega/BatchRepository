@@ -6,7 +6,7 @@ file. You may also write functionality to serialize your bank after every
 transaction but this is not a requirement.
 
 As a user, I can:
-* create an account with a unique email or username?
+* create an account with a unique email or username
 * log in
 * log out
 * deposit money
@@ -25,4 +25,8 @@ Good luck!
 
 Will's Notes:
 
-Can Serialize/Deserialize application memory, as well as saving it all in a text file.
+Can Serialize/Deserialize application memory, as well as saving it all in a text file. Loads from serialization first, and text archive if that fails.
+
+Functions fully implemented: register, log in via username or email, log out, deposit money, withdraw money, view balance.
+
+Functions I want to implement as extra: wiring money to other users.
