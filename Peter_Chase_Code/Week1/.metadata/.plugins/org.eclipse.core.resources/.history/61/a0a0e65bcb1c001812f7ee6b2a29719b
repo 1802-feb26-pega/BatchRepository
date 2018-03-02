@@ -1,0 +1,111 @@
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
+
+class Student implements Serializable {
+	private static final long serialVersionUID = 4921450021301751793L;
+	private String name;
+	private int age;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	Student(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Name: %s, Age: %d", this.name, this.age);
+	}
+	
+	static Student createStudentWithConsole() {
+		try {
+			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+			System.out.print("Enter student name: ");
+			String name = in.readLine();
+			System.out.print("Enter student age: ");
+			int age = Integer.parseInt(in.readLine());
+			System.out.println();
+			
+			return new Student(name, age);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public byte[] serialize() throws IOException {
+	    ByteArrayOutputStream out = new ByteArrayOutputStream();
+	    ObjectOutputStream os = new ObjectOutputStream(out);
+	    os.writeObject(this);
+	    return out.toByteArray();
+	}
+	
+	public static Student deserialize(byte[] data) throws IOException, ClassNotFoundException {
+	    ByteArrayInputStream in = new ByteArrayInputStream(data);
+	    ObjectInputStream is = new ObjectInputStream(in);
+	    return (Student) is.readObject();
+	}
+}
+
+public class StudentExample {
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
+		List<Student> students = new LinkedList<>();
+		
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		System.out.print("(w)rite or (r)ead? ");
+		String answer = in.readLine();
+		
+		if (answer.equals("w")) {
+			System.out.print("Enter num of student: ");
+			int num_students = Integer.parseInt(in.readLine());
+			for (int i = 0; i < num_students; i++) {
+				students.add(Student.createStudentWithConsole());			
+			}
+			FileOutputStream fw = new FileOutputStream("result.txt");
+			for (Student s : students) {
+				fw.write(s.serialize());
+			}
+			fw.close();
+		} else if (answer.equals("r")) {
+			FileInputStream fis = new FileInputStream("result.txt");
+		    ObjectInputStream is = new ObjectInputStream(fis);
+
+			while (true) {
+				Object stu = is.readObject();
+				if (stu == null) {
+					break;
+				}
+				
+				students.add((Student) stu);
+			}
+			is.close();
+		}
+		for (Student s : students) {
+			System.out.println(s);
+		}
+
+		in.close();
+	}	
+}
+
