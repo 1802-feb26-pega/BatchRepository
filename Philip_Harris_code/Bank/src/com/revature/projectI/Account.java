@@ -8,6 +8,7 @@ public class Account {
 	private List<String> usrs;
 	private long accountNumber;
 	Client customer = new Client();
+	static DataPersistency db = new DataPersistency();
 	
 	public void setBalance(int balance) {
 		this.balance = balance;
@@ -20,9 +21,10 @@ public class Account {
 	public void checkBal() {
 		System.out.println( "You have " + balance + " remaining");
 	}
-	public void withdraw(int w) {
+	public void withdraw(int w,Client c) {
 		balance -= w;
 		System.out.println("New Balannce is: " + balance);
+		db.updateBalance(this,c);
 	}
 	public void access() {
 		System.out.println("The follwing people have access to this account: ");

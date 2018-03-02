@@ -11,7 +11,6 @@ import java.util.List;
 
 public class DataPersistency {
 	static final String file = "src/database/Accounts.txt";
-	static DataPersistency data = new DataPersistency();
 	
 
 	public void writeCustomer(Client Customer,Account a) {
@@ -53,4 +52,46 @@ public boolean readCustomer(Client customer,Account account,String username, Str
 		return false;
 		
 	}
+
+
+public void updateBalance(Account a,Client c) {
+
+	String[] textData = null;
+	
+	try(BufferedReader br = new BufferedReader(new FileReader(file))){
+			String line = null;
+			
+			while((line = br.readLine()) != null) {
+					textData = line.split(",");											
+					if(c.getfName().equals(textData[0])) {		//Unique ID	
+						
+						textData[5] = (Integer.toString(a.getBalance()));
+						
+						String nString = "";
+						
+						for(String x: textData) {
+							nString += x + ",";
+						}						
+						
+						try(BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))){
+							bw.write(nString. + "\n");
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}	
+			}
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+}
+
+
+
+
+
 }

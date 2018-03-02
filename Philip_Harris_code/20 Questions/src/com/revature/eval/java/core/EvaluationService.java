@@ -8,6 +8,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+/*go to dir
+ * then run mvn test
+ * 
+ * Completed: 1,2,3,4,5,6,8,9,12,13,14,15,16,18
+ * Need to do: 7,10,11,17,19,20
+ */
 public class EvaluationService {
 
 	/**

@@ -27,6 +27,19 @@ public class GroceryStore {
 		
 		one.start();
 		two.start();			
+		
+		try {
+			one.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			two.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 	

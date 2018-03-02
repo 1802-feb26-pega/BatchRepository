@@ -114,8 +114,13 @@ public class BankMain {
 		
 		switch(option) {
 			case 1:
-					customer.checkAccount(account);
+					account.checkBal();
 			case 2:
+				account.checkBal();
+				System.out.println("How much would you like to withdraw?");	
+				System.out.print("Input here: ");
+				int w = scan.nextInt();
+				account.withdraw(w,customer);
 			case 3:
 		}
 	}

@@ -78,12 +78,5 @@ public class Client {
 		if(v.validate(this, a, usrname,pass)) return true;
 		 		return false;
 			}
-	
-	public void checkAccount(Account a) {
-		a.checkBal();
-	}
-
-
-
 }
 
