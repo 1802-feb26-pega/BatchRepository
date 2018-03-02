@@ -1,5 +1,6 @@
 package com.project.Logic;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.project.Data.Archiver;
@@ -93,8 +94,19 @@ public class ApplicationLogic {
 						}
 						if (!logged) System.out.println("We could not find your username in the system.\n");
 					} else if (choice == 2) {
-						String[] temp = aui.register();
+						ArrayList<String> usernames = new ArrayList<String>();
+						ArrayList<String> emails = new ArrayList<String>();
+						for (User u : app.getUserList()) {
+							if (u != null) {
+								usernames.add(u.getUsername());
+								emails.add(u.getEmailAddress());
+							}
+						}
+						String[] temp = aui.register(usernames, emails);
 						user = new User(temp[0],temp[1],temp[2],temp[3],temp[4],temp[5]);
+						if (user == null) {
+							System.err.println("user is null.");
+						}
 						app.getUserList().add(user);
 						logged = true;
 						save();

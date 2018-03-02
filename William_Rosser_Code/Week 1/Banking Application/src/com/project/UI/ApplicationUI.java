@@ -1,5 +1,6 @@
 package com.project.UI;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.project.Logic.User;
@@ -22,7 +23,7 @@ public class ApplicationUI {
 	 * If any input is invalid, or the user chooses to exit, this returns null instead.
 	 * @return String array of user input (length 5), or null.
 	 */
-	public String[] register() {
+	public String[] register(ArrayList<String> existingUsernames, ArrayList<String> existingEmails) {
 		System.out.println("Welcome to Willbank! We are glad you chose to bank with us.");
 		System.out.println("Would you like to register a new account? (Y/N)");
 		if (sc.nextLine().equalsIgnoreCase("n")) {
@@ -40,10 +41,31 @@ public class ApplicationUI {
 			}
 			System.out.print("Please enter your last or family name:");
 			String last = sc.nextLine();
-			System.out.print("Enter your email address: ");
-			String email = sc.nextLine();
-			System.out.print("Enter a username for your account:");
-			String un = sc.nextLine();
+			
+			boolean original = true;
+			String email = "";
+			do {
+				System.out.print("Enter your email address: ");
+				email = sc.nextLine();
+				if (existingEmails.contains(email)) {
+					System.out.println("Email address already taken.");
+					original = false;
+				} else {
+					original = true;
+				}
+			} while (!original);
+			String un = "";
+			do {
+				System.out.print("Enter a username for your account:");
+				un = sc.nextLine();
+				if (existingUsernames.contains(un)) {
+					original = false;
+					System.out.println("Username already taken.");
+				} else {
+					original = true;
+				}
+			} while (!original);
+			
 			System.out.print("Enter a password for your account:");
 			String pw = sc.nextLine();
 			

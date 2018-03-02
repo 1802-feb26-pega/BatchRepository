@@ -15,7 +15,7 @@ public class Archiver {
 	 * This class stores the data of many users in a single text database.
 	 */
 	
-	private static final String filename = "bin/data/userArchive.txt";
+	private static final String filename = "src/data/userArchive.txt";
 	
 	/**
 	 * Stores the list of students to the file bin/data/userArchive.txt,
