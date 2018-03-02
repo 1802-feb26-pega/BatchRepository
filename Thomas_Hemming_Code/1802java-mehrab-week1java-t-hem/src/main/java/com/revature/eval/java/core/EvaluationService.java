@@ -1,6 +1,9 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -129,21 +132,47 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	public int getScrabbleScore(String string) {
-		char[] x = string.toCharArray();
+	public static int getScrabbleScore(String string) {
+		char[] x = string.toUpperCase().toCharArray();
 		
-		char[] onePoint = {'A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'};
+		/*char[] onePoint = {'A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'};
 		char[] twoPoints = {'D', 'G'};
 		char[] threePoints = {'B', 'C', 'M', 'P'};
 		char[] fourPoints = {'F', 'H', 'V', 'W', 'Y'};
 		char[] fivePoints = {'K'};
 		char[] eightPoints = {'X'};
-		char[] tenPoints = {'Q', 'Z'};
+		char[] tenPoints = {'Q', 'Z'};*/
+		
+		int score = 0;
 		
 		for (char i : x) {
-			//if (i)
+			String s = String.valueOf(i);
+			if (s.matches("[AEIOULNRST]")) {
+				score = score + 1;	
+				//System.out.println(score);
+			} else if (s.matches("[DG]")) {
+				score = score + 2;
+				//System.out.println(score);
+			} else if (s.matches("[BCMP]")) {
+				score = score + 3;
+				//System.out.println(score);
+			} else if (s.matches("[FHVWY]")) {
+				score = score + 4;
+				//System.out.println(score);
+			} else if (s.matches("[K]")) {
+				score = score + 5;
+				//System.out.println(score);
+			} else if (s.matches("[X]")) {
+				score = score + 8;
+				//System.out.println(score);
+			} else if (s.matches("[QZ]")) {
+				score = score + 10;
+				//System.out.println(score);
+			} else {
+				//System.out.println(score);
+			}
 		}
-		return 0;
+		return score;
 	}
 
 	/**
@@ -179,11 +208,9 @@ public class EvaluationService {
 	 */
 	public static String cleanPhoneNumber(String string) {
 		
-		
-		/*if ((string.matches("-?\\d+(.\\d+)-+()?")) == false) {
+		if ((string.matches("^[0-9\\-,. ()]+$")) == false) {
 			throw new IllegalArgumentException();
-		}*/
-		//System.out.println(string.matches("-?\\d+(.\\d+)?"));
+		}
 		
 		String x = string.replaceAll("[^0-9]", "");
 		
@@ -195,9 +222,6 @@ public class EvaluationService {
 			x = x.substring(1);
 		}
 		
-		
-		
-		//System.out.println(x);
 		return x;
 	}
 
@@ -211,8 +235,20 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		string = string.replaceAll("\\s", " ");
+		String[] words = string.split("[^A-Za-z]");
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		for (String word : words) {
+			if (word.length() < 1) {
+				//do nothing
+			} else if (map.containsKey(word)) {
+				map.put(word, map.get(word) + 1);
+			} else {
+				map.put(word,  1);
+			}
+		}
+		return map;
 	}
 
 	/**
@@ -250,12 +286,26 @@ public class EvaluationService {
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
-	static class BinarySearch<T> {
+	static class BinarySearch<T extends Comparable<T>>{
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
-			return 0;
+			int l = 0;
+			int r = sortedList.size() - 1;
+			int m = (int) Math.floor(r/2);
+			while (t.compareTo(sortedList.get(m)) != 0) {
+				if (t.compareTo(sortedList.get(m)) > 0) {
+					l = m + 1;
+					m = (int) Math.floor((l + r)/2);
+				} else if (t.compareTo(sortedList.get(m)) < 0) {
+					r = m - 1;
+					m = (int) Math.floor((l + r)/2);
+				}
+				if (l > r) {
+					return -1;
+				}
+			}
+			return m;
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -291,8 +341,48 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		string = string.toLowerCase();
+		String[] words = string.split(" ");
+		StringBuilder pigLatin = new StringBuilder("");
+		String vowels = "aeiou";
+		
+		for(String s : words) {
+			
+			StringBuilder temp = new StringBuilder(s);
+			
+			int firstVowel = -1;
+			
+			for(int i = 0; i < s.length(); i++) {
+				if(vowels.indexOf(s.charAt(i)) != -1) {
+					firstVowel = i; //gets location of first vowel
+					break;
+				}
+			}
+			
+			//make pig latin happen
+			if(firstVowel == 0) {
+				temp.append("ay");
+			}
+			else {
+				if(s.charAt(0) == 'q') {
+					temp.append(temp.subSequence(0, firstVowel + 1) + "ay");
+					temp.delete(0, firstVowel + 1);
+				}
+				else {
+					temp.append(temp.subSequence(0, firstVowel) + "ay");
+					temp.delete(0, firstVowel);
+				}
+			}
+			
+			if(!s.equals(words[words.length - 1])) {
+				temp.append(" "); //if there are more words in sentence
+			}
+			
+			pigLatin.append(temp.toString()); 
+			
+		}
+		
+		return pigLatin.toString();
 	}
 
 	/**
@@ -311,8 +401,20 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		int length = String.valueOf(input).length();
+		int c = 0;
+		int a, temp;   
+	    temp = input;  
+	    while(input > 0) {  
+		    a = input % 10;  //store right-most digit
+		    input = input / 10;  //remove right-most digit
+		    c = (int) (c + Math.pow(a, length));  
+	    }  
+	    if (temp == c) {
+	    	return true;
+	    } else {
+	    	return false;
+	    }
 	}
 
 	/**
@@ -325,9 +427,18 @@ public class EvaluationService {
 	 * @param l
 	 * @return
 	 */
-	public List<Integer> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+	public List<Long> calculatePrimeFactorsOf(long l) {
+		List<Long> list = new ArrayList<Long>();
+		
+		for(int i = 2; i <= l; i++) {
+			while(l % i == 0) {
+				list.add((long)i);
+				l = l / i;
+			}
+		}
+		
+		//test expects List<Long>, not List<Integer>
+		return list;
 	}
 
 	/**
@@ -365,8 +476,25 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			StringBuffer result= new StringBuffer();
+			 
+	        for (int i=0; i<string.length(); i++)
+	        {
+	            if (Character.isUpperCase(string.charAt(i)))
+	            {
+	                char ch = (char)(((int)string.charAt(i) + key - 65) % 26 + 65);
+	                result.append(ch);
+	            }
+	            else if (Character.isLowerCase(string.charAt(i)))
+	            {
+	                char ch = (char)(((int)string.charAt(i) + key - 97) % 26 + 97);
+	                result.append(ch);
+	            } else {
+	            	result.append(string.charAt(i));
+	            }
+	        }
+	        
+	        return result.toString();
 		}
 
 	}
@@ -587,7 +715,8 @@ public class EvaluationService {
 	}
 	
 	public static void main(String[] args) {
-		cleanPhoneNumber("123-abc-7890");
+		RotationalCipher x = new RotationalCipher(4);
+		System.out.println(x.rotate("Xiwxmrk 1 2 3 xiwxmrk"));
 	}
 
 }
