@@ -1,0 +1,20 @@
+package com.ex.io;
+
+import com.ex.pojos.SecureStudent;
+
+public class SerializeStudent {
+	static String filename = "src/data/serialized.txt";
+	
+	public static void main(String[] args) {
+		
+	}
+
+	static void serialize(SecureStudent s) {
+		
+	}
+	
+	static SecureStudent deserialize() {
+		
+		return null;
+	}
+}

@@ -1,0 +1,27 @@
+package com.ex.io;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ex.pojos.Student;
+
+public class StudentIO {
+	
+	final static String filename = "src/data/students.txt";
+	
+	void writeStudent(Student student) {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(filename, true ));
+			
+		
+		
+	}
+	
+	List<Student> readStudents(){
+		List<Student> students = new ArrayList<Student>();
+		
+		return students;
+	}
+
+}
