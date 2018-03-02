@@ -23,6 +23,7 @@ public class ApplicationUI {
 	 * @return String array of user input (length 5), or null.
 	 */
 	public String[] register() {
+		//TODO: REGISTRATION!
 		return null;
 	}
 
@@ -31,7 +32,14 @@ public class ApplicationUI {
 	 * @return A String[] of length 2 containing the username and password, respectively.
 	 */
 	public String[] userLogIn() {
-		return null;
+		String[] creds = new String[2];
+		boolean unCorrect = false;
+		System.out.print("Please enter your username: ");
+		creds[0] = sc.nextLine();
+		System.out.print("Please enter your password: ");
+		creds[1] = sc.nextLine();
+		
+		return creds;
 	}
 	
 	/**
@@ -42,7 +50,17 @@ public class ApplicationUI {
 	 * @return the password of the user, or null if they choose to log into 
 	 * a different account.
 	 */
-	public String returningUserLogIn(User user) {
+	public String returningUserLogIn(User user, boolean again) {
+		String response = "";
+		if (!again) {
+			System.out.println("Welcome back to Willbank. Are you " + user.getWholeName() + "? (Y/N)");
+			response = sc.nextLine();
+		}
+		if (again || response.equalsIgnoreCase("y")) {
+			System.out.println((again ? "" : "Hello, " + user.getFirstName() + ".") + "Please re-enter your password: ");
+			String pass = sc.nextLine();
+			return pass;
+		}
 		return null;
 	}
 	
@@ -52,7 +70,14 @@ public class ApplicationUI {
 	 * @return True if the user wants to log out, or false if they want to stay logged in.
 	 */
 	public boolean userLogOut(User user) {
-		return false;
+		//TODO: Logout
+		boolean log = false;
+		if (log) {
+			System.out.println("You have been sucessfully logged out.");
+		} else {
+			System.out.println("You have not been logged out, " + user.getFirstName() + ".");
+		}
+		return log;
 	}
 	
 	/**
@@ -62,6 +87,7 @@ public class ApplicationUI {
 	 * @return The amount the user deposits, or -1 if the input is invalid.
 	 */
 	public double depositMoney(User user) {
+		//TODO: deposit money
 		return -1;
 	}
 
@@ -71,6 +97,7 @@ public class ApplicationUI {
 	 * @return The amount they wish to withdraw, regardless of their actual balance. Returns -1 if the input is invalid.
 	 */
 	public double withdrawMoney(User user) {
+		//TODO: withdraw money
 		return -1;
 	}
 	

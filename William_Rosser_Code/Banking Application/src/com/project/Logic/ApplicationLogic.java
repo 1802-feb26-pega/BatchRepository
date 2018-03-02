@@ -22,15 +22,17 @@ public class ApplicationLogic {
 			//if user is found, prompt for password.
 			//if password is correct, log in. If password is not, prompt error.
 			boolean good = false;
+			boolean again = false;
 			String password = null;
 			while (!good) {
-				password = aui.returningUserLogIn(user);
+				password = aui.returningUserLogIn(user, again);
 				if (password != null && user.getPassword().equals(password)) { // If password is correct...
 					//Print login success notification.
-					System.out.println("Success! Welcome back to Willbank, " + user.getWholeName() + ".");
+					System.out.println("Success! Welcome back to Willbank, " + user.getWholeName() + ".\n");
 					good = true;
 				} else if (password != null && !user.getPassword().equals(password)) { // If password is wrong...
-					System.out.println("Incorrect password. Please try again.");
+					System.out.println("Incorrect password. Please try logging in again.");
+					again = true;
 				} else if (password == null) { //If password is null, ignore recovered user account.
 					user = null;
 					good = true;
@@ -47,7 +49,7 @@ public class ApplicationLogic {
 				System.out.println("Welcome to Willbank, valued customer. Do you wish to log in or register?");
 				System.out.println("Please choose an option:");
 				System.out.println("Press 1 to log in.");
-				System.out.println("Press 2 to register as a new customer?");
+				System.out.println("Press 2 to register as a new customer.");
 				int choice = 0;
 				try {
 					choice = Integer.parseInt(sc.nextLine());
@@ -57,9 +59,36 @@ public class ApplicationLogic {
 				} catch (NumberFormatException e) {
 					System.out.println("Please enter either 1 or 2.");
 				}
-				if (choice == 1) {
+				
+				if (choice == 1) { //Log in
 					String[] credentials = aui.userLogIn();
-					//TODO: Log in
+					for (User u: app.getUserList()) {
+						if (logged) break;
+						boolean umatch = u.getUsername().equals(credentials[0]);
+						boolean pmatch = u.getPassword().equals(credentials[1]);
+						if (umatch && pmatch) {
+							user = u;
+							System.out.println("\nWelcome to Willbank, " + user.getWholeName() + ".");
+							logged = true;
+							break;
+						} else if (umatch && !pmatch) {
+							System.out.println("Incorrect password.");
+							do {
+								System.out.println("Please re-enter your password.");
+								String pass = sc.nextLine();
+								pmatch = u.getPassword().equals(pass);
+								if (!pmatch) {
+									System.out.println("Incorrect password.");
+								} else {
+									user = u;
+									System.out.println("\nWelcome to Willbank, " + u.getWholeName() + ".");
+									logged = true;
+								}
+							} while (!pmatch);
+							break;
+						}
+					}
+					if (!logged) System.out.println("We could not find your username in the system.\n");
 				} else if (choice == 2) {
 					String[] accountDetails = aui.register();
 					//TODO: Register
@@ -94,33 +123,33 @@ public class ApplicationLogic {
 			if (choice == 1) {
 				//Deposit
 				double deposit = aui.depositMoney(user);
+				//TODO: Deposit logic
 			} else if (choice == 2) {
 				// View Balance
 				aui.viewBalance(user);
 			} else if (choice == 3) {
 				//Withdraw Money
 				double withdraw = aui.withdrawMoney(user);
+				//TODO: withdraw logic.
 			} else if (choice == 4) {
 				//Log out
 				boolean log = aui.userLogOut(user);
-				if (log) {
-					//print logout successful notification.
+				if (log) {		
 					user = null;
 					save();
-				} else {
-					// print non-logout notification.
 				}
 			} else if (choice == 5) {
 				//print thank you message.
+				System.out.println("Thank you for using Willbank.");
 				quit = true;
 			}
-			//Serialization + archiving;
 			save();
 		}
 		sc.close();
 	}
 	
 	private static void save() {
+		//Serialization + archiving;
 		app.setUser(user);
 		Archiver.writeUsers(app.getUserList());
 		Serializer.serialize(app);
@@ -132,6 +161,7 @@ public class ApplicationLogic {
 			return false;
 		}
 		app = temp;
+		user = app.getUser();
 		return true;
 	}
 
