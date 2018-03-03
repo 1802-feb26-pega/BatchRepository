@@ -3,6 +3,10 @@ package com.revature.eval.java.core;
 import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.HashMap;
 
 public class EvaluationService {
@@ -16,12 +20,14 @@ public class EvaluationService {
 	 */
 	public String reverse(String string) {
 		
-		String reversed = "";
+		char[] reversed = new char[string.length()];
 		
+		int counter = 0;
 		for (int i = string.length() - 1; i >= 0; i--) {
-			reversed += string.substring(i, i + 1);
+			reversed[counter] = string.charAt(i);
+			counter++;
 		}
-		return reversed;
+		return String.valueOf(reversed);
 	}
 
 	/**
@@ -286,28 +292,37 @@ public class EvaluationService {
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
-	static class BinarySearch<T> {
-		private List<T> sortedList;
+	static class BinarySearch<Type> {
+		private List<Type> sortedList;
 
-		public int indexOf(T t) {
+		public int indexOf(Type t) {
 			int min = 0;
 			int max = sortedList.size();
 			
-			// if (t[min + max / 2])
+			if (sortedList.get((min + max) / 2).equals(t)) {
+				return (min + max) / 2;
+			}
+			else if ((int) sortedList.get((min + max) / 2) < (int) t) {
+				min = (int) sortedList.get((min + max) / 2) + 1;
+				return indexOf()
+			}
+			else if ((int) sortedList.get(min + max) / 2 > (int) t) {
+				max = (int) sortedList.get()
+			}
 			
 			return 0;
 		}
 
-		public BinarySearch(List<T> sortedList) {
+		public BinarySearch(List<Type> sortedList) {
 			super();
 			this.sortedList = sortedList;
 		}
 
-		public List<T> getSortedList() {
+		public List<Type> getSortedList() {
 			return sortedList;
 		}
 
-		public void setSortedList(List<T> sortedList) {
+		public void setSortedList(List<Type> sortedList) {
 			this.sortedList = sortedList;
 		}
 
@@ -459,8 +474,24 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			
+			String[] x = string.split("");
+			
+			String letters = "abcdefghijklmnopqrstuvwxyz";
+			String newPhrase = "";
+			
+			for (String i : x) {
+				int letterIndex = letters.indexOf(i.toLowerCase());
+				int newLetterIndex =  (letterIndex + this.key) % 26;
+				if (i.equals(i.toUpperCase())) {
+					newPhrase += letters.substring(newLetterIndex, newLetterIndex + 1).toUpperCase();
+				}
+				else {
+					newPhrase += letters.substring(newLetterIndex, newLetterIndex + 1);
+				}
+				
+			}
+			return newPhrase;
 		}
 
 	}
@@ -514,8 +545,47 @@ public class EvaluationService {
 		 * @param string
 		 * @return
 		 */
+		
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
+			
+			/*// Create cipher map
+			Map<Character, Character> cipher = reverseAlphaKey();
+			
+			// Remove punctuation and spaces from string arg
+			String replaced = string.replaceAll(" ", "").replaceAll("[,.]", "").toLowerCase();
+			
+			// Add each letter to character array
+			char[] letters = new char[replaced.length()];
+			for (int i = 0; i < replaced.length(); i++) {
+				letters[i] = replaced.charAt(i);
+			}
+			
+			// Send through cipher
+			for (int i = 0; i < letters.length; i++) {
+				letters[i] = cipher.get(letters[i]);
+			}
+			
+			// Return characters in groups of five
+			String encoded = "";
+			for (int i = 0; i < letters.length; i++) {
+				if (i % 5 == 0) { encoded += " "; }
+				encoded += Character.toString(letters[i]);
+			}
+			return encoded;
+		}
+		
+		public static Map<Character, Character> reverseAlphaKey() {
+			Map<Character, Character> letters = new HashMap<>();
+			
+			int counter = 0;
+			for (char i = 'a'; i <= 'z'; i++) {
+				letters.put(i, (char)('z' - counter));
+				counter++;
+			}
+			for (char i = '0'; i <= '9'; i++) {
+				letters.put(i, i);
+			}*/
+			//return letters;
 			return null;
 		}
 
@@ -554,7 +624,39 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
+		// Parse input for dashes
+		String[] parsedArr = string.replaceAll("-", "").split("");
+		int[] nums = new int[parsedArr.length];
+		
+		// Check to see if last character is numeric or an 'X'
+		if (parsedArr[parsedArr.length - 1].equalsIgnoreCase("X")) {
+			parsedArr[parsedArr.length - 1] = "10";
+		}
+		else if (parsedArr[parsedArr.length - 1].matches("[^0-9]")) {
+			return false;
+		}
+		
+		// Move values from String array into int array
+		// Return false if non-numeric value is found
+		try {
+			for (int i = 0; i < parsedArr.length; i++) {
+				nums[i] = Integer.parseInt(parsedArr[i]);
+			}
+		} catch (Exception ex) {
+			return false;
+		}
+		
+		// Add each number mulitpled by decrementing value (10 to 1)
+		int total = 0;
+		int counter = 10;
+		for (int i = 0; i < 10; i++) {
+			total += nums[i] * counter;
+			counter--;
+		}
+		
+		if (total % 11 == 0) {
+			return true;
+		}
 		return false;
 	}
 
@@ -571,9 +673,26 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
+	
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		
+		// Create map to track number of times each letter is used
+		Map<Character, Integer> letterTracker = new HashMap<>();
+		Set<String> SetOfLetters = new HashSet<String>();
+		for (char i = 'a'; i <= 'z'; i++) {
+			letterTracker.put(i, 0);
+		}
+		
+		// Parse string
+		String[] letters = string.replaceAll(" ", "").split("");
+		
+		for(String letter : letters) {
+				SetOfLetters.add(letter);
+			}
+		if(SetOfLetters.size() == 26)
+			return true;
+		else 
+			return false;
 	}
 
 	/**
@@ -603,8 +722,22 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+
+		Set<Integer> multiples = new HashSet<>();
+		
+		int sum = 0;
+		
+		for (int num : set) {
+			for (int j = 1; j * num < i; j++) {
+				 multiples.add(j * num);
+			}
+		}
+		
+		for (int n : multiples) {
+			sum += n;
+		}
+		
+		return sum;
 	}
 
 	/**
@@ -644,7 +777,27 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isLuhnValid(String string) {
-		// TODO Write an implementation for this method declaration
+		
+		String[] parsedArr = string.replaceAll("[^0-9]", "").split("");
+		int[] intArr = new int[parsedArr.length];
+		
+		for (int i = 0; i < parsedArr.length; i++) {
+			intArr[i] = Integer.parseInt(parsedArr[i]);
+		}
+		
+		for (int i = intArr.length - 1; i >= 0; i -= 2) {
+			intArr[i] = intArr[i] * 2;
+		}
+		
+		int sum = 0;
+		
+		for (int num : intArr) {
+			sum += num;
+		}
+		
+		if (sum % 10 == 0) {
+			return true;
+		}
 		return false;
 	}
 
@@ -676,8 +829,32 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+				
+		String[] words = string.replaceAll("[?,]", "").split(" ");
+		String operator = words[3];
+		int answer = 0;
+		
+		switch (operator) {
+		case "plus":
+			answer = Integer.parseInt(words[2]) + Integer.parseInt(words[4]);
+			break;
+		case "minus":
+			answer = Integer.parseInt(words[2]) - Integer.parseInt(words[4]);
+			break;
+		case "multiplied":
+			answer = Integer.parseInt(words[2]) * Integer.parseInt(words[5]);
+			break;
+		case "divided":
+			try {
+				answer = Integer.parseInt(words[2]) / Integer.parseInt(words[5]);
+			} catch (ArithmeticException ex) {
+				answer = 0;
+			}
+		default:
+			answer = 0;
+		}
+		
+		return answer;
 	}
 
 }
