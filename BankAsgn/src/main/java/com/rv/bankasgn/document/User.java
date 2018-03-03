@@ -12,16 +12,11 @@ public class User implements Serializable{
 
     private float balance;
 
-    private int balanceDollars,
-                balanceCents;
-
     public User() {
         this.firstname = "";
         this.lastname = "";
         this.email = "";
         this.balance = 0.0f;
-        this.balanceCents = 0;
-        this.balanceDollars = 0;
     }
 
     public User(String firstname, String lastname, String email, String pw) {
@@ -30,8 +25,6 @@ public class User implements Serializable{
         this.email = email;
         this.password = pw;
         this.balance = 0.0f;
-        this.balanceCents = 0;
-        this.balanceDollars = 0;
     }
 
     public User(String firstname, String lastname, String email, String pw, float balance) {
@@ -41,8 +34,6 @@ public class User implements Serializable{
         this.password = pw;
 
         this.balance = balance;
-        this.balanceCents = 0;
-        this.balanceDollars = 0;
     }
 
     public String getPassword() {
