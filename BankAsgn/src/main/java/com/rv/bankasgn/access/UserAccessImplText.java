@@ -13,7 +13,12 @@ public class UserAccessImplText implements UserAccess {
     private List<User> allUsers;
 
     public UserAccessImplText(){
-        allUsers = new ArrayList<>();
+        try {
+            restore();
+        } catch(FileNotFoundException f) {
+            System.out.println("No backup found. Resorting to empty DB.");
+            allUsers = new ArrayList<>();
+        }
     }
 
     @Override
@@ -31,7 +36,7 @@ public class UserAccessImplText implements UserAccess {
         }
     }
 
-    public void restore() {
+    private void restore() throws FileNotFoundException{
         List<User> sts = new ArrayList<>();
 
         String line;
@@ -40,25 +45,23 @@ public class UserAccessImplText implements UserAccess {
 
             while((line = br.readLine()) != null) {
                 String[] tks = line.split(",");
-                sts.add(new User(tks[0], tks[1], tks[2], Float.parseFloat(tks[3])));
+                sts.add(new User(tks[0], tks[1], tks[2], tks[3], Float.parseFloat(tks[3])));
             }
 
         } catch(FileNotFoundException f) {
-
+            System.out.println("Users file not found");
+            throw f;
         } catch(IOException i) {
-
+            i.printStackTrace();
         }
         allUsers = sts;
     }
 
     @Override
     public void saveUser(User u) {
-        /*try(BufferedWriter bw = new BufferedWriter(new FileWriter(FILEONE_DIR + u.getFirstname() + ".txt", false))){
-
-            bw.write(u.toString());
-
-        } catch(IOException ioe){
-            ioe.printStackTrace();
-        }*/
+        if(allUsers.indexOf(u) == -1)
+            allUsers.add(u);
+        else
+            allUsers.set(allUsers.indexOf(u), u);
     }
 }

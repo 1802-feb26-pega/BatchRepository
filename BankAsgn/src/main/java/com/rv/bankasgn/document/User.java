@@ -7,7 +7,8 @@ public class User implements Serializable{
     private static final long serialVersionUID = 507406308193736710L;
     private String firstname,
                    lastname,
-                   email;
+                   email,
+                   password;
 
     private float balance;
 
@@ -23,21 +24,33 @@ public class User implements Serializable{
         this.balanceDollars = 0;
     }
 
-    public User(String firstname, String lastname, String email) {
+    public User(String firstname, String lastname, String email, String pw) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
+        this.password = pw;
         this.balance = 0.0f;
         this.balanceCents = 0;
         this.balanceDollars = 0;
     }
-    public User(String firstname, String lastname, String email, float balance) {
+
+    public User(String firstname, String lastname, String email, String pw, float balance) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
+        this.password = pw;
+
         this.balance = balance;
         this.balanceCents = 0;
         this.balanceDollars = 0;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstname() {
