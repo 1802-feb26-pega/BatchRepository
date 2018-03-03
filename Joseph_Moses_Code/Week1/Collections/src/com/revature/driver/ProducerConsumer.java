@@ -53,6 +53,7 @@ public class ProducerConsumer {
 					synchronized (this) {
 						
 						//wait if queue is full
+						
 						while(queue.size() == capacity)
 							wait();
 						
@@ -64,7 +65,8 @@ public class ProducerConsumer {
 						//wake up the consumer
 						notify();
 						
-						Thread.sleep(1000);
+						Thread.sleep(1000
+								);
 					}
 				}
 			}

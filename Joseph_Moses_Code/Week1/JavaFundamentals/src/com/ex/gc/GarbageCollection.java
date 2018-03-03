@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class GarbageCollection {
 
 	public static void main(String[] args) {
-		/*String a = new String("jadshgakjs");
+		String a = new String("jadshgakjs");
 		String b = new String("jashg");
 		
 		String c = "hello";
@@ -37,68 +37,9 @@ public class GarbageCollection {
 		for(int i = 0; i < 500; i  = i + 5) {
 			System.out.print(i);
 		}
-		*/
-		
 		
 
-		System.out.println(solveWordProblem("What is 1 plus 1?"));
-		}
-		
-static int solveWordProblem(String string) {
-	
-	int output = 0;
-	ArrayList<Integer> numbers = new ArrayList<>();
-	String operation = null;
-	
-	string = string.replaceAll("[^a-zA-Z0-9- ]", "");
-	System.out.println(string);
-	Scanner scan = new Scanner(string);
-	scan.useDelimiter(" ");
-	
-	while(scan.hasNext()) {
-		
-		if(scan.hasNextInt()) {
-			numbers.add(scan.nextInt());
-		}
-		else if(scan.hasNext("plus")) {
-			operation = scan.next(); 
-		}
-		else if(scan.hasNext("minus")) {
-			operation = scan.next(); 
-		}
-		else if(scan.hasNext("multiplied")) {
-			operation = scan.next(); 
-		}
-		else if(scan.hasNext("divided")) {
-			operation = scan.next(); 
-		}
-		else {
-			scan.next();
-		}	
 	}
-	scan.close();
-	System.out.println(numbers);
-	System.out.println(operation);
-	if(operation.equals("plus")) {
-		output = numbers.get(0) + numbers.get(1);
-	}
-	else if(operation.equals("minus")) {
-		output = numbers.get(0) - numbers.get(1);
-	}
-	else if(operation.equals("multiplied")) {
-		output = numbers.get(0) * numbers.get(1);
-	}
-	else if(operation.equals("divided")) {
-		output = numbers.get(0) / numbers.get(1);
-	}
-	
-	return output;
-	
-	
-}
-
-
-
 	
 	/*
 	 * (non-Javadoc)
