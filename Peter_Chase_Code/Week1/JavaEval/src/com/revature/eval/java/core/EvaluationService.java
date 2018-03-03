@@ -838,11 +838,11 @@ public class EvaluationService {
 		if (string.contains("plus")) {
 			result = stream.reduce(0, (num1, num2) -> num1 + num2);
 		} else if (string.contains("minus")) {
-			result = stream.reduce(max*2, (num1, num2) -> num1 - num2);
+			result = stream.reduce(max*nums.size(), (num1, num2) -> num1 - num2);
 		} else if (string.contains("multiplied")) {
 			result = stream.reduce(1, (num1, num2) -> num1 * num2);
 		} else if (string.contains("divided")) {
-			result = stream.reduce(max*max, (num1, num2) -> num1 / num2);
+			result = stream.reduce((int)Math.pow(max, nums.size()), (num1, num2) -> num1 / num2);
 		}
 		
 		return result;

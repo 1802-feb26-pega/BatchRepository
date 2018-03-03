@@ -6,6 +6,7 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value=".reduce"/>
 			<item value=".push"/>
 			<item value=".ad."/>
 			<item value="LinkedList"/>
