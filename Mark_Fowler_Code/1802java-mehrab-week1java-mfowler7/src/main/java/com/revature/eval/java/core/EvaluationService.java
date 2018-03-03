@@ -1,13 +1,14 @@
 package com.revature.eval.java.core;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.Temporal;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.HashMap;
 
 public class EvaluationService {
 
@@ -292,37 +293,42 @@ public class EvaluationService {
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
-	static class BinarySearch<Type> {
-		private List<Type> sortedList;
+	static class BinarySearch<T> {
+		private List<T> sortedList;
 
-		public int indexOf(Type t) {
+		public int indexOf(T t) {
 			int min = 0;
-			int max = sortedList.size();
+			int max = sortedList.size() - 1;
 			
-			if (sortedList.get((min + max) / 2).equals(t)) {
-				return (min + max) / 2;
-			}
-			else if ((int) sortedList.get((min + max) / 2) < (int) t) {
-				min = (int) sortedList.get((min + max) / 2) + 1;
-				return indexOf()
-			}
-			else if ((int) sortedList.get(min + max) / 2 > (int) t) {
-				max = (int) sortedList.get()
-			}
+			return binSearch(min, max, t);
 			
+		}
+		
+		public int binSearch(int minimum, int maximum, T s) {
+			if (sortedList.get((minimum + maximum) / 2).equals(s)) {
+				return (minimum + maximum) / 2;
+			}
+			else if ((int) sortedList.get((minimum + maximum) / 2) < (int) s) {
+				minimum = ((minimum + maximum) / 2) + 1;
+				return binSearch(minimum, maximum, s);
+			}
+			else if ((int) sortedList.get(minimum + maximum) / 2 > (int) s) {
+				maximum = ((minimum + maximum) / 2) - 1;
+				return binSearch(minimum, maximum, s);
+			}
 			return 0;
 		}
 
-		public BinarySearch(List<Type> sortedList) {
+		public BinarySearch(List<T> sortedList) {
 			super();
 			this.sortedList = sortedList;
 		}
 
-		public List<Type> getSortedList() {
+		public List<T> getSortedList() {
 			return sortedList;
 		}
 
-		public void setSortedList(List<Type> sortedList) {
+		public void setSortedList(List<T> sortedList) {
 			this.sortedList = sortedList;
 		}
 
@@ -475,23 +481,19 @@ public class EvaluationService {
 
 		public String rotate(String string) {
 			
-			String[] x = string.split("");
+			char[] characters = string.toCharArray();
 			
-			String letters = "abcdefghijklmnopqrstuvwxyz";
-			String newPhrase = "";
-			
-			for (String i : x) {
-				int letterIndex = letters.indexOf(i.toLowerCase());
-				int newLetterIndex =  (letterIndex + this.key) % 26;
-				if (i.equals(i.toUpperCase())) {
-					newPhrase += letters.substring(newLetterIndex, newLetterIndex + 1).toUpperCase();
+			for (int i = 0; i < characters.length; i++) {
+				if (characters[i] >= 'A' && characters[i] <= 'Z') {
+					characters[i] = (char) (((characters[i] - 'A') + key) % 26 + 'A');
 				}
-				else {
-					newPhrase += letters.substring(newLetterIndex, newLetterIndex + 1);
+				else if (characters[i] >= 'a' && characters[i] <= 'z') {
+				    characters[i] = (char) (((characters[i] - 'a') + key) % 26 + 'a');
 				}
-				
 			}
-			return newPhrase;
+				
+			return String.valueOf(characters);
+		 
 		}
 
 	}
@@ -545,24 +547,26 @@ public class EvaluationService {
 		 * @param string
 		 * @return
 		 */
-		
+		static Map<Character, Character> cipher = new HashMap<Character, Character>();
 		public static String encode(String string) {
 			
-			/*// Create cipher map
-			Map<Character, Character> cipher = reverseAlphaKey();
+			// Create cipher map
+			Map<Character, Character> cipher = new HashMap<Character, Character>();
+			cipher = reverseAlphaKey();
 			
 			// Remove punctuation and spaces from string arg
 			String replaced = string.replaceAll(" ", "").replaceAll("[,.]", "").toLowerCase();
 			
 			// Add each letter to character array
-			char[] letters = new char[replaced.length()];
-			for (int i = 0; i < replaced.length(); i++) {
-				letters[i] = replaced.charAt(i);
-			}
+			char[] letters = replaced.toCharArray();
 			
 			// Send through cipher
 			for (int i = 0; i < letters.length; i++) {
-				letters[i] = cipher.get(letters[i]);
+				try {
+				letters[i] = (char) cipher.get(Character.valueOf(letters[i]));
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 			
 			// Return characters in groups of five
@@ -571,22 +575,24 @@ public class EvaluationService {
 				if (i % 5 == 0) { encoded += " "; }
 				encoded += Character.toString(letters[i]);
 			}
+			
 			return encoded;
+			
 		}
 		
+		// Create Map that stores alphabet in reverse
 		public static Map<Character, Character> reverseAlphaKey() {
 			Map<Character, Character> letters = new HashMap<>();
 			
 			int counter = 0;
-			for (char i = 'a'; i <= 'z'; i++) {
+			for (char i = 'a'; i < 'n'; i++) {
 				letters.put(i, (char)('z' - counter));
 				counter++;
 			}
 			for (char i = '0'; i <= '9'; i++) {
 				letters.put(i, i);
-			}*/
-			//return letters;
-			return null;
+			}
+			return letters;
 		}
 
 		/**
@@ -704,8 +710,18 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
-		return null;
+
+		final int gs = 1000000000;
+		LocalDateTime ltd = null;
+		
+		if (given instanceof LocalDateTime) {
+			ltd = (LocalDateTime) given;
+		}
+		else if (given instanceof LocalDate) {
+			ltd = LocalDateTime.of((LocalDate) given, LocalTime.of(0, 0));
+		}
+		
+		return ltd.plusSeconds(gs);
 	}
 
 	/**
