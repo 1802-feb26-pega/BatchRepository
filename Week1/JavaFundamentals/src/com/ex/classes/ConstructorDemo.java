@@ -1,4 +1,4 @@
-package com.ex.classes;
+			package com.ex.classes;
 
 public class ConstructorDemo {
 	
@@ -20,7 +20,7 @@ public class ConstructorDemo {
 	public ConstructorDemo(String num) {
 		this();
 		this.a = Integer.parseInt(num);
-
+		System.out.println("in string constructor");
 	}
 
 	
@@ -36,7 +36,10 @@ public class ConstructorDemo {
 	}
 	
 	public static void main(String[] args) {
+		ConstructorDemo n = new ConstructorDemo();
 		ConstructorDemo test = new ConstructorDemo(5);
+		ConstructorDemo cd = new ConstructorDemo(1, 2, 3, 4, 5);
+		ConstructorDemo t = new ConstructorDemo("15");
 	}
 }
 

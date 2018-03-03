@@ -14,12 +14,12 @@ public class Operators {
 
 	//post-unary operators
 	static void postUnary(int count) {
-		count++; // count = count + 1
+		System.out.println(count++); // count = count + 1
 		count--; // count = count - 1
 	}
 	
 	static void preUnary(int count) {
-		++count;
+		System.out.println(++count);
 		--count;
 	}
 	
@@ -75,7 +75,7 @@ public class Operators {
 	 * Shifts a bit pattern to the right
 	 * If the number is a 2's complement signed number, the sign bit
 	 * is shifted to the high order positions 	 */
-	public int rightShift(int num, int shift) {
+	public static int rightShift(int num, int shift) {
 		return num >> shift;
 	}
 	
@@ -142,17 +142,22 @@ public class Operators {
 	
 	public static void main(String[] args) {
 		int x = 5;
-		int y = 10;
-		if (x == 5 | ++y == 9) {
+		int y = 9;
+		if (x == 5 && ++y == 9) {
 			System.out.println("true");
 		}
-		else if (x != 5 || y++ == 9) {
-			
+		else if (x != 5 || y++ == 10) {
+			System.out.println("y = " + y);
 		}
 		else {
 			System.out.println(5 | 2);
 		}
 		System.out.println(y);
+		System.out.println(complement(x));
+		postUnary(3);
+		preUnary(3);
+		System.out.println(rightShift(-1, 1));
+		relational(1, 2);
 	}
 
 }

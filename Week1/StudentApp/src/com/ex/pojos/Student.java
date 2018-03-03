@@ -2,7 +2,7 @@ package com.ex.pojos;
 
 import java.io.Serializable;
 
-//POJO = Plain ol Java Object -- used to represent our day to day entities
+//POJO = Plain olds Java Object -- used to represent our day to day entities
 public class Student implements Serializable{
 	
 	private String name;
