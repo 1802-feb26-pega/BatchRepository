@@ -1,8 +1,20 @@
 package com.ex.bank;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class User {
+	
+	public static void main(String[] args) {
+		
+//		try(BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))){
+//			bw.write(user.toString());
+//		} catch(IOException e) {
+//			e.printStackTrace();
+//		}
+	}
 	
 	public String firstName;
 	public String lastName;
@@ -10,6 +22,7 @@ public class User {
 	private String password;
 	private int balance;
 	
+	private String file;
 	
 	public User(String firstName, String lastName, String username, String password) {
 		super();
@@ -17,16 +30,48 @@ public class User {
 		this.lastName = lastName;
 		this.username = username;
 		this.password = password;
+		this.balance = 0;
+		this.file = "src/data/"+username+".txt";
 	}
 	
-	public void login() {
-		
-	}
-	
-	public void register() {
-		
-	}
-	
+//	public void login() {
+//		
+//	}
+//	
+//	public void register() {
+//		String temp = "";
+//		String user = "";
+//		Scanner scan = new Scanner(System.in);
+//		
+//		System.out.println("Firstname:");
+//		temp = scan.nextLine();
+//		setFirstName(temp);
+//		user = user.concat(getFirstName() + ":");
+//		
+//		System.out.println("Lastname:");
+//		temp = scan.nextLine();
+//		setLastName(temp);
+//		user = user.concat(getLastName() + ":");
+//		
+//		System.out.println("Username:");
+//		temp = scan.nextLine();
+//		setUsername(temp);
+//		user = user.concat(getUsername() + ":");
+//		
+//		System.out.println("Password:");
+//		temp = scan.nextLine();
+//		setPassword(temp);
+//		user = user.concat(getPassword() + ":" + getBalance());
+//		
+//		scan.close();
+//		
+//		try(BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))){
+//			bw.write(user.toString());
+//		} catch(IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+//	
 	public void logout() {
 		
 	}
@@ -39,7 +84,9 @@ public class User {
 		
 	}
 	
-	
+	public String getFileName() {
+		return file;
+	}
 	public int getBalance() {
 		return balance;
 	}
