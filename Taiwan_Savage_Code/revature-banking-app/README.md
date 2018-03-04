@@ -1,4 +1,4 @@
-#Banking App - First Iteration
+# Banking App - First Iteration
 
 #### Notes for Genesis:
 When testing the project, the first time that you run the project you must indicate that you do not already have an account. I did not know if you would have preferred that I include premade accounts that I used during my testing so I did not include them. But once you have run through the project once and created a new "account," you will be able to login to the same account you created. (Data Persistence is cool). Thank you!!
