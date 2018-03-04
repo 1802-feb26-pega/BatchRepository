@@ -1,6 +1,8 @@
-package com.ex.projects;
+package com.ex.pojos;
 
 public class User {
+	
+	//public static HashMap<String, User> = new HashMap<String, User>();
 	private String firstName;
 	private String lastName;
 	private String userName;
@@ -58,5 +60,8 @@ public class User {
 		this.balance = balance;
 	}
 	
-	
+	@Override
+	public String toString( ) {
+		return firstName + ":" + lastName + ":" + userName + ":" + password + ":" + balance;
+	}
 }
