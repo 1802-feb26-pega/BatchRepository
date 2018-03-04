@@ -1,19 +1,19 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 
 public class SignUp extends JFrame {
-
+	private static final long serialVersionUID = 2742534148693075976L;
+	
 	private JPanel contentPane;
 	private JTextField nameTextField;
 	private JTextField emailTextField;
@@ -21,52 +21,54 @@ public class SignUp extends JFrame {
 	private JButton btnSubmit;
 	private JLabel lblUsername;
 	private JLabel lblEmail;
-	private JTextField passwordTextField;
 	private JLabel lblPassword;
 	private JLabel lblUsernameStatus;
 	private JLabel lblEmailStatus;
 	private JLabel lblPasswordStatus;
+	private JLabel lblSuccess;
+	private JTextField passwordField;
 
-	/**
-	 * Create the frame.
-	 */
 	public SignUp() {
 		initialize();
 	}
-	
-	
+		
 	private void btnSignInClick() {
 		String username = nameTextField.getText();
 		String email = emailTextField.getText();
-		String password = passwordTextField.getText();
-			
+		String password = passwordField.getText();
 		boolean validUsername = Utils.sanitizeUsername(username);
 		boolean validEmail = Utils.sanitizeEmail(email);
 		boolean validPassword = Utils.sanitizePassword(password);
 		
 		if (!validUsername) {
 			lblUsernameStatus.setText("Can only contain letters and numbers");
+		} else {
+			lblUsernameStatus.setText("");
 		}
 		
 		if (!validEmail) {
 			lblEmailStatus.setText("Invalid email format");
+		} else {
+			lblEmailStatus.setText("");
 		}
 		
 		if (!validPassword) {
-			lblPasswordStatus.setText("Invalid password");
-		}
-		
-		boolean valid = validUsername && validEmail && validPassword;
-		if (valid) {
-			lblUsernameStatus.setText("");
-			lblEmailStatus.setText("");
+			lblPasswordStatus.setText("Must contain letters and numbers");
+		} else {
 			lblPasswordStatus.setText("");
 		}
-
+				
 		
-//		nameTextField.setText("");
-//		emailTextField.setText("");
-//		passwordTextField.setText("");
+		if (validUsername && validEmail && validPassword) {
+			Application.addUser(new User(
+				username, email, password));
+			
+			btnSubmit.setEnabled(false);
+			nameTextField.setEnabled(false);
+			emailTextField.setEnabled(false);
+			passwordField.setEnabled(false);
+			lblSuccess.setText("Account created successfully");
+		}
 	}
 	
 	
@@ -111,15 +113,9 @@ public class SignUp extends JFrame {
 				btnSignInClick();
 			}
 		});
-		btnSubmit.setFont(new Font("SansSerif", Font.BOLD, 16));
+		btnSubmit.setFont(new Font("SansSerif", Font.PLAIN, 16));
 		btnSubmit.setBounds(153, 269, 97, 25);
 		contentPane.add(btnSubmit);
-		
-		passwordTextField = new JTextField();
-		passwordTextField.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		passwordTextField.setColumns(10);
-		passwordTextField.setBounds(151, 220, 174, 22);
-		contentPane.add(passwordTextField);
 		
 		lblPassword = new JLabel("Password");
 		lblPassword.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -140,6 +136,17 @@ public class SignUp extends JFrame {
 		lblPasswordStatus.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		lblPasswordStatus.setBounds(61, 198, 264, 21);
 		contentPane.add(lblPasswordStatus);
+		
+		lblSuccess = new JLabel("");
+		lblSuccess.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSuccess.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		lblSuccess.setBounds(77, 301, 264, 21);
+		contentPane.add(lblSuccess);
+		
+		passwordField = new JTextField();
+		passwordField.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		passwordField.setColumns(10);
+		passwordField.setBounds(151, 223, 174, 22);
+		contentPane.add(passwordField);
 	}
-
 }

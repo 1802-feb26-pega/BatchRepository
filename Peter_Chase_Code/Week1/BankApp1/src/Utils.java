@@ -7,6 +7,7 @@ public class Utils {
 		return usernamePattern.matcher(username).matches();
 	}
 	
+	
 	private static final String emailRegex =
 			   "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"
 		 	 + "\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\"
@@ -19,7 +20,10 @@ public class Utils {
 		return emailPattern.matcher(email).matches();
 	}
 	
+	
+	private static final String passwordRegex = "^([0-9]+[a-zA-Z]+|[a-zA-Z]+[0-9]+)[0-9a-zA-Z]*$";
+	private static final Pattern passwordPattern = Pattern.compile(passwordRegex);
 	public static boolean sanitizePassword(String password) {
-		return true;
+		return passwordPattern.matcher(password).matches();
 	}
 }

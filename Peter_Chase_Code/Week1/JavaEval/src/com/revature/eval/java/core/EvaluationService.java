@@ -822,7 +822,6 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		int result = 0;
-		
 		LinkedList<Integer> nums = new LinkedList<>();
 		
 		// Parse both numbers

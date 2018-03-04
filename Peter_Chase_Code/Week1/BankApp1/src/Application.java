@@ -1,137 +1,108 @@
 import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Application {
-
-	private JFrame frame;
-	private JTextField textFieldUsername;
-	private JTextField textFieldPassword;
-	private JLabel lblPetesBank;
-	private JLabel lblLogin;
-	private JButton btnSignIn;
-	private JButton btnSignUp;
-	private JLabel lblUsername;
-	private JLabel lblPassword;
-	private JLabel lblStatus;
-
-	/**
-	 * Launch the application.
-	 */
+	private static List<User> users = new LinkedList<>();
+	private static final String fileName = "users.dat";
+	private static User currentUser = null;
 	
 	public static void main(String[] args) {
+		readUsers();
+		launchLogIn();
+	}
+	
+	
+	public static void logOut() {
+		currentUser = null;
+		launchLogIn();
+	}
+	
+	private static void launchLogIn() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Application window = new Application();
-					window.frame.setVisible(true);
+					LogIn login = new LogIn();
+					login.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
-
-	/**
-	 * Create the application.
-	 */
-	public Application() {
-		initialize();
-	}
 	
-	private void btnSignUpClick() {
+	public static void launchBank() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SignUp signUp = new SignUp();
-					signUp.setVisible(true);
+					Banking bank = new Banking();
+					bank.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		});	
+		});
 	}
 	
-	private void btnSignInClick() {
-		String username = textFieldUsername.getText();
-		String password = textFieldPassword.getText();
-		textFieldUsername.setText("");
-		textFieldPassword.setText("");
+	private Application() { }
+	
+	public static User getUser() {
+		return currentUser;
 	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 539, 467);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		
-		lblPetesBank = new JLabel("Pete's Bank");
-		lblPetesBank.setFont(new Font("SansSerif", Font.PLAIN, 24));
-		lblPetesBank.setBounds(191, 50, 141, 51);
-		frame.getContentPane().add(lblPetesBank);
-		
-		lblLogin = new JLabel("Login");
-		lblLogin.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		lblLogin.setBounds(190, 108, 71, 51);
-		frame.getContentPane().add(lblLogin);
-		
-		textFieldUsername = new JTextField();
-		textFieldUsername.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		textFieldUsername.setBounds(190, 165, 192, 34);
-		frame.getContentPane().add(textFieldUsername);
-		textFieldUsername.setColumns(10);
-		
-		textFieldPassword = new JTextField();
-		textFieldPassword.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		textFieldPassword.setBounds(190, 212, 192, 34);
-		frame.getContentPane().add(textFieldPassword);
-		textFieldPassword.setColumns(10);
-		
-		btnSignIn = new JButton("Submit");
-		btnSignIn.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		btnSignIn.setBounds(190, 259, 97, 25);
-		frame.getContentPane().add(btnSignIn);
-		
-		btnSignUp = new JButton("Sign Up");
-		btnSignUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnSignUpClick();
+	
+	public static synchronized void addUser(User u) {
+		users.add(u);
+		writeUsers();
+	}
+	
+	public static synchronized void attemptSignIn(String nameOrEmail, String password) {
+		for (User u : users) {
+			if (nameOrEmail.equals(u.getName()) || nameOrEmail.equals(u.getEmail())
+			&& password.equals(u.getPassword())) {
+				currentUser = u;
+				return;
 			}
-		});
-		btnSignUp.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		btnSignUp.setBounds(191, 362, 109, 34);
-		frame.getContentPane().add(btnSignUp);
+		}
 		
-		lblUsername = new JLabel("Username / Email");
-		lblUsername.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblUsername.setBounds(71, 166, 107, 34);
-		frame.getContentPane().add(lblUsername);
-		
-		lblPassword = new JLabel("Password");
-		lblPassword.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblPassword.setBounds(71, 213, 59, 34);
-		frame.getContentPane().add(lblPassword);
-		
-		lblStatus = new JLabel("");
-		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStatus.setFont(new Font("SansSerif", Font.PLAIN, 13));
-		lblStatus.setBounds(107, 297, 297, 34);
-		frame.getContentPane().add(lblStatus);
-		btnSignIn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				btnSignInClick();
+		currentUser = null;
+	}
+	
+	public static void writeUsers() {
+		try {
+			FileOutputStream fos = new FileOutputStream(fileName);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(users);
+			oos.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static void readUsers() {
+		try {
+			FileInputStream fos = new FileInputStream(fileName);
+			ObjectInputStream ois = new ObjectInputStream(fos);
+			Object obj = ois.readObject();
+			if (obj != null) {
+				users = (List<User>) obj;
 			}
-		});
+			ois.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("User file not created yet");
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 }
