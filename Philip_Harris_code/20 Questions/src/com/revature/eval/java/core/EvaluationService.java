@@ -11,8 +11,8 @@ import java.util.StringTokenizer;
 /*go to dir
  * then run mvn test
  * 
- * Completed: 1,2,3,4,5,6,8,9,12,13,14,15,16,18
- * Need to do: 7,10,11,17,19,20
+ * Completed: 1,2,3,4,5,6,8,9,11,12,13,14,15,16,18
+ * Need to do: 7,10,17,19,20
  */
 public class EvaluationService {
 
@@ -28,12 +28,12 @@ public class EvaluationService {
 		int l = string.length() - 1;
 		int count = 0;
 		String rWord = "";
-		
+
 		while(count <= l) {
 			rWord += string.charAt(l-count);
 			count++;
 		}
-		
+
 		return rWord;
 	}
 
@@ -54,9 +54,9 @@ public class EvaluationService {
 			if(phrase.charAt(idx) == Character.toUpperCase(phrase.charAt(idx))) {
 				TLA += phrase.charAt(idx);
 			}
-			
+
 			idx++;
-			
+
 		}
 		TLA = TLA.replaceAll("\\s+","");
 		return TLA;
@@ -150,20 +150,20 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	
+
 	Map <Character, Integer> map;
 	Map <Character, Integer> multiplier;
-	
+
 	public int getScrabbleScore(String string) {
 		// TODO Write an implementation for this method declaration
 		int sum = 0;
 		int[] word = new int[string.length()];
 		createMap();
 		Set<Character> keys = map.keySet();
-		
+
 		for(int i = 0; i < string.length(); i++) {
 			for(Character idx : keys) {
-				
+
 				if((string.charAt(i)== idx)) {
 					sum += map.get(idx);
 					if(multiplier.containsKey(idx)) {
@@ -177,7 +177,7 @@ public class EvaluationService {
 		}
 		return sum;
 	}
-	
+
 	public void createMap() {
 		map = new HashMap< Character, Integer>();
 		map.put('a', 1);
@@ -206,8 +206,8 @@ public class EvaluationService {
 		map.put('x', 8);
 		map.put('z', 10);
 	}
-	
-	
+
+
 
 	/**
 	 * 5. Clean up user-entered phone numbers so that they can be sent SMS messages.
@@ -256,18 +256,18 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	
+
 	private Map< String, Integer > maps;
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
 		maps = new HashMap < String, Integer > ();
 		Set <String> keys = maps.keySet();
 		StringTokenizer tokenizer = new StringTokenizer (string);
-		
+
 		while(tokenizer.hasMoreTokens()) {
-			
+
 			String word = tokenizer.nextToken().toLowerCase();
-			
+
 			if(maps.containsKey(word)) {
 				int count = maps.get(word);
 				maps.put(word, count + 1);
@@ -276,9 +276,9 @@ public class EvaluationService {
 				maps.put(word, 1);			
 		}
 		for(String idx : keys) {
-				System.out.println(idx + " count: " + maps.get(idx));
-			}
-		
+			System.out.println(idx + " count: " + maps.get(idx));
+		}
+
 		return null;
 	}
 
@@ -388,13 +388,13 @@ public class EvaluationService {
 		String num = Integer.toString(input);
 		int l = num.length();
 		int sum = 0;
-		
+
 		for(int i = 0; i <= l - 1;i++) {
 			String temp = Character.toString(num.charAt(i));
 			sum += (int) Math.pow(Integer.parseInt(temp),l);
 			System.out.println(sum);
 		}
-		
+
 		if(input==sum) return true;
 		return false;
 	}
@@ -450,10 +450,20 @@ public class EvaluationService {
 
 		public String rotate(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			String msg = "";
+			string = string.toLowerCase();
+			for(int i = 0; i < string.length(); i++) {
+				char ch = (char)(((int)string.charAt(i) +
+						key - 97) % 26 + 97);
+				msg += ch;
+			}	
+
+
+			return msg;
 		}
 
 	}
+
 
 	/**
 	 * 12. Given a number n, determine what the nth prime is.
@@ -476,20 +486,20 @@ public class EvaluationService {
 		//for(i = 1; i < n;i++) {
 		while(true) {
 			int counter=0; 	  
-	          for(num =i; num>=1; num--)
-	          {
-	             if(i%num==0){ counter = counter + 1; }
-	          }
-	          if (counter ==2) {
-	        	  list.add(i);
-	        	  numOfPrimes++;
-	          }	
-	          if(numOfPrimes==n) break;
-	        i++;
+			for(num =i; num>=1; num--)
+			{
+				if(i%num==0){ counter = counter + 1; }
+			}
+			if (counter ==2) {
+				list.add(i);
+				numOfPrimes++;
+			}	
+			if(numOfPrimes==n) break;
+			i++;
 		}
 		return (int) list.get(n-1);
-		
-		
+
+
 	}
 
 	/**
@@ -526,15 +536,16 @@ public class EvaluationService {
 		 */
 		public static String encode(String string) {
 			// TODO Write an implementation for this method declaration
-			
+
 			String msg = "";
+			string = string.toLowerCase();
 			for(int i = 0; i < string.length(); i++) {
 				int ascii = (int) string.charAt(i);				
 				ascii = ascii - 97;
 				ascii = 122 - ascii;
 				msg += (char) ascii;
 			}
-			
+
 			return msg;
 		}
 
@@ -553,10 +564,10 @@ public class EvaluationService {
 				ascii = ascii + 97;
 				msg += (char) ascii;
 			}
-			 return msg;
+			return msg;
 		}
-		
-		
+
+
 	}
 
 	/**
@@ -584,7 +595,7 @@ public class EvaluationService {
 	public boolean isValidIsbn(String string) {
 		// TODO Write an implementation for this method declaration
 		string = string.replace("-","");
-		
+
 		int sum = 0;
 		int place = 10;
 		for(int i = 0; i < string.length(); i++) {
@@ -597,9 +608,9 @@ public class EvaluationService {
 				sum += (c * place);
 			}
 			place--;
-			
+
 		}
-		
+
 		if(sum%11==0) return true;		
 		return false;
 	}
@@ -625,24 +636,24 @@ public class EvaluationService {
 		for(int i = 0; i < string.length();i++) {			
 			check.add(string.charAt(i));							
 		}
-		
-			int u = 65;
-			int l = 97;
-		
-			while(true) {
-				if(check.contains((char)u)|check.contains((char)l)) {}
-				else {
-					return false;
-				}
-				if(u == 91 | l == 122) {
-					break;
-					}
-				u++;
-				l++;
+
+		int u = 65;
+		int l = 97;
+
+		while(true) {
+			if(check.contains((char)u)|check.contains((char)l)) {}
+			else {
+				return false;
 			}
+			if(u == 91 | l == 122) {
+				break;
+			}
+			u++;
+			l++;
+		}
 
 		return true;
-		
+
 	}
 
 	/**
@@ -673,10 +684,10 @@ public class EvaluationService {
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
 		// TODO Write an implementation for this method declaration
-		
+
 		int sum = 0;
 		int l = set.length;
-		
+
 		ArrayList<Integer> m = new ArrayList<>();
 		for(int z = 1;z < i; z++) {
 			for(int s = 0; s < l; s++) {
@@ -686,7 +697,7 @@ public class EvaluationService {
 						m.add(z);
 						sum+= z;
 					}
-					
+
 				}
 			}			
 		}
@@ -765,7 +776,48 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		ArrayList<Integer> s = new ArrayList<Integer>();
+		int math = 0;
+
+
+		if(string.toLowerCase().contains("plus") | string.contains("+")) {
+			s = work(string);
+			for(int n: s) {
+				math += n;
+			}
+			
+		}
+		else if(string.toLowerCase().contains("minus")) {
+			s = work(string);
+			for(int n: s) {			
+				if(math == 0) math = n;
+				else math -= n;
+			}
+		} 
+		else if(string.toLowerCase().contains("multiplied")) {
+			s = work(string);
+			for(int n: s) {			
+				if(math == 0) math = n;
+				else math *= n;
+			}
+		}
+		else if(string.toLowerCase().contains("divided")) {
+			s = work(string);
+			for(int n: s) {			
+				if(math == 0) math = n;
+				else math /= n;
+			}
+		}		
+		return math;
+	}
+	public static ArrayList<Integer> work(String string) {
+		ArrayList<Integer> num = new ArrayList<Integer>();
+		string = string.replaceAll("[[^\\d.]]"," ");
+		String[] textData = string.split(" ");
+		for(String x: textData){
+			if(x.matches("[0-9]+")) num.add(Integer.parseInt(x));
+		}
+		return num;
 	}
 
 }

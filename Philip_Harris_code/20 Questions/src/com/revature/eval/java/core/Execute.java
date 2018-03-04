@@ -43,7 +43,7 @@ public class Execute {
 		
 		EvaluationService q4 = new EvaluationService();
 		
-		System.out.println(q4.getScrabbleScore("cabbage"));
+		//System.out.println(q4.getScrabbleScore("cabbage"));
 		
 		//EvaluationService q5 = new EvaluationService();
 		//System.out.println(q5.cleanPhoneNumber("613.995.0253"));
@@ -60,6 +60,10 @@ public class Execute {
 		
 		//EvaluationService q10 = new EvaluationService();
 		
+		//RotationalCipher q11 = new RotationalCipher(5);
+		//System.out.println(q11.rotate("omg"));
+		//System.out.println(q11.rotate("abcdefghijklmnopqrstuvwxyz"));
+		
 		//EvaluationService q12 = new EvaluationService();
 		//System.out.println("The 100th prime number is: " + q12.calculateNthPrime(100));
 		
@@ -75,7 +79,11 @@ public class Execute {
 		//EvaluationService q18 = new EvaluationService();
 		//int[] a = {3,5};
 		//System.out.println(q18.getSumOfMultiples(20,a));
-	}
-	
+
+		
+		EvaluationService q20 = new EvaluationService();
+		System.out.println(q20.solveWordProblem("What is 25 divided by 5?"));
+		
+	}	
 }
 
