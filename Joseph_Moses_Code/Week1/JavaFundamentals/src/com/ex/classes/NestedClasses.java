@@ -19,9 +19,28 @@ public class NestedClasses {
 		}
 	}
 	
+	interface MethodPassTest{
+		void abstractMethod();
+		
+		default Object callAbleMethod() {
+			System.out.println("callAbleMethod is called.");
+			Object object = new Object();
+			return object ;
+		}
+	}
+	
+	public static void takingMethod1(Object test) {
+		System.out.println("in takingMethod");
+	}
+	
 	//main method of NestedClasses class
 	public static void main(String[] args) {
-		/*int local = 0;
+		
+		MethodPassTest obj = (MethodPassTest) new Object();
+		
+		takingMethod1(obj.callAbleMethod());
+		
+		int local = 0;
 		class Local{
 			void message() {
 				System.out.println("in local nested class");
@@ -36,16 +55,13 @@ public class NestedClasses {
 				
 			}
 			
-		};*/
+		};
+
+	}
+
+	private static void takingMethod(Object callAbleMethod) {
+		// TODO Auto-generated method stub
 		
-		System.out.println(validateCurrencyInput("100.00"));
 	}
 	
-static boolean validateCurrencyInput(String input) {
-		NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.US);
-		if(input.matches("[-+]?\\d*\\.?\\d{2}")) {
-			return true;
-		}
-		else return false;
-	}
 }

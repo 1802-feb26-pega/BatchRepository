@@ -382,14 +382,11 @@ public class EvaluationService {
 			
 			for(int i = 0; i < s.length(); i++) {
 				
-				String letter = new Character(s.charAt(i)).toString();
 				if(vowels.indexOf(s.charAt(i)) != -1) {
 					firstVowel = i;
 					break;
 				}
 			}
-
-			System.out.println(firstVowel);
 			
 			if(firstVowel == 0) {
 				temp.append("ay");
@@ -521,9 +518,9 @@ public class EvaluationService {
 				
 				Character c = input[i];
 				
-				if(c.isLetter(c)) {
+				if(Character.isLetter(c)) {
 					
-					Character noCase = c.toLowerCase(c);
+					Character noCase = Character.toLowerCase(c);
 					plainIndex = letters.indexOf(noCase);
 					cipherIndex = plainIndex + key;
 					
@@ -531,7 +528,7 @@ public class EvaluationService {
 						cipherIndex -= 26;
 					}
 					
-					if(c.isUpperCase(c)) {
+					if(Character.isUpperCase(c)) {
 						cipher[i] = Character.toUpperCase(letters.charAt(cipherIndex));
 					}
 					else {
@@ -637,7 +634,7 @@ public class EvaluationService {
 				
 				Character c = input[i];
 				
-				if(c.isLetter(c)) {
+				if(Character.isLetter(c)) {
 					int index = plain.indexOf(c);
 					output.append(cipher.charAt(index));
 				}
@@ -669,7 +666,7 @@ public class EvaluationService {
 				
 				Character c = input[i];
 				
-				if(c.isLetter(c)) {
+				if(Character.isLetter(c)) {
 					int index = cipher.indexOf(c);
 					output.append(plain.charAt(index));
 				}

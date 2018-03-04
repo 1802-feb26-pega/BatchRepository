@@ -4,10 +4,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Scanner;
-
 import javax.swing.text.NumberFormatter;
-
 import com.assign.io.DataFileIO;
 
 public class Bank{
