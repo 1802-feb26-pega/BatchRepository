@@ -9,9 +9,11 @@ public class User {
 	private String password;
 	private double balance;
 	
-	public User() {}
+	public User() {
+		this.balance = 0;
+	}
 	
-	public User(String first, String last, String name, String pass, double bal) {
+	public User(String name, String first, String last, String pass, double bal) {
 		super();
 		this.firstName = first;
 		this.lastName = last;
@@ -63,5 +65,20 @@ public class User {
 	@Override
 	public String toString( ) {
 		return userName + ":" + firstName + ":" + lastName + ":" + password + ":" + balance;
+	}
+	
+	public void deposit(double amount) {
+		this.balance += amount;
+	}
+	
+	public void withdraw(double amount) {
+		if(this.balance > amount)
+			this.balance -= amount;
+		else
+			System.out.println("This withdrawal cannot be processed because the amount you entered is greater than your balance.");
+	}
+	
+	public void viewBalance() {
+		System.out.println("Your balance: $" + this.balance);
 	}
 }
