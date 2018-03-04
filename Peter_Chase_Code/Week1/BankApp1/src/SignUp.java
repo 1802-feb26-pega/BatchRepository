@@ -7,9 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 public class SignUp extends JFrame {
 	private static final long serialVersionUID = 2742534148693075976L;
