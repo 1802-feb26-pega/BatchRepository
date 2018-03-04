@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BankMain {
-
+	
 	static Scanner scan = new Scanner(System.in);
 	static Client customer = new Client();
 	static Account account = new Account();
@@ -13,7 +13,10 @@ public class BankMain {
 	static boolean valid = false;
 
 	public static void main(String[] args) {
-
+		
+		//System.out.println(Validation.eROT5("12345678"));
+		//System.out.println(Validation.dROT5("67890123"));
+		
 		boolean loop = true;
 		System.out.println("Hello welcome to Revature Banking!");
 		System.out.println("Where we take care of all your banking needs.");
@@ -32,6 +35,7 @@ public class BankMain {
 			case 3: 
 				System.out.println("Thank for visiting Revature Banking Bye-bye");
 				loop = false;
+				break;
 			default:
 				System.out.println("Please enter in one of the options");
 				System.out.println();
@@ -89,7 +93,8 @@ private static void signup() {
 	
 	while(true) {
 		
-		checkInfo = scan.next();	
+		checkInfo = scan.next();
+		System.out.println();
 		if(checkInfo.equalsIgnoreCase("yes") |  checkInfo.equalsIgnoreCase("y")){	
 			info.add(fn);
 			info.add(ln);
@@ -108,8 +113,7 @@ private static void signup() {
 		else {
 			System.out.println("Please enter in Y or Yes for confirmation.");
 			System.out.println("Please enter in N or No to restart.");
-			System.out.print("Is it correct?");
-			System.out.println();		
+			System.out.print("Is it correct?");		
 		}
 			
 	}
@@ -140,12 +144,12 @@ private static void signin() {
 private static boolean startBanking() {
 	// TODO Auto-generated method stub
 	System.out.println("What you would you like to do?");
-	System.out.println("1. Check Balance");
-	System.out.println("2. Withdraw");
-	System.out.println("3. Deposit");
-	System.out.println("4: Exit");
+	System.out.println("PRESS 1 to Check Balance");
+	System.out.println("PRESS 2 to Withdraw");
+	System.out.println("PRESS 3 to Deposit");
+	System.out.println("PRESS 4 to Exit");
 	System.out.print("Input here: ");
-	int option = scan.nextInt();
+	int option = v.validateNum();
 	System.out.println("");
 
 	switch(option) {
@@ -156,14 +160,14 @@ private static boolean startBanking() {
 		account.checkBal();
 		System.out.println("How much would you like to withdraw?");	
 		System.out.print("Input here: ");
-		int w = scan.nextInt();
+		int w = v.validateNum();
 		account.withdraw(w,customer);
 		break;
 	case 3:
 		account.checkBal();
 		System.out.println("How much would you like to deposit?");	
 		System.out.print("Input here: ");
-		int d = scan.nextInt();
+		int d = v.validateNum();
 		account.deposit(d,customer);
 		break;
 	case 4: 

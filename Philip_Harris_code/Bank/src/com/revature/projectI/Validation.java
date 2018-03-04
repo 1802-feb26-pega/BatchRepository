@@ -34,18 +34,23 @@ public class Validation {
 		int n = 0; 
 
 		while(true) {
+			@SuppressWarnings("resource")
 			Scanner s = new Scanner(System.in);
 			try{
 				n = s.nextInt();
 				if(n < 0){
 					System.out.print("Please enter in a positive amount: ");
 				}
-				else break;					 			
+				else {
+					break;
+				}
+					 			
 			}catch(NumberFormatException | InputMismatchException ex) {
 				System.out.print("Please enter in a number: ");
 				System.out.println();
 			}
 		}	
+		
 		return n;
 	}
 	public String validateNames(String name) {
@@ -59,5 +64,67 @@ public class Validation {
 
 		return name;
 	}
+	public static String encode(String string) {
+		// TODO Write an implementation for this method declaration
+		
+		String msg = "";
+		string = string.toLowerCase();
+		for(int i = 0; i < string.length(); i++) {
+			int ascii = (int) string.charAt(i);				
+			ascii = ascii - 97;
+			ascii = 122 - ascii;
+			msg += (char) ascii;
+		}
+		
+		return msg;
+	}
+	public static String decode(String string) {
+		// TODO Write an implementation for this method declaration
+		string = string.toLowerCase();
+		String msg = "";
+		for(int i = 0; i < string.length(); i++) {
+			int ascii = (int) string.charAt(i);				
+			ascii = 122 - ascii;
+			ascii += 97;
+			msg += (char) ascii;
+		}
+		 return msg;
+	}
+	
+	public static int eROT5(String ssn) {
+		// TODO Write an implementation for this method declaration
+		
+		String msg = "";
+		for(int i = 0; i < ssn.length(); i++) {
+			int ascii = (int) ssn.charAt(i);	
+			if((ascii + 5) > 57) {// if the initial ascii code is above 57
+				ascii += 48;
+				ascii -= 53;
+			}else { // if the the initial ascii code is below 57
+				ascii -= 48;
+				ascii += 53;
+			}
+			msg += (char) ascii;
+		}
+		
+		return Integer.parseInt(msg);
+	}
+	public static int dROT5(String ssn) {
+		// TODO Write an implementation for this method declaration
+		String msg = "";
+		for(int i = 0; i < ssn.length(); i++) {
+			int ascii = (int) ssn.charAt(i);	
+			if((ascii+5) > 57) {// if the initial ascii code is above 57
+				ascii -= 53;
+				ascii += 48;
+			}else {// if the the initial ascci code is below 57
+				ascii -= 48;
+				ascii += 53;
+			}
+			msg += (char) ascii;
+		}
+		if(msg.matches(("[0-9]+")) == false) msg = msg.substring(0, msg.length() - 1);
+		return Integer.parseInt(msg);
 
+}
 }
