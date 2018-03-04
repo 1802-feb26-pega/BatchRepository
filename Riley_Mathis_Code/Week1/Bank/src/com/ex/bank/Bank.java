@@ -71,7 +71,7 @@ public class Bank {
 		System.out.println("Login");
 		System.out.println("Username:");
 		un = scan.nextLine();
-		File fileName = new File("/src/data/"+un+".txt");
+		File fileName = new File("src/data/"+un+".txt");
 		System.out.println(un + "  " + fileName);
 		
 		if(fileName.exists()) {
