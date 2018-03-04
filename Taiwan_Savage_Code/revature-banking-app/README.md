@@ -31,6 +31,7 @@ There are a few areas that I believe could be improved to make for a better appl
 2. The constructor for the CreateAccount class could be overloaded so that if the user attempted to login but no User with that username existed, we could skip recollecting a username and remember the value that was already input.
 3. Some of my methods could be further modularized in order to make the code more readable and easily edited. 
 4. I need to improve my commenting
+5. Implement DAO.
 
 So, my goals for the second iteration are:
 1. Have each method only have ONE function.
