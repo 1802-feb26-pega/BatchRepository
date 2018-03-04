@@ -23,7 +23,7 @@ public class Account {
 	}
 	public void withdraw(int w,Client c) {
 		balance -= w;
-		System.out.println("New Balannce is: " + balance);
+		System.out.println("New Balance is: " + balance);
 		db.updateBalance(this,c);
 	}
 	public void access() {
@@ -42,6 +42,13 @@ public class Account {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public void deposit(int d, Client customer) {
+		// TODO Auto-generated method stub
+		balance += d;
+		System.out.println("New Balance is: " + balance);
+		db.updateBalance(this,customer);
 	}
 	
 }

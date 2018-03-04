@@ -1,6 +1,7 @@
 package com.revature.projectI;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Client {
 	private String fName;
@@ -12,6 +13,8 @@ public class Client {
 	static DataPersistency db = new DataPersistency();
 	static Account account = new Account();
 	static Validation v = new Validation();
+	
+
 	
 	public String getfName() {
 		return fName;
@@ -73,10 +76,6 @@ public class Client {
 		
 	}
 	
-	
-	public boolean access(Account a,String usrname, String pass) {		
-		if(v.validate(this, a, usrname,pass)) return true;
-		 		return false;
-			}
+
 }
 
