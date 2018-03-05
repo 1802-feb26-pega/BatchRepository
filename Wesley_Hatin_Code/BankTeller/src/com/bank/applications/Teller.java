@@ -13,7 +13,6 @@ public class Teller {
 	public void createAccount() {
 		//TODO: ask for help with the writing to a file
 		//TODO: Write username, firstName, lastName, password
-		//TODO: Have runBank class do all console printing
 	}
 	
 	// log in 
@@ -41,7 +40,7 @@ public class Teller {
 		String answer = "";
 		
 		System.out.println("Are you sure you want to log out?");
-		System.out.print("Type 'y' or 'n': ");
+		System.out.println("Type 'y' or 'n': ");
 		while (answer=="") {
 			answer = scan.nextLine();
 			if (answer == "y") {
@@ -49,11 +48,10 @@ public class Teller {
 				password=null;
 			}
 			else if(answer == "n"){
-				System.out.println("Returning to menu...");
-				System.out.print("\n");
+				System.out.println("Returning to menu...\n");
 			} else {
 				scan.nextLine();
-				System.out.print("That was not a valid entry. Please type 'y' or 'n':");
+				System.out.println("That was not a valid entry. Please type 'y' or 'n':");
 
 			} 
 		}
@@ -61,11 +59,11 @@ public class Teller {
 	}
 	
 	//deposit money
-	public void deposit() {
+	public void deposit(int amount) {
 	}
 	
 	//withdraw money
-	public boolean withdraw() {
+	public boolean withdraw(int amount) {
 		return false;
 	}
 	
@@ -91,7 +89,7 @@ public class Teller {
 	}
 
 	public String getName() {
-		return (firstName+lastName);
+		return (firstName+" "+lastName);
 	}
 
 	public void setName(String firstName, String lastName) {
