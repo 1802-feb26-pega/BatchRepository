@@ -889,14 +889,14 @@ public class EvaluationService
 			String result;
 			
 			// TESTING
-			System.out.println("Before Loop");
+			/*System.out.println("Before Loop");
 			System.out.print("Input: ");
 			for (char x : input)
 			{
 				System.out.print(x);
 			}
 			System.out.println();
-			System.out.println();
+			System.out.println();*/
 			
 			// 3. Calculation
 			for(int x = 0; x < input.length; x++)
@@ -931,7 +931,7 @@ public class EvaluationService
 			result = new String(output);
 			
 			// TESTING
-			System.out.println("After Loop");
+			/*System.out.println("After Loop");
 			System.out.print("Input: ");
 			for (char x : input)
 			{
@@ -945,7 +945,7 @@ public class EvaluationService
 			}
 			System.out.println();
 			System.out.println("Result: " + result);
-			System.out.println();
+			System.out.println();*/
 			
 			return result;
 		}
@@ -982,6 +982,7 @@ public class EvaluationService
 		ArrayList<Integer> primeNums = new ArrayList<>();
 		int counter = 0;
 		int prime = 2;
+		//int arrSize = 0;
 		
 		// 3. Calculation
 		do
@@ -992,31 +993,63 @@ public class EvaluationService
 				primeNums.add(prime);
 				counter = counter + 1;
 			}
-			else if (!(prime % 2 == 0))
+			//else if (!(prime % 2 == 0))
+			else if (prime == 3)
 			{
-				
-				/*if((prime % counter) == 0)
+				primeNums.add(prime);
+				counter = counter + 1;
+			}
+			else
+			{
+				if (prime % 2 != 0 && prime % 3 != 0)
 				{
-					// Add prime to primeNums
-					primeNums[counter] = prime;
-					counter = counter + 1;
-				}*/
+					int i = 5;
+					int w = 2;
+					boolean isPrime = true;
+					
+					while(i * i <= prime)
+					{
+						if(prime % i == 0)
+						{
+							isPrime = false;
+						}
+						
+						i = i + w;
+						w = 6 - w;
+					}
+					
+					if(isPrime)
+					{
+						primeNums.add(prime);
+						//primeNums[x] = prime;
+						counter = counter + 1;
+					}					
+					
+				}
 			}
 			
 			// increment prime
 			prime = prime + 1;
 			
-		} while (counter < primeNums.size());
+			// TESTING
+			/*System.out.println("Counter: " + counter);
+			System.out.println("Prime: " + prime);
+			//System.out.println("primeNums size: " + primeNums.size());
+			System.out.println();*/
+			
+		} while (counter <= input);
 		
 		// 4. Output
-		System.out.println("primeNums: ");
+		// TESTING
+		/*System.out.println("primeNums: ");
 		for (int x : primeNums)
 		{
 			System.out.println(x);
 		}
-		System.out.println();
+		System.out.println();*/
 		
 		return primeNums.get(input - 1);
+		//return primeNums[input - 1];
 	}
 	
 	/**
@@ -1043,7 +1076,14 @@ public class EvaluationService
 	 * rxpyi ldmul cqfnk hlevi gsvoz abwlt gives thequickbrownfoxjumpsoverthelazydog
 	 *
 	 */
-	static class AtbashCipher {
+	static class AtbashCipher
+	{
+		// Variables
+		private static List<Character> alphabet = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 
+				'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 
+				'y', 'z');
+		private static List<Character> atbash = Arrays.asList('z', 'y', 'x', 'w', 'v', 'u', 't', 's', 'r', 
+				'q', 'p', 'o', 'n', 'm', 'l', 'k', 'j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a');
 
 		/**
 		 * Question 13
@@ -1051,9 +1091,64 @@ public class EvaluationService
 		 * @param string
 		 * @return
 		 */
-		public static String encode(String string) {
+		public static String encode(String string)
+		{
 			// TODO Write an implementation for this method declaration
-			return null;
+			
+			// 1. Variables & 2. Input
+			char[] input = string.toCharArray();
+			//char[] output = new char[input.length];
+			ArrayList<Character> output = new ArrayList<>();
+			int inKey;
+			int outSize;
+			int counter = 0;
+			String result = "";
+			
+			for(int x = 0; x < input.length; x++)
+			{
+				if (Character.isLetter(input[x]))
+				{
+					// Set keys
+					inKey = alphabet.indexOf(Character.toLowerCase(input[x]));
+					//newKey = inKey + key;
+					
+					/*if (newKey >= alphabet.size())
+					{
+						newKey = newKey - 26;
+					}*/
+					
+					output.add(atbash.get(inKey));
+				}
+				else if (Character.isDigit(input[x]))
+				{
+					output.add(input[x]);
+				}
+			}
+			
+			outSize = output.size();
+			
+			do
+			{
+				for (int x = 0; x < 5; x++)
+				{
+					if (counter < outSize)
+					{
+						result = result + output.get(counter);
+						
+						if (x == 4 & output.get(counter) != output.get(outSize - 1))
+						{
+							result = result + " ";
+						}
+						
+						counter = counter + 1;
+					}
+				}
+				
+			}while(counter < outSize);
+			
+			//System.out.println("Result: " + result);
+			
+			return result;
 		}
 
 		/**
@@ -1062,9 +1157,50 @@ public class EvaluationService
 		 * @param string
 		 * @return
 		 */
-		public static String decode(String string) {
+		public static String decode(String string)
+		{
 			// TODO Write an implementation for this method declaration
-			return null;
+			// 1. Variables & 2. Input
+			char[] input = string.toCharArray();
+			char[] output = new char[input.length];
+			//ArrayList<Character> output = new ArrayList<>();
+			int inKey;
+			//int outSize;
+			//int counter = 0;
+			String result = "";
+			
+			for(int x = 0; x < input.length; x++)
+			{
+				if (Character.isLetter(input[x]))
+				{
+					// Set keys
+					inKey = atbash.indexOf(Character.toLowerCase(input[x]));
+					//newKey = inKey + key;
+					
+					/*if (newKey >= alphabet.size())
+					{
+						newKey = newKey - 26;
+					}*/
+					
+					//output.add(alphabet.get(inKey));
+					output[x] = alphabet.get(inKey);
+				}
+				else if (Character.isDigit(input[x]))
+				{
+					//output.add(input[x]);
+					output[x] = input[x];
+				}
+			}
+			
+			for(int x = 0; x < output.length; x++)
+			{
+				if (Character.isLetterOrDigit(output[x]))
+				{
+					result = result + output[x];
+				}
+			}
+			
+			return result;
 		}
 	}
 	
@@ -1090,18 +1226,44 @@ public class EvaluationService
 	 * @param string
 	 * @return
 	 */
-	public boolean isValidIsbn(String string) {
+	public boolean isValidIsbn(String string)
+	{
 		// TODO Write an implementation for this method declaration
 		
-		// 1. Variables
-		
-		// 2. Input
+		// 1. Variables & 2. Input
+		char[] input = string.toCharArray();
+		int isbnMod = 10;
+		int result = 0;
 		
 		// 3. Calculation
+		for(int x = 0; x < input.length; x++)
+		{
+			if (isbnMod < 1)
+			{
+				return false;
+			}
+			else if(Character.isDigit(input[x]))
+			{
+				result = result + (Integer.parseInt(Character.toString(input[x])) * isbnMod);
+				isbnMod = isbnMod - 1;
+			}
+			else if (input[x] == 'X')
+			{
+				result = result + (10 * isbnMod);
+				isbnMod = isbnMod - 1;
+			}
+			else if (input[x] == '-')
+			{
+				
+			}
+			else
+			{
+				return false;
+			}
+		}
 		
 		// 4. Output
-		
-		return false;
+		return result % 11 == 0;
 	}
 	
 	/**
