@@ -27,37 +27,30 @@ public class TestProblem6 {
 	public ExpectedException expectedException = ExpectedException.none();
 	
 	/*******************************************************************
-	 * Question 11
+	 * Question 19
 	 ******************************************************************/
-
 	@Test
-	public void rotateSingleCharacterWithWrapAround() {
-		EvaluationService.RotationalCipher rotationalCipher = new EvaluationService.RotationalCipher(13);
-		assertEquals("a", rotationalCipher.rotate("n"));
+	public void testThatAValidCanadianSocialInsuranceNumberIsIdentifiedAsValidV1() {
+		assertTrue(evaluationService.isLuhnValid("046 454 286"));
 	}
 
 	@Test
-	public void rotateCapitalLetters() {
-		EvaluationService.RotationalCipher rotationalCipher = new EvaluationService.RotationalCipher(5);
-		assertEquals("TRL", rotationalCipher.rotate("OMG"));
+	public void testThatAnInvalidCanadianSocialInsuranceNumberIsIdentifiedAsInvalid() {
+		assertFalse(evaluationService.isLuhnValid("046 454 287"));
 	}
 
 	@Test
-	public void rotateNumbers() {
-		EvaluationService.RotationalCipher rotationalCipher = new EvaluationService.RotationalCipher(4);
-		assertEquals("Xiwxmrk 1 2 3 xiwxmrk", rotationalCipher.rotate("Testing 1 2 3 testing"));
+	public void testThatAnInvalidCreditCardIsIdentifiedAsInvalid() {
+		assertFalse(evaluationService.isLuhnValid("8273 1232 7352 0569"));
 	}
 
 	@Test
-	public void rotatePunctuation() {
-		EvaluationService.RotationalCipher rotationalCipher = new EvaluationService.RotationalCipher(21);
-		assertEquals("Gzo'n zvo, Bmviyhv!", rotationalCipher.rotate("Let's eat, Grandma!"));
+	public void testThatAddingANonDigitCharacterToAValidStringInvalidatesTheString() {
+		assertFalse(evaluationService.isLuhnValid("046a 454 286"));
 	}
 
 	@Test
-	public void rotateAllLetters() {
-		EvaluationService.RotationalCipher rotationalCipher = new EvaluationService.RotationalCipher(13);
-		assertEquals("The quick brown fox jumps over the lazy dog.",
-				rotationalCipher.rotate("Gur dhvpx oebja sbk whzcf bire gur ynml qbt."));
+	public void testThatStringContainingPunctuationIsInvalid() {
+		assertFalse(evaluationService.isLuhnValid("055-444-285"));
 	}
-}
+ }
