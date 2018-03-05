@@ -16,9 +16,10 @@ public class UserIO {
 	
 	public void writeUser(User aUser)
 	{
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter(filename, true)))
+		//try(BufferedWriter bw = new BufferedWriter(new FileWriter(filename, true)))
+		try(FileWriter bw = new FileWriter(filename,false))
 		{
-			bw.write(aUser.toString());
+			bw.write(aUser.toString()+"\n");
 		} catch (IOException e)
 		{
 			e.printStackTrace();

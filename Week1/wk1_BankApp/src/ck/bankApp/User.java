@@ -155,13 +155,16 @@ public class User {
 		System.out.println("First Name = " + this.getFirstName());
 		System.out.println(" Last Name = " + this.getLastName());
 	}//display account information
-
+//====================================================
+	
+	
+	
+//====================================================
 	@Override
 	public String toString()
 	{
 		return new String(username + ":" + firstName + ":" + lastName + ":" + balance);
 	}
-	
 	
 	
 }
