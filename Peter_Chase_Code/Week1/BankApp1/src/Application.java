@@ -72,7 +72,7 @@ public class Application {
 		currentUser = null;
 	}
 	
-	public static void writeUsers() {
+	public static synchronized void writeUsers() {
 		try {
 			FileOutputStream fos = new FileOutputStream(fileName);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -86,7 +86,7 @@ public class Application {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static void readUsers() {
+	private static synchronized void readUsers() {
 		try {
 			FileInputStream fos = new FileInputStream(fileName);
 			ObjectInputStream ois = new ObjectInputStream(fos);
