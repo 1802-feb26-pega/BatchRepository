@@ -113,7 +113,7 @@ public class SimpleATM {
 
     }
 
-    public static void main(String... args) throws ClassNotFoundException{
+    public static void main(String... args) {
         boolean done = false;
         System.out.println("\nWelcome to the Absurdly Simplified Bank.\n");
 
