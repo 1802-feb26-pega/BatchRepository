@@ -73,7 +73,8 @@ public class SimpleATM {
     }
 
     static void logout() {
-        USERVICE.saveUser(currentUser);
+        if(currentUser != null)
+            USERVICE.saveUser(currentUser);
         currentUser = null;
     }
 
@@ -112,9 +113,8 @@ public class SimpleATM {
 
     }
 
-    public static void main(String... args) {
+    public static void main(String... args) throws ClassNotFoundException{
         boolean done = false;
-
         System.out.println("\nWelcome to the Absurdly Simplified Bank.\n");
 
         while(!done) {
@@ -155,7 +155,10 @@ public class SimpleATM {
                     System.out.println("Your new balance is: " + USD.format(currentUser.getBalance()));
                     break;
                 case "6":
-                    System.out.println("Your current balance is: " + USD.format(currentUser.getBalance()));
+                    if(currentUser == null)
+                        System.out.println("Please log in before you do that");
+                    else
+                        System.out.println("Your current balance is: " + USD.format(currentUser.getBalance()));
                     break;
                 case "7":
                     logout();
