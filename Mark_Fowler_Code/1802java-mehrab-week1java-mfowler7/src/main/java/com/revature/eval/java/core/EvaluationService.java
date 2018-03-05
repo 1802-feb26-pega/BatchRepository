@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -441,7 +442,23 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Integer> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
+
+		List<Integer> primes = new ArrayList<Integer>();
+		
+		// Generate list of primes up to l arg
+		for (int i = 2; i < (int) l; i++) {
+			boolean isPrime = true;
+			for (int j = 2; j < i; i++) {
+				if (i % j == 0) {
+					isPrime = false;
+					break;
+				}
+			}
+			if (isPrime == true) { 
+				primes.add(i);
+			}
+		}
+		
 		return null;
 	}
 
@@ -554,7 +571,7 @@ public class EvaluationService {
 			Map<Character, Character> cipher = new HashMap<Character, Character>();
 			cipher = reverseAlphaKey();
 			
-			// Remove punctuation and spaces from string arg
+			/*// Remove punctuation and spaces from string arg
 			String replaced = string.replaceAll(" ", "").replaceAll("[,.]", "").toLowerCase();
 			
 			// Add each letter to character array
@@ -576,7 +593,8 @@ public class EvaluationService {
 				encoded += Character.toString(letters[i]);
 			}
 			
-			return encoded;
+			return encoded;*/
+			return null;
 			
 		}
 		
