@@ -37,7 +37,7 @@ public class Main {
 				
 				password = scan.next();
 				
-				if(!myBank.login(email, password)) {
+				if(myBank.login(email, password)) {
 					System.out.println("Incorrect email or password");
 				}
 				

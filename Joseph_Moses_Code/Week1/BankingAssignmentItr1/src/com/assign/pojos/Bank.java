@@ -27,6 +27,8 @@ public class Bank{
 	
 	public boolean closeBank() {
 		
+		io.clearFile();
+		
 		for(User u : users) {
 			io.writeUsers(u);
 		}
@@ -47,9 +49,6 @@ public class Bank{
 				else {
 					return false;
 				}	
-			}
-			else {
-				return false;
 			}
 		}
 		return false;
