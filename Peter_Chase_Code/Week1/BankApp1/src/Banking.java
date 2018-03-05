@@ -35,12 +35,12 @@ public class Banking extends JFrame {
 		char c = e.getKeyChar();
 		String text = tf.getText();
 		
-		if (c >= '0' && c <= '9' || e.getKeyCode() == KeyEvent.VK_PERIOD) {
+		if (c >= '0' && c <= '9'
+		|| e.getKeyCode() == KeyEvent.VK_PERIOD && !text.contains(".")) {
 			tf.setText(tf.getText() + c);
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && !text.equals("")) {
-			System.out.println("fuck yeah");
 			tf.setText(text.substring(0, text.length() - 1));
 		}
 	}
@@ -50,7 +50,7 @@ public class Banking extends JFrame {
 	}
 	
 	private void btnWithdrawClick() {
-		float amount = parseField(withdrawField);
+		double amount = parseField(withdrawField);
 		boolean success = Application.getUser().withdraw(amount);
 		
 		if (success) {
@@ -66,7 +66,7 @@ public class Banking extends JFrame {
 	}
 	
 	private void btnDepositClick() {
-		float amount = parseField(depositField);
+		double amount = parseField(depositField);
 		Application.getUser().deposit(amount);
 		updateBalance();
 		if (amount != 0.0f) {
@@ -74,15 +74,15 @@ public class Banking extends JFrame {
 		}
 	}
 	
-	private float parseField(JTextField tf) {
+	private double parseField(JTextField tf) {
 		lblSuccess.setText("");
 		String text = tf.getText();
-		float amount = 0.0f;
+		double amount = 0.0;
 		if (!text.equals("")) {
 			if (text.contains(".")) {
-				amount = Float.parseFloat(text);
+				amount = Double.parseDouble(text);
 			} else {
-				amount = (float)Integer.parseInt(text);
+				amount = (double)Integer.parseInt(text);
 			}
 		}
 		tf.setText("");

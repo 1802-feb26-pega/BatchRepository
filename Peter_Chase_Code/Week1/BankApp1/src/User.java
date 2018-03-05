@@ -6,26 +6,27 @@ public class User implements Serializable {
 	private String name;
 	private String email;
 	private String password;
-	private float balance;
+	private double balance;
 	
 	public User(String name, String email, String password) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		
-		balance = 0.0f;
+		balance = 0.0;
 	}
 	
-	public void deposit(float amount) {
+	public void deposit(double amount) {
 		balance += amount;
 	}
 	
-	public boolean withdraw(float amount) {
+	public boolean withdraw(double amount) {
 		if (balance < amount) {
 			return false;
 		}
 		
 		balance -= amount;
+		
 		return true;
 	}
 	
@@ -37,5 +38,5 @@ public class User implements Serializable {
 	public String getName() { return name; }
 	public String getEmail() { return email; }
 	public String getPassword() { return password; }
-	public float getBalance() { return balance; }
+	public double getBalance() { return balance; }
 }
