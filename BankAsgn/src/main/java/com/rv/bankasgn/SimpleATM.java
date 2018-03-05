@@ -144,15 +144,26 @@ public class SimpleATM {
                         login();
                     break;
                 case "3":
-                    logout();
+                    if(currentUser == null)
+                        System.out.println("Please log in before you do that");
+                    else
+                        logout();
                     break;
                 case "4":
-                    depositOrWithdraw(true);
-                    System.out.println("Your new balance is: " + USD.format(currentUser.getBalance()));
+                    if(currentUser == null)
+                        System.out.println("Please log in before you do that");
+                    else {
+                        depositOrWithdraw(true);
+                        System.out.println("Your new balance is: " + USD.format(currentUser.getBalance()));
+                    }
                     break;
                 case "5":
-                    depositOrWithdraw(false);
-                    System.out.println("Your new balance is: " + USD.format(currentUser.getBalance()));
+                    if(currentUser == null)
+                        System.out.println("Please log in before you do that");
+                    else {
+                        depositOrWithdraw(false);
+                        System.out.println("Your new balance is: " + USD.format(currentUser.getBalance()));
+                    }
                     break;
                 case "6":
                     if(currentUser == null)
