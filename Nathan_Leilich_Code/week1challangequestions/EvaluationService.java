@@ -834,33 +834,10 @@ public class EvaluationService {
 	 * @throws Exception 
 	 */
 	public int solveWordProblem(String string) throws Exception  {
-		// TODO test
-		
-		String[] words = string.split(" ");
-		for(String s : words) {
-			
-			
-		}//if
-		string = string.replace("/[^a-zA-Z0-9-]/", "");
-		if(string.contains("plus")){
-			
-			
-		}//if
-		else if(string.contains("minus")){
-			
-			
-		}//elseif
+		// TODO everything
 		
 		
-		else if(string.contains("multiplied by")) {
-			
-			
-		}//elseif
-		else if(string.contains("divided by")) {
-			
-			
-		}//elseif
-		throw new Exception("can't compute");
+		return 0;
 	}
 
 }
