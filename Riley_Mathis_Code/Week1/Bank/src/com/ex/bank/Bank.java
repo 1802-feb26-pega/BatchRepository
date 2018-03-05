@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Bank {
-	//static Set<String> users = new HashSet<>();
-	
+
 	public static void main(String[] args) {
 		
 		Scanner scan = new Scanner(System.in);
@@ -36,6 +35,7 @@ public class Bank {
 		}
 		else {
 			System.out.println("Invalid input! Must be 'r' or 'l'.");
+			welcome(scan);
 		}
 	}
 	
@@ -60,7 +60,6 @@ public class Bank {
 		}
 		else {
 			String output = fn+":"+ln+":"+un+":"+pw+":"+user.getBalance();
-			//users.add(un);
 			try(BufferedWriter bw = new BufferedWriter(new FileWriter(user.getFileName(), false))){
 				bw.write(output.toString());
 			} catch(IOException e) {
@@ -77,7 +76,6 @@ public class Bank {
 		System.out.println("Username:");
 		un = scan.nextLine();
 		File fileName = new File("src/data/"+un+".txt");
-		System.out.println(un + "  " + fileName);
 		
 		if(fileName.exists()) {
 			try(BufferedReader br = new BufferedReader(new FileReader(fileName))){
@@ -216,7 +214,7 @@ public class Bank {
 		currentBalance = data.get(4);
 		newBalance = Integer.parseInt(currentBalance) - amount;
 		
-		if(newBalance >= 0) {
+		if(newBalance >= 0 && amount > 0) {
 			data.set(4,newBalance.toString());
 			for(int i = 0; i<5; i++) {
 				if(i==4) {
