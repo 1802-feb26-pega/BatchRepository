@@ -12,7 +12,7 @@ import java.util.List;
 import ck.bankApp.User;
 
 public class UserIO {
-	final static String filename = "/src/data/accounts.txt";
+	final static String filename = "./accounts.txt";
 	
 	public void writeUser(User aUser)
 	{

@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class User {
 	private String username;
+	private String password;
 	private String firstName;
 	private String lastName;
 	private double balance;
@@ -75,12 +76,14 @@ public class User {
 					System.out.println("Your account cannot overdraw more than $100.00");
 					System.out.println("Available Balance: $" + this.getBalance());
 					System.out.println("Enter amount to withdraw:");
+					sc.nextLine();
 				}else if(amountToWithdraw < 0)
 				{
 					System.out.println("!!!!!!!!!!!!!!!!!");
 					System.out.println("You cannot withdraw negative amounts!");
 					System.out.println("Available Balance: $" + this.getBalance());
 					System.out.println("Enter amount to withdraw:");
+					sc.nextLine();
 				}else
 				{
 					this.setBalance(this.getBalance()-amountToWithdraw);
@@ -95,6 +98,7 @@ public class User {
 				System.out.println("Your available balance: $" + this.getBalance());
 				System.out.println("Your account cannot overdraw more than $100.00");
 				System.out.println("Enter the amount you would like to withdraw:");
+				sc.nextLine();
 			}//try-catch
 		}//while
 		sc.close();
@@ -133,8 +137,10 @@ public class User {
 				System.out.println("================================");
 				System.out.println("Your current balance is: $" + this.getBalance());
 				System.out.println("Please enter the amount you would like to deposit:");
+				sc.nextLine();
 			}
 		}
+		sc.close();
 	}//deposit funds
 	
 	public void checkBalance()
