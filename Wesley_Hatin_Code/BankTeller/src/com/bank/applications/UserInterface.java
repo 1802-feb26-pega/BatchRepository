@@ -34,7 +34,7 @@ public class UserInterface {
 				System.out.println("");
 				
 				if (t.logIn(user, pass)) {
-					System.out.println("Success: Welcome, " + t.getName());
+					System.out.println("Password accepted: Welcome, " + t.getName());
 				} 
 				else {
 					System.out.println("Sorry, that's not a valid username/password combination.");
@@ -95,50 +95,82 @@ public class UserInterface {
 				e.printStackTrace();
 			}
 			System.out.println(name[0] + ", what action would you like to take now?");
-			System.out.println("If you would like to make a deposit, please press '1'.");
-			System.out.println("If you would like to make a withdrawl, please press '2'.");
-			System.out.println("If you would like to check your balance, please press '3'.");
-			System.out.println("If you would like to log out, please press '4'.");
+			System.out.println("If you would like to make a deposit, please press 1.");
+			System.out.println("If you would like to make a withdrawl, please press 2.");
+			System.out.println("If you would like to check your balance, please press 3.");
+			System.out.println("If you would like to log out, please press 4.");
 			option=Integer.valueOf(menu.nextLine());
 			System.out.println("");
 			
+			String answer="";
+			Integer amount;
 			switch(option) {
 			
 			//Deposit
 			case 1:
 				System.out.println("How much would you like to deposit?");
-				t.deposit(Integer.valueOf(menu.nextLine()));
+				amount = Integer.valueOf(menu.nextLine());
+				System.out.println("Are you sure you want to deposit?");
+				System.out.println("Type Y or N: ");
 				
-				System.out.println("");
-				System.out.println("Your new balance is $" + t.getBalance());
+				do {
+					answer = menu.nextLine();
+					if ((answer.toLowerCase()).equals("y")) {
+						t.deposit(amount);
+						System.out.println("");
+					}
+					else if((answer.toLowerCase()).equals("n")){
+						System.out.println("Returning to menu...\n");
+					} else {
+						System.out.println("That was not a valid entry. Please type Y or N: ");
+
+					} 
+				}while (answer=="");
+				
+				System.out.println("Your new balance is $" + String.format("%.2f", t.getBalance()));
 				System.out.println("");
 				break;
 				
 			//Withdrawal
 			case 2:
 				System.out.println("How much would you like to withdraw?");
+				amount = Integer.valueOf(menu.nextLine());
+				System.out.println("Are you sure you want to withdraw?");
+				System.out.println("Type Y or N: ");
 				
-				if(t.withdraw(Integer.valueOf(menu.nextLine()))) {
-					System.out.println("");
-					System.out.println("Your new balance is $" + t.getBalance());
-				}
-				else {
-					System.out.println("");
-					System.out.println("You do not have enough funds to make that withdrawl.");
-					System.out.println("We're nice though, so we won't fee you for it.");
-				}
-				System.out.println("");
+				do {
+					answer = menu.nextLine();
+					if ((answer.toLowerCase()).equals("y")) {
+						if(t.withdraw(amount)) {
+							
+							System.out.println("");
+							System.out.println("Your new balance is $" + String.format("%.2f", t.getBalance()));
+						}
+						else {
+							System.out.println("");
+							System.out.println("You do not have enough funds to make that withdrawl.");
+							System.out.println("We're nice though, so we won't fee you for it.");
+						}
+						System.out.println("");
+						System.out.println("");
+					}
+					else if((answer.toLowerCase()).equals("n")){
+						System.out.println("Returning to menu...\n");
+					} else {
+						System.out.println("That was not a valid entry. Please type Y or N: ");
+
+					} 
+				}while (answer=="");
 				break;
 				
 			//Balance
 			case 3:
-				System.out.println("Your current balance is $" + t.getBalance());
+				System.out.println("Your current balance is $" + String.format("%.2f", t.getBalance()));
 				System.out.println("");
 				break;
 				
 			//Log-out
 			case 4:
-				String answer;
 				System.out.println("Are you sure you want to log out?");
 				System.out.println("Type Y or N: ");
 				do {
@@ -166,6 +198,9 @@ public class UserInterface {
 				}
 				if(repeatResponse.toLowerCase().equals((String)"e")) {
 					t.logOut();
+				}
+				else {
+					System.out.println("Returning to menu...\n");
 				}
 			}
 			
