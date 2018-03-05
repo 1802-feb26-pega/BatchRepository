@@ -23,6 +23,9 @@ public class UserAccessImplText implements UserAccess {
 
     @Override
     public User getUser(String email) {
+        for(User u : allUsers)
+            if(u.getEmail().equals(email))
+                return u;
         return null;
     }
 
@@ -30,7 +33,7 @@ public class UserAccessImplText implements UserAccess {
     public void writeAll() {
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_ALL, false))){
             for(User u : allUsers)
-                bw.write(u.toString());
+                bw.write(u.toString() + "\n");
         } catch(IOException ioe){
             ioe.printStackTrace();
         }
@@ -45,7 +48,7 @@ public class UserAccessImplText implements UserAccess {
 
             while((line = br.readLine()) != null) {
                 String[] tks = line.split(",");
-                sts.add(new User(tks[0], tks[1], tks[2], tks[3], Float.parseFloat(tks[3])));
+                sts.add(new User(tks[2], tks[3], tks[0], tks[1], Float.parseFloat(tks[4])));
             }
 
         } catch(FileNotFoundException f) {

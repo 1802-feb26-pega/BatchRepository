@@ -16,7 +16,7 @@ public class UserService {
     static final NumberFormat USD = NumberFormat.getCurrencyInstance(Locale.US);
 
     public UserService() {
-        this.ua = new UserAccessImplSerialize();
+        this.ua = new UserAccessImplText();
     }
 
     public UserService(UserAccess u) {

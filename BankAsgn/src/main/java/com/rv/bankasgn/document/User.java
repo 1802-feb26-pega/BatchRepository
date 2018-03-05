@@ -78,6 +78,6 @@ public class User implements Serializable{
 
     @Override
     public String toString() {
-        return email + "," +firstname + "," + lastname + "," + balance;
+        return email  + "," + password + "," +firstname + "," + lastname + "," + balance;
     }
 }
