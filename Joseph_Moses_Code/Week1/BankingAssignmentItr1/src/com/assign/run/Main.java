@@ -176,7 +176,7 @@ public class Main {
 	
 	private static boolean validateCurrencyInput(String input) {
 		
-		if(input.matches("[-+]?\\d*\\.?\\d{2}")) {
+		if(input.matches("[+]?\\d*\\.?\\d{2}") && Double.parseDouble(input) < Double.MAX_VALUE) {
 			return true;
 		}
 		else return false;
@@ -197,5 +197,6 @@ public class Main {
 		
 		return false;
 	}
+	
 
 }
