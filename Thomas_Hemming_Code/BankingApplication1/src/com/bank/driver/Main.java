@@ -172,7 +172,7 @@ public class Main {
 	}
 	
 	private static boolean checkCurrency(String currency) {
-		if(currency.matches("[-+]?\\d*\\.?\\d{2}")) {
+		if(currency.matches("[+]?\\d*\\.?\\d?\\d?") && Double.parseDouble(currency) < Double.MAX_VALUE) {
 			return true;
 		}
 		return false;
