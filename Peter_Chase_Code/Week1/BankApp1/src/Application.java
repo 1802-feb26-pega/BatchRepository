@@ -60,7 +60,7 @@ public class Application {
 		writeUsers();
 	}
 	
-	public static synchronized void attemptSignIn(String nameOrEmail, String password) {
+	public static void attemptSignIn(String nameOrEmail, String password) {
 		for (User u : users) {
 			if (nameOrEmail.equals(u.getName()) || nameOrEmail.equals(u.getEmail())
 			&& password.equals(u.getPassword())) {
@@ -72,7 +72,7 @@ public class Application {
 		currentUser = null;
 	}
 	
-	public static synchronized void writeUsers() {
+	public static void writeUsers() {
 		try {
 			FileOutputStream fos = new FileOutputStream(fileName);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -86,7 +86,7 @@ public class Application {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static synchronized void readUsers() {
+	private static void readUsers() {
 		try {
 			FileInputStream fos = new FileInputStream(fileName);
 			ObjectInputStream ois = new ObjectInputStream(fos);
