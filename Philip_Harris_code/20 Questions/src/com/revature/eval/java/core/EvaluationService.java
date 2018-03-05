@@ -1,5 +1,6 @@
 package com.revature.eval.java.core;
 
+import java.time.Duration;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,8 +12,8 @@ import java.util.StringTokenizer;
 /*go to dir
  * then run mvn test
  * 
- * Completed: 1,2,3,4,5,6,8,9,11,12,13,14,15,16,18
- * Need to do: 7,10,17,19,20
+ * Completed: 1,2,3,4,5,6,8,9,11,12,13,14,15,16,18,19,20
+ * Need to do: 7,10,17,
  */
 public class EvaluationService {
 
@@ -322,6 +323,9 @@ public class EvaluationService {
 
 		public int indexOf(T t) {
 			// TODO Write an implementation for this method declaration
+			//CODE HERE
+			
+			
 			return 0;
 		}
 
@@ -410,8 +414,28 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Integer> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration		
-		return null;
+		// TODO Write an implementation for this method declaration	
+				
+		int num;
+		int i = 1;
+		int numOfPrimes = 0;
+		List<Integer> list = new ArrayList<Integer>();
+		while(true) {
+			int counter=0; 	  
+			for(num =i; num>=1; num--)
+			{
+				if(i%num==0){ counter = counter + 1; }
+			}
+			if (counter ==2) {
+				list.add(i);
+				numOfPrimes++;
+			}else {
+				
+			}
+			if(numOfPrimes==l) break;
+			i++;
+		}		
+		return list;
 	}
 
 	/**
@@ -488,9 +512,9 @@ public class EvaluationService {
 			int counter=0; 	  
 			for(num =i; num>=1; num--)
 			{
-				if(i%num==0){ counter = counter + 1; }
+				if(i%num==0){ counter += 1; }
 			}
-			if (counter ==2) {
+			if (counter==2) {
 				list.add(i);
 				numOfPrimes++;
 			}	
@@ -665,8 +689,13 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
+	
 		// TODO Write an implementation for this method declaration
-		return null;
+		
+		given = given.plus(Duration.ofSeconds(100000000000L));
+		System.out.println(given);
+		
+		return given;
 	}
 
 	/**
@@ -720,6 +749,7 @@ public class EvaluationService {
 	 * non-digit characters are disallowed.
 	 * 
 	 * Example 1: valid credit card number 1 4539 1488 0343 6467 The first step of
+	 *                                       8569 2478 0383 3437
 	 * the Luhn algorithm is to double every second digit, starting from the right.
 	 * We will be doubling
 	 * 
@@ -744,7 +774,48 @@ public class EvaluationService {
 	 */
 	public boolean isLuhnValid(String string) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		
+		
+		if(string.length() < 1) {
+			System.out.println("Number is less than 1. Please enter in the correct number");
+			return false;
+		}
+		if(string.matches("[0-9]+")==false) {
+			System.out.println("You have invalid characters. Please enter in a number");
+			return false;
+		}
+		
+		string = string.replaceAll(" ","");
+		StringBuilder num = new StringBuilder(string);
+		int sum = 0;
+		for(int i = 15; i > 0; i-=2){			
+			int x = Integer.parseInt(Character.toString(num.charAt(i)));
+			System.out.println("The number before doubling: " + x);
+			System.out.println("The number after doubling: " + x*2);
+			int d = x*2;
+			if(d > 9) {
+				int s = d-9;
+				String temp = Integer.toString(s);
+				char a = temp.charAt(0);
+				System.out.println("If the product was greater than 9: " + temp);					
+				num.setCharAt(i, temp.charAt(0));
+			}
+			else {
+				String temp = Integer.toString(d);
+				//System.out.println(temp.charAt(0));
+				num.setCharAt(i, temp.charAt(0));
+			}
+		}	
+		
+		num = num.deleteCharAt(0);
+		
+		for(int i = 0; i < num.length();i++) {
+			sum += Character.getNumericValue(num.charAt(i));
+		}
+		
+
+		if((sum%10)==0) return true;
+		else return false;
 	}
 
 	/**
@@ -785,7 +856,7 @@ public class EvaluationService {
 			for(int n: s) {
 				math += n;
 			}
-			
+
 		}
 		else if(string.toLowerCase().contains("minus")) {
 			s = work(string);

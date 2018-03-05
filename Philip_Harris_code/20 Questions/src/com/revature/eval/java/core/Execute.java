@@ -3,7 +3,9 @@
  */
 package com.revature.eval.java.core;
 
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author phili
@@ -58,7 +60,10 @@ public class Execute {
 		//EvaluationService q9 = new EvaluationService();
 		//System.out.println("Is " + 153 + " a Armstrong Number: " + q9.isArmstrongNumber(153));
 		
-		//EvaluationService q10 = new EvaluationService();
+		EvaluationService q10 = new EvaluationService();
+		List<Integer>  a= q10.calculatePrimeFactorsOf(100);
+		for(int x : a)
+			System.out.println(x);
 		
 		//RotationalCipher q11 = new RotationalCipher(5);
 		//System.out.println(q11.rotate("omg"));
@@ -76,13 +81,23 @@ public class Execute {
 		//EvaluationService q16 = new EvaluationService();
 		//System.out.println("Is this a pangram? " + q16.isPangram("Jived fox nymph grabs quick waltz."));
 		
+		
+//		EvaluationService q17 = new EvaluationService();
+//		Temporal given = null;
+//		given = q17.getGigasecondDate(given);
+
+		//q17.getGigasecondDate();
+		
 		//EvaluationService q18 = new EvaluationService();
 		//int[] a = {3,5};
 		//System.out.println(q18.getSumOfMultiples(20,a));
 
+		//EvaluationService q19 = new EvaluationService();
+		//System.out.println("Is this a valid luhn value: " + q19.isLuhnValid("1 4539  0343 6467"));
 		
-		EvaluationService q20 = new EvaluationService();
-		System.out.println(q20.solveWordProblem("What is 25 divided by 5?"));
+		//EvaluationService q20 = new EvaluationService();
+		//System.out.println(q20.solveWordProblem("What is 25 divided by 5?"));
+
 		
 	}	
 }
