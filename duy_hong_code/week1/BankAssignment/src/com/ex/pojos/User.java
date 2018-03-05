@@ -64,7 +64,7 @@ public class User {
 	
 	@Override
 	public String toString( ) {
-		return userName + ":" + firstName + ":" + lastName + ":" + password + ":" + balance;
+		return userName + ":" + firstName + ":" + lastName + ":" + password + ":" + balance + System.lineSeparator();
 	}
 	
 	public void deposit(double amount) {

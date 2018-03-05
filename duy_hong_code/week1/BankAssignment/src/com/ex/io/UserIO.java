@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import com.ex.pojos.User;
@@ -27,19 +28,29 @@ public class UserIO {
 		
 		try(BufferedReader br = new BufferedReader(new FileReader(filename))){
 			String line = null;
+			String[] data;	// = line.split(":");
 			
 			while((line=br.readLine()) != null) {
 				
-				String[] data = line.split(":");
-				User temp = new User();
-				
-				temp.setUserName(data[0]);
-				temp.setFirstName(data[1]);
-				temp.setLastName(data[2]);
-				temp.setPassword(data[3]);
-				temp.setBalance(Double.parseDouble(data[4]));
-				
-				users.put(data[0], temp);
+				data = line.split(":");
+				//System.out.println(Arrays.toString(data));
+				if(data.length == 5) {
+					/*System.out.println(data[0]);
+					System.out.println(data[1]);
+					System.out.println(data[2]);
+					System.out.println(data[3]);
+					System.out.println(data[4]);*/
+					
+					User temp = new User();
+					
+					temp.setUserName(data[0]);
+					temp.setFirstName(data[1]);
+					temp.setLastName(data[2]);
+					temp.setPassword(data[3]);
+					temp.setBalance(Double.parseDouble(data[4]));
+					
+					users.put(data[0], temp);
+				}
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
