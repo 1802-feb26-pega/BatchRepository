@@ -7,7 +7,7 @@ public class Teller {
 	private String username;
 	private String firstName;
 	private String lastName;
-	private String password;
+	private String password="";
 	
 	// create an account with a unique email or username
 	public void createAccount() {
@@ -16,46 +16,22 @@ public class Teller {
 	}
 	
 	// log in 
-	public void logIn() {
-		Scanner scan = new Scanner(System.in);
-		
-		while(password=="") {
-			System.out.println("Enter your username: ");
-			this.setUsername(scan.nextLine());
-			System.out.println("");
-			
-			System.out.println("Enter your password: ");
-			this.setPassword(scan.nextLine());
-			System.out.println("");
-			
-			
+	public boolean logIn(String username, String password) {
+		//TODO:check if username/password are in database
+		if(username.equals("alpha")) {
+			this.username=username;
+			this.password=password;
+			return true;
 		}
-		
-		scan.close();
+		else {
+			return false;
+		}
 	}
 	
 	//log out
 	public void logOut() {
-		Scanner scan = new Scanner(System.in);
-		String answer = "";
-		
-		System.out.println("Are you sure you want to log out?");
-		System.out.println("Type 'y' or 'n': ");
-		while (answer=="") {
-			answer = scan.nextLine();
-			if (answer == "y") {
-				setUsername(null);
-				password=null;
-			}
-			else if(answer == "n"){
-				System.out.println("Returning to menu...\n");
-			} else {
-				scan.nextLine();
-				System.out.println("That was not a valid entry. Please type 'y' or 'n':");
-
-			} 
-		}
-		scan.close();
+		this.username=null;
+		this.password=null;
 	}
 	
 	//deposit money

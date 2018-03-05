@@ -7,45 +7,70 @@ public class UserInterface {
 	public static void main(String[] args) {
 		Teller t = new Teller();
 		int option;
-		Scanner scan = new Scanner(System.in);
+		Scanner menu = new Scanner(System.in);
+		
 		System.out.println("Welcome to your automated bank terminal!");
 		System.out.println("If you would like to log in to your account, please press '1'.");
 		System.out.println("If you would like to create a new account, please press '2'.");
-		option = scan.nextInt();
+		
+		option = Integer.valueOf(menu.nextLine());
 		System.out.println(""); 
-		scan.close();
 		
 		switch(option) {
 		case 1:
-			t.logIn();
+			String user, pass;
+			
+			do {
+				System.out.println("Enter your username: ");
+				user = String.valueOf(menu.nextLine());
+				System.out.println("");
+				System.out.println("Enter your password: ");
+				pass = String.valueOf(menu.nextLine());
+				System.out.println("");
+				if (t.logIn(user, pass)) {
+					System.out.println("Success: Welcome, " + t.getName());
+				} 
+				else {
+					System.out.println("Sorry, that's not a valid username/password combination.");
+					System.out.println("Try again.");
+					System.out.println("");
+					pass = "";
+				}
+			} while (pass=="");
 			break;
 		case 2:
 			t.createAccount();
 			break;
 		}
 		String[] name = t.getName().split(" ");
-		Scanner menu = new Scanner(System.in);
 		
 		while(t.getUsername()!=null) {
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			System.out.println(name[0] + ", what action would you like to take now?");
 			System.out.println("If you would like to make a deposit, please press '1'.");
 			System.out.println("If you would like to make a withdrawl, please press '2'.");
 			System.out.println("If you would like to check your balance, please press '3'.");
 			System.out.println("If you would like to log out, please press '4'.");
-			option=menu.nextInt();
+			option=Integer.valueOf(menu.nextLine());
 			System.out.println("");
 			
 			switch(option) {
 			case 1:
 				System.out.println("How much would you like to deposit?");
-				t.deposit(scan.nextInt());
+				t.deposit(Integer.valueOf(menu.nextLine()));
+				
 				System.out.println("");
 				System.out.println("Your new balance is $" + t.getBalance());
 				System.out.println("");
 				break;
 			case 2:
 				System.out.println("How much would you like to withdraw?");
-				if(t.withdraw(scan.nextInt())) {
+				
+				if(t.withdraw(Integer.valueOf(menu.nextLine()))) {
 					System.out.println("");
 					System.out.println("Your new balance is $" + t.getBalance());
 				}
@@ -61,7 +86,21 @@ public class UserInterface {
 				System.out.println("");
 				break;
 			case 4:
-				t.logOut();
+				String answer;
+				System.out.println("Are you sure you want to log out?");
+				System.out.println("Type Y or N: ");
+				do {
+					answer = menu.nextLine();
+					if ((answer.toLowerCase()).equals("y")) {
+						t.logOut();
+					}
+					else if((answer.toLowerCase()).equals("n")){
+						System.out.println("Returning to menu...\n");
+					} else {
+						System.out.println("That was not a valid entry. Please type 'y' or 'n': ");
+
+					} 
+				}while (answer=="");
 				break;
 			}
 		}
