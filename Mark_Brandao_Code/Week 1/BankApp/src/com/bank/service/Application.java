@@ -65,17 +65,15 @@ public class Application {
 			}
 			else if (getOption() == 2) {
 				System.out.println("Enter how much you would like to deposit: ");
-				double withdraw = scan.nextDouble();
-				double total = user.getBalance() + withdraw;
-				user.setBalance(total);
-				System.out.println("Your new total is: $" + total);
+				double deposit = scan.nextDouble();
+				user.adjustBalance(deposit);
+				System.out.println("Your current balance is: $" + user.getBalance());
 			}
 			else if(getOption() == 3) {
 				System.out.println("Enter how much you would like to withdraw: ");
 				double withdraw = scan.nextDouble();
-				double total = user.getBalance() - withdraw;
-				user.setBalance(total);
-				System.out.println("Your new total is: $" + total);
+				user.adjustBalance(-1.0*withdraw);
+				System.out.println("Your current balance is: $" + user.getBalance());
 			}
 			else if (getOption () == 4) {
 				cont = false;
