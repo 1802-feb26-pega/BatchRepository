@@ -1,6 +1,8 @@
 package com.ex.inheritance;
 
-public interface Livable
-{
+public interface Livable {
 	
+	void live();
+	
+
 }

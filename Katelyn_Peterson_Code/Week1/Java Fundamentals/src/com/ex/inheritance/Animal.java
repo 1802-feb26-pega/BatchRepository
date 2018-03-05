@@ -1,11 +1,12 @@
 package com.ex.inheritance;
 
-public class Animal
-{
-	void breathe()
-	{
+public abstract class Animal extends Test{
+	
+	void breathe() {
 		System.out.println("Animals can breathe!");
 	}
 	
-	
+	abstract void eat();
+
+
 }
