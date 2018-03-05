@@ -114,8 +114,8 @@ public class Tester {
 //		System.out.println(es.isPangram("the quick brown fox jumps over the lazy dog"));
 		
 //		//#17
-//		LocalDate time = LocalDate.of(1996,Month.APRIL, 9);
-//		System.out.println(es.getGigasecondDate(time));
+		LocalDate time = LocalDate.of(1996,Month.APRIL, 9);
+		System.out.println(es.getGigasecondDate(time));
 	
 		//#18
 //		int set[] = {5,6,8};
@@ -125,7 +125,7 @@ public class Tester {
 		//System.out.println(es.isLuhnValid("046 454 286"));
 	
 		//#20
-		System.out.println(es.solveWordProblem("What is 21 divided by -7?"));
+//		System.out.println(es.solveWordProblem("What is 21 divided by -7?"));
 	
 	
 	

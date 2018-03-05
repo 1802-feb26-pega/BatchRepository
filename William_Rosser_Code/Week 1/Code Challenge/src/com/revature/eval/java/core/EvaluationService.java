@@ -676,11 +676,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		LocalDateTime now = LocalDateTime.now();
-		if (given instanceof LocalDate) given = ((LocalDate) given).atTime(0,0);
-		long timeElapsed = given.until(now, ChronoUnit.SECONDS);
-		long timeRemaining = 1000000000 - timeElapsed;
-		return now.plus(timeRemaining, ChronoUnit.SECONDS).withNano(0);
+		return ((given instanceof LocalDate) ? ((LocalDate) given).atTime(0,0) : given).plus(1000000000, ChronoUnit.SECONDS);
 	}
 
 	/**
