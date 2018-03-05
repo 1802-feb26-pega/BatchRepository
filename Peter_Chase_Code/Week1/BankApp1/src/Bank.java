@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-public class Banking extends JFrame {
+public class Bank extends JFrame {
 	private static final long serialVersionUID = -6882150152101214273L;
 	
 	private JPanel contentPane;
@@ -29,7 +29,7 @@ public class Banking extends JFrame {
 
 	private JLabel lblValidValue;
 	
-	public Banking() {
+	public Bank() {
 		initialize();
 	}
 	

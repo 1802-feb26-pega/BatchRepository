@@ -40,7 +40,7 @@ public class Application {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Banking bank = new Banking();
+					Bank bank = new Bank();
 					bank.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
