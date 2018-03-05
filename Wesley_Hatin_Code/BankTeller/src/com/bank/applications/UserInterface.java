@@ -155,11 +155,20 @@ public class UserInterface {
 				}while (answer=="");
 				break;
 			}
-			System.out.println("Please re-enter your password: ");
-			while(!String.valueOf(menu.nextLine()).equals(t.getPassword())) {
-				System.out.println("Sorry, that was not the correct password. Please re-enter your password: ");
-				System.out.println("");
+			if(option!=4) {
+				System.out.println("Please re-enter your password, or enter E to exit: ");
+				String repeatResponse = String.valueOf(menu.nextLine());
+				while(!repeatResponse.toLowerCase().equals((String)"e")&&!repeatResponse.equals(String.valueOf(t.getPassword()))) {
+					System.out.println("Sorry, that was not the correct password.");
+					System.out.println("Please re-enter your password or enter E to exit: ");
+					System.out.println("");
+					repeatResponse = String.valueOf(menu.nextLine());
+				}
+				if(repeatResponse.toLowerCase().equals((String)"e")) {
+					t.logOut();
+				}
 			}
+			
 		}
 		
 		//Exit screen
