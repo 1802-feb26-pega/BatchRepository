@@ -16,7 +16,11 @@ public class UserInterface {
 		option = Integer.valueOf(menu.nextLine());
 		System.out.println(""); 
 		
+		
+		//Log-in Menu
 		switch(option) {
+		
+		//Returning user
 		case 1:
 			String user, pass;
 			
@@ -24,9 +28,11 @@ public class UserInterface {
 				System.out.println("Enter your username: ");
 				user = String.valueOf(menu.nextLine());
 				System.out.println("");
+				
 				System.out.println("Enter your password: ");
 				pass = String.valueOf(menu.nextLine());
 				System.out.println("");
+				
 				if (t.logIn(user, pass)) {
 					System.out.println("Success: Welcome, " + t.getName());
 				} 
@@ -38,12 +44,50 @@ public class UserInterface {
 				}
 			} while (pass=="");
 			break;
+			
+		//Register new user
 		case 2:
-			t.createAccount();
+			String newUser, newPass, newFirst, newLast;
+			
+			do {
+				System.out.println("Enter a username: ");
+				newUser = String.valueOf(menu.nextLine());
+				System.out.println("");
+				
+				do {
+					System.out.println("Enter a password (minimum of 8 characters): ");
+					newPass = String.valueOf(menu.nextLine());
+					if(newPass.length()<8) {
+						System.out.println("That password is too short.");
+						System.out.println("");
+					}
+				} while (newPass.length()<8);
+				System.out.println("");
+				
+				System.out.println("Enter your first name: ");
+				newFirst = String.valueOf(menu.nextLine());
+				System.out.println("");
+				
+				System.out.println("Enter your last name: ");
+				newLast = String.valueOf(menu.nextLine());
+				System.out.println("");
+				
+				if(t.createAccount(newUser, newFirst, newLast, newPass)) {
+					System.out.println("Congratulations on your new account!");
+					System.out.println("");
+				}
+				else {
+					System.out.println("Sorry, that username is taken. Please choose another username.");
+					System.out.println("");
+					newUser="";
+				}
+			} while (newUser=="");
 			break;
 		}
 		String[] name = t.getName().split(" ");
 		
+		
+		//Main Menu
 		while(t.getUsername()!=null) {
 			try {
 				Thread.sleep(2000);
@@ -59,6 +103,8 @@ public class UserInterface {
 			System.out.println("");
 			
 			switch(option) {
+			
+			//Deposit
 			case 1:
 				System.out.println("How much would you like to deposit?");
 				t.deposit(Integer.valueOf(menu.nextLine()));
@@ -67,6 +113,8 @@ public class UserInterface {
 				System.out.println("Your new balance is $" + t.getBalance());
 				System.out.println("");
 				break;
+				
+			//Withdrawal
 			case 2:
 				System.out.println("How much would you like to withdraw?");
 				
@@ -81,10 +129,14 @@ public class UserInterface {
 				}
 				System.out.println("");
 				break;
+				
+			//Balance
 			case 3:
 				System.out.println("Your current balance is $" + t.getBalance());
 				System.out.println("");
 				break;
+				
+			//Log-out
 			case 4:
 				String answer;
 				System.out.println("Are you sure you want to log out?");
@@ -97,14 +149,26 @@ public class UserInterface {
 					else if((answer.toLowerCase()).equals("n")){
 						System.out.println("Returning to menu...\n");
 					} else {
-						System.out.println("That was not a valid entry. Please type 'y' or 'n': ");
+						System.out.println("That was not a valid entry. Please type Y or N: ");
 
 					} 
 				}while (answer=="");
 				break;
 			}
+			System.out.println("Please re-enter your password: ");
+			while(!String.valueOf(menu.nextLine()).equals(t.getPassword())) {
+				System.out.println("Sorry, that was not the correct password. Please re-enter your password: ");
+				System.out.println("");
+			}
 		}
+		
+		//Exit screen
 		System.out.println("Thank you for using your automated bank terminal.");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		System.out.println("Have a nice day!");
 		menu.close();
 	}

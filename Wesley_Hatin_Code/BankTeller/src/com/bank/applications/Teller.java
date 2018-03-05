@@ -1,31 +1,38 @@
 package com.bank.applications;
 
-import java.util.Scanner;
-
 public class Teller {
 	
 	private String username;
 	private String firstName;
 	private String lastName;
 	private String password="";
+	private double balance;
+	private BankDatabase db=new BankDatabase();
 	
 	// create an account with a unique email or username
-	public void createAccount() {
-		//TODO: ask for help with the writing to a file
-		//TODO: Write username, firstName, lastName, password
+	public boolean createAccount(String user, String first, String last, String pass) {
+		if(!db.usernameValidation(user)) {
+			db.writeNewClient(user, first, last, pass);
+			return true;
+		}
+		return false;
 	}
 	
 	// log in 
 	public boolean logIn(String username, String password) {
-		//TODO:check if username/password are in database
-		if(username.equals("alpha")) {
-			this.username=username;
-			this.password=password;
-			return true;
+		if(db.usernameValidation(username)) {
+			String[] entry = db.retrieveClientEntry(username);
+			
+			if(String.valueOf(password).equals(String.valueOf(entry[3]))) {
+				this.username=username;
+				this.password=password;
+				firstName=entry[1];
+				lastName=entry[2];
+				balance=Double.valueOf(entry[4]);
+				return true;
+			}
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 	
 	//log out
@@ -44,34 +51,20 @@ public class Teller {
 	}
 	
 	//view balance
-	public float getBalance() {
-		return 0;
+	public double getBalance() {
+		return balance;
 	}
 
 	public String getUsername() {
 		return username;
 	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
 	
 	public String getPassword() {
 		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getName() {
 		return (firstName+" "+lastName);
 	}
-
-	public void setName(String firstName, String lastName) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
-
 
 }
