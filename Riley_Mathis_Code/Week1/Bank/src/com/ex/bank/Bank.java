@@ -24,6 +24,7 @@ public class Bank {
 		scan.close();
 	}
 	public static void welcome(Scanner scan) {
+		
 		String temp = "";
 		System.out.println("Welcome\nRegister(r)--Login(l)");
 		temp = scan.nextLine();
@@ -40,6 +41,7 @@ public class Bank {
 	}
 	
 	public static void register(Scanner scan) {
+		
 		String fn,ln,un,pw = "";
 		System.out.println("Register");
 		System.out.println("Firstname:");
@@ -70,6 +72,7 @@ public class Bank {
 	}
 	
 	public static void login(Scanner scan) {
+		
 		String un,pw,checkPw = "";
 		List<String> data = new ArrayList<>();
 		System.out.println("Login");
@@ -106,6 +109,7 @@ public class Bank {
 	}
 	
 	public static void atm(Scanner scan, String username) {
+		
 		String choice = "";
 		System.out.println("Deposit(d) -- Withdraw(w) -- Show Balance(b) -- Logout(l)");
 		choice = scan.nextLine();
@@ -184,6 +188,7 @@ public class Bank {
 	}
 	
 	public static void withdraw(Scanner scan, String username) {
+		
 		String fileName = "src/data/"+username+".txt";
 		String output = "";
 		String currentBalance = "";
