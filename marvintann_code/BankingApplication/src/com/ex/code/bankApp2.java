@@ -46,6 +46,17 @@ public class bankApp2 {
 		return accounts;
 	}
 	
+	// write from map to text file
+	public static void writeFromMap(Map<String, ArrayList<String>> map, String key, File file) {
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))){
+			
+			bw.write(key+":"+map.get(key).get(0)+","+map.get(key).get(1)+';');
+			bw.newLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	// helper function to write stuff
 	public static void writeToFile(File file, String string, boolean newLine) {
         
@@ -256,7 +267,9 @@ public class bankApp2 {
 						Scanner depo = new Scanner(System.in);
 
 						int dep = depo.nextInt();
-						add(Integer.parseInt(map.get(un1)).get(1) + dep);
+						int curr = Integer.parseInt(map.get(un1).get(1));
+						String toAdd = Integer.toString(curr);
+						map.get(un1).set(1, toAdd);
 
 
 						break;
