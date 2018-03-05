@@ -4,11 +4,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+
+/*
+ * a user Interface for the Bank class
+ */
 public class Driver {
 
 	private static BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-	private static boolean running = true;
+	private static boolean running = true;  //while true, the program will continually loop
 	
+	
+	/*
+	 * Initializes a bank and calls the main menu
+	 */
 	public static void main(String[] args) {
 		
 		Bank bank = new Bank();
@@ -26,6 +34,11 @@ public class Driver {
 	}//main()
 	
 	
+	/*
+	 * prints a welcome message to the end user.  allows user to login,
+	 * create an account, or exit the program.  to options are also 
+	 * available for testing purposes: exit with serializing and admin tools
+	 */
 	private static void welcome(Bank bank) throws IOException {
 		
 		boolean invalidInput = true;
@@ -33,9 +46,9 @@ public class Driver {
 		
 							"1:  login" + "\n" + 
 							"2:  new user" + "\n" + 
-							"3:  admin tools" + "\n" +
-							"4:  exit" + "\n" +
-							"10:  exit without serializing");
+							"3:  exit" + "\n\n" +
+							"10:  exit without serializing" + "\n" +
+							"20:  admin tools");
 		String input = "";
 		while(invalidInput) {
 			
@@ -53,11 +66,6 @@ public class Driver {
 				break;
 				
 			case "3":
-				adminTools(bank);
-				invalidInput = false;
-				break;
-				
-			case "4":
 				exit(bank);
 				invalidInput = false;
 				break;
@@ -67,36 +75,44 @@ public class Driver {
 				invalidInput = false;
 				running = false;
 				break;
+				
+			case "20":
+				adminTools(bank);
+				invalidInput = false;
+				break;
 			default:
 				System.out.println("\n" + "Invalid menu option.  Here are the options again:" + "\n\n" +
 			
 									"1:  login" + "\n" + 
 									"2:  new user" + "\n" + 
-									"3:  admin tools" + "\n" +
-									"4:  exit" + "\n" +
-									"10:  exit without serializing");
+									"3:  exit" + "\n\n" +
+									"10:  exit without serializing" + "\n" +
+									"20:  admin tools");
 				break;
 			}//switch	
 		}//while
 	}//welcome()
 	
 	
-	
+	/*
+	 * end user can create a new account
+	 */
 	private static void newUser(Bank bank) throws IOException {
 		
 		boolean invalidInput = true;
 		String userName = "";
 		String password = "";
 		float balance = 0.0f;
-		while(invalidInput) {
+		while(invalidInput) {   //program loops until a valid username is entered
 			
 			System.out.println("enter a user name");
 			userName = stdin.readLine();
-			if(bank.userNameInUse(userName)) {
+			if(bank.userNameInUse(userName)) {  //entered username was not unique
 				
 				System.out.println("that name is already in use.  Try another");
 				continue;
 			}//if
+			
 			System.out.println("enter a password");
 			password = stdin.readLine();
 			System.out.println("enter a staring balance");
@@ -104,14 +120,16 @@ public class Driver {
 			bank.login(userName, password);
 			invalidInput = false;
 		}//while
+		
 		bank.newUser(userName, password, balance);
 		boolean loginSuccessful = bank.login(userName, password);
-		if(loginSuccessful) {
+		
+		if(loginSuccessful) { 
 			
 			System.out.println("\n" + "account creation sucsessful.  loging in..." + "\n");
 			accountManagement(bank);
 		}//if
-		else {
+		else {  //if something unexpected happens, newly made user is removed for good measure
 			
 			System.out.println("login failed");
 			bank.removeUser(userName);
@@ -119,29 +137,33 @@ public class Driver {
 	}//newUser()
 	
 	
+	/*
+	 * allows user to login
+	 */
 	private static void login(Bank bank) throws IOException {
 		
 		boolean invalidInput = true;
 		String userName = "";
 		String password = "";
 		int count = 0;
-		while(invalidInput) {
-			
+		while(invalidInput) {   //program loops until valid username and password are entered
+							  	
 			System.out.println("enter a user name");
 			userName = stdin.readLine();
 			System.out.println("enter a password");
 			password = stdin.readLine();
-			if(bank.login(userName, password)) {
+			
+			if(bank.login(userName, password)) { 	//login successful
 				
 				invalidInput = false;
 				System.out.println("logging in");
 			}//if
-			else {
+			else {		//login unsuccessful 
 				
 				System.out.println("invalid username or password");
 				count++;
-				if(count > 3) {
-					
+				if(count > 2) {		//if user fails to login on third attempt, 
+									//they are prompted to return to the main menu
 					System.out.println("you have failed " + count + " login attempts" + "\n" +
 										"exit to main menu?  (y/n)");
 					boolean secondInputInvalid = true;
@@ -173,6 +195,9 @@ public class Driver {
 	}//login()
 	
 	
+	/*
+	 * allows user to get balance, withdraw and deposte, or change passwords
+	 */
 	private static void accountManagement(Bank bank) throws IOException {
 		
 		boolean managing = true;
@@ -253,6 +278,17 @@ public class Driver {
 	}//accountManagement()
 	
 	
+	
+	/*
+	 * testing tools for the benifite of testing.  these options 
+	 * would not be avalible to end users in a commerial app.
+	 * 
+	 * Options inclue:  printing all user information, removing 
+	 * users by user name, and removeing all users.
+	 * 
+	 * Note that in the main menu, there is an option to exit without
+	 * serializing
+	 */
 	private static void adminTools(Bank bank) throws IOException {
 		
 		boolean administrating = true;
@@ -317,6 +353,9 @@ public class Driver {
 	}//adminTools()
 	
 	
+	/*
+	 * saves data to file and exits the program
+	 */
 	private static void exit(Bank bank) throws IOException {
 		
 		bank.exit();

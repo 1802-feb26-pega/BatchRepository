@@ -2,31 +2,32 @@ package com.revature.bank1;
 
 import java.util.HashMap;
 
+
+/*
+ * bank keeps track of Users.  It allows for the creation
+ * deletion, and manipulation of User objects, as well as
+ * the ability to save data post program
+ */
 public class Bank {
 
 	private HashMap<String, User> currentData;
 	private User currentUser;
 	private DataSerializer ds;
 	
+	
+	/*
+	 * constructor automatically deserializes data
+	 */
 	public Bank() {
 		
 		ds = DataSerializer.getInstance();
 		currentData = ds.deSerialize();	
 	}//constructor
-	
-	public Bank(User user) {
-		this();
-		currentUser = user;
-	}//constructor
-	
-	public void deserializeUserData() {
-		
-		currentData = ds.deSerialize();
-	}//deserializeUserData()
+
 	
 	
 	/*
-	 * a valid user
+	 * returns true if currentData contains a key mapping for input
 	 */
 	public boolean userNameInUse(String userName) {
 		
@@ -36,6 +37,7 @@ public class Bank {
 		}//if
 		return false;
 	}//userNameInUse()
+	
 	
 	/*
 	 * takes in a username and password and compares them to
@@ -57,41 +59,64 @@ public class Bank {
 		}//if
 		return false;
 	}//login()
-		
-		
-	
-	public void newUser(String userName, String password) {
-		
-		currentData.put(userName, new User(userName, password, 0.0f));
-	}//newUser(2)
 	
 	
+	
+	/*
+	 * input Strings are used to create a new User Instance and add
+	 * it to currentData
+	 */
 	public void newUser(String userName, String password, float startingBalance) {
 		
 		currentData.put(userName, new User(userName, password, startingBalance));
-	}//newUser(3)
+	}//newUser()
 	
 	
+	
+	/*
+	 * remove a user from currentData 
+	 * @Param userName : the username of the user being removed
+	 */
 	public void removeUser(String userName) {
 		
 		currentData.remove(userName);
 	}//removeUser()
 	
+	
+	/*
+	 * change the password of the User stored in currentUser
+	 */
 	public void changePassword(String newPassword) {
 		
 		currentUser.setPassword(newPassword);
 	}//changePassword()
 	
+	
+	
+	/*
+	 * return the balance of the User stored in currentUser as a float
+	 */
 	public float getBalence() {
 		
 		return currentUser.getBalance();
 	}//getBalence()
 	
+	
+	/*
+	 * add to the balance of the User stored in currentUser
+	 */
 	public void deposit(float deposit) {
 		
 		currentUser.setBalance(currentUser.getBalance() + deposit);
 	}//deposit()
 	
+	
+	
+	/*
+	 * withdraw from the User stored in currentUser's account.
+	 * if funds are insufficient, -1.0f is returned, else the
+	 * withdrawn amount is returned as a float
+	 */
 	public float withdraw(float withdraw) {
 		
 		if(withdraw <= currentUser.getBalance()) {
@@ -105,19 +130,31 @@ public class Bank {
 		}//else
 	}//withdraw
 	
+	
+	/*
+	 * sets currentUser to null
+	 */
 	public void logout() {
 		
 		currentUser = null;
 	}//logout
 	
+	
+	/*
+	 * serializes the the HashMap currentData, then clears
+	 * currentData and currentUser fields
+	 */
 	public void exit() {
 		
 		ds.serialize(currentData);
 		currentData = null;
 		currentUser = null;
-	}
+	}//exit()
         
 		
+	/*
+	 * prints the user information of all users stored in currentData
+	 */
 	public void dataDump() {
 		
 		if(currentData.isEmpty()){
@@ -135,10 +172,17 @@ public class Bank {
 	}//dataDump()	
 		
 		
+	
+	/*
+	 * clears all entries in currentData.
+	 * does NOT set field to null
+	 */
 	public void clearData() {
 		
 		currentData.clear();
-	}
+	}//clearData()
+	
+	
 	
 	/*
 	 * Deprecated code used to test serialization.

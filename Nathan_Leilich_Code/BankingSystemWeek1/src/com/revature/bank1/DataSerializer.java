@@ -8,6 +8,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
+
+/*
+ * DataSerializer serializes and deserializes HashMaps
+ * of type <String, User>
+ */
 public class DataSerializer {
 
 	private static final DataSerializer INSTANCE = new DataSerializer();
