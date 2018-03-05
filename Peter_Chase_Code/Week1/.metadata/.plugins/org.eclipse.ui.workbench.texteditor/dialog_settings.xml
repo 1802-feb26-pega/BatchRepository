@@ -8,14 +8,14 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="fuck yeah"/>
+			<item value="float"/>
 			<item value="JFormattedTextField"/>
 			<item value="jpanel"/>
 			<item value="frame"/>
 			<item value="a-z"/>
 			<item value="\\d+"/>
 			<item value=".reduce"/>
-			<item value=".push"/>
-			<item value=".ad."/>
 		</list>
 		<list key="replacehistory">
 			<item value="JTextField"/>

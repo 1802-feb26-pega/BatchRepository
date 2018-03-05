@@ -18,7 +18,6 @@ public class Application {
 		launchLogIn();
 	}
 	
-	
 	public static void logOut() {
 		currentUser = null;
 		launchLogIn();

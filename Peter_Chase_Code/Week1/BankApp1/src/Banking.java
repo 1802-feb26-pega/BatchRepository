@@ -26,6 +26,8 @@ public class Banking extends JFrame {
 	private JButton btnDeposit;
 	private JLabel lblSuccess;
 	private JButton btnSignOut;
+
+	private JLabel lblValidValue;
 	
 	public Banking() {
 		initialize();
@@ -76,14 +78,19 @@ public class Banking extends JFrame {
 	
 	private double parseField(JTextField tf) {
 		lblSuccess.setText("");
+		lblValidValue.setText("");
 		String text = tf.getText();
 		double amount = 0.0;
-		if (!text.equals("")) {
-			if (text.contains(".")) {
-				amount = Double.parseDouble(text);
-			} else {
-				amount = (double)Integer.parseInt(text);
+		try {
+			if (!text.equals("")) {
+				if (text.contains(".")) {
+					amount = Double.parseDouble(text);
+				} else {
+					amount = (double)Integer.parseInt(text);
+				}
 			}
+		} catch (NumberFormatException e) {
+			lblValidValue.setText("Amount too large");
 		}
 		tf.setText("");
 		return amount;
@@ -184,6 +191,12 @@ public class Banking extends JFrame {
 		btnSignOut.setFont(new Font("SansSerif", Font.PLAIN, 16));
 		btnSignOut.setBounds(432, 13, 97, 25);
 		contentPane.add(btnSignOut);
+		
+		lblValidValue = new JLabel("");
+		lblValidValue.setHorizontalAlignment(SwingConstants.CENTER);
+		lblValidValue.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		lblValidValue.setBounds(152, 122, 225, 25);
+		contentPane.add(lblValidValue);
 		updateBalance();
 	}
 }
