@@ -3,6 +3,9 @@
 #### Notes for Genesis:
 When testing the project, the first time that you run the project you must indicate that you do not already have an account. I did not know if you would have preferred that I include premade accounts that I used during my testing so I did not include them. But once you have run through the project once and created a new "account," you will be able to login to the same account you created. (Data Persistence is cool). Thank you!!
 
+#### Revised/Additional Notes!!
+I started recieving a funky exception when I try and deserialize a file after it checks the username. I've been working on fixing it but the code still runs. To get around it for now I decided to include a few test accounts. I made one for you. When you choose that you already have an account, your username and password are both gbonds. (I threw 500 dollars into your account). 
+
 ## Flow of Code
 ### Driver
 Progression through the app is controlled primary by the Driver, CreateAccount, and ChooseAction classes.
