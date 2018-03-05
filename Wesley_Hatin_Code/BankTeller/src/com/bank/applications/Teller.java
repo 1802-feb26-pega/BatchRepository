@@ -2,14 +2,12 @@ package com.bank.applications;
 
 import java.util.Scanner;
 
-@SuppressWarnings("unused")
 public class Teller {
-	//TODO: ask whether username and email are exclusive
 	
-	private String username=null;
+	private String username;
 	private String firstName;
 	private String lastName;
-	private String password=null;
+	private String password;
 	
 	// create an account with a unique email or username
 	public void createAccount() {
@@ -21,6 +19,18 @@ public class Teller {
 	// log in 
 	public void logIn() {
 		Scanner scan = new Scanner(System.in);
+		
+		while(password=="") {
+			System.out.println("Enter your username: ");
+			this.setUsername(scan.nextLine());
+			System.out.println("");
+			
+			System.out.println("Enter your password: ");
+			this.setPassword(scan.nextLine());
+			System.out.println("");
+			
+			
+		}
 		
 		scan.close();
 	}
@@ -35,7 +45,7 @@ public class Teller {
 		while (answer=="") {
 			answer = scan.nextLine();
 			if (answer == "y") {
-				username=null;
+				setUsername(null);
 				password=null;
 			}
 			else if(answer == "n"){
@@ -64,9 +74,30 @@ public class Teller {
 		return 0;
 	}
 
-	public static void main(String[] args) {
-		//TODO: ask whether multi-threading is necessary, or at least useful
-		
+	public String getUsername() {
+		return username;
 	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getName() {
+		return (firstName+lastName);
+	}
+
+	public void setName(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
 
 }

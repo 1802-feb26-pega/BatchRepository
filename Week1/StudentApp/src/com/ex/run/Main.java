@@ -10,8 +10,8 @@ public class Main {
 	public static void main(String[] args) {
 		
 		StudentIO io = new StudentIO();
-	/*	Student a = new Student("test", 289);
-		io.writeStudent(a);*/
+		Student a = new Student("test", 289);
+		io.writeStudent(a);
 		
 		List<Student> students = io.readStudents();
 		for(Student s : students) {
