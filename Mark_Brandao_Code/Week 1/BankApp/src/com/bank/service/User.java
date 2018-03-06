@@ -1,7 +1,7 @@
 package com.bank.service;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 public class User {
 	private String username;
@@ -69,15 +69,15 @@ public class User {
 	}
 	
 	public void login() {
-		Scanner scan = new Scanner(System.in);
+		//Scanner scan = new Scanner(System.in);
 		System.out.println("Enter your username.");
-		String un = scan.nextLine();
+		String un = Application.scan.nextLine();
 		boolean uncheck = this.verifyUsername(un);
 		if (!uncheck) {
 			System.out.println("That username doesn't exist yet.");
 		}
 		System.out.println("Enter your password.");
-		String pw = scan.nextLine();
+		String pw = Application.scan.nextLine();
 		User pwcheck = this.verifyPassword(un, pw);
 		if (pwcheck == null) {
 			System.out.println("Incorrect password.");
@@ -89,17 +89,16 @@ public class User {
 	}
 	
 	public void makeAccount() {
-		Scanner scan = new Scanner(System.in);
+		//Scanner scan = new Scanner(System.in);
 		System.out.println("Enter a user name: ");
-		this.setUsername(scan.nextLine());
+		this.setUsername(Application.scan.nextLine());
 		System.out.println("Enter a password: ");
-		this.setPassword(scan.nextLine());
+		this.setPassword(Application.scan.nextLine());
 		System.out.println("Enter your first name: ");
-		this.setFirstname(scan.nextLine());
+		this.setFirstname(Application.scan.nextLine());
 		System.out.println("Enter your last name: ");
-		this.setLastname(scan.nextLine());
+		this.setLastname(Application.scan.nextLine());
 		this.setBalance(0);
-		scan.close();
 		
 		DataAccess db = new DataAccess();
 		ArrayList<User> users = db.readUsers();

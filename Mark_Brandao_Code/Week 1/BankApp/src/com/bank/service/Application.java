@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Application {
 	private int option;
+	static Scanner scan = new Scanner(System.in);
 	
 	public int getOption() {
 		return option;
@@ -21,7 +22,7 @@ public class Application {
 				System.out.println("To log in, enter 1");
 				System.out.println("To create an account, enter 2");
 				
-				Scanner scan = new Scanner(System.in);
+				
 				setOption(scan.nextInt());
 				scan.nextLine();
 				if(getOption() != 1 && getOption() != 2) {
@@ -50,7 +51,7 @@ public class Application {
 	
 	public void mainMenu(User user) {
 		boolean cont = true;
-		Scanner scan = new Scanner(System.in);
+		//Scanner scan = new Scanner(System.in);
 		do {
 			System.out.println("\nTo view balance enter 1");
 			System.out.println("To deposit money enter 2");
@@ -80,6 +81,7 @@ public class Application {
 			else if (getOption () == 4) {
 				cont = false;
 				System.out.println("\nLogged out.");
+				scan.close();
 			} else {
 				
 			}
