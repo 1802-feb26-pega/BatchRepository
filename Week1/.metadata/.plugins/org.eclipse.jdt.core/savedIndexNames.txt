@@ -1,2 +1,0 @@
-INDEX VERSION 1.130+C:\Users\Genesis\my_git_repos\BatchRepository\Week1\.metadata\.plugins\org.eclipse.jdt.core
-1304235118.index
