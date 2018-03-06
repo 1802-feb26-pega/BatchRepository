@@ -16,7 +16,7 @@ import ck.bankApp.User;
 public class UserIO {
 	final static String filename = "./accounts.txt";
 	
-	
+	/*
 	//DONT USE THIS FUNCTION FOR WRITING A SINGLE USER
 	public void writeUser(User aUser)
 	{
@@ -30,11 +30,16 @@ public class UserIO {
 		}
 		
 	}//write user
+	*/
+	
+	//===============================================
 	
 	public void writeAllUsers(List<User> users)
 	{
+		//delete old version of file
 		File fold = new File(filename);
 		fold.delete();
+		//create new blank file with the same name
 		File fnew = new File(filename);
 		
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(filename,true)))
@@ -46,14 +51,17 @@ public class UserIO {
 		}catch(IOException ioe)
 		{
 			ioe.printStackTrace();
-		}
-	}
+		}//try-catch block
+	}//writeAllUsers
+	
+	//===================================================
 	
 	public List<User> readAllUsers(){
 		List<User> users = new ArrayList<User>();
 		try(BufferedReader br = new BufferedReader(new FileReader(filename)))
 		{
 			String line = null;
+			//read lines from the file until a blank line is encountered
 			while((line=br.readLine()) != null)
 			{
 				String[] data = line.split(":");
