@@ -26,8 +26,37 @@ INSERT INTO Customer (CustomerId, FirstName, LastName, Address, City, State, Cou
 --SELECT * FROM customer where CustomerID = 60 OR CustomerID = 61;
 
 --2.4
+UPDATE customer
+SET firstname = 'Robert', lastname = 'Walter'
+WHERE firstname = 'Aaron' AND lastname = 'Mitchell';
 
+UPDATE artist
+SET name = 'CCR'
+WHERE name = 'Creedence Clearwater Revival';
 
+--2.5
+SELECT * FROM invoice WHERE billingaddress LIKE 'T%';
 
+--2.6
+SELECT * FROM invoice WHERE total >= 15 AND total <= 50;
+SELECT * FROM employee WHERE hiredate >= DATE '2003-6-1' AND hiredate <= DATE '2004-3-1';
 
 -- Section 7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
