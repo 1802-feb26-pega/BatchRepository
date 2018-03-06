@@ -329,6 +329,7 @@ public class EvaluationService {
 					
 					return middleBound;
 				}//else
+				middleBound = (upperBound + lowerBound) / 2;
 				comparison = t.compareTo(sortedList.get(middleBound));
 			}//while
 			if(upperBound == lowerBound) {
@@ -462,41 +463,42 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long input) {
-		// TODO test
-		List<Long> primes = new ArrayList<Long>();
-		long l = 0;
-		long num = 0;
-
-		for (l = 1; l <= 901255l; l++) {  	//primes are calculated up to 9012551 (the largest test case)
-											//for times sake	  	  
-          
-			int counter=0; 	  
-			for(num = l; num >= 1; num--){
-				if(l%num==0){
-					
-					counter = counter + 1;
-				}//if
-			}//for
-			if (counter ==2){
-
-				primes.add(l);
-			}//if
-		}//for
-		List<Long> primeFactors = new ArrayList<Long>();
-		
-		for(int i = (primes.size() -1); i >= 0; i--) {
-			
-			if(primes.get(i) >= input) {
-				
-				break;
-			}//if
-			if(input%primes.get(i) == 0) {
-				
-				primeFactors.add(primes.get(i));
-			}//if
-		}//for
-			
-		return primeFactors;
+		// TODO fix/test
+//		List<Long> primes = new ArrayList<Long>();
+//		long l = 0;
+//		long num = 0;
+//
+//		for (l = 1; l <= 901255l; l++) {  	//primes are calculated up to 9012551 (the largest test case)
+//											//for times sake	  	  
+//          
+//			int counter=0; 	  
+//			for(num = l; num >= 1; num--){
+//				if(l%num==0){
+//					
+//					counter = counter + 1;
+//				}//if
+//			}//for
+//			if (counter ==2){
+//
+//				primes.add(l);
+//			}//if
+//		}//for
+//		List<Long> primeFactors = new ArrayList<Long>();
+//		
+//		for(int i = (primes.size() -1); i >= 0; i--) {
+//			
+//			if(primes.get(i) >= input) {
+//				
+//				break;
+//			}//if
+//			if(input%primes.get(i) == 0) {
+//				
+//				primeFactors.add(primes.get(i));
+//			}//if
+//		}//for
+//			
+//		return primeFactors;
+		return new ArrayList<Long>();
 	}//calculatePrimeFactorsOf()
 
 	/**
@@ -535,7 +537,7 @@ public class EvaluationService {
 
 		public String rotate(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			return " ";
 		}
 
 	}
@@ -750,16 +752,18 @@ public class EvaluationService {
 				
 				if(o%i == 0) {
 					
-					multiplesSet.add(o);
+					multiplesSet.add(new Integer(o));
 				}//if
 			}//for
 		}//for
 		
 		int sum = 0;
-		Integer[] multiplesArray = (Integer[]) multiplesSet.toArray();
-		for(Integer i: multiplesArray) {
+		Object[] multiplesArray = multiplesSet.toArray();
+		
+		for(int o = 0; o < multiplesArray.length; o++) {
 			
-			sum += i;
+			int temp = (Integer) multiplesArray[o];
+			sum += temp;
 		}//
 		return sum;
 	}
