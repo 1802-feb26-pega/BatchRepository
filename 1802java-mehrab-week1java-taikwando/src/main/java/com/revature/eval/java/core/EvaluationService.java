@@ -726,7 +726,6 @@ public class EvaluationService {
 		// get rid of the '-'
 		char[] charArrOfString = string.toCharArray();
 		string = "";
-		System.out.println(string);
 		for (int i = 0; i < charArrOfString.length; i++) {
 			if (charArrOfString[i] == '-') {
 				
@@ -742,7 +741,6 @@ public class EvaluationService {
 			}
 		}
 		
-		System.out.println(string);
 		int result = 0;
 		if (string.length() == 10) {
 			for (int i = 0; i < string.length(); i++) {
@@ -750,7 +748,6 @@ public class EvaluationService {
 					result += (10 * (10-i));
 				}
 				result += ((int)(string.charAt(i)) * (10-i));
-				System.out.println(result);
 			}
 		}
 		else {
@@ -779,18 +776,29 @@ public class EvaluationService {
 	 */
 	public boolean isPangram(String string) {
 		// TODO Write an implementation for this method declaration
+		string = string.toLowerCase();
 		char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-		Map<Character, Integer> letters = new HashMap<>();
 		Map<Character, Integer> lettercount = new HashMap<>();
 		for (int i = 0; i < alphabet.length; i++) {
-			letters.put(alphabet[i], 1);
 			lettercount.put(alphabet[i], 0);
 		}
 		
-		for (int i = 0; i < alphabet.length; i++) {
-			
+		for (int i = 0; i < string.length(); i++) {
+			if (string.charAt(i) == ' ') {
+				
+			}
+			else {
+				lettercount.put(string.charAt(i), lettercount.get(string.charAt(i)) + 1);	
+			}
 		}
-		return false;
+		
+		for (int i = 0; i < alphabet.length; i++) {
+			char temp = alphabet[i];
+			if (lettercount.get(temp) < 1) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -821,7 +829,26 @@ public class EvaluationService {
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		int result = 0;
+		List<Integer> used = new ArrayList<>();
+		for (int e = 0; e < set.length; e++) {
+			int interval = set[e];
+			int num = set[e];
+			while (num < i) {
+				System.out.print(num + " ");
+				if (used.contains(num)) {
+					num += interval;
+				}
+				else {
+					result += num;
+					used.add(num);
+					num += interval;
+				}
+			}
+			System.out.println("Made it out");
+		}
+		System.out.println(result + "\n");
+		return result;
 	}
 
 	/**
