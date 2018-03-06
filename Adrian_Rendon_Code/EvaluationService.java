@@ -212,26 +212,33 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		
 		// Clean up the number
 		String clean = "";
 		int len = string.length();
+		
 		for (int index = 0; index != len; index++) {
 			char token = string.charAt(index);
 			
+			// Inserts digits into clean as long as first digit is not 1
 			if (Character.isDigit(token)) {
+				// If the first digit is 1, do not insert onto string clean
+				if (index == 0 && token == '1')
+					continue;
 				clean = clean.concat(token + "");
-			} else if (Character.isWhitespace(token)) {
+				
+			// Skip all characters that are white space, dots, hyphens or parentheses	
+			} else if (Character.isWhitespace(token) || token == '.' || token == '-'
+					|| token == '(' || token == ')') {
 				continue;
-			} else if (token == '.' || token == '-') {
-				continue;
+			
+			// Error if invalid character is used as input	
 			} else {
-				return null;
+				throw new IllegalArgumentException("invalid characters");
 			}
 		}
 		// Numbers must not be over or under 10 digits
-		if (len != 10)
-			return null;
+		if (clean.length() != 10) 
+			throw new IllegalArgumentException("too many digits");
 		
 		return clean;
 		
@@ -250,7 +257,6 @@ public class EvaluationService {
 		Map<String, Integer> occurrence = new HashMap<>();
 		
 		// Insert the words in strings into an array
-		System.out.println("string: " + string);
 		String[] strArray = string.split(" |,");
 		
 		// Insert into the hash map, if the word is already inside increment the value by 1
@@ -299,12 +305,39 @@ public class EvaluationService {
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
-	static class BinarySearch<T> {
+	static class BinarySearch<T extends Comparable<T>> {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
-			return 0;
+			sortedList = getSortedList();
+			
+			// the start point of the list that will be traversed, changes as index of t
+			// is above or below the middle
+			int start = 0;
+			int end = sortedList.size() - 1;
+			int middle = end / 2;
+			
+			do {
+				//Compare search key with the middle of the sorted list.
+				T current = sortedList.get(middle);
+				
+				if (t.compareTo(current) == 0) {
+					//.out.println("here");
+					return middle;
+				} else if (t.compareTo(current) > 0) { // t is above middle
+					start = middle + 1;
+					middle += (end - start) / 2;
+					middle++;
+					continue;
+				} else if (t.compareTo(current) < 0) { // t is below middle
+					end = middle - 1;
+					middle -= (end - start) / 2;
+					middle--;
+					continue;
+				}
+			
+			} while (true);
+			
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -406,9 +439,19 @@ public class EvaluationService {
 	 * @param l
 	 * @return
 	 */
-	public List<Integer> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+	public List<Long> calculatePrimeFactorsOf(long l) {
+		List<Long> factors = new ArrayList<>();
+		long prime = l;
+		long i = 2;
+		
+		while (prime > 1) {
+			if (prime % i == 0) {
+				factors.add(i);
+				prime /= i;
+			} else 
+				i++;
+		}
+		return factors;
 	}
 
 	/**
@@ -493,8 +536,28 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		if (i <= 0) {
+			throw new IllegalArgumentException("illegal number");
+		}
+		
+		int counter = 0, number = 2;
+		while (counter < i) {
+			
+			if (findPrime(number)) {
+				counter++;
+			}
+			number++;
+		}
+		return --number;
+	}
+	
+	// returns true if a number is prime
+	private boolean findPrime(int number) {
+		for (int n = 2; n < number; n ++) {
+			if (number % n == 0)
+				return false;
+		}
+		return true;
 	}
 
 	/**
@@ -628,7 +691,7 @@ public class EvaluationService {
 				continue;
 			
 			int digit;
-			if (digitChar == 'X') {
+			if (digitChar == 'X' && i ==string.length() - 1) {
 				digit = 10;
 			} else if (Character.isDigit(digitChar)){
 				digit = digitChar - '0';
@@ -768,7 +831,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
+		final double gigaSec = Math.pow(10, 9);
 		return null;
 	}
 
