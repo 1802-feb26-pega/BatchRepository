@@ -103,13 +103,13 @@ public class UserInterface {
 			System.out.println("");
 			
 			String answer="";
-			Integer amount;
+			Double amount;
 			switch(option) {
 			
 			//Deposit
 			case 1:
 				System.out.println("How much would you like to deposit?");
-				amount = Integer.valueOf(menu.nextLine());
+				amount = Double.valueOf(menu.nextLine());
 				System.out.println("Are you sure you want to deposit?");
 				System.out.println("Type Y or N: ");
 				
@@ -134,7 +134,7 @@ public class UserInterface {
 			//Withdrawal
 			case 2:
 				System.out.println("How much would you like to withdraw?");
-				amount = Integer.valueOf(menu.nextLine());
+				amount = Double.valueOf(menu.nextLine());
 				System.out.println("Are you sure you want to withdraw?");
 				System.out.println("Type Y or N: ");
 				
