@@ -56,7 +56,11 @@ public class User {
 		return balance;
 	}
 	public void setBalance(double balance) {
-		this.balance = balance;
+		if (balance < 0) {
+			System.out.println("\nYou cannot have a negative balance!");
+		} else {
+			this.balance = balance;
+		}
 	}
 	
 	@Override

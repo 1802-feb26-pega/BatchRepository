@@ -52,7 +52,7 @@ public class Application {
 		boolean cont = true;
 		Scanner scan = new Scanner(System.in);
 		do {
-			System.out.println("To view balance enter 1");
+			System.out.println("\nTo view balance enter 1");
 			System.out.println("To deposit money enter 2");
 			System.out.println("To withdraw money enter 3");
 			System.out.println("To log out enter 4");
@@ -60,7 +60,7 @@ public class Application {
 			setOption(scan.nextInt());
 			scan.nextLine();
 			if (getOption() == 1) {
-				System.out.println("Your current balance is: $" + user.getBalance());
+				System.out.println("\nYour current balance is: $" + user.getBalance());
 				
 			}
 			else if (getOption() == 2) {
@@ -68,18 +68,18 @@ public class Application {
 				double withdraw = scan.nextDouble();
 				double total = user.getBalance() + withdraw;
 				user.setBalance(total);
-				System.out.println("Your new total is: $" + total);
+				System.out.println("\nYour current balance is: $" + user.getBalance());
 			}
 			else if(getOption() == 3) {
 				System.out.println("Enter how much you would like to withdraw: ");
 				double withdraw = scan.nextDouble();
 				double total = user.getBalance() - withdraw;
 				user.setBalance(total);
-				System.out.println("Your new total is: $" + total);
+				System.out.println("\nYour current balance is: $" + user.getBalance());
 			}
 			else if (getOption () == 4) {
 				cont = false;
-				System.out.println("Logged out.");
+				System.out.println("\nLogged out.");
 			} else {
 				
 			}
