@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Main {
 	public static UserIO io = new UserIO();
+	public static Scanner sc = new Scanner(System.in);
 	
 	public static void main(String[] args)
 	{
@@ -33,20 +34,26 @@ public class Main {
 		System.out.println("\n\nwritten to file");
 		*/
 		
+		//initialize top level client UI - make a selection to create new account, login with an existing account, or exit
 		ClientUI cui = new ClientUI();
 		int topSelection = cui.topUI();
 		
 		switch(topSelection)
 		{
 		case 1:
+			//create new user
 			users = cui.createNewUser(users);
 			System.out.println("User created successfully");
 			break;
 		case 2:
 			//login for existing user
+			//need to find user via username
+			//set as currentUser
+			//start memberUI
 			break;
 		case 3:
 			//exit - print message/do nothing
+			System.out.println("\n\nExiting program. Thank you.\n\n");
 			break;
 		default:
 			System.out.println("Something went wrong");
@@ -54,5 +61,6 @@ public class Main {
 		
 		System.out.println("Writing accounts.txt");
 		io.writeAllUsers(users);
+		sc.close();
 	}//main method
 }

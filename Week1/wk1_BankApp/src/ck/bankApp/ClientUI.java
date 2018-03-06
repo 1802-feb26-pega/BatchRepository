@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ClientUI {
-	public static Scanner sc = new Scanner(System.in);
+	//public static Scanner sc = new Scanner(System.in);
 	
 	public int topUI()
 	{
@@ -20,7 +20,7 @@ public class ClientUI {
 			System.out.println("3 - Exit");
 			try
 			{
-				userInput = sc.nextInt();
+				userInput = Main.sc.nextInt();
 				if(userInput == 1 || userInput == 2 || userInput == 3)
 				{
 					System.out.println("\nGood selection: "+userInput + "\n");
@@ -28,12 +28,12 @@ public class ClientUI {
 				}else
 				{
 					System.out.println("\nBad, need 1 | 2 | 3. Try again.\n");
-					sc.nextLine();
+					Main.sc.nextLine();
 				}//if-else
 			}catch(InputMismatchException ime)
 			{
 				System.out.println("\nNon-int input. Try again.\n");
-				sc.nextLine();
+				Main.sc.nextLine();
 			}//try-catch
 		}//while
 		return userInput;
@@ -78,7 +78,7 @@ public class ClientUI {
 		while(!valid)
 		{
 			System.out.println("Enter username: (1-10 characters, letters and #'s only)");
-			newU = sc.nextLine();
+			newU = Main.sc.nextLine();
 			unique = true;
 			if(newU.length()>=1 && newU.length()<=10)
 			{
@@ -124,7 +124,7 @@ public class ClientUI {
 		while(!valid)
 		{
 			System.out.println("Enter first name: (1-12 characters, letters only)");
-			newF = sc.nextLine();
+			newF = Main.sc.nextLine();
 			if(newF.length() >= 1 && newF.length() <= 10)
 			{
 				if(newF.matches("[A-Za-z]*"))
@@ -154,7 +154,7 @@ public class ClientUI {
 		while(!valid)
 		{
 			System.out.println("Enter last name: (1-12 characters, letters only)");
-			newL = sc.nextLine();
+			newL = Main.sc.nextLine();
 			if(newL.length() >= 1 && newL.length() <= 10)
 			{
 				if(newL.matches("[A-Za-z]*"))
@@ -186,7 +186,7 @@ public class ClientUI {
 			System.out.println("Enter starting balance: (greater than 0)");
 			try
 			{
-				newB = sc.nextDouble();
+				newB = Main.sc.nextDouble();
 				if(newB>=0)
 				{
 					System.out.println("Good balance: " + newB);
@@ -194,12 +194,12 @@ public class ClientUI {
 				}else
 				{
 					System.out.println("\nStarting balance must be greater than 0\n");
-					sc.nextLine();
+					Main.sc.nextLine();
 				}//if-else
 			}catch(InputMismatchException ime)
 			{
 				System.out.println("\nNon-double entry\n");
-				sc.nextLine();
+				Main.sc.nextLine();
 			}//try-catch
 		}//while
 		
