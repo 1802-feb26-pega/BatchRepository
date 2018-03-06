@@ -41,7 +41,6 @@ public class FactorialsTest {
 		assertEquals(actual,expected);
 		assertFalse(fact.factorial(5) == 0);
 		assertEquals(24, fact.factorial(4));				
-		fail("Not yet implemented");
 	}
 	public void test2() {
 		

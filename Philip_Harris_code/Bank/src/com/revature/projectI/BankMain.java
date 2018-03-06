@@ -3,6 +3,11 @@ package com.revature.projectI;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/*
+ * Things to improve:
+ * 	Pojo's should never using sysout
+ *  Double check adding bal to new users
+ */
 public class BankMain {
 	
 	static Scanner scan = new Scanner(System.in);

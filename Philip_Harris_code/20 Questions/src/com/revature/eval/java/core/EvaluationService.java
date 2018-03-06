@@ -72,7 +72,7 @@ public class EvaluationService {
 	 * different lengths.
 	 *
 	 */
-	public class Triangle {
+	public static class Triangle {
 		private double sideOne;
 		private double sideTwo;
 		private double sideThree;
@@ -324,8 +324,31 @@ public class EvaluationService {
 		public int indexOf(T t) {
 			// TODO Write an implementation for this method declaration
 			//CODE HERE
-			
-			
+
+			List<T> newList = sortedList;
+			int x = Integer.parseInt(t.toString());
+			int idx = 0;
+			int i;
+			int divide;
+
+			while(true) {
+				i = 0;
+				divide = newList.size()/2;
+				
+				if(newList.get(i) == t) {
+					return i;
+				}
+//				else if(newList.get(i) > x){
+//					idx += i;
+//				}
+
+				for(int k = 0; k < i;k++) {
+					newList.remove(k);
+				}
+				break;
+			}
+
+
 			return 0;
 		}
 
@@ -415,7 +438,7 @@ public class EvaluationService {
 	 */
 	public List<Integer> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration	
-				
+
 		int num;
 		int i = 1;
 		int numOfPrimes = 0;
@@ -430,7 +453,7 @@ public class EvaluationService {
 				list.add(i);
 				numOfPrimes++;
 			}else {
-				
+
 			}
 			if(numOfPrimes==l) break;
 			i++;
@@ -689,12 +712,12 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-	
+
 		// TODO Write an implementation for this method declaration
-		
+
 		given = given.plus(Duration.ofSeconds(100000000000L));
 		System.out.println(given);
-		
+
 		return given;
 	}
 
@@ -774,8 +797,8 @@ public class EvaluationService {
 	 */
 	public boolean isLuhnValid(String string) {
 		// TODO Write an implementation for this method declaration
-		
-		
+
+
 		if(string.length() < 1) {
 			System.out.println("Number is less than 1. Please enter in the correct number");
 			return false;
@@ -784,7 +807,7 @@ public class EvaluationService {
 			System.out.println("You have invalid characters. Please enter in a number");
 			return false;
 		}
-		
+
 		string = string.replaceAll(" ","");
 		StringBuilder num = new StringBuilder(string);
 		int sum = 0;
@@ -806,13 +829,13 @@ public class EvaluationService {
 				num.setCharAt(i, temp.charAt(0));
 			}
 		}	
-		
+
 		num = num.deleteCharAt(0);
-		
+
 		for(int i = 0; i < num.length();i++) {
 			sum += Character.getNumericValue(num.charAt(i));
 		}
-		
+
 
 		if((sum%10)==0) return true;
 		else return false;
