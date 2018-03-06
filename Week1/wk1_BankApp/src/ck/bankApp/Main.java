@@ -36,18 +36,32 @@ public class Main {
 		
 		//initialize top level client UI - make a selection to create new account, login with an existing account, or exit
 		ClientUI cui = new ClientUI();
-		int topSelection = cui.topUI();
+		int topSelection;
+		User loggedIn;
+		boolean userExit = false; //maybe put the topUI in a loop until the user manually exits?
 		
+		topSelection = cui.topUI();
+
 		switch(topSelection)
 		{
 		case 1:
 			//create new user
 			users = cui.createNewUser(users);
 			System.out.println("User created successfully");
+			//start member ui
 			break;
 		case 2:
 			//login for existing user
 			//need to find user via username
+			loggedIn = cui.userLogin(users);
+			if(loggedIn != null)
+			{
+				System.out.println("Login successful.\nHello, " + loggedIn.getUsername());
+				//call memberUI for logged in user
+			}else
+			{
+				System.out.println("User not found. Exiting.");
+			}//if-else
 			//set as currentUser
 			//start memberUI
 			break;
@@ -58,7 +72,7 @@ public class Main {
 		default:
 			System.out.println("Something went wrong");
 		}//switch
-		
+
 		System.out.println("Writing accounts.txt");
 		io.writeAllUsers(users);
 		sc.close();

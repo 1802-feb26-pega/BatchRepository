@@ -207,4 +207,50 @@ public class ClientUI {
 		return newB;
 	}//validateBalance
 	
+	//========================================================================
+	
+	public User userLogin(List<User> users)
+	{
+		String temp;
+		boolean valid = false;
+		
+		System.out.println("Please enter your username:");
+		temp = Main.sc.next();
+		
+		for(User u : users)
+		{
+			if(temp.equals(u.getUsername()))
+			{
+				return u;
+			}//if
+		}//for
+		
+		
+		//return null if username is not found in list of current users
+		return null;
+	}//userLogin
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
