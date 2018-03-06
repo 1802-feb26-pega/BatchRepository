@@ -51,7 +51,6 @@ public class Application {
 	
 	public void mainMenu(User user) {
 		boolean cont = true;
-		//Scanner scan = new Scanner(System.in);
 		do {
 			System.out.println("\nTo view balance enter 1");
 			System.out.println("To deposit money enter 2");

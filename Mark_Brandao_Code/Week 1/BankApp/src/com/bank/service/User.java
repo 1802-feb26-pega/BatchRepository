@@ -1,7 +1,6 @@
 package com.bank.service;
 
 import java.util.ArrayList;
-//import java.util.Scanner;
 
 public class User {
 	private String username;
@@ -69,7 +68,6 @@ public class User {
 	}
 	
 	public void login() {
-		//Scanner scan = new Scanner(System.in);
 		System.out.println("Enter your username.");
 		String un = Application.scan.nextLine();
 		boolean uncheck = this.verifyUsername(un);
@@ -89,9 +87,19 @@ public class User {
 	}
 	
 	public void makeAccount() {
-		//Scanner scan = new Scanner(System.in);
-		System.out.println("Enter a user name: ");
-		this.setUsername(Application.scan.nextLine());
+		boolean invalidname = true;
+		DataAccess da = new DataAccess();
+		do {
+			System.out.println("Enter a user name: ");
+			String inputname = Application.scan.nextLine();
+			
+			if(!da.isUser(inputname)) {
+				invalidname = false;
+				this.setUsername(inputname);
+			} else {
+				System.out.println("\nThat username is unavailable. Please select another username.");
+			}
+		} while (invalidname);
 		System.out.println("Enter a password: ");
 		this.setPassword(Application.scan.nextLine());
 		System.out.println("Enter your first name: ");
@@ -133,12 +141,6 @@ public class User {
 
 	public void updateData() {
 		DataAccess db = new DataAccess();
-		ArrayList<User> users = db.readUsers();
-		for (User user: users) {
-			if(user.username.equals(this.username)) {
-				user.setBalance(this.getBalance());
-			}
-		}
-		db.writeUsers(users);;
+		db.updateBalance(this);
 	}
 }

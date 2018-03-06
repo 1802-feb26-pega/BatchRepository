@@ -38,4 +38,24 @@ public class DataAccess {
 
 		return users;
 	}
+	
+	public boolean isUser(String input) {
+		ArrayList<User> users = readUsers();
+		for (User user : users) {
+			if(user.getUsername().equals(input)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void updateBalance(User user_to_update) {
+		ArrayList<User> users = readUsers();
+		for (User user: users) {
+			if(user.getUsername().equals(user_to_update.getUsername())) {
+				user.setBalance(user_to_update.getBalance());
+			}
+		}
+		writeUsers(users);
+	}
 }
