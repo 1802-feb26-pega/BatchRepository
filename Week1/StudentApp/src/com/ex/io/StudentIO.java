@@ -2,6 +2,7 @@ package com.ex.io;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -15,13 +16,31 @@ public class StudentIO {
 	
 	final static String filename = "src/data/students.txt";
 	
+	
 	public void writeStudent(Student student) {
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(filename, true))){
 			bw.write(student.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void writeAllStudents(List<Student> students)
+	{
+		File fold = new File(filename);
+		fold.delete();
+		File fnew = new File(filename);
 		
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(filename,true)))
+		{
+			for(Student s : students)
+			{
+				bw.write(s.toString());
+			}
+		}catch(IOException ioe)
+		{
+			ioe.printStackTrace();
+		}
 	}
 	
 	public List<Student> readStudents(){

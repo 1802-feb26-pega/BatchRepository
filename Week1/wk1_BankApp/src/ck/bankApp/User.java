@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class User {
 	private String username;
-	private String password;
+	//private String password;
 	private String firstName;
 	private String lastName;
 	private double balance;
@@ -163,7 +163,7 @@ public class User {
 	@Override
 	public String toString()
 	{
-		return new String(username + ":" + firstName + ":" + lastName + ":" + balance);
+		return new String(username + ":" + firstName + ":" + lastName + ":" + balance + "\n");
 	}
 	
 	

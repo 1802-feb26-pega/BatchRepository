@@ -134,7 +134,7 @@ public class Bank {
 		}//while - username
 		
 		//first name
-		newFirstName = sanitizeUsername();
+		newFirstName = sanitizeFirstName();
 		newUser.setFirstName(newFirstName);
 
 		//last name
@@ -146,6 +146,11 @@ public class Bank {
 		newUser.setBalance(newBalance);
 		
 		ul.add(newUser);
+		
+		for(User u : ul)
+		{
+			System.out.println(u.getUsername());
+		}
 		
 		return ul;
 	}//createNewUser
@@ -160,31 +165,24 @@ public class Bank {
 		
 		while(!valid)
 		{
-			try
+			newUsername = sc.nextLine();
+			if(newUsername.length() >= 1 && newUsername.length() <= 10)
 			{
-				newUsername = sc.nextLine();
-				if(newUsername.length() >= 1 && newUsername.length() <= 10)
+				if(newUsername.matches("[A-Za-z0-9]*"))
 				{
-					if(newUsername.matches("[A-Za-z0-9]*"))
-					{
-						System.out.println("Valid username entered. Checking against list of current users");
-						valid = true;
-					}else
-					{
-						System.out.println("Username must be between 1-10 characters and contain only letters and digits");
-						System.out.println("Enter new username:");
-						//sc.nextLine();
-					}
+					System.out.println("Valid username entered. Checking against list of current users");
+					valid = true;
 				}else
 				{
 					System.out.println("Username must be between 1-10 characters and contain only letters and digits");
 					System.out.println("Enter new username:");
 					//sc.nextLine();
 				}
-			}catch(NoSuchElementException nsee)
+			}else
 			{
-				System.out.println("e");
-				sc.nextLine();
+				System.out.println("Username must be between 1-10 characters and contain only letters and digits");
+				System.out.println("Enter new username:");
+				//sc.nextLine();
 			}
 
 		}//while
@@ -194,7 +192,7 @@ public class Bank {
 		return newUsername;
 	}//sanitizeUsername
 //=======================================
-	public String sanitizeFirstName()
+	public static String sanitizeFirstName()
 	{
 		//Scanner sc = new Scanner(System.in);
 		boolean valid = false;
