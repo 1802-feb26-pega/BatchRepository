@@ -56,7 +56,9 @@ public class Main {
 			loggedIn = cui.userLogin(users);
 			if(loggedIn != null)
 			{
-				System.out.println("Login successful.\nHello, " + loggedIn.getUsername());
+				System.out.println("\n\nLogin successful.\nHello, " + loggedIn.getUsername());
+				MemberUI mui = new MemberUI(loggedIn);
+				mui.topUI();
 				//call memberUI for logged in user
 			}else
 			{
