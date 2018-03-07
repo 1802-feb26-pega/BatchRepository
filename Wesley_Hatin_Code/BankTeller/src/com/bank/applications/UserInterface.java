@@ -6,22 +6,31 @@ public class UserInterface {
 
 	public static void main(String[] args) {
 		Teller t = new Teller();
-		int option;
+		String option="";
 		Scanner menu = new Scanner(System.in);
 		
 		System.out.println("Welcome to your automated bank terminal!");
-		System.out.println("If you would like to log in to your account, please press '1'.");
-		System.out.println("If you would like to create a new account, please press '2'.");
+		System.out.println("If you would like to log in to your account, please press 1.");
+		System.out.println("If you would like to create a new account, please press 2.");
 		
-		option = Integer.valueOf(menu.nextLine());
-		System.out.println(""); 
-		
+		do {
+			option = String.valueOf(menu.nextLine());
+			System.out.println("");
+			
+			if(!option.equals("1")) {
+				if(!option.equals("2")) {
+					System.out.println("Sorry, that is not a valid response. Please press 1 or 2.");
+					System.out.println("");
+					option = "";
+				}
+			}
+		} while (option=="");
 		
 		//Log-in Menu
 		switch(option) {
 		
 		//Returning user
-		case 1:
+		case "1":
 			String user, pass;
 			
 			do {
@@ -46,7 +55,7 @@ public class UserInterface {
 			break;
 			
 		//Register new user
-		case 2:
+		case "2":
 			String newUser, newPass, newFirst, newLast;
 			
 			do {
@@ -99,7 +108,7 @@ public class UserInterface {
 			System.out.println("If you would like to make a withdrawl, please press 2.");
 			System.out.println("If you would like to check your balance, please press 3.");
 			System.out.println("If you would like to log out, please press 4.");
-			option=Integer.valueOf(menu.nextLine());
+			option=String.valueOf(menu.nextLine());
 			System.out.println("");
 			
 			String answer="";
@@ -107,7 +116,7 @@ public class UserInterface {
 			switch(option) {
 			
 			//Deposit
-			case 1:
+			case "1":
 				System.out.println("How much would you like to deposit?");
 				amount = Double.valueOf(menu.nextLine());
 				System.out.println("Are you sure you want to deposit?");
@@ -123,6 +132,7 @@ public class UserInterface {
 						System.out.println("Returning to menu...\n");
 					} else {
 						System.out.println("That was not a valid entry. Please type Y or N: ");
+						answer="";
 
 					} 
 				}while (answer=="");
@@ -132,7 +142,7 @@ public class UserInterface {
 				break;
 				
 			//Withdrawal
-			case 2:
+			case "2":
 				System.out.println("How much would you like to withdraw?");
 				amount = Double.valueOf(menu.nextLine());
 				System.out.println("Are you sure you want to withdraw?");
@@ -158,19 +168,20 @@ public class UserInterface {
 						System.out.println("Returning to menu...\n");
 					} else {
 						System.out.println("That was not a valid entry. Please type Y or N: ");
+						answer="";
 
 					} 
 				}while (answer=="");
 				break;
 				
 			//Balance
-			case 3:
+			case "3":
 				System.out.println("Your current balance is $" + String.format("%.2f", t.getBalance()));
 				System.out.println("");
 				break;
 				
 			//Log-out
-			case 4:
+			case "4":
 				System.out.println("Are you sure you want to log out?");
 				System.out.println("Type Y or N: ");
 				do {
@@ -186,8 +197,10 @@ public class UserInterface {
 					} 
 				}while (answer=="");
 				break;
+			default:
+				System.out.println("That was not a valid input.");
 			}
-			if(option!=4) {
+			if(option!="4") {
 				System.out.println("Please re-enter your password, or enter E to exit: ");
 				String repeatResponse = String.valueOf(menu.nextLine());
 				while(!repeatResponse.toLowerCase().equals((String)"e")&&!repeatResponse.equals(String.valueOf(t.getPassword()))) {
