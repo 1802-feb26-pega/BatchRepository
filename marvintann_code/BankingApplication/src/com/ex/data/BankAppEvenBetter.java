@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-public class BankAppBetter {
+public class BankAppEvenBetter {
 	public static boolean running = true;
 	// "c:/users/Marvin/Documents/github/BankingApplication/src/com/ex/date/file"
 	
@@ -40,7 +40,7 @@ public class BankAppBetter {
 	}
 	
 	// METHOD TO UPDATE USER INFORMATION
-	public static void updateUserInfo(Map<String, ArrayList<String>> map) {
+	public static void updateUserInfo(Map<String, String[]> map) {
 		
 		// clear file
 		PrintWriter pw = null;
@@ -55,15 +55,15 @@ public class BankAppBetter {
 		Set<String> keys = map.keySet();
 		Object[] kar = keys.toArray();
 		for(int i = 0; i < keys.size(); i++) {
-			writeToFile(":"+kar[i]+","+map.get(kar[i]).get(0)+";"+map.get(kar[i]).get(1));
+			writeToFile(":"+kar[i]+","+map.get(kar[i])[0]+";"+map.get(kar[i])[1]);
 		}
 		
 	}
 	
 	// METHOD TO READ FROM FILE AND RETURN AS A HASHMAP
-	public static Map<String, ArrayList<String>> readFromFile() {
-		Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
-		ArrayList<String> arr = new ArrayList<String>();
+	public static Map<String, String[]> readFromFile() {
+		Map<String, String[]> map = new HashMap<String, String[]>();
+		String[] arr = new String[2];
 		
 		try(BufferedReader br = new BufferedReader(new FileReader(filename))){
 			String line = null;
@@ -71,9 +71,9 @@ public class BankAppBetter {
 			while((line=br.readLine()) != null) {
 				
 				int afterComma = line.indexOf(',') + 1;
-				arr.add(line.substring(afterComma, line.indexOf(';'))); // password
+				arr[0] = (line.substring(afterComma, line.indexOf(';'))); // password
 				int afterSemi = line.indexOf(';') + 1;
-				arr.add(line.substring(afterSemi)); // balance
+				arr[1] = (line.substring(afterSemi)); // balance
 				
 				//int afterColon = line.indexOf(':')+1;
 				map.put(line.substring(1, line.indexOf(',')), arr); // use account name as key
@@ -112,7 +112,7 @@ public class BankAppBetter {
 		Scanner input1 = new Scanner(System.in);
 		String userName = input1.nextLine();
 		
-		Map<String, ArrayList<String>> accounts = readFromFile(); // get map of user accounts from text file
+		Map<String, String[]> accounts = readFromFile(); // get map of user accounts from text file
 		
 		if(accounts.containsKey(userName) == false) {
 			System.out.println("Username does not exist");
@@ -135,8 +135,8 @@ public class BankAppBetter {
 			Scanner input2 = new Scanner(System.in);
 			String pw = input1.nextLine();
 
-			if(( accounts.get(userName).get(0) ).equals(pw) == false) {
-				System.out.println("password for "+userName+" is "+accounts.get(userName).get(0) );
+			if(( accounts.get(userName)[0] ).equals(pw) == false) {
+				System.out.println("password for "+userName+" is "+accounts.get(userName)[0] );
 				System.out.println("map looks like "+accounts);
 				System.out.println("Password incorrect");
 				System.out.println("Log in as a different user? '9'");
@@ -165,7 +165,7 @@ public class BankAppBetter {
 		Scanner input1 = new Scanner(System.in);
 		String userName = input1.nextLine();
 		
-		Map<String, ArrayList<String>> accounts = readFromFile();
+		Map<String, String[]> accounts = readFromFile();
 		System.out.println("does it exist? "+accounts.containsKey(userName));
 		if (accounts.containsKey(userName) == true) {
 			System.out.println("Username already exists");
@@ -211,10 +211,10 @@ public class BankAppBetter {
 		Scanner input = new Scanner(System.in);
 		String ip1 = input.nextLine();
 		
-		Map<String, ArrayList<String>> accounts = readFromFile();
+		Map<String, String[]> accounts = readFromFile();
 		
 		if (ip1.equals("1")) {
-			System.out.println("Your balance is "+accounts.get(userName).get(1));
+			System.out.println("Your balance is "+accounts.get(userName)[1]);
 			userOptions(userName);
 		} else if (ip1.equals("2")) {
 			makeDeposit(userName);
@@ -232,7 +232,7 @@ public class BankAppBetter {
 	
 	// DEPOSIT BLOCK
 	public static void makeDeposit (String userName) {
-		Map<String, ArrayList<String>> accounts = readFromFile();
+		Map<String, String[]> accounts = readFromFile();
 		
 		System.out.println("How much do you want to deposit?");
 		Scanner depo = new Scanner(System.in);
@@ -245,13 +245,13 @@ public class BankAppBetter {
 			makeDeposit(userName);
 		}
 		
-		Double curr = Double.parseDouble(accounts.get(userName).get(1));
+		Double curr = Double.parseDouble(accounts.get(userName)[1]);
 		curr = curr + dep;
 		String toAdd = Double.toString(curr);
-		accounts.get(userName).set(1, toAdd);
+		accounts.get(userName)[1] = toAdd;
 		
 		System.out.println("Deposit successful!");
-		System.out.println("New total is "+accounts.get(userName).get(1));
+		System.out.println("New total is "+accounts.get(userName)[1]);
 		
 		updateUserInfo(accounts);
 		userOptions(userName);
@@ -259,9 +259,9 @@ public class BankAppBetter {
 	
 	// WITHDRAW BLOCK
 	public static void makeWithdrawal (String userName) {
-		Map<String, ArrayList<String>> accounts = readFromFile();
+		Map<String, String[]> accounts = readFromFile();
 		
-		System.out.println("Your current balance is "+accounts.get(userName).get(1));
+		System.out.println("Your current balance is "+accounts.get(userName)[1]);
 		System.out.println("How much do you want to withdraw?");
 		Scanner amount = new Scanner(System.in);
 		double wd = 0;
@@ -273,18 +273,18 @@ public class BankAppBetter {
 			makeWithdrawal(userName);
 		}
 		
-		if (wd > Double.parseDouble(accounts.get(userName).get(1))) {
+		if (wd > Double.parseDouble(accounts.get(userName)[1])) {
 			System.out.println("Insufficient funds, cannot complete transaction: ");
 			makeWithdrawal(userName);
 		} else {
 			
-			Double curr = Double.parseDouble(accounts.get(userName).get(1));
+			Double curr = Double.parseDouble(accounts.get(userName)[1]);
 			curr = curr - wd;
 			String toAdd = Double.toString(curr);
-			accounts.get(userName).set(1, toAdd);
+			accounts.get(userName)[1] = toAdd;
 			
 			System.out.println("Withdrawal successful!");
-			System.out.println("New total is "+accounts.get(userName).get(1));
+			System.out.println("New total is "+accounts.get(userName)[1]);
 			updateUserInfo(accounts);
 			userOptions(userName);
 		}

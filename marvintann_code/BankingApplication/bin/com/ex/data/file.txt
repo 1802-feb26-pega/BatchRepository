@@ -1,0 +1,2 @@
+:gogo,hobo;10.0
+:poop,po;0

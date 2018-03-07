@@ -1,1 +1,3 @@
-:popipo,klo;40.0
+:gogo,hobo;10.0
+:poop,po;0
+:popipo,klop;0
