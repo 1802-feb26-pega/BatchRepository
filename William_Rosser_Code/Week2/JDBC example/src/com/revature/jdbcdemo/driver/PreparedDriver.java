@@ -84,7 +84,7 @@ public class PreparedDriver {
 
 	}
 
-	public static void help(int value) {
+	private static void help(int value) {
 		if (value == 0) {
 			System.out.println(value + " rows affected. Maybe this was a DDL statement?");
 		} else {
