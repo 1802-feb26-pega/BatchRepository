@@ -238,18 +238,37 @@ PRINT cursorCust;
 
 -- 4.2
 -- Create a stored procedure that updates the personal information of an employee
-CREATE OR REPLACE PROCEDURE
+CREATE OR REPLACE PROCEDURE change_employee_phone(e_id IN NUMBER, new_phone IN VARCHAR2)
 IS
 
 BEGIN
+    UPDATE employee
+    SET phone = new_phone
+    WHERE e_id = employeeid;
 END;
 /
 
+-- Run change_employee_phone (for this example, phone before is: 1(708)485-9593
+EXECUTE change_employee_phone(9, '+1 (708) 485-9593');
+-- Showing output
+SELECT employeeid, firstname, lastname, phone
+FROM employee
+WHERE employeeid = 9;
+
 -- Create a stored procedure that returns the managers of an employee
-CREATE OR REPLACE PROCEDURE
+CREATE OR REPLACE PROCEDURE employee_manager (e_id IN NUMBER, m_id IN NUMBER)
 IS
 
 BEGIN
+    SELECT employeeid
+    INTO m_id
+    FROM employee
+    WHERE employee.reportsto = 
+    (
+        SELECT employeeid
+        FROM employee
+        WHERE e_id = employeeid
+    );
 END;
 /
 

@@ -190,3 +190,9 @@ PL/SQL = Procedural Language extension of SQL
       - Definition: stored program in PL/SQL which is automatically executed upon the occurrence
             of some event (such as an INSERT into a table).
 */
+
+-- Statements for use in JBDC demo
+drop table test;
+
+select *
+from test;

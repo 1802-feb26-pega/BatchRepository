@@ -20,16 +20,15 @@ public class DemoDriver
 			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe",
 					"Tin", "Tin");
 			
+			conn.close();
 			
 		}
 		catch (ClassNotFoundException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
