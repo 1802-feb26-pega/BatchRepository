@@ -81,6 +81,8 @@ CROSS JOIN artist
 WHERE artist.artistid = album.artistid
 ORDER BY artist.name;
 
+
+--7.5
 SELECT a.firstname as "Subordinate Firstname", a.lastname as "Subordinate Lastname", 
     b.firstname as "Superior Firstname", b.lastname as "Superior Lastname"
 FROM employee a, employee b
