@@ -86,3 +86,61 @@ MINUS
 SELECT ID, name, email, birthdate, hire_date
 FROM employee
 WHERE TO_CHAR(hire_date, 'MM') IN ('05','06');
+
+--JOINS
+--OUTER
+--INNER
+--CROSS
+--SELF
+--EQUI
+--Thetha (NON-equi)
+
+SELECT e.first_name,e.last_name,j.job_id, j.min_salary
+FROM employees e
+JOIN jobs j -- INNER JOINS,EQUI JOIN
+on e.job_id = j.job_id;
+
+SELECT e.first_name,e.last_name, job_id,j.min_salary
+FROM employees e
+JOIN jobs j --INNER jOINS, EQUI JOIN
+using(job_id);
+
+--THETA EXAMPLES ALSO called INNER JOIN
+SELECT e.employee_id, e.first_name,e.last_name, e.salary, d.department_id
+FROM employees e
+JOIN departments d
+on e.department_id BETWEEN 10 AND 40;
+
+--CROSS join produces a CARTESIAN PRODUCT
+SELECT *
+FROM employees
+cross JOIN department;
+
+--ACCIDENTAL CROSS JOIN
+SELECT *
+FROM employees, departments, jobs;
+
+--SELF JOIN
+SELECT e.employee_id,e.first_name,e.last_name, e.salary
+FROM employees 
+JOIN employees em
+ON e.manager_id = em.employee_id
+ORDER BY employee_id;
+
+SELECT e.employee_id,e.first_name,e.last_name, e.salary
+FROM employees e
+ORDER BY employee_id;
+
+
+--Functions
+
+Create OR REPLACE function get_current_time
+RETURN TIMESTAMP IS l_systimestamp TIMESTAMP;
+BEGIN 
+    SELECT systimestamp
+    INTO l_systimestamp
+    FROM DUAL;
+    Return l_systimestamp;
+END;
+/
+SELECT get_current_time() FROM DUAL;

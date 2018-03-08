@@ -1,3 +1,14 @@
+/*create or replace PROCEDURE get_all_artists(cursorParam OUT SYS_REFCURSOR)
+IS
+BEGIN
+    OPEN cursorParam FOR
+    SELECT * FROM artist;
+END;
+/
+*/
+variable rc REFCURSOR;
+EXECUTE get_all_artists(:rc);
+print rc;
 --PART 1
 --1.0 DONE
 --2.1 SELECT
@@ -123,6 +134,149 @@ ALTER TABLE Invoice ADD CONSTRAINT FK_Invoice_CustomerId
     WHERE firstname = 'Robert'
     AND
     lastname = 'Walter';
+--3.0 SQL Functions
+--3.1 System Defined Functions
+--3.1.1
+
+Create OR REPLACE function get_current_time
+RETURN TIMESTAMP IS l_systimestamp TIMESTAMP;
+BEGIN 
+    SELECT systimestamp
+    INTO l_systimestamp
+    FROM DUAL;
+    Return l_systimestamp;
+END;
+/
+SELECT get_current_time() FROM DUAL;
+
+--3.1.2
+
+create or replace function get_mediatype_len
+RETURN INT is l int;
+BEGIN 
+    Select LENGTH(name)
+    INTO l
+    FROM MEDIATYPE
+    WHERE name = 'Protected MPEG-4 video file';
+    RETURN l;
+END;
+/
+SELECT get_mediatype_len() FROM DUAL;
+
+
+--3.2 System Defiend aggregate functions
+--3.2.1
+create or replace function get_invoice_avg
+RETURN Number is average Number(3,2);
+BEGIN 
+    Select AVG(total)
+    INTO average
+    FROM invoice;
+    RETURN average;
+END;
+/
+SELECT get_invoice_avg FROM DUAL;
+
+
+--3.2.1
+create or replace function get_most_exp_track
+RETURN NUMBER is mx Number(3,2);
+BEGIN
+    SELECT MAX(unitprice)
+    INTO mx
+    FROM Track;
+    RETURN mx;
+END;
+/
+
+SELECT get_most_exp_track() FROM DUAL;
+
+--3.3 User defiened Scalar Functions
+Create  or replace function get_avg_invoiceline_items
+RETURN NUMBER is average NUMBER(3,2);
+BEGIN
+    SELECT AVG(unitprice)
+    INTO average
+    FROM Invoiceline;
+    RETURN average;
+END;
+/
+
+SELECT get_avg_invoiceline_items() FROM DUAL;
+
+--3.4 USer Defined Table Valued Functions
+--FUNCTIONS DO NOT RETURN MORE THAN ONE RECORD
+Create or Replace function get_before_1968
+RETURN int is idx int;
+BEGIN
+    SELECT Count(Firstname)
+    INTO idx
+    FROM employee
+    WHERE BIRTHDATE > DATE '1968-01-01';
+    RETURN idx;
+END;
+/
+SELECT get_before_1968() FROM DUAL;
+
+--4.0 STORED PRODEDURES
+--4.1 
+create or replace PROCEDURE get_nameof_employee(cursorParam OUT SYS_REFCURSOR)
+IS 
+BEGIN
+    OPEN cursorParam FOR
+    SELECT firstname,lastname
+    FROM employee;
+END;
+/
+
+variable rc REFCURSOR;
+EXECUTE get_nameof_employee(:rc);
+print rc;
+
+--4.2
+--4.2.1
+create or replace PROCEDURE set_employee
+IS 
+BEGIN
+    UPDATE employee
+    SET firstname = 'Jonny', lastname = 'Quest'
+    WHERE firstname = 'Philip2';
+END;
+/
+
+EXECUTE set_employee();
+
+--4.2.2
+create or replace procedure get_managers(cursorParam OUT SYS_REFCURSOR)
+IS
+BEGIN
+    OPEN cursorParam FOR
+    SELECT a.firstname, a.lastname, a.reportsto, b.firstname, b.lastname
+    FROM employee a
+    JOIN employee b
+    ON a.reportsto = b.employeeid
+    WHERE a.firstname = 'Nancy';
+END;
+/
+
+variable a REFCURSOR;
+EXECUTE get_managers(:a);
+print a;
+
+--4.3
+create or replace procedure get_companyname(cursorParam OUT SYS_REFCURSOR)
+IS
+BEGIN
+    OPEN cursorParam FOR
+    SELECT firstname, lastname, company
+    FROM CUSTOMER
+    WHERE firstname = '2Philip' AND lastname = '2Harris';
+END;
+/
+
+variable a REFCURSOR;
+EXECUTE get_companyname(:a);
+print a;
 
 --7.0
 --7.1
@@ -144,6 +298,17 @@ RIGHT JOIN Artist
 on ALBUM.artistid = Artist.ARTISTID;
 
 --7.4
+SELECT *
+FROM ALBUM
+CROSS JOIN ARTIST 
+Order BY name ASC;
+
+--7.5
+SELECT a.FIRSTNAME, a.LASTNAME, a.reportsto, b.FIRSTNAME, b.LASTNAME
+FROM employee a
+JOIN employee b
+ON a.reportsto = b.employeeid;
+
 
 
 --Part 2
