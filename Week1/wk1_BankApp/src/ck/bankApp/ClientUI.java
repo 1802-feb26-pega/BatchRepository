@@ -220,7 +220,8 @@ public class ClientUI {
 		String tempUname;
 		String tempPass;
 		byte[] bytesOfPass;
-		String passHash = null;
+		byte[] passHash = null;
+		StringBuilder temp = new StringBuilder();
 		MessageDigest md;
 		boolean valid = false;
 		
@@ -239,8 +240,12 @@ public class ClientUI {
 				try
 				{
 					md = MessageDigest.getInstance("MD5");
-					passHash = Arrays.toString(md.digest(bytesOfPass));
-					if(passHash.equals(u.getPassHash()))
+					passHash = md.digest(bytesOfPass);
+					for(byte b : passHash)
+					{
+						temp.append(String.format("%02x", b & 0xff));
+					}
+					if(temp.toString().equals(u.getPassHash()))
 					{
 						System.out.println("Good login");
 						return u;
@@ -269,7 +274,8 @@ public class ClientUI {
 	{
 		String password;
 		byte[] bytesOfPass;
-		String passHash = null;
+		byte[] passHash = null;
+		StringBuilder temp = new StringBuilder();
 		MessageDigest md;
 		boolean valid = false;
 		
@@ -287,7 +293,11 @@ public class ClientUI {
 					try
 					{
 						md = MessageDigest.getInstance("MD5");
-						passHash =Arrays.toString(md.digest(bytesOfPass));
+						passHash=md.digest(bytesOfPass);
+						for(byte b : passHash)
+						{
+							temp.append(String.format("%02x", b & 0xff));
+						}
 					}catch(NoSuchAlgorithmException nsae)
 					{
 						nsae.printStackTrace();
@@ -310,7 +320,7 @@ public class ClientUI {
 			}//if-else
 			
 		}//while
-		return passHash;
+		return temp.toString();
 	}//validatePassword
 	
 }
