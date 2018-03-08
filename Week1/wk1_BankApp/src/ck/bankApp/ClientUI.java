@@ -1,8 +1,11 @@
 package ck.bankApp;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
 
 public class ClientUI {
 	//public static Scanner sc = new Scanner(System.in);
@@ -48,6 +51,9 @@ public class ClientUI {
 		
 		//validateUsername
 		newPerson.setUsername(validateUsername(users));
+		
+		//validatePassword
+		newPerson.setPassHash(validatePassword());
 		
 		//validateFirstName
 		newPerson.setFirstName(validateFirstName());
@@ -211,17 +217,44 @@ public class ClientUI {
 	
 	public User userLogin(List<User> users)
 	{
-		String temp;
+		String tempUname;
+		String tempPass;
+		byte[] bytesOfPass;
+		String passHash = null;
+		MessageDigest md;
 		boolean valid = false;
 		
 		System.out.println("Please enter your username:");
-		temp = Main.sc.next();
+		tempUname = Main.sc.next();
 		
 		for(User u : users)
 		{
-			if(temp.equals(u.getUsername()))
+			if(tempUname.equals(u.getUsername()))
 			{
-				return u;
+				//check password if username is found
+				System.out.println(tempUname + "\nEnter your password:");
+				tempPass = Main.sc.next();
+				bytesOfPass = tempPass.getBytes();
+				
+				try
+				{
+					md = MessageDigest.getInstance("MD5");
+					passHash = Arrays.toString(md.digest(bytesOfPass));
+					if(passHash.equals(u.getPassHash()))
+					{
+						System.out.println("Good login");
+						return u;
+					}else
+					{
+						System.out.println("Bad login");
+						return null;
+					}//if-else
+					
+				}catch(NoSuchAlgorithmException nsae)
+				{
+					System.out.println("MD5 Algorithm - login");
+				}//try-catch
+				
 			}//if
 		}//for
 		
@@ -229,6 +262,56 @@ public class ClientUI {
 		//return null if username is not found in list of current users
 		return null;
 	}//userLogin
+	
+	//=========================================================================
+	
+	public String validatePassword()
+	{
+		String password;
+		byte[] bytesOfPass;
+		String passHash = null;
+		MessageDigest md;
+		boolean valid = false;
+		
+		while(!valid)
+		{
+			System.out.println("Enter password (8-20 characters)");
+			password = Main.sc.nextLine();
+			if(password.length() >= 8 && password.length() <= 20)
+			{
+				System.out.println("\n\nGood password");
+				try
+				{
+					bytesOfPass = password.getBytes("UTF-8");
+					
+					try
+					{
+						md = MessageDigest.getInstance("MD5");
+						passHash =Arrays.toString(md.digest(bytesOfPass));
+					}catch(NoSuchAlgorithmException nsae)
+					{
+						nsae.printStackTrace();
+						System.out.println("Broken in MD5 - validatePassword()");
+					}//try-catch
+						
+						
+				}catch(UnsupportedEncodingException uee)
+				{
+					uee.printStackTrace();
+					System.out.println("Broken in getBytes() encoding - validatePassword()");
+				}finally
+				{
+					valid = true;
+				}
+				
+			}else
+			{
+				System.out.println("\nBad length\n");
+			}//if-else
+			
+		}//while
+		return passHash;
+	}//validatePassword
 	
 }
 

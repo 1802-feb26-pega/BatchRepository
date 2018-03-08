@@ -1,11 +1,10 @@
 package ck.bankApp;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.Arrays;
 
 public class User {
 	private String username;
-	//private String password;
+	private String passHash;
 	private String firstName;
 	private String lastName;
 	private double balance;
@@ -15,6 +14,7 @@ public class User {
 	public User(String uName,String fName,String lName,double bal)
 	{
 		username = uName;
+		passHash = null;
 		firstName = fName;
 		lastName = lName;
 		balance = bal;
@@ -56,11 +56,28 @@ public class User {
 		this.balance = newBalance;
 	}
 	//===========================
-	@Override
-	public String toString()
+	public String getPassHash()
 	{
-		return new String(username + ":" + firstName + ":" + lastName + ":" + balance + "\n");
+		return passHash;
 	}
+	public void setPassHash(String newPH)
+	{
+		this.passHash = newPH;
+	}
+	//===========================
+
+	@Override
+	public String toString() {
+		return username + ":" + passHash + ":" + firstName
+				+ ":" + lastName + ":" + balance;
+	}
+	
+	
+//	@Override
+//	public String toString()
+//	{
+//		return new String(username + ":" + firstName + ":" + lastName + ":" + balance + "\n");
+//	}
 	
 	
 }

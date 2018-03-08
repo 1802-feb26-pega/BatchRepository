@@ -68,9 +68,10 @@ public class UserIO {
 				User temp = new User();
 				//parse the data fields and add them to a User instance, add that to the list of Users
 				temp.setUsername(data[0]);
-				temp.setFirstName(data[1]);
-				temp.setLastName(data[2]);
-				temp.setBalance(Double.parseDouble(data[3]));
+				temp.setPassHash(data[1]);
+				temp.setFirstName(data[2]);
+				temp.setLastName(data[3]);
+				temp.setBalance(Double.parseDouble(data[4]));
 				
 				users.add(temp);
 			}

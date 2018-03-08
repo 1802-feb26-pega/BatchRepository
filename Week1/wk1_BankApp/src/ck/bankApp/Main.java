@@ -60,10 +60,7 @@ public class Main {
 				MemberUI mui = new MemberUI(loggedIn);
 				mui.topUI();
 				//call memberUI for logged in user
-			}else
-			{
-				System.out.println("User not found. Exiting.");
-			}//if-else
+			}
 			//set as currentUser
 			//start memberUI
 			break;
