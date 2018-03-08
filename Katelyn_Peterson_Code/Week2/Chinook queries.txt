@@ -1,0 +1,75 @@
+--2.1
+SELECT *
+FROM employee;
+
+SELECT *
+FROM employee
+WHERE lastname = 'King';
+
+SELECT *
+FROM employee
+WHERE firstname = 'Andrew' AND reportsto IS null;
+
+--2.2
+SELECT *
+FROM album
+ORDER BY title DESC;
+
+SELECT firstname
+FROM customer
+ORDER BY city;
+
+--2.3
+INSERT ALL
+INTO genre (genreid, name) 
+    VALUES (26, 'Christian Contemporary')
+INTO genre (genreid, name)
+    VALUES (27, 'Christian Rock')
+SELECT * FROM dual;
+
+INSERT ALL
+INTO employee (EmployeeId, LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, 
+Phone, Fax, Email) 
+    VALUES (9, 'Calvin', 'Lance', 'Security Guard', 1, DATE '1992-04-14', Date '2006-06-01', '4538 Deyo Ave', 'Brookfield', 
+    'IL', 'USA', '60513', '1(708)485-9593', null, 'lance@chinookcorp.com')
+INTO employee (EmployeeId, LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, 
+Phone, Fax, Email) 
+    VALUES (10, 'Calvin', 'Alanna', 'Security Guard', 1, DATE '1994-05-10', Date '2006-06-01', '4538 Deyo Ave', 'Brookfield', 
+    'IL', 'USA', '60513', '1(708)485-9593', null, 'alanna@chinookcorp.com')
+SELECT * FROM dual;
+
+INSERT ALL
+INTO customer (CustomerId, FirstName, LastName, Company, Address, City, State, Country, PostalCode, Phone, Fax, Email, SupportRepId)
+    VALUES (60, 'Greg', 'Parker', 'Strategic Response Unit', '4538 Deyo Ave', 'Brookfield', 'IL', 'USA', '60513', 
+    '1(708)485-9593', null, 'parker@sru.gov', 1)
+INTO customer (CustomerId, FirstName, LastName, Company, Address, City, State, Country, PostalCode, Phone, Fax, Email, SupportRepId)
+    VALUES (61, 'Kevin', 'Wordsworth', 'Strategic Response Unit', '6452 Maple Ave', 'Brookfield', 'IL', 'USA', '60513', 
+    '1(708)485-8267', null, 'wordsworth@sru.gov', 1)
+SELECT * FROM dual;
+
+--2.4
+UPDATE customer
+SET firstname = 'Robert', lastname = 'Walter'
+WHERE firstname = 'Aaron' AND lastname = 'Mitchell';
+
+UPDATE artist
+Set name = 'CCR'
+WHERE name = 'Creedence Clearwater Revival';
+
+--2.5
+SELECT *
+FROM invoice
+WHERE billingaddress LIKE 'T%';
+
+--2.6
+SELECT *
+FROM invoice
+WHERE total BETWEEN 15 AND 50;
+
+SELECT *
+FROM employee
+WHERE hiredate BETWEEN DATE '2003-06-01' AND DATE '2004-03-01';
+
+--2.7
+DELETE FROM customer
+WHERE firstname = 'Robert' AND lastname = 'Walter';

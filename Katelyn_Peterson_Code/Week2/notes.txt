@@ -1,0 +1,4 @@
+SQL Resources
+http://plsql-tutorial.com/plsql-procedures.htm - PL/SQL Procedures
+http://plsql-tutorial.com/plsql-functions.htm - PL/SQL Functions
+http://plsql-tutorial.com/plsql-triggers.htm - PL/SQL Triggers
