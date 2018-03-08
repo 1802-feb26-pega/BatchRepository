@@ -15,11 +15,13 @@ public class DemoDriver {
 			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", 
 					"demo","demo");
 			System.out.println("Connected to the database.");
-			conn.close();
+			conn.close();	
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			System.out.println("Exiting the database.");
 		}
 		
 		
