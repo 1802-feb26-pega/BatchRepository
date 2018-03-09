@@ -29,7 +29,6 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return null;
 	}
-	
 
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<User>();

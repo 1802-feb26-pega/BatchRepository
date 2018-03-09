@@ -13,6 +13,12 @@ import com.revature.bank.util.ConnectionFactory;
 
 public class AccountDAOImpl implements AccountDAO {
 
+	private Account resultsToAccount(ResultSet rs, boolean callNext) throws SQLException {
+		if(!callNext || rs.next()) {
+			return new Account(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getString(4));
+		}
+		return null;
+	}
 	public List<Account> getAllAccounts() {
 		List<Account> accounts = new ArrayList<Account>();
 
@@ -22,11 +28,7 @@ public class AccountDAOImpl implements AccountDAO {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while(rs.next()) {
-				int uid = rs.getInt(1);
-				int accountID = rs.getInt(2);
-				double balance = rs.getDouble(3);
-				String name = rs.getString(4);
-				Account temp = new Account(uid, accountID, balance, name);
+				Account temp = resultsToAccount(rs, false);
 				if (temp != null) accounts.add(temp);
 			}
 
@@ -37,16 +39,38 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	public Account getAccountByAccountID(int accountID) {
-		// TODO Auto-generated method stub
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			String sql = "SELECT * FROM accounts WHERE ? = account_id";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, accountID);
+			ResultSet rs = pstmt.executeQuery();
+			return resultsToAccount(rs, true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	public List<Account> getAllAccountsForUsers(int userID) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Account> accounts = new ArrayList<>();
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			String sql = "SELECT * FROM accounts WHERE ? = user_id";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userID);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Account temp = resultsToAccount(rs, false);
+				if (temp != null) accounts.add(temp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return accounts;
 	}
 
-	public int addAccount(int userID, Account account) {
+	public int addAccount(Account account) {
+		int userID = account.getUserID();
+		if (userID <= 0) return -1;
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			conn.setAutoCommit(false);
 			String sql = "INSERT INTO accounts(user_id, balance, account_name) VALUES (?,?,?)";
@@ -66,7 +90,7 @@ public class AccountDAOImpl implements AccountDAO {
 		return 0;
 	}
 
-	public int updateAccount(int accountID, Account updated) {
+	public int updateAccount(Account updated) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

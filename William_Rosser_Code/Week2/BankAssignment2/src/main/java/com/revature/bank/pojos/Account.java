@@ -14,22 +14,18 @@ public class Account {
 		this.accountName = accountName;
 	}
 
-	public Account(int userID, int accountID, String accountName) {
-		super();
-		this.userID = userID;
-		this.accountID = accountID;
-		this.balance = 0.0;
-		this.accountName = accountName;
+	public Account(int userID, double balance, String accountName) {
+		this(userID, -1, balance, accountName);
+	}
+	
+	public Account(int userID, String accountName) {
+		this(userID, 0.0, accountName);
 	}
 
-	public Account(int userID, int accountID) {
-		super();
-		this.userID = userID;
-		this.accountID = accountID;
-		this.balance = 0.0;
-		this.accountName = "Savings Account";
+	public Account(int userID) {
+		this(userID, "Savings Account");
 	}
-
+	
 	public double getBalance() {
 		return balance;
 	}
