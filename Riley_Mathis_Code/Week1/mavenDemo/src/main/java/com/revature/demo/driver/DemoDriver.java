@@ -24,8 +24,8 @@ public class DemoDriver {
 		String name = artDao.getNameById(2);
 		System.out.println(name);
 		
-		System.out.println();
-		Artist artist2 = artDao.addArtist("My Band");
-		System.out.println("Added "+ artist2);
+//		System.out.println();
+//		Artist artist2 = artDao.addArtist("My Band");
+//		System.out.println("Added "+ artist2);
 	}
 }

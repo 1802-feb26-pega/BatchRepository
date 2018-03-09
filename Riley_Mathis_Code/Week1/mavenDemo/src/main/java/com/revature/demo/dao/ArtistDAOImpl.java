@@ -75,18 +75,27 @@ public class ArtistDAOImpl implements ArtistDAO{
 		return name;
 	}
 
-	public Artist addArtist(String name) {
+	public Artist addArtist(Artist artist) {
 		// TODO Auto-generated method stub
-		Artist artist = new Artist();
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-			String sql = "INSERT INTO artist VALUES (?, ?)";
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, 0);
-			pstmt.setString(2, name);
-			pstmt.executeUpdate();
-			artist.setId(0);
-			artist.setName(name);
+			
+			conn.setAutoCommit(false);
+			
+			String sql = "INSERT INTO artist(name) VALUES (?)";
+			String[] key = new String[1];
+			key[0] = "artistid";
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql, key);
+			pstmt.setString(1, artist.getName());
+			int rowsAffected = pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
 
+			if(rowsAffected > 0) {
+				while(rs.next()) {
+					artist.setId(rs.getInt(1));
+				}
+				conn.commit();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,9 +103,26 @@ public class ArtistDAOImpl implements ArtistDAO{
 		return artist;
 	}
 
-	public Artist updateArtist(int id, String newName) {
+	public int updateArtist(int id, String newName) {
 		// TODO Auto-generated method stub
-		return null;
+		int rowsAffected = -1;
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+		String sql ="UPDATE artist SET name = ? WHERE artistid = ?";
+		PreparedStatement pstmt = conn.preparedStatement(sql);
+		pstmt
+		}
+		return 0;
+	}
+	
+	public int removeArtist(int id) {
+		ArtistDAO artistDao = new ArtistDAOImpl();
+		if(artistDao)
+		return 0;
+	}
+	
+	public boolean hasAlbum() {
+		return false;
+		
 	}
 
 }
