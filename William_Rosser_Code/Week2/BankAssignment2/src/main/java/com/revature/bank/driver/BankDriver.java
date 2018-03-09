@@ -17,10 +17,15 @@ public class BankDriver {
 //		temp.setBalance(777.0);
 //		aDao.addAccount(temp);
 		
-//		for (Account acc : aDao.getAllAccounts()) {
-//			System.out.println(acc);
-//		}
-		System.out.println(aDao.getAccountByAccountID(2));
+		int count = 1;
+		for (Account acc : aDao.getAllAccountsForUser(1)) {
+			System.out.println(acc);
+			acc.setAccountName("Will's Account " + count);
+			acc.setBalance(acc.getBalance() * 2);
+			aDao.updateAccount(acc);
+		}
+		
+		
 		
 	}
 

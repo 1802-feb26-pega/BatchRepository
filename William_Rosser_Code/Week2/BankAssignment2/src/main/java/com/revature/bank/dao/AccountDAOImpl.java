@@ -51,7 +51,7 @@ public class AccountDAOImpl implements AccountDAO {
 		return null;
 	}
 
-	public List<Account> getAllAccountsForUsers(int userID) {
+	public List<Account> getAllAccountsForUser(int userID) {
 		ArrayList<Account> accounts = new ArrayList<>();
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			String sql = "SELECT * FROM accounts WHERE ? = user_id";
@@ -91,14 +91,30 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	public int updateAccount(Account updated) {
-		// TODO Auto-generated method stub
+		int id = updated.getAccountID();
+		if(id <= 0) return -1;	
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			conn.setAutoCommit(false);
+			String sql = "UPDATE accounts SET balance = ?, account_name = ? WHEN account_id = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setDouble(1, updated.getBalance());
+			pstmt.setString(2, updated.getAccountName());
+			pstmt.setInt(3, id);
+			int val = pstmt.executeUpdate();
+			if (val>0) {
+				//System.out.println("Committed");
+				conn.commit();
+				return val;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
 		return 0;
 	}
 
 	@Override
 	public int removeAccount(int accountID) {
-		// TODO Auto-generated method stub
-		return 0;
+		return -1;
 	}
 
 }
