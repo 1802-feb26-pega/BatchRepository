@@ -8,6 +8,7 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="JFrame."/>
 			<item value="fuck yeah"/>
 			<item value="float"/>
 			<item value="JFormattedTextField"/>
@@ -15,7 +16,6 @@
 			<item value="frame"/>
 			<item value="a-z"/>
 			<item value="\\d+"/>
-			<item value=".reduce"/>
 		</list>
 		<list key="replacehistory">
 			<item value="JTextField"/>
