@@ -129,7 +129,7 @@ CREATE OR REPLACE PROCEDURE employeeNames (names OUT SYS_REFCURSOR)
 IS
 BEGIN
     open names FOR
-        SELECT * FROM employee;
+        SELECT firstname, lastname FROM employee;
     RETURN;
 END;
 /
@@ -137,6 +137,58 @@ END;
 var refcur refcursor; 
 EXECUTE employeeNames(:refcur);
 print refcur;
+
+--4.2
+CREATE OR REPLACE PROCEDURE updatePersonalInfo(
+    id IN NUMBER,
+    fn IN VARCHAR2,
+    ln IN VARCHAR2,
+    ttl IN VARCHAR2,
+    addr IN VARCHAR2,
+    cty IN VARCHAR2,
+    st IN VARCHAR2,
+    cntry IN VARCHAR2,
+    pstcode IN VARCHAR2,
+    phn IN VARCHAR2,
+    fx IN VARCHAR2,
+    eml IN VARCHAR2)
+AS
+BEGIN
+    UPDATE employee
+    SET lastname = ln,
+        firstname = fn,
+        title = ttl,
+        address = addr,
+        city = cty,
+        state = st,
+        country = cntry,
+        postalcode = pstcode,
+        phone = phn,
+        fax = fx,
+        email = eml
+    WHERE
+        employeeid = id;
+END;
+/
+
+SELECT * FROM EMPLOYEE;
+EXEC updatePersonalInfo(1,'John','Doe','Office Hobo', 'Yellow Brick Road','Emerald City','Oz', 'Over The Rainbow', '12345', '7777777777','6666667777','oz@ozmail.com');
+
+
+
+CREATE OR REPLACE PROCEDURE employeeManagers(id IN NUMBER, names OUT SYS_REFCURSOR)
+IS
+BEGIN
+    open names FOR
+        SELECT * FROM employee WHERE reportsto = id;
+    RETURN;
+END;
+/
+
+var refcur refcursor; 
+EXECUTE employeeManagers(2,:refcur);
+print refcur;
+
 
 -- Section 7
 
