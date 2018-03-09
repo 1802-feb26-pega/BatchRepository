@@ -20,21 +20,32 @@ public class User {
 		this.username = username;
 		this.password = password;
 	}
-
-	public User(int userID, String firstName, String lastName, String email, String username, String password) {
-		super();
-		this.userID = userID;
-		this.firstName = firstName;
-		this.middleInitial = "";
-		this.lastName = lastName;
-		this.email = email;
-		this.username = username;
-		this.password = password;
-	}
 	
 	public User(int userID) {
 		super();
 		this.userID = userID;
+	}
+	
+	/**
+	 * Represents a new, temporary User object not yet in the database.
+	 */
+	public User() { 
+		super();
+		this.userID = -1;
+	}
+	
+	/**
+	 * Represents a new, temporary User object not yet in the database.
+	 */
+	public User(String firstName, String middleInitial, String lastName, String email, String username,
+			String password) {
+		this();
+		this.firstName = firstName;
+		this.middleInitial = middleInitial;
+		this.lastName = lastName;
+		this.email = email;
+		this.username = username;
+		this.password = password;
 	}
 
 	public int getUserID() {
