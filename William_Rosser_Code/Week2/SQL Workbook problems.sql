@@ -175,7 +175,6 @@ SELECT * FROM EMPLOYEE;
 EXEC updatePersonalInfo(1,'John','Doe','Office Hobo', 'Yellow Brick Road','Emerald City','Oz', 'Over The Rainbow', '12345', '7777777777','6666667777','oz@ozmail.com');
 
 
-
 CREATE OR REPLACE PROCEDURE employeeManagers(id IN NUMBER, names OUT SYS_REFCURSOR)
 IS
 BEGIN
@@ -188,6 +187,31 @@ END;
 var refcur refcursor; 
 EXECUTE employeeManagers(2,:refcur);
 print refcur;
+
+--4.3
+CREATE OR REPLACE PROCEDURE custNameAndCompany(id IN NUMBER, fn OUT VARCHAR2, ln OUT VARCHAR2, cmp OUT VARCHAR2)
+AS
+BEGIN
+    SELECT firstname, lastname, company INTO fn, ln, cmp FROM customer WHERE id=customerid;
+END;
+/
+
+DECLARE
+ fn VARCHAR2(500);
+ ln VARCHAR2(500);
+ cmp VARCHAR2(500);
+BEGIN
+    custNameAndCompany(1,fn,ln,cmp);
+    dbms_output.Put_line(fn);
+    dbms_output.Put_line(ln);
+    dbms_output.Put_line(cmp);
+END;
+/
+
+-- SECTION 5
+
+
+-- SECTION 6
 
 
 -- Section 7
