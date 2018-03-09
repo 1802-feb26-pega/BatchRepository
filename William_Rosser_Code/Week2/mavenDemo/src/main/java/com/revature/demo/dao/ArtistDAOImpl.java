@@ -44,14 +44,19 @@ public class ArtistDAOImpl implements ArtistDAO {
 		return null;
 	}
 
-	public Artist addArtist(String name) {
+	public int addArtist(String name) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
-	public Artist updateArtist(int id, String name) {
+	public int updateArtist(int id, String name) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
+	}
+
+	public int removeArtist(int id) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
