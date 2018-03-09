@@ -191,7 +191,8 @@ public class UserInterface {
 					}
 					else if((answer.toLowerCase()).equals("n")){
 						System.out.println("Returning to menu...\n");
-					} else {
+					} 
+					else {
 						System.out.println("That was not a valid entry. Please type Y or N: ");
 
 					} 
@@ -200,7 +201,7 @@ public class UserInterface {
 			default:
 				System.out.println("That was not a valid input.");
 			}
-			if(option!="4") {
+			if(!option.equals("4")) {
 				System.out.println("Please re-enter your password, or enter E to exit: ");
 				String repeatResponse = String.valueOf(menu.nextLine());
 				while(!repeatResponse.toLowerCase().equals((String)"e")&&!repeatResponse.equals(String.valueOf(t.getPassword()))) {

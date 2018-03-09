@@ -18,7 +18,7 @@ public class BankDatabase {
 	//adds a new client entry to the data file
 	public void writeNewClient(String username, String first, String last, String password) {
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))){
-			bw.write(username+":"+first+":"+last+":"+password+":0");
+			bw.write(username+":"+first+":"+last+":"+password+":0 ");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
