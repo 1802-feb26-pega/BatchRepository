@@ -1,14 +1,3 @@
-/*create or replace PROCEDURE get_all_artists(cursorParam OUT SYS_REFCURSOR)
-IS
-BEGIN
-    OPEN cursorParam FOR
-    SELECT * FROM artist;
-END;
-/
-*/
-variable rc REFCURSOR;
-EXECUTE get_all_artists(:rc);
-print rc;
 --PART 1
 --1.0 DONE
 --2.1 SELECT
@@ -64,12 +53,14 @@ print rc;
     
 --2.3.3
     INSERT INTO CUSTOMER (CUSTOMERID,FIRSTNAME,LASTNAME,COMPANY,ADDRESS,CITY,state,country,postalcode,phone,fax,email,supportrepid)
-    VALUES(100,'Philip','Harris','Revature','13000 Revature Way','Reston','VA','USA',13579,1234567890,0987654321,'pjh@yahoo.com'
+    VALUES(CUSTOMER_SEQ.nextval,'Phil4ip','Harr4is','Revature','13000 Revature Way','Reston','VA','USA',13579,1234567890,0987654321,'pjh@yahoo.com'
     ,5);
     
      INSERT INTO CUSTOMER (CUSTOMERID,FIRSTNAME,LASTNAME,COMPANY,ADDRESS,CITY,state,country,postalcode,phone,fax,email,supportrepid)
-    VALUES(101,'2Philip','2Harris','Revature','13000 Revature Way','Reston','VA','USA',13579,1234560000,0000654321,'harrisphilip@yahoo.com'
+    VALUES(CUSTOMER_SEQ.nextval,'3Philip','3Harris','Revature','13000 Revature Way','Reston','VA','USA',13579,1234560000,0000654321,'harrisphilip@yahoo.com'
     ,2);
+    
+    commit;
     
     SELECT *
     FROM CUSTOMER;
@@ -277,6 +268,68 @@ END;
 variable a REFCURSOR;
 EXECUTE get_companyname(:a);
 print a;
+
+--5.0 Transactions
+--5.1.1
+CREATE or Replace procedure blah (cursorParam OUT SYS_REFCURSOR)
+IS
+BEGIN
+    DELETE FROM Invoice
+    WHERE invoiceid = 316;
+    
+    OPEN cursorParam FOR
+    SELECT *
+    FROM INVOICE
+    WHERE invoiceid = 316;
+
+Rollback;
+END;
+/
+
+variable a REFCURSOR;
+EXECUTE blah(:a);
+print a;
+
+--5.1.2
+CREATE or replace procedure ins_new
+AS
+BEGIN
+    INSERT INTO CUSTOMER (CUSTOMERID,FIRSTNAME,LASTNAME,COMPANY,ADDRESS,CITY,state,country,postalcode,phone,fax,email,supportrepid)
+    VALUES(CUSTOMER_SEQ.nextval,'theGREATESTPhilip','theGREATESTHarris','Revature','13000 Revature Way','Reston','VA','USA',13579,1234560000,0000654321,'harrisphilip@yahoo.com'
+    ,2);
+    COMMIT;
+END;
+/
+
+EXECUTE ins_new();
+
+--6.1
+create or replace TRIGGER Q6_1 
+BEFORE INSERT ON CUSTOMER 
+BEGIN
+dbms_output.put_line('IT Works when it wants too'); 
+END;
+/
+
+INSERT INTO CUSTOMER (CUSTOMERID,FIRSTNAME,LASTNAME,COMPANY,ADDRESS,CITY,state,country,postalcode,phone,fax,email,supportrepid)
+    VALUES(CUSTOMER_SEQ.nextval,'theGREATEST','theGREATEST','Revature','13000 Revature Way','Reston','VA','USA',13579,1234560000,0000654321,'harrisphilip@yahoo.com'
+    ,2);
+--6.2
+create or replace TRIGGER Q6_2
+BEFORE UPDATE ON CUSTOMER 
+BEGIN
+dbms_output.put_line('IT Works when it wants too'); 
+END;
+/
+
+--6.3
+create or replace TRIGGER Q6_3 
+BEFORE DELETE ON CUSTOMER 
+BEGIN
+dbms_output.put_line('IT Works when it wants too'); 
+END;
+/
+
 
 --7.0
 --7.1
