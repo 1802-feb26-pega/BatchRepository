@@ -45,6 +45,99 @@ SELECT * FROM employee WHERE hiredate >= DATE '2003-6-1' AND hiredate <= DATE '2
 DELETE FROM customer
 WHERE firstname = 'Robert' AND lastname = 'Walter';
 
+
+-- Section 3
+
+--3.1
+CREATE OR REPLACE FUNCTION getTime RETURN VARCHAR2
+IS
+    cur_time VARCHAR2(50);
+BEGIN
+    cur_time := TO_CHAR(SYSDATE, 'HH:MI:SS');
+    RETURN cur_time;
+END;
+/
+
+SELECT getTime() FROM dual;
+
+CREATE OR REPLACE FUNCTION getMediatypeLength RETURN NUMBER
+IS
+    len NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO len FROM mediatype;
+    RETURN len;
+END;
+/
+
+--SELECT getMediatypeLength() FROM dual;
+
+--3.2
+CREATE OR REPLACE FUNCTION invoiceAve RETURN NUMBER
+IS
+    ave NUMBER;
+BEGIN
+    SELECT SUM(total) / count(total) INTO ave FROM invoice;
+    RETURN ROUND(ave, 2);
+END;
+/
+
+SELECT invoiceAve() FROM dual;
+
+CREATE OR REPLACE FUNCTION maxTrackPrice RETURN VARCHAR2
+IS
+    track_name VARCHAR2(200 BYTE);
+BEGIN
+    SELECT name INTO track_name FROM (SELECT * FROM track ORDER BY unitprice DESC) WHERE ROWNUM = 1;
+    DBMS_OUTPUT.PUT_LINE(track_name);
+    return track_name;
+END;
+/
+
+SELECT maxTrackPrice() FROM dual;
+
+--3.3
+CREATE OR REPLACE FUNCTION invoiceLineAve RETURN NUMBER
+IS
+    ave NUMBER;
+BEGIN
+    SELECT SUM(unitprice * quantity) / count(unitprice) INTO ave FROM invoiceline;
+    RETURN ROUND(ave, 2);
+END;
+/
+
+SELECT invoiceLineAve() FROM dual;
+
+--3.4
+
+CREATE OR REPLACE FUNCTION after1968 RETURN SYS_REFCURSOR
+AS
+    tbl SYS_REFCURSOR;
+BEGIN
+    OPEN tbl FOR
+        SELECT firstname, lastname, birthdate FROM employee WHERE birthdate >= DATE '1969-1-1' ORDER BY birthdate DESC;
+    return tbl;
+END;
+/
+
+var rc refcursor;
+exec :rc := after1968();
+print rc;
+    
+--SECTION 4
+--4.1
+CREATE OR REPLACE PROCEDURE employeeNames (names OUT SYS_REFCURSOR)
+IS
+BEGIN
+    open names FOR
+        SELECT * FROM employee;
+    RETURN;
+END;
+/
+
+var refcur refcursor; 
+EXECUTE employeeNames(:refcur);
+print refcur;
+
 -- Section 7
 
 --7.1
