@@ -125,7 +125,7 @@ public class BankDriver {
 				customer = new Client(fn,ln,ssn,usr,pwd);				
 				account = new Account(typeof, amount, null);
 
-				if(Validation.checking_signup(customer, account)) {
+				if(Validation.writeNewUser(customer, account)) {
 					System.out.println(fn + " " + ln + "  has been added successfully");
 					System.out.println("Thank you for signing up with Revature bank!");
 					System.out.println();
@@ -191,7 +191,7 @@ public class BankDriver {
 		customer = new Client();
 		account = new Account();
 		//Implement multiple login in attempts
-		if (Validation.access(customer,account,usrName,pwd))		
+		if (Validation.access(customer,account,usrName,pwd))
 			while(bankloop) 
 				bankloop = startBanking();
 		else {

@@ -1,19 +1,22 @@
 package com.revature.banking.util;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Scanner;
 
-import com.revature.banking.dao.Client_Dao;
+import java.util.Scanner;
+import com.revature.banking.dao.DaoImpl;
 import com.revature.banking.pojos.Account;
 import com.revature.banking.pojos.Client;
 
 public class Validation {
 	static Scanner scan = new Scanner(System.in);
 
-	public static boolean access(Client c,Account a,String usrname, String pass) {
-		//Implement multiple login in attempts
-		if(Client_Dao.readCustomer(c,a,usrname, pass)) return true;
+	public static boolean access(Client c, Account a, String usrname, String pass) {
+
+		DaoImpl.readCustomer(c, usrname, pass);
+		if(c.getUsrName().equals(usrname) & c.getPassword().equals(pass)) {
+			DaoImpl.readAccount(c,a);
+			return true;
+		}
+
 		return false;
 	}
 	public static int validateNumSSN(String n) {	
@@ -119,20 +122,12 @@ public class Validation {
 		return Integer.parseInt(msg);
 
 	}
-	public static boolean checking_signup(Client c, Account a) {
-		int client_check = Client.write(c);
-		int account_check = Account.writeA(a,c);
+	public static boolean checking_signup(int client_check, int account_check) {
+		if(client_check  > 0 & account_check > 0) return true;		
+		return false;		
+	}
+	public static boolean writeNewUser(Client c, Account a) {
+		return DaoImpl.writeUser(c, a);
 
-		if(client_check  > 0 & account_check > 0) {
-			try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-				conn.commit();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return true;
-		}
-		return false;
-		
 	}
 }

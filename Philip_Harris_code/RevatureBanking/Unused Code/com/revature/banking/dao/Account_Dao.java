@@ -4,31 +4,28 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Random;
 
 import com.revature.banking.pojos.Account;
 import com.revature.banking.pojos.Client;
 import com.revature.banking.util.ConnectionFactory;
 
-
-public class Client_Dao  implements Client_Interface{
-
-	public static int writeClient(Client c) {
+public class Account_Dao implements Account_Interface{		
+	public static int writeAccount(Account a,Client c) {
 		int ra = -1;
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-
+			
 			conn.setAutoCommit(false);
-
-			String sql = "INSERT INTO CUSTOMER (U_id,Firstname,Lastname,Social,Username,PASS) VALUES (?,?,?,?,?,?)";
+			
+			String sql = "INSERT INTO ACCOUNT (U_ID,ACCOUNT_NUM,BALANCE,TYPE) VALUES (?,?,?,?)";
 			String[] key = new String[1];
-			key[0] = "U_id";
-
+			key[0] = "ACC_ID";
 			PreparedStatement p_statement = conn.prepareStatement(sql,key);
-			p_statement.setInt(1, 1);
-			p_statement.setString(2, c.getfName());
-			p_statement.setString(3, c.getlName());
-			p_statement.setInt(4, c.getSsn());
-			p_statement.setString(5, c.getUsrName());
-			p_statement.setString(6, c.getPassword());
+			p_statement.setInt(1, c.getId());
+			p_statement.setLong(2, a.getAccountNumber());
+			p_statement.setInt(3, a.getBalance());
+			p_statement.setInt(4, a.getType());
 
 			ra = p_statement.executeUpdate();
 			ResultSet rs = p_statement.getGeneratedKeys();
@@ -43,9 +40,5 @@ public class Client_Dao  implements Client_Interface{
 		}
 		return ra;
 	}
-
-	public static boolean readCustomer(Client c, Account a, String usrname, String pass) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }
+

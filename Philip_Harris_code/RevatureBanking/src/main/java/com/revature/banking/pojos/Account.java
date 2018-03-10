@@ -26,12 +26,21 @@ public class Account {
 		
 		
 	}
-	public static int writeA(Account a,Client c) {
-		return Account_Dao.writeAccount(a,c);
-	}
+
+
+	
 
 	
 	
+	public void setAccountNumber(long accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+
+
+
+
+
+
 	public long getAccountNumber() {
 		return accountNumber;
 	}
