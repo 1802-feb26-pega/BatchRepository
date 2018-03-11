@@ -28,7 +28,7 @@ public class ClientUI {
 		while(!valid)
 		{
 			System.out.println("Make your selection:");
-			System.out.println("1 - Create new account");
+			System.out.println("1 - Create new user");
 			System.out.println("2 - Login");
 			System.out.println("3 - Exit");
 			try
@@ -243,7 +243,7 @@ public class ClientUI {
 
 	//========================================================================
 
-	public User userLogin(List<User> users)
+	public User userLogin()
 	{
 		String tempUname;
 		String tempPass;
@@ -256,6 +256,8 @@ public class ClientUI {
 		System.out.println("Please enter your username:");
 		tempUname = Main.sc.next();
 
+		List<User> users = Main.uDao.getAllUsers();
+		
 		for(User u : users)
 		{
 			if(tempUname.equals(u.getUsername()))

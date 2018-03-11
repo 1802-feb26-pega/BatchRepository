@@ -62,8 +62,8 @@ public class Main {
 		case 2:
 			//login for existing user
 			//need to find user via username
-			users = uDao.getAllUsers();
-			loggedIn = cui.userLogin(users);
+			//users = uDao.getAllUsers();	//dont think we need this anymore
+			loggedIn = cui.userLogin();
 			if(loggedIn != null)
 			{
 				System.out.println("\n\nLogin successful.\nHello, " + loggedIn.getUsername());
