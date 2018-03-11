@@ -1,6 +1,9 @@
 package com.revature.banking.pojos;
 
+import java.util.List;
+
 import com.revature.banking.dao.Client_Dao;
+import com.revature.banking.dao.DaoImpl;
 
 public class Client {
 	private String fName;
@@ -83,6 +86,19 @@ public class Client {
 	@Override
 	public String toString() {
 		return fName + "," + lName + "," + ssn + "," + usrName + "," + password;
+	}
+
+	public static boolean delAccount(Account account) {
+		// TODO Auto-generated method stub
+		if(DaoImpl.d_account(account)) return true;
+		return false;
+	}
+	public static boolean getClient(String username){
+		List<Client> review =  DaoImpl.getClients();
+		for(Client usr: review) {
+			if(usr.getUsrName().equals(username)) return true;
+		}
+		return false;
 	}
 
 

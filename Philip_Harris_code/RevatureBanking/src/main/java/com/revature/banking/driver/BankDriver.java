@@ -1,11 +1,10 @@
 package com.revature.banking.driver;
 
-import java.util.ArrayList;
+
+import java.util.List;
 import java.util.Scanner;
 
-import com.revature.banking.dao.Account_Dao;
-import com.revature.banking.dao.Client_Dao;
-import com.revature.banking.dao.DaoImpl;
+
 import com.revature.banking.pojos.Account;
 import com.revature.banking.pojos.Client;
 import com.revature.banking.util.Validation;
@@ -73,6 +72,12 @@ public class BankDriver {
 
 		String usr = scan.next();
 
+		while(true) {
+			if(!Client.getClient(usr)) break;
+			System.out.println("Username is already taken please choose another: ");
+			usr = scan.next();
+		}
+
 		System.out.println();
 		System.out.print("Please enter in your desired password:");
 
@@ -91,7 +96,7 @@ public class BankDriver {
 		System.out.println("What type of account do you want?");
 		int typeof = user_type(Validation.validateNum(scan.next()));
 
-		
+
 		String checkInfo; 
 		String type = null;
 
@@ -106,20 +111,20 @@ public class BankDriver {
 			System.out.println("User Name: " + usr);
 			System.out.println("Password: " + pwd);
 			System.out.println("Starting amount: "  + amount);
-			
+
 			switch(typeof) {
 			case 1:  type = "Checking";break;
 			case 2:  type = "Credit"; break;
 			case 3:  type = "Saving";break;
 			case 4:  type = "Loans";break;
 			}
-			
+
 			System.out.println("Type of account : " + type);
 
 
 			System.out.println("Is it correct?");
 			System.out.print("Input here:");
-			
+
 			checkInfo = scan.next();
 			System.out.println();
 			if(checkInfo.equalsIgnoreCase("yes") |  checkInfo.equalsIgnoreCase("y")){	
@@ -152,6 +157,7 @@ public class BankDriver {
 		}
 	}
 
+
 	public static int user_type(int wants) {
 		int temp = 0;
 
@@ -169,7 +175,7 @@ public class BankDriver {
 	private static void signin() {
 
 		boolean bankloop = true;
-		
+
 		System.out.print("Please enter in your UserName:");
 		String usrName = scan.next();
 
@@ -191,7 +197,7 @@ public class BankDriver {
 			System.out.println("Access denied");
 			System.out.println("Password and/or Username was incorrect");
 			System.out.println();
-			if(tries < 3) {
+			if(tries <= 1) {
 				tries++; signin();
 			}
 			else {
@@ -200,18 +206,10 @@ public class BankDriver {
 				System.out.println("Too many attempts returning to main menu");
 				System.out.println();
 				System.out.println();
+				return;
 			}
-		}
-		
-		System.out.println("If you would like to return to the menu please PRESS 1");
-		System.out.println("OTHERWISE PLEASE ENTER ANY OTHER NUMBER");
-		
-		System.out.print("Input Here:");
-		int option = Validation.validateNum(scan.next());
+		}		
 
-		// TODO Auto-generated method stub
-		if(option==1) return;
-		
 	}
 
 	private static boolean startBanking() {
@@ -223,6 +221,8 @@ public class BankDriver {
 		System.out.println("PRESS 3 to Deposit");
 		System.out.println("PRESS 4 to Add An Account");
 		System.out.println("PRESS 5 to View Accounts");
+		System.out.println("PRESS 6 to Transfer money");
+		System.out.println("PRESS 7 to Remove Account");
 		System.out.println("PRESS 0 to Exit");
 		System.out.print("Input here: ");
 		int option = Validation.validateNum(scan.next());
@@ -237,6 +237,12 @@ public class BankDriver {
 			System.out.println("How much would you like to withdraw?");	
 			System.out.print("Input here: ");
 			int w = Validation.validateNum(scan.next());
+
+			System.out.println();
+			System.out.println();
+
+
+
 			if(!account.withdraw(w))
 			{
 				System.out.println("Error Occured you broke.");
@@ -245,10 +251,10 @@ public class BankDriver {
 				System.out.println();
 				break;
 			}
-			
+
 			System.out.println();
 			System.out.println();
-			System.out.println("New Balance is: " + account.getBalance());
+			System.out.println("Balance is: " + account.getBalance());
 			System.out.println();
 			System.out.println();
 
@@ -259,10 +265,10 @@ public class BankDriver {
 			System.out.println("How much would you like to deposit?");	
 			System.out.print("Input here: ");
 			int d = Validation.validateNum(scan.next());
-			if(account.deposit(d)) System.out.println("Problems has occured please try again later");
+			if(!account.deposit(d)) System.out.println("Problems has occured please try again later");
 			System.out.println();
 			System.out.println();
-			System.out.println("New Balance is: " + account.getBalance());
+			System.out.println("Balance is: " + account.getBalance());
 			System.out.println();
 			System.out.println();
 			break;
@@ -270,7 +276,6 @@ public class BankDriver {
 			System.out.println("Creating new account...");
 			System.out.println("How much money will you like to put in initially?");
 			int amount = Validation.validateNum(scan.next());
-
 			System.out.println();
 			System.out.println();
 			System.out.println("We have added a couple of more option to our application");
@@ -281,7 +286,15 @@ public class BankDriver {
 			System.out.println("If you want a Loans account PRESS 4");
 			System.out.println("What type of account do you want?");
 			int typeof = user_type(Validation.validateNum(scan.next()));
-			
+
+			while(true) {
+				if(typeof == 1 | typeof == 2 | typeof ==3 | typeof ==4) break;
+				else {
+					System.out.println("Please enter in a number that is 1 - 4");
+					typeof = user_type(Validation.validateNum(scan.next()));
+				}
+			}
+
 			if(!account.createAccount(account,amount,typeof)) {
 				System.out.println("There was a problem creating your account.");
 				System.out.println("Please try again.");
@@ -289,13 +302,136 @@ public class BankDriver {
 				System.out.println();
 			}else {
 				System.out.println("Account " + account.getAccountNumber() + " has been created");
+				System.out.println();
+				System.out.println();
 			}
 			break;
 		case 5:
 			System.out.println("Here is the list of your accounts:");
 			//print
-			for(Account x: account.getAcc())
-					x.toString();
+			for(Account x: Account.getAcc()) {
+				System.out.println(x.toString());
+				System.out.println();
+			}
+
+
+			break;
+		case 6:
+
+			List<Account> acc = Account.getAcc();
+			int choice = 1;
+			if(acc.size() == 1) {
+				System.out.println("You only have one account please make another before trying to transfer money");
+				break;
+			}
+			for(Account x: Account.getAcc()) {
+				System.out.println(choice + ". " + x.toString());
+				System.out.println();
+				choice++;
+			}
+
+			System.out.println("Please choose an account to transfer money from:");
+			System.out.print("Input Here: ");
+			int debit = Validation.validateNum(scan.next());
+
+			System.out.println("Please choose an account to transfer money to:");
+			System.out.print("Input Here: ");
+			int credit   = Validation.validateNum(scan.next());
+
+			System.out.println("How much money would you like to transfer?");
+			System.out.print("Input Here: ");
+			int money   = Validation.validateNum(scan.next());
+
+			if(!Account.transfer(acc.get(debit-1),acc.get(credit-1),money)) {
+				System.out.println("You can not transfer money you do not have.");
+				System.out.println("Please try again");
+				System.out.println();
+			}else {
+				System.out.println("Money has been transferred Successfully");
+				System.out.println(acc.get(debit-1).toString());
+				System.out.println(acc.get(credit-1).toString());
+				System.out.println();
+			}
+			break;
+		case 7:
+			int c = 1;
+
+			List<Account> d_account = Account.getAcc();
+
+			for(Account x: Account.getAcc()) {
+				System.out.println(c + ". " + x.toString());
+				System.out.println();
+				c++;
+			}
+
+			System.out.println("Which account would you like to delete?");
+			System.out.print("Input Here: ");
+			int del   = Validation.validateNum(scan.next());
+			boolean flag = true;
+			String last_check;
+			while(flag) {
+				System.out.println("Since you have chosen to delelet Account #: " + d_account.get(del -1).getAccountNumber());
+				System.out.println("We must verify that you are sure about this.");
+				System.out.println("Please make sure your money has be transferred to another account.");
+				System.out.println("Once the account has been deleted there is no recovering your money.");
+				System.out.println("Are you sure you want to delete your account?");
+				System.out.print("Input Here: ");
+				last_check = scan.next();
+
+				if(last_check.equalsIgnoreCase("yes") |  last_check.equalsIgnoreCase("y")){	
+					if(d_account.get(del-1).getBalance() > 0) {
+						System.out.println("Sorry you can not delete this account because you still have money in it.");
+						System.out.println("Please transfer the money into another account then re-try the delete");
+						System.out.println();
+						System.out.println();
+
+						System.out.println("Please choose an account to transfer money to:");
+						System.out.print("Input Here: ");
+						int otherAccount   = Validation.validateNum(scan.next());
+
+						System.out.println("Transfering: " + d_account.get(del-1).getBalance() + " to " + d_account.get(otherAccount-1).getBalance());
+
+						while(true) {
+							if((otherAccount-1) == (del-1)){
+								System.out.println("Please enter valid account number other than: " + d_account.get(del-1).getAccountNumber());
+								otherAccount   = Validation.validateNum(scan.next());
+							}else break;
+						}
+
+						if(!Account.transfer(d_account.get(del-1),d_account.get(otherAccount-1),d_account.get(del-1).getBalance())) {
+							System.out.println("You can not transfer money you do not have.");
+							System.out.println("Please try again");
+							System.out.println();
+						}else {
+							System.out.println("Money has been transferred Successfully");
+							System.out.println(d_account.get(del-1).toString());
+							System.out.println(d_account.get(otherAccount-1).toString());
+							System.out.println();
+						}
+
+					}
+					if(!Client.delAccount(d_account.get(del-1)))
+					{
+						System.out.println("There was a problem deleting your account.");
+						System.out.println("Please try again.");
+						System.out.println();
+						System.out.println();
+					}else {
+						System.out.println("Account has been removed");
+						System.out.println();
+						System.out.println();
+					}
+					flag = false;
+				}
+				else if(last_check.equalsIgnoreCase("no") | last_check.equalsIgnoreCase("n")) {
+					flag = false;
+				}
+				else {
+					System.out.println("Please enter in Y or Yes for confirmation.");
+					System.out.println("Please enter in N or No to restart.");
+					System.out.println();		
+				}
+			}
 			break;
 		case 0: 
 			System.out.println("");

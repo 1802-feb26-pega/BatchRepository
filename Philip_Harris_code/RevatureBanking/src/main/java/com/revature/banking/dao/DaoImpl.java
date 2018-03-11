@@ -1,9 +1,11 @@
 package com.revature.banking.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +30,9 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 			PreparedStatement p_statement = conn.prepareStatement(sql,ckey);
 			p_statement.setString(1, c.getfName());
 			p_statement.setString(2, c.getlName());
-			p_statement.setInt(3, c.getSsn());
+			p_statement.setInt(3, Validation.eROT5(c.getSsn()));
 			p_statement.setString(4, c.getUsrName());
-			p_statement.setString(5, c.getPassword());
+			p_statement.setString(5, Validation.encode(c.getPassword()));
 
 			cra = p_statement.executeUpdate();
 			ResultSet crs = p_statement.getGeneratedKeys();
@@ -40,7 +42,7 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 			}
 
 
-			sql = "INSERT INTO ACCOUNT (U_ID,ACCOUNT_NUM,BALANCE,TYPE) VALUES (?,?,?,?)";
+			sql = "INSERT INTO ACCOUNT (U_ID,ACCOUNT_NUM,BALANCE,ACCOUNT_TYPE) VALUES (?,?,?,?)";
 			String[] akey = new String[1];
 			akey[0] = "ACC_ID";
 			p_statement = conn.prepareStatement(sql,akey);
@@ -80,7 +82,7 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 
 			PreparedStatement p_statement = conn.prepareStatement(sql);
 			p_statement.setString(1, usrname);
-			p_statement.setString(2, pass);
+			p_statement.setString(2, Validation.encode(pass));
 
 			ResultSet crs = p_statement.executeQuery();
 
@@ -88,9 +90,9 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 				c.setId(crs.getInt(1));
 				c.setfName(crs.getString(2));
 				c.setlName(crs.getString(3));
-				c.setSsn(crs.getInt(4));
+				c.setSsn(Validation.dROT5(crs.getInt(4)));
 				c.setUsrName(crs.getString(5));
-				c.setPassword(crs.getString(6));
+				c.setPassword(Validation.decode(crs.getString(6)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -106,13 +108,11 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 
 			conn.setAutoCommit(false);
-			
-			String sql = "SELECT ACC_ID, ACCOUNT_NUM, BALANCE, TYPE FROM ACCOUNT WHERE U_ID = ?";
+
+			String sql = "SELECT ACC_ID, ACCOUNT_NUM, BALANCE, ACCOUNT_TYPE FROM ACCOUNT WHERE U_ID = ?";
 
 			PreparedStatement p_statement = conn.prepareStatement(sql);
-			p_statement.setInt(1, c.getId());
-			p_statement.executeQuery();
-
+			p_statement.setInt(1, Client.getId());
 
 			ResultSet crs = p_statement.executeQuery();
 
@@ -160,10 +160,10 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 	public static boolean createAcc(Account a) {
 		// TODO Auto-generated method stub
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-			
+
 			conn.setAutoCommit(false);
-			
-			String sql = "INSERT INTO ACCOUNT (U_ID,ACCOUNT_NUM,BALANCE,TYPE) VALUES (?,?,?,?)";
+
+			String sql = "INSERT INTO ACCOUNT (U_ID,ACCOUNT_NUM,BALANCE,ACCOUNT_TYPE) VALUES (?,?,?,?)";
 
 			PreparedStatement p_statement = conn.prepareStatement(sql);
 
@@ -174,7 +174,7 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 			p_statement.setInt(4, a.getType());
 
 			int result = p_statement.executeUpdate();	
-			
+
 			if(Validation.check_update(result)){
 				conn.commit();
 				return true;
@@ -189,23 +189,22 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 		}
 		return false;
 	}
-	
+
 	public static List<Account> getAccounts() {
 		List<Account> account = new ArrayList<Account>();
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 
-			
-			String sql = "SELECT * FROM ACCOUNT WHERE U_ID = ?";
 
-			PreparedStatement p_statement = conn.prepareStatement(sql);
-			p_statement.setInt(1, Client.getId());
-			p_statement.executeQuery();
+			String sql = "SELECT * FROM ACCOUNT WHERE U_ID = " + Client.getId();
+
+			Statement statement = conn.createStatement();
 
 
-			ResultSet crs = p_statement.executeQuery();
+			ResultSet crs = statement.executeQuery(sql);
 
 			while(crs.next()) {
-				Account acc = new Account();				
+				Account acc = new Account();
+				acc.setId(crs.getInt(1));
 				acc.setAccountNumber(crs.getInt(3));
 				acc.setBalance(crs.getInt(4));
 				acc.setType(crs.getInt(5));
@@ -217,9 +216,64 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 		}catch (NullPointerException npe) {
 			npe.printStackTrace();
 		}
-		
+
 		return account;
-		
+
 	}
-	
+
+	public static boolean d_account(Account account) {
+		// TODO Auto-generated method stub
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+
+			conn.setAutoCommit(false);
+
+			String sql = "{CALL DEL_ACC(?)}";
+
+			CallableStatement c_statement = conn.prepareCall(sql);
+
+			c_statement.setInt(1, account.getId());
+
+			int result = c_statement.executeUpdate();	
+
+			if(Validation.check_update(result)){
+				conn.commit();
+				return true;
+			}else {
+				conn.rollback();
+				return false;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public static List<Client> getClients() {
+		// TODO Auto-generated method stub
+		List<Client>  list = new ArrayList<>();
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+
+			String sql = "SELECT USERNAME FROM CUSTOMER";
+
+			Statement statement = conn.createStatement();
+
+
+			ResultSet crs = statement.executeQuery(sql);
+
+			while(crs.next()) {
+				Client old = new Client();
+				old.setUsrName(crs.getString(1));
+				list.add(old);
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (NullPointerException npe) {
+			npe.printStackTrace();
+		}
+		return list;
+	}
 }

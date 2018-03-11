@@ -108,12 +108,23 @@ public class Account {
 		if(DaoImpl.createAcc(this)) return true;
 			return false;
 	}
-	public List<Account> getAcc(){
+	public static List<Account> getAcc(){
 		return DaoImpl.getAccounts();
 	}
 	@Override
 	public String toString() {
 		return  "[Account Number: " + accountNumber + "  ] [Balance: " + balance +" ] [Account Type: " + type + "]";
+	}
+
+	public static boolean transfer(Account debit, Account credit,int m) {
+		// TODO Auto-generated method stub
+			debit.balance -= m;
+			credit.balance += m;
+			if(debit.balance >= 0) {
+				if( DaoImpl.updateBalance(debit) & DaoImpl.updateBalance(credit)) return true;
+				else return false;
+			}
+		return false;
 	}
 
 }

@@ -12,7 +12,8 @@ public class Validation {
 	public static boolean access(Client c, Account a, String usrname, String pass) {
 
 		DaoImpl.readCustomer(c, usrname, pass);
-		if(c.getUsrName().equals(usrname) & c.getPassword().equals(pass)) {
+		if(c.getUsrName() == null | c.getPassword() == null) return false;
+		else if(c.getUsrName().equals(usrname) & c.getPassword().equals(pass)) {
 			DaoImpl.readAccount(c,a);
 			return true;
 		}
@@ -21,8 +22,8 @@ public class Validation {
 	}
 	public static int validateNumSSN(String n) {	
 		while(true) {
-			if(n.matches(("[0-9]+")) == false | (n.length() !=8) ){
-				System.out.print("Please enter in a number that contains 8 digits: ");
+			if(n.matches(("[0-9]+")) == false | (n.length() !=9) ){
+				System.out.print("Please enter in a number that contains 9 digits: ");
 				n = scan.next();
 				System.out.println();
 			}
@@ -86,9 +87,10 @@ public class Validation {
 		return msg;
 	}
 
-	public static int eROT5(String ssn) {
+	public static int eROT5(int num) {
 		// TODO Write an implementation for this method declaration
 
+		String ssn = Integer.toString(num);
 		String msg = "";
 		for(int i = 0; i < ssn.length(); i++) {
 			int ascii = (int) ssn.charAt(i);	
@@ -104,8 +106,9 @@ public class Validation {
 
 		return Integer.parseInt(msg);
 	}
-	public static int dROT5(String ssn) {
+	public static int dROT5(int num) {
 		// TODO Write an implementation for this method declaration
+		String ssn = Integer.toString(num);
 		String msg = "";
 		for(int i = 0; i < ssn.length(); i++) {
 			int ascii = (int) ssn.charAt(i);	
