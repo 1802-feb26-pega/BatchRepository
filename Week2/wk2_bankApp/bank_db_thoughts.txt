@@ -1,0 +1,142 @@
+maybe have two tables in bank database:
+one for user information: columns --> userid,username, firstname, lastname, password
+one for all the accounts: columns --> accountnumber, userid, balance
+
+when the user asks to list available accounts, query the accounts table:
+SELECT account_number FROM accounts WHERE stored_username = loggedInUser.getUsername()
+//^^^it would probably be better to do this with userid
+this output can also be used for getting a count of active accounts
+
+will probably need to make a new class for account
+or maybe just alter the withdraw/deposit funds methods to take an account number in as input
+
+for the accounts table make a sequence and a trigger that iterates every time an account 
+is created and inserted into the the table, this can be the account number
+^^^do this as well for the user table, then userid can be the primary key
+
+create a stored procedure/transaction for inserting a new user into the user table
+or a new account into the account table for when the java appl creates one or the other
+
+
+
+========================================================================================
+CREATE OR REPLACE PROCEDURE create_new_user(
+newusername IN customer.username%TYPE,
+newfirstname IN customer.firstname%TYPE,
+newlastname IN customer.lastname%TYPE,
+newpassword IN customer.password%TYPE)
+IS
+BEGIN
+	INSERT INTO customer(userid,username,firstname,lastname,password)
+	VALUES (user_seq.NEXTVAL,newusername,newfirstname,newlastname,newpassword);
+	COMMIT;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE create_new_account(
+newaccountnumber IN account.accountnumber%TYPE,
+newuserid IN account.userid%TYPE,
+newbalance IN account.balance%TYPE)
+IS
+BEGIN
+	INSERT INTO account(accountnumber,userid,balance)
+	VALUES (account_seq.NEXTVAL,newuserid,newbalance);
+	COMMIT;
+END;
+/
+=========================================================================================
+CREATE SEQUENCE customer_seq
+MINVALUE 1
+MAXVALUE 9999999
+INCREMENT BY 1
+START WITH 1;
+/
+
+CREATE SEQUENCE account_seq
+MINVALUE 1
+MAXVALUE 99999999
+INCREMENT BY 1
+START WITH 1;
+/
+============================================================================================
+CREATE OR REPLACE TRIGGER user_trigger
+BEFORE INSERT ON customer
+FOR EACH ROW
+BEGIN
+	SELECT user_seq.NEXTVAL
+	INTO :new.userid
+	FROM dual;
+END;
+/
+
+CREATE OR REPLACE TRIGGER account_trigger
+BEFORE INSERT ON account
+FOR EACH ROW
+BEGIN
+	SELECT account_seq.NEXTVAL
+	INTO :new.accountnumber
+	FROM dual;
+END;
+/
+=========================================================================================
+
+/*=====================
+Create Database
+=======================*/
+CREATE USER chris
+IDENTIFIED BY password
+DEFAULT TABLESPACE users
+TEMPORARY TABLESPACE temp
+QUOTA 10M ON users;
+
+GRANT connect TO chris;
+GRANT resource TO chris;
+GRANT create_session TO chris;
+GRANT create table TO chris;
+GRANT create view TO chris;
+
+conn chris/password
+
+
+/*=====================
+Create Tables
+=======================*/
+CREATE TABLE Customer
+(
+	userid		NUMBER(5) NOT NULL,
+	username	VARCHAR2(100) NOT NULL,
+	firstname	VARCHAR2(100) NOT NULL,
+	lastname	VARCHAR2(100) NOT NULL,
+	password	VARCHAR2(100) NOT NULL,
+	CONSTRAINT pk_department PRIMARY KEY (userid)
+);
+
+CREATE TABLE Account
+(
+	accountnumber	NUMBER(5) NOT NULL
+	userid		NUMBER(5)
+	balance		NUMBER(12,2) NOT NULL,
+	CONSTRAINT pk_account PRIMARY KEY (accountnumber)
+);
+
+
+/*===================
+Create Foreign Keys
+=====================*/
+ALTER TABLE account ADD CONSTRAINT fk_userid
+	FOREIGN KEY (userid) REFERENCES user (userid);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
