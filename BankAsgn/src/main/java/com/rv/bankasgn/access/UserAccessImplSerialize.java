@@ -1,12 +1,12 @@
 package com.rv.bankasgn.access;
 
-import com.rv.bankasgn.document.User;
+import com.rv.bankasgn.pojos.User;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserAccessImplSerialize implements UserAccess {
+public class UserAccessImplSerialize /*implements UserAccess*/ {
 
     public static final String FILE_ALL = "users.out";
 
@@ -21,8 +21,8 @@ public class UserAccessImplSerialize implements UserAccess {
         }
     }
 
-    @Override
-    public User getUser(String email) {
+    //@Override
+    public User getUserByEmail(String email) {
         for(User u : allUsers)
             if(u.getEmail().equals(email))
                 return u;
@@ -44,7 +44,7 @@ public class UserAccessImplSerialize implements UserAccess {
         allUsers = users;
     }
 
-    @Override
+    //@Override
     public void writeAll() {
         try(ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(FILE_ALL))) {
             o.writeObject(allUsers);

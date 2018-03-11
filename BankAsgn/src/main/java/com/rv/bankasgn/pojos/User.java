@@ -1,4 +1,4 @@
-package com.rv.bankasgn.document;
+package com.rv.bankasgn.pojos;
 
 import java.io.Serializable;
 
@@ -10,13 +10,13 @@ public class User implements Serializable{
                    email,
                    password;
 
-    private float balance;
+    private int userId;
 
     public User() {
         this.firstname = "";
         this.lastname = "";
         this.email = "";
-        this.balance = 0.0f;
+        this.userId = -1;
     }
 
     public User(String firstname, String lastname, String email, String pw) {
@@ -24,16 +24,16 @@ public class User implements Serializable{
         this.lastname = lastname;
         this.email = email;
         this.password = pw;
-        this.balance = 0.0f;
+        this.userId = -1;
     }
 
-    public User(String firstname, String lastname, String email, String pw, float balance) {
+    public User(String firstname, String lastname, String email, String pw, int id) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = pw;
 
-        this.balance = balance;
+        this.userId = id;
     }
 
     public String getPassword() {
@@ -68,16 +68,16 @@ public class User implements Serializable{
         this.email = email;
     }
 
-    public float getBalance() {
-        return balance;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setBalance(float balance) {
-        this.balance = balance;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     @Override
     public String toString() {
-        return email  + "," + password + "," +firstname + "," + lastname + "," + balance;
+        return email  + "," + password + "," +firstname + "," + lastname + "," + userId;
     }
 }

@@ -1,14 +1,12 @@
 package com.rv.bankasgn.service;
 
 import com.rv.bankasgn.access.UserAccess;
+import com.rv.bankasgn.access.UserAccessImplRDB;
 import com.rv.bankasgn.access.UserAccessImplSerialize;
-import com.rv.bankasgn.access.UserAccessImplText;
-import com.rv.bankasgn.document.User;
+import com.rv.bankasgn.pojos.User;
 
 import java.text.NumberFormat;
-import java.util.InputMismatchException;
 import java.util.Locale;
-import java.util.Scanner;
 
 public class UserService {
 
@@ -16,7 +14,7 @@ public class UserService {
     static final NumberFormat USD = NumberFormat.getCurrencyInstance(Locale.US);
 
     public UserService() {
-        this.ua = new UserAccessImplText();
+        this.ua = new UserAccessImplRDB();
     }
 
     public UserService(UserAccess u) {
@@ -24,7 +22,7 @@ public class UserService {
     }
 
     public User getOneUser(String email, String pw) {
-        User target = ua.getUser(email);
+        User target = ua.getUserByEmail(email);
 
         if(target != null && pw.equals(target.getPassword()))
             return target;
@@ -37,8 +35,12 @@ public class UserService {
         return u;
     }
 
+    public void updateUser(User u) {
+        ua.updateUser(u);
+    }
+
     public User registerUser(User u){
-        if(ua.getUser(u.getEmail()) == null) {
+        if(ua.getUserByEmail(u.getEmail()) == null) {
             ua.saveUser(u);
         } else {
             return null;

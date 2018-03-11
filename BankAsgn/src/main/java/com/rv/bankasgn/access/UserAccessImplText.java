@@ -1,12 +1,12 @@
 package com.rv.bankasgn.access;
 
-import com.rv.bankasgn.document.User;
+import com.rv.bankasgn.pojos.User;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserAccessImplText implements UserAccess {
+public class UserAccessImplText /*implements UserAccess*/ {
 
     public static final String FILE_ALL = "users.txt";
 
@@ -21,15 +21,15 @@ public class UserAccessImplText implements UserAccess {
         }
     }
 
-    @Override
-    public User getUser(String email) {
+    //@Override
+    public User getUserByEmail(String email) {
         for(User u : allUsers)
             if(u.getEmail().equals(email))
                 return u;
         return null;
     }
 
-    @Override
+    //@Override
     public void writeAll() {
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_ALL, false))){
             for(User u : allUsers)
@@ -48,7 +48,7 @@ public class UserAccessImplText implements UserAccess {
 
             while((line = br.readLine()) != null) {
                 String[] tks = line.split(",");
-                sts.add(new User(tks[2], tks[3], tks[0], tks[1], Float.parseFloat(tks[4])));
+                sts.add(new User());
             }
 
         } catch(FileNotFoundException f) {
@@ -60,7 +60,7 @@ public class UserAccessImplText implements UserAccess {
         allUsers = sts;
     }
 
-    @Override
+    //@Override
     public void saveUser(User u) {
         if(allUsers.indexOf(u) == -1)
             allUsers.add(u);
