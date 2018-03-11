@@ -210,9 +210,80 @@ END;
 
 -- SECTION 5
 
+--5.1
+CREATE OR REPLACE PROCEDURE deleteIDTransact(in_id IN NUMBER)
+IS
+BEGIN
+    COMMIT;
+    SET TRANSACTION READ WRITE NAME 'deleteID';
+    SAVEPOINT transact_start;
+    DELETE FROM invoiceline where invoiceid = in_id;
+    DELETE FROM invoice WHERE invoiceid = in_id;
+    COMMIT;
+END deleteIDTransact;
+/
+
+SELECT * FROM invoice a
+RIGHT JOIN invoiceline b
+ON a.invoiceid = b.invoiceid
+WHERE a.invoiceid = 61;
+
+
+--Task – Create a transaction nested within a stored procedure that 
+-- inserts a new record in the Customer table
+CREATE OR REPLACE PROCEDURE addCustomer(
+    CID IN NUMBER,
+    FN IN VARCHAR2,
+    LN IN VARCHAR2,
+    CMPNY IN VARCHAR2,
+    ADDR IN VARCHAR2,
+    CTY IN VARCHAR2,
+    ST IN VARCHAR2,
+    CNTRY IN VARCHAR2,
+    PSTCD IN VARCHAR2,
+    PHN IN VARCHAR2,
+    FX IN VARCHAR2,
+    EML IN VARCHAR2,
+    SRID IN NUMBER)
+IS
+BEGIN
+    COMMIT;
+    SET TRANSACTION NAME add_cust;
+    SAVEPOINT a_c_savepoint;
+    INSERT INTO customer(customerid, firstname, 
+        lastname, company, address, city, state, 
+        country, postalcode, phone, fax, email, supportrepid)
+    VALUES(CID, FN, LN, CMPNY, ADDR, CTY, ST, CNTRY, PSTCD, PHN, FX, EML, SRID);
+    COMMIT;
+END;
+/
+
+EXEC addcustomer(60,'William','Rosser','Revature','Somewhere','Reston','VA','USA','20170','4045121359','none','will.e179@gmail.com','');
+SELECT * FROM customer WHERE customerid = 60;
+
 
 -- SECTION 6
 
+CREATE OR REPLACE TRIGGER after_insert_employee
+AFTER INSERT ON employee
+BEGIN
+    dbms_output.put_line('Employee inserted.');
+END;
+/
+
+CREATE OR REPLACE TRIGGER after_update_album
+AFTER UPDATE ON album
+BEGIN
+    dbms_output.put_line('Album Updated.');
+END;
+/
+
+CREATE OR REPLACE TRIGGER after_delete_customer
+AFTER DELETE ON customer
+BEGIN
+    dbms_output.put_line('Customer DELETED.');
+END;
+/
 
 -- Section 7
 
