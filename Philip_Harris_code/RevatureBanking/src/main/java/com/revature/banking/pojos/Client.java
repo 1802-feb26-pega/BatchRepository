@@ -8,7 +8,7 @@ public class Client {
 	private String password;
 	private int ssn;
 	private String usrName;
-	private int Id;
+	private static int Id;
 
 
 
@@ -72,7 +72,7 @@ public class Client {
 		this.usrName = usrName;
 	}
 		
-	public int getId() {
+	public static int getId() {
 		return Id;
 	}
 
@@ -84,4 +84,6 @@ public class Client {
 	public String toString() {
 		return fName + "," + lName + "," + ssn + "," + usrName + "," + password;
 	}
+
+
 }

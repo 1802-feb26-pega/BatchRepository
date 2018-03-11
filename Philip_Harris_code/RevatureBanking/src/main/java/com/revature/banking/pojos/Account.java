@@ -3,8 +3,7 @@ package com.revature.banking.pojos;
 import java.util.List;
 import java.util.Random;
 
-import com.revature.banking.dao.Account_Dao;
-import com.revature.banking.dao.Client_Dao;
+import com.revature.banking.dao.DaoImpl;
 
 public class Account {
 
@@ -27,19 +26,9 @@ public class Account {
 		
 	}
 
-
-	
-
-	
-	
 	public void setAccountNumber(long accountNumber) {
 		this.accountNumber = accountNumber;
 	}
-
-
-
-
-
 
 	public long getAccountNumber() {
 		return accountNumber;
@@ -68,11 +57,11 @@ public class Account {
 		return balance;
 
 	}
-	public boolean withdraw(int w,Client c) {
+	public boolean withdraw(int w) {
 		int temp = balance - w;
 		if(temp > 0) {
 			balance -= w;			
-			db.updateBalance(this,c);
+			return DaoImpl.updateBalance(this);
 		}
 		return false;
 	}
@@ -94,10 +83,10 @@ public class Account {
 		this.type = type;
 	}
 
-	public void deposit(int d, Client customer) {
+	public boolean deposit(int d) {
 		// TODO Auto-generated method stub
 		balance += d;
-		db.updateBalance(this,customer);
+		 return DaoImpl.updateBalance(this);
 	}
 
 
@@ -107,6 +96,24 @@ public class Account {
 		Long High = 999999999L;
 		Long Result = r.nextInt((int)(High-Low)) + Low;
 		return Result;
+	}
+	
+	public boolean createAccount(Account a,int amount, int typeof) {
+		// TODO Auto-generated method stub
+		
+		a.type = typeof;
+		a.balance = amount;
+		a.accountNumber = account_Gen();
+		
+		if(DaoImpl.createAcc(this)) return true;
+			return false;
+	}
+	public List<Account> getAcc(){
+		return DaoImpl.getAccounts();
+	}
+	@Override
+	public String toString() {
+		return  "[Account Number: " + accountNumber + "  ] [Balance: " + balance +" ] [Account Type: " + type + "]";
 	}
 
 }

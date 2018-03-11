@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.revature.banking.pojos.Account;
 import com.revature.banking.pojos.Client;
@@ -103,7 +105,9 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 		// TODO Auto-generated method stub
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 
-			String sql = "SELECT ACCOUNT_NUM, BALANCE, TYPE FROM ACCOUNT WHERE U_ID = ?";
+			conn.setAutoCommit(false);
+			
+			String sql = "SELECT ACC_ID, ACCOUNT_NUM, BALANCE, TYPE FROM ACCOUNT WHERE U_ID = ?";
 
 			PreparedStatement p_statement = conn.prepareStatement(sql);
 			p_statement.setInt(1, c.getId());
@@ -113,9 +117,9 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 			ResultSet crs = p_statement.executeQuery();
 
 			while(crs.next()) {
-				a.setAccountNumber(crs.getLong(1));
-				a.setBalance(crs.getInt(2));
-				a.setId(crs.getInt(3));
+				a.setId(crs.getInt(1));
+				a.setAccountNumber(crs.getLong(2));
+				a.setBalance(crs.getInt(3));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -124,4 +128,98 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 			npe.printStackTrace();
 		}
 	}
+
+	public static boolean updateBalance(Account a) {
+		// TODO Auto-generated method stub
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+
+			conn.setAutoCommit(false);
+
+			String sql = "UPDATE ACCOUNT SET balance = ? WHERE ACC_ID = ?";
+
+			PreparedStatement p_statement = conn.prepareStatement(sql);
+			p_statement.setInt(1, a.getBalance());
+			p_statement.setInt(2, a.getId());
+
+			int check = p_statement.executeUpdate();	
+
+			if(Validation.check_update(check)){
+				conn.commit();
+				return true;
+			}else {
+				conn.rollback();
+				return false;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public static boolean createAcc(Account a) {
+		// TODO Auto-generated method stub
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			
+			conn.setAutoCommit(false);
+			
+			String sql = "INSERT INTO ACCOUNT (U_ID,ACCOUNT_NUM,BALANCE,TYPE) VALUES (?,?,?,?)";
+
+			PreparedStatement p_statement = conn.prepareStatement(sql);
+
+			p_statement = conn.prepareStatement(sql);
+			p_statement.setInt(1, Client.getId());
+			p_statement.setLong(2, a.getAccountNumber());
+			p_statement.setInt(3, a.getBalance());
+			p_statement.setInt(4, a.getType());
+
+			int result = p_statement.executeUpdate();	
+			
+			if(Validation.check_update(result)){
+				conn.commit();
+				return true;
+			}else {
+				conn.rollback();
+				return false;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public static List<Account> getAccounts() {
+		List<Account> account = new ArrayList<Account>();
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+
+			
+			String sql = "SELECT * FROM ACCOUNT WHERE U_ID = ?";
+
+			PreparedStatement p_statement = conn.prepareStatement(sql);
+			p_statement.setInt(1, Client.getId());
+			p_statement.executeQuery();
+
+
+			ResultSet crs = p_statement.executeQuery();
+
+			while(crs.next()) {
+				Account acc = new Account();				
+				acc.setAccountNumber(crs.getInt(3));
+				acc.setBalance(crs.getInt(4));
+				acc.setType(crs.getInt(5));
+				account.add(acc);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (NullPointerException npe) {
+			npe.printStackTrace();
+		}
+		
+		return account;
+		
+	}
+	
 }

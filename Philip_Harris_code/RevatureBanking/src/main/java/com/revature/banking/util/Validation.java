@@ -37,7 +37,7 @@ public class Validation {
 
 		while(true) {
 			if(n.matches(("[0-9]+")) == false){
-				System.out.print("Please enter in a number that contains 8 digits: ");
+				System.out.print("Please enter in a number that is valid");
 				n = scan.next();
 				System.out.println();
 			}
@@ -129,5 +129,9 @@ public class Validation {
 	public static boolean writeNewUser(Client c, Account a) {
 		return DaoImpl.writeUser(c, a);
 
+	}
+	public static boolean check_update(int num) {
+		if(num > 0) return true;
+		return false;
 	}
 }
