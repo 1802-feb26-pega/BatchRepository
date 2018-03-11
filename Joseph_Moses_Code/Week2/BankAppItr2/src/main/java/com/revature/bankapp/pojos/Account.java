@@ -1,5 +1,7 @@
 package com.revature.bankapp.pojos;
 
+//A class to encapsulate an Account.
+
 public class Account {
 
 	private int accId;

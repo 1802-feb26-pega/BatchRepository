@@ -10,6 +10,8 @@ import javax.swing.text.NumberFormatter;
 import com.revature.bankapp.dao.AccountDAOImpl;
 import com.revature.bankapp.dao.UserDAOImpl;
 
+//The Bank class contains the logic necessary for the interactions a user can have with the bank
+
 public class Bank{
 
 	private boolean loggedIn;
@@ -74,6 +76,7 @@ public class Bank{
 	public Account createAccount() {
 		Account newAccount = new Account(currentUser.getUserId());
 		newAccount = accountDAO.addAccount(newAccount);
+		System.out.println(newAccount);
 		return newAccount;
 	}
 	
@@ -92,6 +95,7 @@ public class Bank{
 		}
 		else if(balance < amount) {
 			
+			System.out.println("not enough funds");
 			return 2;
 		}
 		else {

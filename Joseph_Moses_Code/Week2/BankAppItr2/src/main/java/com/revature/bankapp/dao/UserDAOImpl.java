@@ -11,6 +11,8 @@ import java.util.List;
 import com.revature.bankapp.pojos.User;
 import com.revature.bankapp.util.ConnectionFactory;
 
+//The implementation of the UserDAO interface to query the BankApp database
+
 public class UserDAOImpl implements UserDAO {
 
 	@Override

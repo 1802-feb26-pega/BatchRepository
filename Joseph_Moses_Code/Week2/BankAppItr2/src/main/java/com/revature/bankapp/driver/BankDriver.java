@@ -6,6 +6,8 @@ import com.revature.bankapp.pojos.Account;
 import com.revature.bankapp.pojos.Bank;
 import com.revature.bankapp.util.UserInputValidation;
 
+//The BankDriver class utilizes a main method for running the bank app. It houses all of the user interaction code.
+
 public class BankDriver {
 
 	private static Scanner scan = new Scanner(System.in);
@@ -26,14 +28,14 @@ public class BankDriver {
 			System.out.println("2 - Register");
 			System.out.println("3 - Shutdown");
 			
-			selection1 = UserInputValidation.validateInput(1);
+			selection1 = UserInputValidation.validateInput(1, scan);
 			
 			if(selection1.equals("1")){
 				String email = null;
 				String password;
 				System.out.println("Please enter your email: ");
 				
-				email = UserInputValidation.validateInput(2);
+				email = UserInputValidation.validateInput(2, scan);
 				
 				System.out.println("Please enter you password:");
 				
@@ -59,16 +61,16 @@ public class BankDriver {
 					System.out.println("5 - View Total Balance of All Accounts");
 					System.out.println("6 - Logout");
 					
-					String selection2 = UserInputValidation.validateInput(1);
+					String selection2 = UserInputValidation.validateInput(1, scan);
 					
 					switch(selection2) {
 						case "1":	System.out.println("Your new account has been created:");
 									System.out.println(myBank.createAccount());
 									break;
 						case "2": 	System.out.println("Enter the account id of the account you wish to deposit into:");
-									String accountId = UserInputValidation.validateInput(5);
+									String accountId = UserInputValidation.validateInput(5, scan);
 									System.out.println("Enter the amount to Deposit:");
-									String depositAmount = UserInputValidation.validateInput(3);
+									String depositAmount = UserInputValidation.validateInput(3, scan);
 									if(!myBank.deposit(Integer.parseInt(accountId), Double.valueOf(depositAmount))) {
 										System.out.println("You have entered an account number you don't have access to.");
 									} else {
@@ -76,9 +78,9 @@ public class BankDriver {
 									}
 									break;
 						case "3": 	System.out.println("Enter the account id of the account you wish to withdraw from:");
-									accountId = UserInputValidation.validateInput(5);
+									accountId = UserInputValidation.validateInput(5, scan);
 									System.out.println("Enter the amount to Withdraw:");
-									String withdrawAmount = UserInputValidation.validateInput(3);
+									String withdrawAmount = UserInputValidation.validateInput(3, scan);
 									switch(myBank.withdraw(Integer.parseInt(accountId), Double.valueOf(withdrawAmount))) {
 									case 1: System.out.println("You have entered an account number you don't have access to.");
 											break;
@@ -89,11 +91,11 @@ public class BankDriver {
 								}
 									break;
 						case "4":	System.out.println("Enter the account id of the account you wish to withdraw from:");
-									accountId = UserInputValidation.validateInput(5);
+									accountId = UserInputValidation.validateInput(5, scan);
 									System.out.println("Enter the account id of the account you wish to deposit into:");
-									String accountId2 = UserInputValidation.validateInput(5);
+									String accountId2 = UserInputValidation.validateInput(5, scan);
 									System.out.println("Enter the amount to Withdraw:");
-									String transferAmount = UserInputValidation.validateInput(3);
+									String transferAmount = UserInputValidation.validateInput(3, scan);
 									switch(myBank.transfer(Integer.parseInt(accountId), Integer.parseInt(accountId2), Double.valueOf(transferAmount))) {
 										case 1: System.out.println("You have entered an account number you don't have access to.");
 												break;
@@ -121,11 +123,11 @@ public class BankDriver {
 				boolean pwNotVerified = true;
 				
 				System.out.println("Please enter your first name:");
-				firstName = UserInputValidation.validateInput(4);
+				firstName = UserInputValidation.validateInput(4, scan);
 				System.out.println("Please enter your last name:");
-				lastName = UserInputValidation.validateInput(4);
+				lastName = UserInputValidation.validateInput(4, scan);
 				System.out.println("Please enter your email:");
-				email = UserInputValidation.validateInput(2);
+				email = UserInputValidation.validateInput(2, scan);
 				
 				while(pwNotVerified){
 					System.out.println("Please enter your password:");
@@ -153,7 +155,9 @@ public class BankDriver {
 				System.out.println("myBank is now closed.");
 			}
 		}
-				
+		
+		scan.close();
+		
 	}
 	
 	

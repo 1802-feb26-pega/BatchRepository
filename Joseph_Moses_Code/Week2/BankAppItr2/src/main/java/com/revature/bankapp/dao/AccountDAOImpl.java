@@ -11,6 +11,8 @@ import java.util.List;
 import com.revature.bankapp.pojos.Account;
 import com.revature.bankapp.util.ConnectionFactory;
 
+//The implementation of the AccountDAO to query the BankApp database concerning accounts
+
 public class AccountDAOImpl implements AccountDAO {
 
 	@Override
@@ -83,7 +85,7 @@ public class AccountDAOImpl implements AccountDAO {
 			
 			if(rowsAffected > 0) {
 				while(rs.next()) {
-					account.setUserId(rs.getInt(1));
+					account.setAccId(rs.getInt(1));
 				}
 				
 				conn.commit();

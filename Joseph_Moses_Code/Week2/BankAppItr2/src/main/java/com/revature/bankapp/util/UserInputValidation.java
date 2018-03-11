@@ -2,11 +2,11 @@ package com.revature.bankapp.util;
 
 import java.util.Scanner;
 
+//This is a utility class used for validating the various different types of expected user input.
+
 public class UserInputValidation {
 
-	public static String validateInput(int type) {
-		
-		Scanner scan = new Scanner(System.in);
+	public static String validateInput(int type, Scanner scan) {
 		
 		String input;
 		boolean loopFlag = false;
@@ -56,20 +56,20 @@ public class UserInputValidation {
 			}	
 		} while(loopFlag);
 		
-		//scan.close();
+		
 		return input;
 	}
 	
-	private static boolean validateNumberOnlyInput(String input) {
+	public static boolean validateNumberOnlyInput(String input) {
 		
-		if(input.matches("[^0-9]{1}")) {
-			return false;
+		if(input.matches("[0-9]{1}")) {
+			return true;
 		}
 		
-		return true;
+		return false;
 	}
 	
-	private static boolean validateCurrencyInput(String input) {
+	public static boolean validateCurrencyInput(String input) {
 		
 		if(input.matches("[+]?\\d*\\.?\\d{2}") && Double.parseDouble(input) < Double.MAX_VALUE) {
 			return true;
@@ -77,7 +77,7 @@ public class UserInputValidation {
 		else return false;
 	}
 	
-	private static boolean validateEmailInput(String input) {
+	public static boolean validateEmailInput(String input) {
 		
 		if(input.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")){
 			return true;
@@ -86,7 +86,7 @@ public class UserInputValidation {
 		return false;
 	}
 	
-	private static boolean validateNameInput(String input) {
+	public static boolean validateNameInput(String input) {
 		if(input.matches("[a-zA-Z]+")) {
 			return true;
 		}
@@ -94,13 +94,13 @@ public class UserInputValidation {
 		return false;
 	}
 	
-	private static boolean validateAccountIdInput(String input) {
+	public static boolean validateAccountIdInput(String input) {
 		
-		if(input.matches("[^0-9]+")) {
-			return false;
+		if(input.matches("[0-9]+")) {
+			return true;
 		}
 		
-		return true;
+		return false;
 	}
 	
 }
