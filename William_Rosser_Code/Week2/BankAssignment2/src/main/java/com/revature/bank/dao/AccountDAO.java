@@ -3,8 +3,10 @@ package com.revature.bank.dao;
 import java.util.List;
 
 import com.revature.bank.pojos.Account;
+import com.revature.bank.pojos.User;
 
 public interface AccountDAO {
+	
 	
 	/**
 	 * Returns a list of all accounts. List will be empty if information cannot be loaded.
@@ -27,6 +29,7 @@ public interface AccountDAO {
 	 * @return	A list of accounts.
 	 */
 	public List<Account> getAllAccountsForUser(int userID);
+	public List<Account> getAllAccountsForUser(User user);
 	
 	/**
 	 * Adds a new account to the database. Returns 0 if it fails.

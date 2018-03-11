@@ -165,7 +165,9 @@ public class User {
 				+ "]";
 	}
 	
-	
+	public String getWholeName() {
+		return firstName + " " + ((middleInitial != null && middleInitial.length() > 0) ? middleInitial + ". " : " ") + lastName;
+	}
 	
 	
 }

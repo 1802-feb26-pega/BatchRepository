@@ -14,7 +14,16 @@ import com.revature.bank.util.ConnectionFactory;
 
 public class UserDAOImpl implements UserDAO {
 
-
+	private static UserDAOImpl uDAO = null;
+	
+	private UserDAOImpl() {
+		uDAO = this;
+	}
+	
+	public static synchronized UserDAOImpl getInstance() {
+		if (uDAO == null) uDAO = new UserDAOImpl();
+		return uDAO;
+	}
 	
 	private User resultsToUser(ResultSet rs, boolean callNext) throws SQLException {
 		if (!callNext || rs.next()) {

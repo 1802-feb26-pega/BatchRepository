@@ -9,10 +9,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.bank.pojos.Account;
+import com.revature.bank.pojos.User;
 import com.revature.bank.util.ConnectionFactory;
 
 public class AccountDAOImpl implements AccountDAO {
+	
+	private static AccountDAOImpl aDAO = null;
+	
+	private AccountDAOImpl() {
+		aDAO = this;
+	}
 
+	public static synchronized AccountDAOImpl getInstance() {
+		if (aDAO == null) return new AccountDAOImpl();
+		return aDAO;
+	}
+	
 	private Account resultsToAccount(ResultSet rs, boolean callNext) throws SQLException {
 		if(!callNext || rs.next()) {
 			return new Account(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getString(4));
@@ -67,6 +79,10 @@ public class AccountDAOImpl implements AccountDAO {
 		}
 		return accounts;
 	}
+	
+	public List<Account> getAllAccountsForUser(User user) {
+		return getAllAccountsForUser(user.getUserID());
+	}
 
 	public int addAccount(Account account) {
 		int userID = account.getUserID();
@@ -95,7 +111,13 @@ public class AccountDAOImpl implements AccountDAO {
 		if(id <= 0) return -1;	
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			conn.setAutoCommit(false);
-			String sql = "UPDATE accounts SET balance = ?, account_name = ? WHEN account_id = ?";
+//			String sql = "UPDATE accounts SET balance = " + updated.getBalance() 
+//			+ ", account_name = '" + updated.getAccountName() + "' where account_id = " + updated.getAccountID();
+//			System.out.println(sql);
+//			Statement stmt = conn.createStatement();
+//			int val = stmt.executeUpdate(sql);
+			
+			String sql = "UPDATE accounts SET balance = ?, account_name = ? WHERE account_id = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setDouble(1, updated.getBalance());
 			pstmt.setString(2, updated.getAccountName());

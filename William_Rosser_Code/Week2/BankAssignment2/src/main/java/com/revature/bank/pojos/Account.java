@@ -34,6 +34,18 @@ public class Account {
 		this.balance = balance;
 	}
 
+	public boolean deposit(double amount) {
+		if (amount < 0) return false;
+		this.balance += amount;
+		return true;
+	}
+	
+	public boolean withdraw(double amount) {
+		if ((this.balance - amount) < 0 || amount <= 0) return false;
+		this.balance -= amount;
+		return true;
+	}
+	
 	public String getAccountName() {
 		return accountName;
 	}
