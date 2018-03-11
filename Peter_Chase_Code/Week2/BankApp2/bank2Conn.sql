@@ -48,3 +48,7 @@ commit;
 --------- SELECTION ----------
 SELECT * FROM account;
 ------------------------------
+
+---- DELETE TEST ACCOUNT -----
+DELETE FROM account WHERE act_name = 'testaccount';
+------------------------------

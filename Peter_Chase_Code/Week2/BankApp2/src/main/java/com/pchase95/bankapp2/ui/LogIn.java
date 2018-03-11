@@ -37,12 +37,11 @@ public class LogIn extends JFrame {
 		String nameOrEmail = textFieldUsername.getText();
 		String password = textFieldPassword.getText();
 		
-		Application.attemptSignIn(nameOrEmail, password);
-		if (Application.getAccount() == null) {
-			lblStatus.setText("Wrong username/email or password");
-		} else {
+		if (Application.attemptSignIn(nameOrEmail, password)) {
 			Application.launchBank();
 			dispose();
+		} else {
+			lblStatus.setText("Wrong username/email or password");
 		}
 		
 	}

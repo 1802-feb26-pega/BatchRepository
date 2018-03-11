@@ -9,12 +9,15 @@ import com.pchase95.bankapp2.pojos.TransferResult;
 import com.pchase95.bankapp2.ui.Bank;
 import com.pchase95.bankapp2.ui.LogIn;
 import com.pchase95.bankapp2.ui.SignUp;
+import com.pchase95.bankapp2.util.Sanitizer;
 
 public class Application {
 	private static Account currentAccount = null;
-	private static AccountDAO actDAO = new AccountDAOImpl();
+	private static final AccountDAO actDAO = new AccountDAOImpl();
 	
 	private Application() { }
+	
+	public static Account getAccount() { return currentAccount; }
 	
 	public static void main(String[] args) {
 		launchLogIn();
@@ -30,6 +33,10 @@ public class Application {
 		logOut();
 	}
 	
+	public static void updateAccount() {
+		currentAccount = actDAO.getAccountById(currentAccount.getId());
+	}
+	
 	public static void deposit(double amount) {
 		currentAccount.setBalance(currentAccount.getBalance() + amount);
 		actDAO.updateAccount(currentAccount.getId(), currentAccount);
@@ -40,19 +47,29 @@ public class Application {
 			return TransferResult.NOFUNDS;
 		}
 		
-		for (Account other : actDAO.getAllAccounts()) {
-			if (other.getName().equals(nameOrEmail)
-			|| other.getEmail().equals(nameOrEmail)) {
-				if (currentAccount.equals(other)) {
-					return TransferResult.SAMEUSER;
-				}
-				
-				currentAccount.setBalance(currentAccount.getBalance() - amount);
-				other.setBalance(other.getBalance() + amount);
-				return TransferResult.SUCCESS;
-			}
+		Account other = null;
+		if (Sanitizer.sanitizeUsername(nameOrEmail)) {
+			other = actDAO.getAccountByName(nameOrEmail);
+		} else if (Sanitizer.sanitizeEmail(nameOrEmail)) {
+			other = actDAO.getAccountByEmail(nameOrEmail);
 		}
-		return TransferResult.NOUSER;
+		
+		if (other == null) {
+			return TransferResult.NOUSER;
+		}
+
+		if (currentAccount.getId() == other.getId()) {
+			return TransferResult.SAMEUSER;
+		}
+		
+		currentAccount.setBalance(currentAccount.getBalance() - amount);
+		actDAO.updateAccount(currentAccount.getId(), currentAccount);
+		
+		other.setBalance(other.getBalance() + amount);
+		actDAO.updateAccount(other.getId(), other);
+		
+		return TransferResult.SUCCESS;
+		
 	}
 	
 	
@@ -65,16 +82,21 @@ public class Application {
 		return false;
 	}
 	
-	public static void attemptSignIn(String nameOrEmail, String password) {
-		for (Account act : actDAO.getAllAccounts()) {
-			if (nameOrEmail.equals(act.getName()) || nameOrEmail.equals(act.getEmail())
-			&& password.equals(act.getPassword())) {
-				currentAccount = act;
-				return;
-			}
+	public static boolean attemptSignIn(String nameOrEmail, String password) {
+		Account act = null;
+		if (Sanitizer.sanitizeUsername(nameOrEmail)) {
+			act = actDAO.getAccountByName(nameOrEmail);
+		} else if (Sanitizer.sanitizeEmail(nameOrEmail)) {
+			act = actDAO.getAccountByEmail(nameOrEmail);
 		}
 		
+		if (act != null && act.getPassword().equals(password)) {
+			currentAccount = act;
+			return true;
+		}
+				
 		currentAccount = null;
+		return false;
 	}
 	
 	public static void logOut() {
@@ -82,7 +104,6 @@ public class Application {
 		launchLogIn();
 	}
 	
-	public static Account getAccount() { return currentAccount; }
 	
 	public static void launchLogIn() {
 		EventQueue.invokeLater(new Runnable() {

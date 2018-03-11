@@ -67,6 +67,8 @@ public class Bank extends JFrame {
 			
 			switch (result) {
 			case SUCCESS:
+				Application.updateAccount();
+				updateBalance();
 				lblSuccess.setText("Transfer Success");
 				break;
 			case NOFUNDS:

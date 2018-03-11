@@ -62,6 +62,60 @@ public class AccountDAOImpl implements AccountDAO {
 		return act;
 	}
 
+	@Override
+	public Account getAccountByName(String accountName) {
+		Account act = null;
+		
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			String sql = "SELECT * FROM account WHERE act_name = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, accountName);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				act = new Account();
+				act.setId(rs.getLong(1));
+				act.setName(rs.getString(2));
+				act.setEmail(rs.getString(3));
+				act.setPassword(rs.getString(4));
+				act.setBalance(rs.getDouble(5));
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return act;
+	}
+	
+	@Override
+	public Account getAccountByEmail(String accountEmail) {
+		Account act = null;
+		
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			String sql = "SELECT * FROM account WHERE act_email = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, accountEmail);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				act = new Account();
+				act.setId(rs.getLong(1));
+				act.setName(rs.getString(2));
+				act.setEmail(rs.getString(3));
+				act.setPassword(rs.getString(4));
+				act.setBalance(rs.getDouble(5));
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return act;
+	}
+	
 	public boolean addAccount(Account newAccount) {
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			conn.setAutoCommit(false);
@@ -129,10 +183,6 @@ public class AccountDAOImpl implements AccountDAO {
 		}
 		
 		return rowsAffected > 0;
-	}
-
-	public boolean accountExists(long accountId) {
-		return getAccountById(accountId) != null;
 	}
 
 }
