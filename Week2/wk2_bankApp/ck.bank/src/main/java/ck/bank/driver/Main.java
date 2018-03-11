@@ -1,39 +1,48 @@
-package ck.bankApp;
+package ck.bank.driver;
 
 import java.util.List;
 import java.util.Scanner;
 
+import ck.bank.dao.ClientUI;
+import ck.bank.dao.MemberUI;
+import ck.bank.dao.UserDao;
+import ck.bank.dao.UserDaoImpl;
+import ck.bank.pojos.User;
+import ck.bank.dao.UserIO;
+
 public class Main {
 	public static UserIO io = new UserIO();
 	public static Scanner sc = new Scanner(System.in);
+	public static UserDao uDao = new UserDaoImpl();
 	
 	public static void main(String[] args)
 	{
 		//UserIO io = new UserIO();
 		
-		List<User> users = io.readAllUsers();// keep this
-
-		/*
-		for(User u : users)
-		{
-			u.displayAccountInformation();
-			u.checkBalance();
-		}	
-		
-		System.out.println("====================\n====================");
-		User bb = new User("j","K","L",4.0);
-		users.add(bb);
-		
-		for(User u: users)
-		{
-			u.displayAccountInformation();
-			u.checkBalance();
-		}
-		
-		io.writeAllUsers(users);
-		System.out.println("\n\nwritten to file");
-		*/
-		
+		//List<User> users = uDao.getAllUsers();// keep this
+		List<User> users;
+//
+//		/*
+//		for(User u : users)
+//		{
+//			u.displayAccountInformation();
+//			u.checkBalance();
+//		}	
+//		
+//		System.out.println("====================\n====================");
+//		User bb = new User("j","K","L",4.0);
+//		users.add(bb);
+//		
+//		for(User u: users)
+//		{
+//			u.displayAccountInformation();
+//			u.checkBalance();
+//		}
+//		
+//		io.writeAllUsers(users);
+//		System.out.println("\n\nwritten to file");
+//		*/
+//		
 		//initialize top level client UI - make a selection to create new account, login with an existing account, or exit
 		ClientUI cui = new ClientUI();
 		int topSelection;
@@ -46,13 +55,14 @@ public class Main {
 		{
 		case 1:
 			//create new user
-			users = cui.createNewUser(users);
+			cui.createNewUser();
 			System.out.println("User created successfully");
 			//start member ui
 			break;
 		case 2:
 			//login for existing user
 			//need to find user via username
+			users = uDao.getAllUsers();
 			loggedIn = cui.userLogin(users);
 			if(loggedIn != null)
 			{
@@ -71,9 +81,34 @@ public class Main {
 		default:
 			System.out.println("Something went wrong");
 		}//switch
+//
+//		System.out.println("Writing accounts.txt");
+//		io.writeAllUsers(users);
+		
+		
+		
+		
+		
 
-		System.out.println("Writing accounts.txt");
-		io.writeAllUsers(users);
+		
+		
+		users = uDao.getAllUsers();
+		
+		for(User u : users)
+		{
+			System.out.println(u.toString());
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		sc.close();
 	}//main method
 }

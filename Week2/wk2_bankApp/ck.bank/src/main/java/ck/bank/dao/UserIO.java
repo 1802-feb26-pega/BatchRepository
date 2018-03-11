@@ -1,4 +1,4 @@
-package ck.bankApp;
+package ck.bank.dao;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import ck.bankApp.User;
+import ck.bank.pojos.User;
 
 public class UserIO {
 	final static String filename = "./accounts.txt";
-	
+
 	/*
 	//DONT USE THIS FUNCTION FOR WRITING A SINGLE USER
 	public void writeUser(User aUser)
@@ -28,12 +28,12 @@ public class UserIO {
 		{
 			e.printStackTrace();
 		}
-		
+
 	}//write user
-	*/
-	
+	 */
+
 	//===============================================
-	
+
 	public void writeAllUsers(List<User> users)
 	{
 		//delete old version of file
@@ -41,7 +41,7 @@ public class UserIO {
 		fold.delete();
 		//create new blank file with the same name
 		File fnew = new File(filename);
-		
+
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(filename,true)))
 		{
 			for(User u : users)
@@ -53,9 +53,9 @@ public class UserIO {
 			ioe.printStackTrace();
 		}//try-catch block
 	}//writeAllUsers
-	
+
 	//===================================================
-	
+
 	public List<User> readAllUsers(){
 		List<User> users = new ArrayList<User>();
 		try(BufferedReader br = new BufferedReader(new FileReader(filename)))
@@ -72,7 +72,7 @@ public class UserIO {
 				temp.setFirstName(data[2]);
 				temp.setLastName(data[3]);
 				temp.setBalance(Double.parseDouble(data[4]));
-				
+
 				users.add(temp);
 			}
 		} catch (FileNotFoundException e) {
@@ -83,3 +83,4 @@ public class UserIO {
 		return users;
 	}//read users
 }
+

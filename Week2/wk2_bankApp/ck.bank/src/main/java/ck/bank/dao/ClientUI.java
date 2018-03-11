@@ -1,20 +1,30 @@
-package ck.bankApp;
+package ck.bank.dao;
+
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 
+import ck.bank.driver.Main;
+import ck.bank.pojos.User;
+import ck.bank.util.ConnectionFactory;
+
 public class ClientUI {
 	//public static Scanner sc = new Scanner(System.in);
-	
+
 	public int topUI()
 	{
 		int userInput = -1;
 		boolean valid = false;
-		
+
 		while(!valid)
 		{
 			System.out.println("Make your selection:");
@@ -41,46 +51,64 @@ public class ClientUI {
 		}//while
 		return userInput;
 	}//topUI
-	
+
 	//=======================================================
-	
-	public List<User> createNewUser(List<User> users)
+
+	//public List<User> createNewUser(List<User> users)
+	public void createNewUser()
 	{
 		User newPerson = new User();
-		
-		
+
+
 		//validateUsername
-		newPerson.setUsername(validateUsername(users));
-		
+		newPerson.setUsername(validateUsername());
+
 		//validatePassword
 		newPerson.setPassHash(validatePassword());
-		
+
 		//validateFirstName
 		newPerson.setFirstName(validateFirstName());
-		
+
 		//validateLastName
 		newPerson.setLastName(validateLastName());
-		
+
 		//validateBalance
-		newPerson.setBalance(validateBalance());
-		
+		//newPerson.setBalance(validateBalance());
+
 		//add new person to the list
-		users.add(newPerson);
-		
-		
-		return users;
+		//users.add(newPerson);
+
+		Main.uDao.addUser(newPerson);
+		//return users;
 	}//createNewUser
-	
+
 	//========================================================
-	
-	public String validateUsername(List<User> u)
+
+	public String validateUsername()
 	{
-		String newU = "";
 		boolean valid = false;
 		boolean unique = true;
+		List<String> usernames = new ArrayList<String>();
+		String newU = "";
 		
-		//NEED TO MAKE SURE THE USERNAME HASNT BEEN USED BEFORE
+		//get list of taken usernames from the server
+		try(Connection conn = ConnectionFactory.getInstance().getConnection())
+		{
+			String sql = "SELECT username FROM customer";
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next())
+			{
+				usernames.add(rs.getString(1));
+			}//while
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}//try-catch
+
 		
+		//check that entered username meets form requirements and isnt already taken
 		while(!valid)
 		{
 			System.out.println("Enter username: (1-10 characters, letters and #'s only)");
@@ -90,9 +118,9 @@ public class ClientUI {
 			{
 				if(newU.matches("[A-Za-z0-9]*"))
 				{
-					for(User a : u)
+					for(String s : usernames)
 					{
-						if(newU.equals(a.getUsername()))
+						if(s.equals(newU))
 						{
 							unique = false;
 							break;
@@ -114,19 +142,19 @@ public class ClientUI {
 			{
 				System.out.println("\nBad length\n");
 			}//if
-		
+
 		}//while
 		
 		return newU;
 	}//validateUsername
-	
+
 	//=================================================
-	
+
 	public String validateFirstName()
 	{
 		String newF = null;
 		boolean valid = false;
-		
+
 		while(!valid)
 		{
 			System.out.println("Enter first name: (1-12 characters, letters only)");
@@ -145,18 +173,18 @@ public class ClientUI {
 			{
 				System.out.println("\nBad length\n");
 			}
-			
+
 		}//while
 		return newF;
 	}//validateFirstName
-	
+
 	//====================================================
-	
+
 	public String validateLastName()
 	{
 		String newL = null;
 		boolean valid = false;
-		
+
 		while(!valid)
 		{
 			System.out.println("Enter last name: (1-12 characters, letters only)");
@@ -175,18 +203,18 @@ public class ClientUI {
 			{
 				System.out.println("\nBad length\n");
 			}
-			
+
 		}//while
 		return newL;
 	}//validateLastName
-	
+
 	//========================================================
-	
+
 	public double validateBalance()
 	{
 		double newB = 0;
 		boolean valid = false;
-		
+
 		while(!valid)
 		{
 			System.out.println("Enter starting balance: (greater than 0)");
@@ -208,13 +236,13 @@ public class ClientUI {
 				Main.sc.nextLine();
 			}//try-catch
 		}//while
-		
-		
+
+
 		return newB;
 	}//validateBalance
-	
+
 	//========================================================================
-	
+
 	public User userLogin(List<User> users)
 	{
 		String tempUname;
@@ -224,10 +252,10 @@ public class ClientUI {
 		StringBuilder temp = new StringBuilder();
 		MessageDigest md;
 		boolean valid = false;
-		
+
 		System.out.println("Please enter your username:");
 		tempUname = Main.sc.next();
-		
+
 		for(User u : users)
 		{
 			if(tempUname.equals(u.getUsername()))
@@ -236,7 +264,7 @@ public class ClientUI {
 				System.out.println(tempUname + "\nEnter your password:");
 				tempPass = Main.sc.next();
 				bytesOfPass = tempPass.getBytes();
-				
+
 				try
 				{
 					md = MessageDigest.getInstance("MD5");
@@ -254,22 +282,22 @@ public class ClientUI {
 						System.out.println("Bad login");
 						return null;
 					}//if-else
-					
+
 				}catch(NoSuchAlgorithmException nsae)
 				{
 					System.out.println("MD5 Algorithm - login");
 				}//try-catch
-				
+
 			}//if
 		}//for
-		
-		
+
+
 		//return null if username is not found in list of current users
 		return null;
 	}//userLogin
-	
+
 	//=========================================================================
-	
+
 	public String validatePassword()
 	{
 		String password;
@@ -278,7 +306,7 @@ public class ClientUI {
 		StringBuilder temp = new StringBuilder();
 		MessageDigest md;
 		boolean valid = false;
-		
+
 		while(!valid)
 		{
 			System.out.println("Enter password (8-20 characters)");
@@ -289,7 +317,7 @@ public class ClientUI {
 				try
 				{
 					bytesOfPass = password.getBytes("UTF-8");
-					
+
 					try
 					{
 						md = MessageDigest.getInstance("MD5");
@@ -303,8 +331,8 @@ public class ClientUI {
 						nsae.printStackTrace();
 						System.out.println("Broken in MD5 - validatePassword()");
 					}//try-catch
-						
-						
+
+
 				}catch(UnsupportedEncodingException uee)
 				{
 					uee.printStackTrace();
@@ -313,37 +341,14 @@ public class ClientUI {
 				{
 					valid = true;
 				}
-				
+
 			}else
 			{
 				System.out.println("\nBad length\n");
 			}//if-else
-			
+
 		}//while
 		return temp.toString();
 	}//validatePassword
-	
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,11 +1,16 @@
-package ck.bankApp;
+package ck.bank.dao;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import ck.bank.driver.Main;
+import ck.bank.pojos.User;
+
+
+
 public class MemberUI {
 	User loggedIn;
-	
+
 	public MemberUI(User u)
 	{
 		this.loggedIn = u;
@@ -14,7 +19,7 @@ public class MemberUI {
 	{
 		int userInput = -1;
 		boolean valid = false;
-		
+
 		while(!valid)
 		{
 			userInput = -1;
@@ -43,9 +48,9 @@ public class MemberUI {
 				System.out.println("\nNon-int input. Try again.\n");
 				Main.sc.nextLine();
 			}//try-catch
-		
-		
-		
+
+
+
 			//switch statement
 			switch(userInput)
 			{
@@ -89,12 +94,12 @@ public class MemberUI {
 
 
 		}//while
-		
+
 		//return userInput;
 	}//topUI
-	
+
 	//==========================================================
-	
+
 	public void displayAccountInformation()
 	{
 		System.out.println("Your account information:");
@@ -102,16 +107,16 @@ public class MemberUI {
 		System.out.println("First Name = " + this.loggedIn.getFirstName());
 		System.out.println(" Last Name = " + this.loggedIn.getLastName());
 	}//display account information
-	
+
 	//==========================================================
-	
+
 	public void checkBalance()
 	{
 		System.out.println("Available balance: $" + this.loggedIn.getBalance());
 	}//check balance
-	
+
 	//==========================================================
-	
+
 	public void withdrawFunds()
 	{
 		double amountToWithdraw = 0;
@@ -119,7 +124,7 @@ public class MemberUI {
 		System.out.println("Available balance: $" + this.loggedIn.getBalance());
 		System.out.println("Your account cannot overdraw more than $100.00");
 		System.out.println("Enter amount to withdraw:");
-		
+
 		while(!valid)
 		{
 			try
@@ -157,16 +162,16 @@ public class MemberUI {
 		}//while
 		//sc.close();
 	}//withdraw funds
-	
+
 	//=================================================================
-	
+
 	public void depositFunds()
 	{
 		double amountToDeposit;
 		boolean valid = false;
 		System.out.println("Current balance: $" + this.loggedIn.getBalance());
 		System.out.println("Enter amount to deposit:");
-		
+
 		while(!valid)
 		{
 			try
@@ -185,7 +190,7 @@ public class MemberUI {
 					System.out.println("Your new balance is: $" + this.loggedIn.getBalance());
 					valid = true;
 				}//if-else
-				
+
 			}catch(InputMismatchException ime)
 			{
 				//System.out.println("--INVALID ENTRY--INVALID ENTRY--");
@@ -198,14 +203,14 @@ public class MemberUI {
 		}//while
 		//sc.close();
 	}//deposit funds
-	
+
 	//=====================================================================
-	
+
 	public void changeFirstName()
 	{
 		String newF;
 		boolean valid = false;
-		
+
 		while(!valid)
 		{
 			System.out.println("\n\nEnter first name: (1-12 characters, letters only)");
@@ -227,14 +232,14 @@ public class MemberUI {
 			}//if-else
 		}//while
 	}//changeFIrstName
-	
+
 	//==================================================================
-	
+
 	public void changeLastName()
 	{
 		String newL;
 		boolean valid = false;
-		
+
 		while(!valid)
 		{
 			System.out.println("\n\nEnter last name: (1-12 characters, letters only)");

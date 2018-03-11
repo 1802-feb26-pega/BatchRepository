@@ -1,4 +1,5 @@
-package ck.bankApp;
+package ck.bank.pojos;
+
 
 import java.util.Arrays;
 
@@ -8,9 +9,9 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private double balance;
-	
+
 	public User() {}
-	
+
 	public User(String uName,String fName,String lName,double bal)
 	{
 		username = uName;
@@ -69,15 +70,16 @@ public class User {
 	@Override
 	public String toString() {
 		return username + ":" + passHash + ":" + firstName
-				+ ":" + lastName + ":" + balance;
+				+ ":" + lastName;
 	}
-	
-	
-//	@Override
-//	public String toString()
-//	{
-//		return new String(username + ":" + firstName + ":" + lastName + ":" + balance + "\n");
-//	}
-	
-	
+
+
+	//		@Override
+	//		public String toString()
+	//		{
+	//			return new String(username + ":" + firstName + ":" + lastName + ":" + balance + "\n");
+	//		}
+
+
 }
+
