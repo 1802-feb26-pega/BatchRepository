@@ -22,8 +22,11 @@ public class DemoDriver {
 		
 		System.out.println(artDao.getNameById(1));
 		
-		System.out.println(artDao.addArtist("Revature"));
-		
-		System.out.println(artDao.updateArtist(276, "Update test"));
+		Artist a2 = new Artist(1, "testing new methods");
+		Artist a3 = new Artist(1, "testing update");
+
+		System.out.println(artDao.addArtist(a2));
+		System.out.println(artDao.updateArtist(277, a3));
+		System.out.println(artDao.removeArtist(276));
 	}
 }

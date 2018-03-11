@@ -82,9 +82,8 @@ public class ArtistDAOImpl implements ArtistDAO{
 		return output;
 	}
 
-	public Artist addArtist(String name) {
-		
-		Artist output = new Artist();
+	@Override
+	public int addArtist(Artist newArtist) {
 		int value = 0;
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
@@ -102,9 +101,7 @@ public class ArtistDAOImpl implements ArtistDAO{
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, ++lastId);
-			output.setId(lastId);
-			pstmt.setString(2, name);
-			output.setName(name);
+			pstmt.setString(2, newArtist.getName());
 			
 			value = pstmt.executeUpdate();
 			
@@ -113,11 +110,11 @@ public class ArtistDAOImpl implements ArtistDAO{
 			e.printStackTrace();
 		}
 		
-		return output;
+		return value;
 	}
 
-	public Artist updateArtist(int id, String newName) {
-		Artist output = new Artist();
+	@Override
+	public int updateArtist(int id, Artist updatedArtist) {
 		int value = 0;
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
@@ -125,10 +122,8 @@ public class ArtistDAOImpl implements ArtistDAO{
 			String sql = "UPDATE artist SET name = ? WHERE artistId = ?";
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, newName);
-			output.setName(newName);
+			pstmt.setString(1, updatedArtist.getName());
 			pstmt.setInt(2, id);
-			output.setId(id);
 			
 			value = pstmt.executeUpdate();
 			
@@ -137,7 +132,28 @@ public class ArtistDAOImpl implements ArtistDAO{
 			e.printStackTrace();
 		}
 		
-		return output;
+		return value;
+	}
+
+	@Override
+	public int removeArtist(int id) {
+		int value = 0;
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+
+			String sql = "DELETE FROM artist WHERE artistId = ?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			
+			value = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return value;
 	}
 
 }

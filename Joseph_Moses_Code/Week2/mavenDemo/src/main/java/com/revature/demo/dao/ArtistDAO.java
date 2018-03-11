@@ -9,6 +9,7 @@ public interface ArtistDAO {
 	public List<Artist> getAllArtists();
 	public Artist getArtistById(int id);
 	public String getNameById(int id);
-	public Artist addArtist(String name);
-	public Artist updateArtist(int id, String newName);
+	public int addArtist(Artist newArtist);
+	public int updateArtist(int id, Artist updatedArtist);
+	public int removeArtist(int id);
 }

@@ -1,0 +1,18 @@
+CREATE SEQUENCE artist_seq
+MINVALUE 1
+MAXVALUE 1000000
+INCREMENT BY 1
+START WITH 280;
+/
+
+CREATE OR REPLACE TRIGGER artist_trigger
+BEFORE INSERT ON artist
+FOR EACH ROW
+BEGIN
+    SELECT artist_seq.NEXTVAL
+    INTO :new.artistId
+    FROM dual;
+END;
+/
+
+INSERT INTO artist(name) VALUES ('new artist');
