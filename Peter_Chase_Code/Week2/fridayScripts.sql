@@ -12,7 +12,7 @@ CREATE OR REPLACE TRIGGER artist_trigger
 
     BEGIN
         SELECT artist_seq.NEXTVAL
-        INTO : new.artistid
+        INTO:new.artistid
         FROM dual;
     END;
 /
