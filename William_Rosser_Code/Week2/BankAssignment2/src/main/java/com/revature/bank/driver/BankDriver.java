@@ -137,9 +137,9 @@ public class BankDriver {
 
 	public static boolean check(String test, boolean email) {
 		if (email) {
-			return uDao.getUserByEmail(test) != null;
+			return uDao.getUserByEmail(test) == null;
 		} else {
-			return uDao.getUserByUsername(test) != null;
+			return uDao.getUserByUsername(test) == null;
 		}
 	}
 

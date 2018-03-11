@@ -55,5 +55,6 @@ END;
 INSERT INTO ACCOUNTS(USER_ID, BALANCE, ACCOUNT_NAME) VALUES ('1','77.7','Will Account');
 
 SELECT * FROM accounts;
+SELECT * FROM users;
 commit;
 rollback;
