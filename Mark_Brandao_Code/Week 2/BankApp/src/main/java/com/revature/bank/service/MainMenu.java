@@ -239,6 +239,8 @@ public class MainMenu {
 		
 		if(success == true) {
 			toAccount.setBalance(toAccount.getBalance() + transfer);
+			accountDao.updateAccount(fromAccount.getAccountId(), fromAccount);
+			accountDao.updateAccount(toAccount.getAccountId(), toAccount);
 			System.out.println("Transaction successful.");
 			mm.mainMenu(user);
 		} else {
