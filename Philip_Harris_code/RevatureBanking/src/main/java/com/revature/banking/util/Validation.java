@@ -14,7 +14,7 @@ public class Validation {
 		dao.readCustomer(c, usrname, pass);
 		if(c.getUsrName() == null | c.getPassword() == null) return false;
 		else if(c.getUsrName().equals(usrname) & c.getPassword().equals(pass)) {
-			DaoImpl.readAccount(c,a);
+			dao.readAccount(c,a);
 			return true;
 		}
 

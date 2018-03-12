@@ -62,7 +62,31 @@ public class RevatureBankingTest {
 		assertTrue(flag);
 	}
 	@Test
-	public void test_getaccounts() {	
+	public void test_ReadAccount() {
+		boolean flag = false;
+		Client.setId(21);
+		dao.readAccount(client, account);
+		if(account.getId() == 47) flag = true;
+		assertTrue(flag);
+	}
+	@Test
+	public void test_updateBalance() {
+		account.setBalance(5000);
+		account.setId(21);
+		
+		assertTrue(dao.updateBalance(account));
+	}
+	@Test
+	public void test_createAcc() {
+		Client.setId(21);
+		account.setAccountNumber(00000500000);
+		account.setBalance(1000);
+		account.setType(2);
+		assertTrue(dao.createAcc(account));
+	}
+@Test
+
+ 	public void test_getaccounts() {	
 		Client.setId(3);
 		boolean found = false;
 		List<Account> list = DaoImpl.getAccounts();
@@ -72,7 +96,15 @@ public class RevatureBankingTest {
 		assertTrue(found);
 	}
 	@Test
-	public void test_getClientsUserName() {
+	public void test_d_account() {
+		
+	}
+
+
+
+@Test
+	
+public void test_getClientsUserName() {
 		boolean found = false;
 		List<Client> list = DaoImpl.getClients();
 		for(Client l: list)
@@ -80,10 +112,7 @@ public class RevatureBankingTest {
 				found = true;
 		assertTrue(found);
 	}
-	public void test_Account() {
-		client.setId(3);
-		assert
-	}
+
 	
 	
 	@After

@@ -103,7 +103,7 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 
 	}
 
-	public static void readAccount(Client c, Account a) {
+	public void readAccount(Client c, Account a) {
 		// TODO Auto-generated method stub
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 
@@ -129,7 +129,7 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 		}
 	}
 
-	public static boolean updateBalance(Account a) {
+	public boolean updateBalance(Account a) {
 		// TODO Auto-generated method stub
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 
@@ -157,7 +157,7 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 		return false;
 	}
 
-	public static boolean createAcc(Account a) {
+	public boolean createAcc(Account a) {
 		// TODO Auto-generated method stub
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 

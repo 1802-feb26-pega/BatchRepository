@@ -12,6 +12,7 @@ public class Account {
 	private int balance;
 	private List<String> usrs;
 	private long accountNumber;
+	static DaoImpl dao = new DaoImpl();
 
 
 
@@ -61,7 +62,7 @@ public class Account {
 		int temp = balance - w;
 		if(temp > 0) {
 			balance -= w;			
-			return DaoImpl.updateBalance(this);
+			return dao.updateBalance(this);
 		}
 		return false;
 	}
@@ -86,7 +87,7 @@ public class Account {
 	public boolean deposit(int d) {
 		// TODO Auto-generated method stub
 		balance += d;
-		 return DaoImpl.updateBalance(this);
+		 return dao.updateBalance(this);
 	}
 
 
@@ -105,7 +106,7 @@ public class Account {
 		a.balance = amount;
 		a.accountNumber = account_Gen();
 		
-		if(DaoImpl.createAcc(this)) return true;
+		if(dao.createAcc(this)) return true;
 			return false;
 	}
 	public static List<Account> getAcc(){
@@ -121,7 +122,7 @@ public class Account {
 			debit.balance -= m;
 			credit.balance += m;
 			if(debit.balance >= 0) {
-				if( DaoImpl.updateBalance(debit) & DaoImpl.updateBalance(credit)) return true;
+				if( dao.updateBalance(debit) & dao.updateBalance(credit)) return true;
 				else return false;
 			}
 		return false;
