@@ -29,7 +29,7 @@ public class ConnectionFactory {
 		Connection conn = null;
 		
 		try {
-			prop.load(new FileReader("C:\\Users\\whati\\eclipse-workspace\\BatchRepository\\Wesley_Hatin_Code\\BankTeller\\src\\resources"));
+			prop.load(new FileReader("C:\\Users\\whati\\eclipse-workspace\\BatchRepository\\Wesley_Hatin_Code\\BankTeller\\src\\resources\\application.properties"));
 			Class.forName(prop.getProperty("driver"));
 			conn = DriverManager.getConnection(prop.getProperty("url"), 
 					prop.getProperty("user"), prop.getProperty("password"));

@@ -2,7 +2,6 @@ package com.bank.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +18,7 @@ public class BankDatabaseImpl implements BankDatabase{
 	//adds a new client entry to the client table
 	public void writeNewUser(String username, String firstName, String lastName, String password) {
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-			PreparedStatement pstat = conn.prepareStatement("INSERT INTO user VALUES ?, ?, ?, ?");
+			PreparedStatement pstat = conn.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?)");
 			pstat.setString(1, username);
 			pstat.setString(2, firstName);
 			pstat.setString(3, lastName);
@@ -37,7 +36,20 @@ public class BankDatabaseImpl implements BankDatabase{
 	
 	//adds a new account to the account table attached to a client
 	public void writeNewAccount(String username, String accountName) {
-		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			PreparedStatement pstat = conn.prepareStatement("INSERT INTO accounts VALUES (?, ?, ?)");
+			
+			pstat.setString(1, accountName);
+			pstat.setString(2, username);
+			pstat.setDouble(3, 0.0);
+			pstat.executeUpdate();
+			
+			pstat.close();
+			conn.close();
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//checks a username against all usernames in the database, returns true if that username already exists
@@ -148,10 +160,12 @@ public class BankDatabaseImpl implements BankDatabase{
 		List <Account> accountList = new ArrayList <Account>();
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			
-			String sql = "SELECT * FROM accounts WHERE user = " + givenUser;
+			StringBuilder sql = new StringBuilder("SELECT * FROM accounts WHERE user = '"); 
+			sql.append(givenUser);
+			sql.append("'");
 			Statement stat = conn.createStatement();
 
-			ResultSet rs = stat.executeQuery(sql);
+			ResultSet rs = stat.executeQuery(sql.substring(0));
 			while(rs.next()) {
 				Account newAccount = new Account();
 				newAccount.setAccountName(rs.getString(1));

@@ -247,9 +247,9 @@ public class BankDriver {
 						System.out.println("Which account would you like to withdraw to?");
 						System.out.print("Your options are: ");
 						for(Account account : accountList) {
-							if(fromAccount != account) {
+							if(!fromAccount.equals(account)) {
 								System.out.println(Integer.toString(counter) + ": " + account.getAccountName());
-							counter++;
+								counter++;
 							}
 						}
 						accountChoice = menu.nextLine(); 
