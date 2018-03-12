@@ -21,6 +21,7 @@ import org.junit.Test;
 import com.revature.banking.dao.DaoImpl;
 import com.revature.banking.pojos.Account;
 import com.revature.banking.pojos.Client;
+import com.revature.banking.util.AccountServiceLayer;
 import com.revature.banking.util.ConnectionFactory;
 import com.revature.banking.util.Validation;
 
@@ -40,84 +41,84 @@ public class RevatureBankingTest {
 	@Before
 	public void setUp() throws Exception {
 	}
-//
-//	@Test 
-//	public void test_writeUser() {
-//		client.setfName("Philip");
-//		client.setlName("Martinez");
-//		client.setSsn(622199300);
-//		client.setUsrName("phil2");
-//		client.setPassword("6017");
-//
-//		account.setAccountNumber(123456789);
-//		account.setBalance(111111111);
-//		account.setType(1);
-//		assertTrue(dao.writeUser(client,  account));
-//		//delusr();
-//		//delAcc();
-//	}
-//	@Test
-//	public void test_readCustomer() {
-//		boolean flag = false;
-//		String usr = "phil2";
-//		String pwd = "6017";
-//		dao.readCustomer(client, usr, pwd);
-//
-//		if((client.getUsrName().equals(usr))&(client.getPassword().equals(pwd))) flag = true;
-//		assertTrue(flag);
-//	}
-//	@Test
-//	public void test_ReadAccount() {
-//		boolean flag = false;
-//		Client.setId(49);
-//		dao.readAccount(client, account);
-//		if(account.getId() == 75) flag = true;
-//		assertTrue(flag);
-//	}
-//	@Test
-//	public void test_updateBalance() {
-//		account.setBalance(5000);
-//		account.setId(49);
-//
-//		assertTrue(dao.updateBalance(account));
-//	}
-//	@Test
-//	public void test_createAcc() {
-//		Client.setId(49);
-//		account.setAccountNumber(00000500000);
-//		account.setBalance(1000);
-//		account.setType(2);
-//		assertTrue(dao.createAcc(account));
-//		//delAcc();
-//	}
-//	@Test
-//
-//	public void test_getaccounts() {	
-//		Client.setId(49);
-//		boolean found = false;
-//		List<Account> list = dao.getAccounts();
-//		for(Account l: list)
-//			if(l.getAccountNumber() == 163840)
-//				found = true;
-//		assertTrue(found);
-//	}
-//	@Test
-//	public void test_d_account() {
-//		account.setId(13);
-//		assertTrue(dao.d_account(account));
-//	}
-//	@Test
-//
-//	public void test_getClientsUserName() {
-//		boolean found = false;
-//		List<Client> list = dao.getClients();
-//		for(Client l: list)
-//			if(l.getUsrName().equals("pharris"))
-//				found = true;
-//		assertTrue(found);
-//	}
-//
-//	
+
+	@Test 
+	public void test_writeUser() {
+		client.setfName("Philip");
+		client.setlName("Martinez");
+		client.setSsn(622199300);
+		client.setUsrName("phil2");
+		client.setPassword("6017");
+
+		account.setAccountNumber(123456789);
+		account.setBalance(111111111);
+		account.setType(1);
+		assertTrue(dao.writeUser(client,  account));
+		//delusr();
+		//delAcc();
+	}
+	@Test
+	public void test_readCustomer() {
+		boolean flag = false;
+		String usr = "phil2";
+		String pwd = "6017";
+		dao.readCustomer(client, usr, pwd);
+
+		if((client.getUsrName().equals(usr))&(client.getPassword().equals(pwd))) flag = true;
+		assertTrue(flag);
+	}
+	@Test
+	public void test_ReadAccount() {
+		boolean flag = false;
+		Client.setId(49);
+		dao.readAccount(client, account);
+		if(account.getId() == 75) flag = true;
+		assertTrue(flag);
+	}
+	@Test
+	public void test_updateBalance() {
+		account.setBalance(5000);
+		account.setId(49);
+
+		assertTrue(dao.updateBalance(account));
+	}
+	@Test
+	public void test_createAcc() {
+		Client.setId(49);
+		account.setAccountNumber(00000500000);
+		account.setBalance(1000);
+		account.setType(2);
+		assertTrue(dao.createAcc(account));
+		//delAcc();
+	}
+	@Test
+
+	public void test_getaccounts() {	
+		Client.setId(49);
+		boolean found = false;
+		List<Account> list = dao.getAccounts();
+		for(Account l: list)
+			if(l.getAccountNumber() == 163840)
+				found = true;
+		assertTrue(found);
+	}
+	@Test
+	public void test_d_account() {
+		account.setId(13);
+		assertTrue(dao.d_account(account));
+	}
+	@Test
+
+	public void test_getClientsUserName() {
+		boolean found = false;
+		List<Client> list = dao.getClients();
+		for(Client l: list)
+			if(l.getUsrName().equals("pharris"))
+				found = true;
+		assertTrue(found);
+	}
+
+	
 	
 	@Test
 	public void test_access() {
@@ -155,10 +156,10 @@ public class RevatureBankingTest {
 	public void test_checking_signup() {
 		assertTrue(valid.checking_signup(4, 5));
 	}
-//	@Test
-//	public void test_writeNewUser() {
-//		assertTrue(valid.writeNewUser(client, account));
-//	}
+	@Test
+	public void test_writeNewUser() {
+		assertTrue(valid.writeNewUser(client, account));
+	}
 	@Test
 	public void test_check_update() {
 		int num = -1;
@@ -169,21 +170,21 @@ public class RevatureBankingTest {
 	public void test_withdraw() {
 		int n = 324;
 		account.setBalance(500);
-		assertTrue(account.withdraw(324));
+		assertTrue(AccountServiceLayer.withdraw(324,account));
 	}
 	
 	@Test
 	public void test_deposit() {
 		int n = 324;
 		account.setBalance(500);
-		assertTrue(account.deposit((324)));
+		assertTrue(AccountServiceLayer.deposit((324),account));
 	}
 	
-//	@Test
-//	public void test_Acc_Gen() {
-//		Long acc_num = account.account_Gen();
-//		assertTrue(acc_num > 0 & acc_num < 999999999L);
-//	}
+	@Test
+	public void test_Acc_Gen() {
+		Long acc_num = AccountServiceLayer.account_Gen();
+		assertTrue(acc_num > 0 & acc_num < 999999999L);
+	}
 	
 	@After
 	public void tearDown() throws Exception {		

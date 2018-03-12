@@ -4,15 +4,16 @@ import java.util.List;
 import java.util.Random;
 
 import com.revature.banking.dao.DaoImpl;
+import com.revature.banking.util.AccountServiceLayer;
 
 public class Account {
 
 	private int type;
 	private int id;
 	private int balance;
-	private List<String> usrs;
 	private long accountNumber;
-	static DaoImpl dao = new DaoImpl();
+	private String typeString;
+
 
 
 
@@ -21,11 +22,11 @@ public class Account {
 		super();
 		this.type = type;
 		this.balance = balance;
-		this.accountNumber = account_Gen();
-		
-		
+		this.accountNumber = AccountServiceLayer.account_Gen();
+
+
 	}
-	
+
 	//Default Constructor
 	public Account() {
 		// TODO Auto-generated constructor stub
@@ -56,69 +57,26 @@ public class Account {
 	}
 	public void setType(int type) {
 		this.type = type;
-	}
-	
-	
-	//Method that withdraws the balance and checks to see if account
-	//would go negative. If negative throws back false and warns user
-	public boolean withdraw(int w) {
-		int temp = balance - w;
-		if(temp > 0) {
-			balance -= w;			
-			return dao.updateBalance(this);
-		}
-		return false;
-	}
-	
-	//Method that deposits money into account
-	public boolean deposit(int d) {
-		// TODO Auto-generated method stub
-		balance += d;
-		 return dao.updateBalance(this);
-	}
-	
-	//Method that generates an Account number that is 9 digits long
-	public static Long account_Gen() {
-		Random r = new Random();
-		Long Low = 100000000L;
-		Long High = 999999999L;
-		Long Result = r.nextInt((int)(High-Low)) + Low;
-		return Result;
 	}	
 	
-	//Creates an account with users input
-	public boolean createAccount(Account a,int amount, int typeof) {
-		// TODO Auto-generated method stub
-		
-		a.type = typeof;
-		a.balance = amount;
-		a.accountNumber = account_Gen();
-		
-		if(dao.createAcc(this)) return true;
-			return false;
-	}
-	
-	//Return list of accounts that current user has
-	public static List<Account> getAcc(){
-		return dao.getAccounts();
-	}
-	
-	//Overrides toString method for custom output
-	@Override
-	public String toString() {
-		return  "[Account Number: " + accountNumber + "  ] [Balance: " + balance +" ] [Account Type: " + type + "]";
+	public String getTypeString() {
+		return typeString;
 	}
 
-	//Method that transfers money from one account to another.
-	public static boolean transfer(Account debit, Account credit,int m) {
-		// TODO Auto-generated method stub
-			debit.balance -= m;
-			credit.balance += m;
-			if(debit.balance >= 0) {
-				if( dao.updateBalance(debit) & dao.updateBalance(credit)) return true;
-				else return false;
-			}
-		return false;
+	public void setTypeString(String typeString) {
+		this.typeString = typeString;
+	}
+
+	//Custom output
+	//[Account #] [Balance] [Type of account]
+	public String toString() {
+		return  "[Account Number: " + accountNumber + "  ] [Balance: " + balance +" ] [Account Type: " + typeString + "]";
+	}
+	
+	//Custom output
+	//Shows only the account numbers
+	public String showAccountNumber() {
+		return "[Account Number: " + accountNumber + "  ] ";
 	}
 
 }

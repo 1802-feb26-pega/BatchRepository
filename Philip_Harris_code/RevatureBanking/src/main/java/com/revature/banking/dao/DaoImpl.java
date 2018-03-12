@@ -24,10 +24,10 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 
 			//Set to commit to avoid descynchro of account and client
 			conn.setAutoCommit(false);
-			
+
 			//SQL Query that adds new customer to table
 			String sql = "INSERT INTO CUSTOMER (Firstname,Lastname,Social,Username,PASS) VALUES (?,?,?,?,?)";
-			
+
 			String[] ckey = new String[1];
 			ckey[0] = "U_id";
 
@@ -38,7 +38,7 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 			p_statement.setInt(3, Validation.eROT5(c.getSsn())); //Hashes SSN
 			p_statement.setString(4, c.getUsrName());
 			p_statement.setString(5, Validation.encode(c.getPassword()));//Hashes password
-			
+
 			//Run SQL statement
 			cra = p_statement.executeUpdate();
 			//Return back primary key for future use
@@ -53,8 +53,8 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 			sql = "INSERT INTO ACCOUNT (U_ID,ACCOUNT_NUM,BALANCE,ACCOUNT_TYPE) VALUES (?,?,?,?)";
 			String[] akey = new String[1];
 			akey[0] = "ACC_ID";
-			
-			
+
+
 			p_statement = conn.prepareStatement(sql,akey);
 			p_statement.setInt(1, c.getId());
 			p_statement.setLong(2, a.getAccountNumber());
@@ -64,7 +64,7 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 			//Run SQL 
 			ara = p_statement.executeUpdate();
 			ResultSet ars = p_statement.getGeneratedKeys();
-			
+
 			//Grabs primary key for future use
 			if(ara > 0) {
 				while(ars.next()) 
@@ -122,16 +122,20 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 
 	//Reads the account from the database
 	//Uses similiar code to the read user
+	//Using a subquery to get account type name
 	public void readAccount(Client c, Account a) {
 		// TODO Auto-generated method stub
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 
 			conn.setAutoCommit(false);
 
-			String sql = "SELECT ACC_ID, ACCOUNT_NUM, BALANCE, ACCOUNT_TYPE FROM ACCOUNT WHERE U_ID = ?";
-
+			String sql = "SELECT ACC_ID, ACCOUNT_NUM, BALANCE, " + 
+					"(SELECT ACCOUNT_TYPE FROM ACC_TYPE WHERE T_ID = ?)" + 
+					"FROM ACCOUNT WHERE U_ID = ? AND ACC_ID = ?";
 			PreparedStatement p_statement = conn.prepareStatement(sql);
-			p_statement.setInt(1, Client.getId());
+			p_statement.setInt(1,a.getType());
+			p_statement.setInt(2, c.getId());
+			p_statement.setInt(3,a.getId());
 
 			ResultSet crs = p_statement.executeQuery();
 
@@ -139,6 +143,7 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 				a.setId(crs.getInt(1));
 				a.setAccountNumber(crs.getLong(2));
 				a.setBalance(crs.getInt(3));
+				a.setTypeString(crs.getString(4));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -213,12 +218,18 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 
 	//Grabs a list of accounts that belong to the user
 	//Used normal statements since it was just a SELECT query
+	//Uses a left join to grab all of the accounts data
+	// on key T_ID which gives the type.
 	public List<Account> getAccounts() {
 		List<Account> account = new ArrayList<Account>();
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 
 
-			String sql = "SELECT * FROM ACCOUNT WHERE U_ID = " + Client.getId();
+			String sql = "SELECT ACC_ID, ACCOUNT_NUM, BALANCE, at.ACCOUNT_TYPE " + 
+					"FROM ACCOUNT a " + 
+					"LEFT JOIN ACC_TYPE at " + 
+					"ON a.ACCOUNT_TYPE = at.T_ID " + 
+					"WHERE a.U_ID = " + Client.getId();
 
 			Statement statement = conn.createStatement();
 
@@ -228,9 +239,9 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 			while(crs.next()) {
 				Account acc = new Account();
 				acc.setId(crs.getInt(1));
-				acc.setAccountNumber(crs.getInt(3));
-				acc.setBalance(crs.getInt(4));
-				acc.setType(crs.getInt(5));
+				acc.setAccountNumber(crs.getInt(2));
+				acc.setBalance(crs.getInt(3));
+				acc.setTypeString(crs.getString(4));
 				account.add(acc);
 			}
 		} catch (SQLException e) {
@@ -243,7 +254,7 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 		return account;
 
 	}
-	
+
 	//Delete account removes an account from users view
 	//Ues a prodcedure to delete code and called by callable
 	public boolean d_account(Account account) {
