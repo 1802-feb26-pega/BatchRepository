@@ -1,0 +1,237 @@
+/*******************************************************************************
+   Drop database if it exists
+********************************************************************************/
+
+DROP USER chinook CASCADE;
+
+/*******************************************************************************
+   Create database
+********************************************************************************/
+CREATE USER chinook
+IDENTIFIED BY p4ssw0rd
+DEFAULT TABLESPACE users
+TEMPORARY TABLESPACE temp
+QUOTA 10M ON users;
+
+GRANT connect to chinook;
+GRANT resource to chinook;
+GRANT create session TO chinook;
+GRANT create table TO chinook;
+GRANT create view TO chinook;
+conn chinook/p4ssw0rd
+
+
+
+--chinook password : p4ssw0rd
+
+/*****************************************************
+SQL Workbook   PART 1
+*****************************************************/
+--Nathan Leilich
+/*****************************
+    SECTION 2
+*****************************/
+
+----2.1
+--Task1 - Select all records from the Employee table.
+
+SELECT * 
+FROM employee;
+
+--Task2 - Select all records from the Employee table where last name is King.
+
+SELECT * 
+FROM employee
+WHERE lastname = 'King';
+
+--Task3 - Select all records from the Employee table where first name is Andrew and REPORTSTO is NULL.
+
+SELECT *
+FROM employee
+WHERE firstname = 'Andrew' AND
+reportsto IS NULL;
+
+-----------------
+----2.2
+--Task1 - Select all albums in Album table and sort result set in descending order by title.
+
+SELECT *
+FROM album
+ORDER BY title DESC;
+
+--Task2 - Select first name from Customer and sort result set in ascending order by city
+        
+SELECT firstname
+FROM customer
+ORDER BY city ASC;
+  
+-----------------   
+----2.3
+--Task1 - Insert two new records into Genre table
+
+INSERT INTO genre
+VALUES (26, 'tuvan throat singing');
+
+INSERT INTO genre
+VALUES (27, 'gregorian chant');
+
+--Task2 - Insert two new records into Employee table
+
+INSERT INTO employee
+VALUES (9, 'bob', 'vila', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO employee
+VALUES (10, 'not bob', 'vila', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+--Task3 - Insert two new records into Customer table
+        
+INSERT INTO customer
+VALUES (60, 'bob', 'vila', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'email', NULL);
+
+INSERT INTO customer
+VALUES (61, 'not bob', 'vila', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'not email', NULL);
+    
+-----------------    
+----2.4
+--Task1 - Update Aaron Mitchell in Customer table to Robert Walter
+
+UPDATE customer
+SET lastname = 'Walter', firstname = 'Robert'
+WHERE lastname = 'Mitchell' AND firstname = 'Aaron';
+
+--Task2 - Update name of artist in the Artist table “Creedence Clearwater Revival” to “CCR”
+        
+UPDATE artist
+SET name = 'CCR'
+WHERE name = 'Creedence Clearwater Revival';
+
+-----------------
+----2.5
+--Task - Select all invoices with a billing address like “T%”        
+  
+SELECT *
+FROM invoice
+WHERE billingaddress LIKE 'T%';
+ -----------------       
+----2.6
+--Task1 - Select all invoices that have a total between 15 and 50
+
+SELECT *
+FROM invoice
+WHERE total BETWEEN 15 AND 50;
+
+--Task2 - Select all employees hired between 1st of June 2003 and 1st of March 2004
+        
+SELECT *
+FROM employee
+WHERE hiredate BETWEEN DATE '2003-06-01' AND DATE '2004-03-01';
+ 
+-----------------       
+----2.7
+--Task - Delete a record in Customer table where the name is Robert Walter (There may be constraints that rely on this, find out how to resolve them).
+
+ALTER TABLE invoice
+DROP CONSTRAINT FK_InvoiceCustomerId;
+    
+DELETE FROM customer
+WHERE firstname = 'Robert' AND lastname = 'Walter';
+
+
+
+/*****************************
+    SECTION 3
+*****************************/
+
+/*****************************
+    SECTION 4
+*****************************/
+
+/*****************************
+    SECTION 5
+*****************************/
+
+/*****************************
+    SECTION 6
+*****************************/
+
+/*****************************
+    SECTION 7
+*****************************/
+
+----7.1
+--Task – Create an inner join that joins customers and orders and specifies the name of the customer and the invoiceId.
+        
+SELECT invoice.invoiceid, customer.firstname, customer.lastname
+FROM invoice 
+INNER JOIN customer ON invoice.customerid = customer.customerid;
+
+-----------------      
+----7.2
+--Task – Create an outer join that joins the customer and invoice table, specifying the CustomerId, firstname, lastname, invoiceId, and total.   
+        
+
+
+-----------------        
+----7.3
+--Task – Create a right join that joins album and artist specifying artist name and title.        
+     
+        
+
+-----------------        
+----7.4
+--Task – Create a cross join that joins album and artist and sorts by artist name in ascending order.       
+     
+        
+
+-----------------        
+----7.5
+--Task – Perform a self-join on the employee table, joining on the reportsto column.
+
+
+/*****************************
+    SECTION 8
+*****************************/
+
+/*****************************
+    SECTION 9
+*****************************/
+------------
+--notes
+------------
+CREATE OR REPLACE PROCEDURE get_all_artists(cursorParam OUT sys_refcursor)
+IS                                       --(varName IN/OUT TYPE)
+
+BEGIN
+    OPEN cursorParam FOR
+    SELECT * FROM artist;
+END get_all_artists;
+/
+
+VARIABLE cursorParam refcursor;
+EXECUTE get_all_artists(:cursorParam);
+PRINT cursorParam;
+
+
+CREATE SEQUENCE artist_seq
+MINVALUE 1
+MAXVALUE 99999999999
+INCREMENT BY 1
+START WITH 276;
+/
+
+DROP SEQUENCE artist_seq;
+
+CREATE OR REPLACE TRIGGER artist_trgr
+BEFORE INSERT ON artist
+FOR EACH ROW
+
+BEGIN
+    SELECT artist_seq.NEXTVAL
+    INTO :new.artistid
+    FROM dual;
+END;
+/
+
+INSERT INTO artist(name) VALUES ('skdlfjlsdjfls');
+
+ 

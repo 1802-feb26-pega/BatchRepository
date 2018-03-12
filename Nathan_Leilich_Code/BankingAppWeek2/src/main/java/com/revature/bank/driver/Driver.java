@@ -56,9 +56,7 @@ public class Driver {
 		
 							"1:  login" + "\n" + 
 							"2:  new user" + "\n" + 
-							"3:  exit" + "\n\n" +
-							
-							"20:  admin tools   :   this does nothing");
+							"3:  exit");
 		String input = "";
 		while(invalidInput) {
 			
@@ -79,19 +77,13 @@ public class Driver {
 				exit();
 				invalidInput = false;
 				break;
-				
-			case "20":
-				adminTools();
-				invalidInput = false;
-				break;
+
 			default:
 				System.out.println("\n" + "Invalid menu option.  Here are the options again:" + "\n\n" +
 			
 									"1:  login" + "\n" + 
 									"2:  new user" + "\n" + 
-									"3:  exit" + "\n\n" +
-									
-									"20:  admin tools");
+									"3:  exit");
 				break;
 			}//switch	
 		}//while
@@ -111,8 +103,7 @@ public class Driver {
 		}//try
 		catch(SQLException e) {
 			
-			System.out.println("there are no users");
-			return;
+			//do nothing
 		}//catch
 		
 		
@@ -122,17 +113,27 @@ public class Driver {
 		while(invalidInput) {   //program loops until a valid username is entered
 			
 			System.out.println("enter a user name");
-			userName = stdin.readLine();
-			if(userNames.contains(userName)) {  
+			userName = readNonEmptyString();
+			try {
 				
-				System.out.println("that name is already in use.  Try another");
-			}//if
-			else {
+				if(userNames.contains(userName)) {  
+					
+					System.out.println("that name is already in use.  Try another");
+				}//if
+				else {
+					
+					System.out.println("enter a password");
+					password = readNonEmptyString();
+					invalidInput = false;
+				}//else
+			}//try
+			catch(NullPointerException e) {
 				
 				System.out.println("enter a password");
-				password = stdin.readLine();
+				password = readNonEmptyString();
 				invalidInput = false;
-			}//else
+				
+			}//catch
 		}//while
 		
 		User newUser = new User(userName, password);
@@ -148,7 +149,15 @@ public class Driver {
 	private static void login() throws IOException {
 		
 		UserDAO udao = new UserDAOImpl();
-		
+		try{
+			
+			udao.getAllUserNames();
+		}//try
+		catch(SQLException e) {
+			
+			System.out.println("there are no user");
+			return;
+		}//catch
 		boolean invalidUser = true;
 		String userName = "";
 		String password = "";
@@ -158,9 +167,9 @@ public class Driver {
 		while(invalidUser) {   //program loops until valid username and password are entered
 
 			System.out.println("enter a user name");
-			userName = stdin.readLine();
+			userName = readNonEmptyString();
 			System.out.println("enter a password");
-			password = stdin.readLine();
+			password = readNonEmptyString();
 			
 			try {
 				
@@ -240,7 +249,7 @@ public class Driver {
 					
 				case "3":
 					System.out.println("enter new password");
-					String newPassword = stdin.readLine();
+					String newPassword = readNonEmptyString();
 					user.setPassword(newPassword);
 					UserDAO udao = new UserDAOImpl();
 					try {
@@ -284,7 +293,7 @@ public class Driver {
 		AccountDAO adao = new AccountDAOImpl();
 
 		System.out.println("enter an account name");
-		String name = stdin.readLine();
+		String name = readNonEmptyString();
 		System.out.println("enter a starting balance");
 		double balance = readDouble();
 		Account newAccount = new Account(name, user.getUserID(), balance);
@@ -306,9 +315,8 @@ public class Driver {
 		}//try
 		catch(SQLException e) {
 			
-			System.out.println("somethng is wrong.  This menu option should not" + "\n" +
-								"have been avalible to a user with no accounts.");
-			e.printStackTrace();
+			System.out.println("user has no accounts");
+			return;		
 		}//catch
 		int index = accountViewHelper(accounts);
 		if(index >= 0) {
@@ -470,7 +478,12 @@ public class Driver {
 					    
 					    if(account.getAccountName().equals(recipient.getAccountName())) {
 					    	
-					    	System.out.println("cannot transfer money to the same account");
+					    	System.out.println("cannot transfer money to the same account" + "\n" +
+								    			"1:  balance" + "\n" + 
+												"2:  withdraw" + "\n" + 
+												"3:  deposite" + "\n" +
+												"4:  transfer money" + "\n" +
+												"5:  back to user menu");
 					    	break;
 					    }//if
 						
@@ -521,68 +534,6 @@ public class Driver {
 	}//accountManagement()
 	
 	
-	
-	/*
-	 * testing tools for the benefit of testing.  these options 
-	 * would not be available to end users in a commercial app.
-	 * 
-	 * Options include:  printing all user information, removing 
-	 * users by user name, and removing all users.
-	 * 
-	 * Note that in the main menu, there is an option to exit without
-	 * serializing
-	 */
-	private static void adminTools() throws IOException {
-		
-		System.out.println("nothing done...");
-//		boolean administrating = true;
-//		while(administrating) {
-//			
-//			boolean invalidInput = true;
-//			System.out.println("\n" +"there are testing tools that would" + "\n" +
-//								"be unavalible to the user" + "\n\n" +
-//			
-//								"1:  data dump" + "\n" + 
-//								"2:  remove user" + "\n" + 
-//								"3:  clear all users" + "\n" +
-//								"4:  return to main menu");
-//		
-//			String input = "";
-//			while(invalidInput) {
-//				
-//				input = stdin.readLine();
-//				switch(input) {
-//				
-//				case "1":
-//					invalidInput = false;
-//					break;
-//					
-//				case "2":
-//					invalidInput = false;
-//					break;
-//					
-//				case "3":
-//					invalidInput = false;
-//					break;
-//					
-//				case "4":
-//					invalidInput = false;
-//					administrating = false;
-//					break;
-//				default:
-//					System.out.println("\n" + "Invalid menu option.  Here are the options again:" + "\n\n" +
-//				
-//										"1:  data dump" + "\n" + 
-//										"2:  remove user" + "\n" + 
-//										"3:  clear all users" + "\n" +
-//										"4:  return to main menu");
-//					break;
-//				}//switch	
-//			}//while
-//		}//while
-	}//adminTools()
-	
-	
 	/*
 	 * saves data to file and exits the program
 	 */
@@ -596,28 +547,23 @@ public class Driver {
 	 * Continually reads the next line from the console until
 	 * it can be formated as an integer and returned
 	 */
-	private static int readInt() {
+	private static String readNonEmptyString() throws IOException{
 		
 		boolean invalidInput = true;
-		int returnInt = 0;
+		String returnString = "";
 		while(invalidInput) {
 			
-			try {
+			returnString = stdin.readLine();
+			if(returnString.equals("")){
 				
-				returnInt = Integer.parseInt(stdin.readLine());
+				System.out.println("Invald input.  cannot be empty string");
+			}//if
+			else {
+				
 				invalidInput = false;
-				
-			}//try
-			catch (NumberFormatException nfe) {
-				
-				System.out.println("Invald input.  Must enter an Integer");
-			}//catch
-			catch (IOException e) {
-				
-				e.toString();
-			}
+			}//else
 		}//while
-		return returnInt;
+		return returnString;
 	}//readInt()
 	
 	
