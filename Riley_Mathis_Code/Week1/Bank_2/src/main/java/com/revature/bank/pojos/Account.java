@@ -8,11 +8,9 @@ public class Account {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Account(int id, int customerid, int balance) {
+	public Account(int customerid) {
 		super();
-		this.id = id;
 		this.customerId = customerid;
-		this.balance = balance;
 	}
 	public int getId() {
 		return id;
@@ -20,7 +18,7 @@ public class Account {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getCustomerid() {
+	public int getCustomerId() {
 		return customerId;
 	}
 	public void setCustomerId(int customerid) {

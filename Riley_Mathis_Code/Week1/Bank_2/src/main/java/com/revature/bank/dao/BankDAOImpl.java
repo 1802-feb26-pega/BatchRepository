@@ -1,5 +1,6 @@
 package com.revature.bank.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -97,8 +98,36 @@ public class BankDAOImpl implements BankDAO{
 	}
 
 	public Account registerAccount(Account account) {
-		// TODO Auto-generated method stub
-		return null;
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			
+			conn.setAutoCommit(false);
+			
+			String sql = "INSERT INTO account(customerid)"
+					+ " VALUES (?)";
+			String[] key = new String[3];
+			key[0] = "accountid";
+			key[1] = "customerid";
+			key[2] = "balance";
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql, key);
+			pstmt.setInt(1, account.getCustomerId());
+			int rowsAffected = pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+
+			if(rowsAffected > 0) {
+				while(rs.next()) {
+					account.setId(rs.getInt(1));
+					account.setCustomerId(rs.getInt(2));
+					account.setBalance(rs.getInt(3));
+
+				}
+				conn.commit();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return account;
 	}
 
 	public void logOut(Customer customer) {
@@ -128,7 +157,24 @@ public class BankDAOImpl implements BankDAO{
 
 	public int balance(Account account) {
 		// TODO Auto-generated method stub
-		return 0;
+		int balance = 0;
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			String sql = "{CALL showBalance(?,?)}";
+			CallableStatement cstmt = conn.prepareCall(sql);
+			cstmt.setInt(1, account.getId());
+			cstmt.registerOutParameter(2, java.sql.Types.INTEGER);
+			int value = cstmt.executeUpdate();
+			//rs.next();
+			balance = cstmt.getInt(2);
+			if(value < 1) {
+				System.out.println("Couldn't get balance for that account!");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return balance;
 	}
 
 	@Override

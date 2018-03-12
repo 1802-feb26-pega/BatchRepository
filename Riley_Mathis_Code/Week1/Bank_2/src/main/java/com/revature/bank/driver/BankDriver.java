@@ -32,6 +32,12 @@ public class BankDriver {
 		
 		customer = bankDao.registerCustomer(temp);
 		System.out.println(customer);
+		
+		Account tempA = new Account(1);
+		account = bankDao.registerAccount(tempA);
+		System.out.println(account);
+		
+		System.out.println(bankDao.balance(account));
 	}
 
 }
