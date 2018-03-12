@@ -1,0 +1,9 @@
+/* Select all albums in Album table and sort result set in descending order by title */
+SELECT title
+FROM album
+ORDER BY title DESC;
+
+/* Select first name from Customer and sort result set in ascending order by city */
+SELECT firstname
+FROM customer
+ORDER BY city ASC;

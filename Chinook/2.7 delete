@@ -1,0 +1,33 @@
+/* Delete a record in Customer table where the name is Robert Walter (There may be constraints that 
+   rely on this, find out how to resolve them) */
+   
+SELECT *
+FROM customer
+WHERE customerid = 32;
+
+SELECT *
+FROM invoice
+WHERE customerid = 32;
+
+SELECT *
+FROM invoice
+WHERE c= 32;
+
+DELETE FROM invoiceline
+WHERE 
+    (
+        invoiceid = 116
+        AND invoiceid = 245
+        AND invoiceid = 268
+        AND invoiceid = 290
+        AND invoiceid = 342
+        AND invoiceid = 50
+        AND invoiceid = 61
+    );
+
+DELETE FROM invoice
+WHERE customerid = 32;
+
+DELETE FROM customer
+WHERE firstname = 'Robert' AND lastname = 'Walter';
+

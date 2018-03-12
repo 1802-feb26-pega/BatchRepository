@@ -1,0 +1,9 @@
+/* Select all invoices that have a total between 15 and 50 */
+SELECT *
+FROM invoice
+WHERE total BETWEEN 15 AND 50;
+
+/* Select all employees hired between 1st of June 2003 and 1st of March 2004 */
+SELECT *
+FROM employee
+WHERE hiredate BETWEEN DATE '2003-06-01' AND DATE '2004-03-01';

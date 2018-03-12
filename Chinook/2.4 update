@@ -1,0 +1,13 @@
+/* Update Aaron Mitchell in Customer table to Robert Walter */
+UPDATE customer
+SET firstname = 'Robert', lastname = 'Walter'
+WHERE customerid = 32;
+
+/*SELECT *
+FROM artist
+WHERE name = 'Creedence Clearwater Revival';*/
+
+/* Update name of artist in the Artist table “Creedence Clearwater Revival” to “CCR” */
+UPDATE artist
+SET name = 'CCR'
+WHERE artistid = 76;

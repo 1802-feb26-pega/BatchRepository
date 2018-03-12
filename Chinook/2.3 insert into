@@ -1,0 +1,28 @@
+/* Insert two new records into Genre table */
+INSERT INTO genre (genreid, name)
+VALUES (26, 'Foreign');
+
+INSERT INTO genre (genreid, name)
+VALUES (27, 'Musical');
+
+/* Insert two new records into Employee table */
+INSERT INTO employee (employeeid, lastname, firstname, title, reportsto, birthdate,
+                      hiredate, address, city, state, country, postalcode, phone,
+                      fax, email)
+VALUES (9, 'Smith', 'John', 'Intern', 7, TO_DATE('1997-1-1 00:00:00','yyyy-mm-dd hh24:mi:ss'),
+        TO_DATE('2018-3-6 00:00:00','yyyy-mm-dd hh24:mi:ss'), '123 Fake st', 'Washington D.C.',
+        'Maryland', 'United States', '90000', '123-456-7890', '098-765-4321', 'smith@email.com'); 
+        
+INSERT INTO employee (employeeid, lastname, firstname, title, reportsto, birthdate,
+                      hiredate, address, city, state, country, postalcode, phone,
+                      fax, email)
+VALUES (10, 'Wade', 'Wilson', 'Janitor', 1, TO_DATE('1980-6-6 00:00:00','yyyy-mm-dd hh24:mi:ss'),
+        TO_DATE('2018-3-1 00:00:00','yyyy-mm-dd hh24:mi:ss'), '1818 Street', 'Los Angeles',
+        'California', 'United States', '91919', '123-456-7890', '098-765-4321', 'wilson@chinookcorp.com'); 
+        
+/* Insert two new records into Customer table */
+INSERT INTO customer (customerid, firstname, lastname, company, city, state, country, email, supportrepid)
+VALUES (60, 'Adrian', 'Rendon', 'Revature', 'Reston', 'VA', 'United States', 'adrendon95@gmail.com', 3);
+
+INSERT INTO customer (customerid, firstname, lastname, city, state, country, email, supportrepid)
+VALUES (61, 'John', 'Smith', 'Somewhere', 'NA', 'Classified', 'someEmail.gmail.com', 1);

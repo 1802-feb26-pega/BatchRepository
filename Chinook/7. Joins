@@ -1,0 +1,45 @@
+---------------INNER-------------------------------
+/* Task – Create an inner join that joins customers and orders and specifies 
+   the name of the customer and the invoiceId. */
+   
+SELECT c.firstname, c.lastname, i.invoiceid
+FROM invoice i
+INNER JOIN customer c
+ON c.customerid = i.customerid;
+
+
+------------------OUTER----------------------------
+/* Task – Create an outer join that joins the customer and invoice table, specifying 
+   the CustomerId, firstname, lastname, invoiceId, and total. */
+   
+SELECT c.customerid, c.firstname, c.lastname, i.invoiceid, i.total
+FROM customer c, invoice i
+WHERE c.customerid = i.customerid(+);
+
+
+-----------------Right-------------------------------
+/* Task – Create a right join that joins album and artist specifying artist name and title. */
+
+SELECT ar.name, al.title
+FROM artist ar
+RIGHT JOIN album al
+ON ar.artistid = al.artistid;
+
+
+----------------CROSS----------------------------------
+/* Task – Create a cross join that joins album and artist and sorts by artist 
+   name in ascending order. */
+
+SELECT ar.name
+FROM artist ar
+CROSS JOIN album
+ORDER BY ar.name DESC;
+
+
+----------------SELF--------------------------------------
+/* Task – Perform a self-join on the employee table, joining on the reportsto column. */
+
+SELECT *
+FROM employee e
+JOIN employee em
+ON e.reportsto = em.reportsto;

@@ -1,0 +1,20 @@
+/* select all records from the employee table */
+SELECT *
+FROM employee;
+
+/* select all records from employee table where last name is King */
+SELECT *
+FROM employee
+WHERE lastname = 'King';
+
+/* select all records from employee table where first name is Andrew and reportsto is null */
+SELECT *
+FROM employee
+WHERE
+    (
+        firstname = 'Andrew'
+    )
+    AND 
+    (
+        reportsto IS NULL
+    );

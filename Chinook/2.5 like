@@ -1,0 +1,4 @@
+/* Select all invoices with a billing address like “T%” */
+SELECT *
+FROM invoice
+WHERE billingaddress LIKE 'T%';

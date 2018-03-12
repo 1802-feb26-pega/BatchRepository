@@ -1,0 +1,16 @@
+--------------------System defined functions--------------------
+/* Task – Create a function that returns the current time. */
+
+CREATE OR REPLACE FUNCTION get_current_time
+RETURN TIMESTAMP IS l_systimestamp TIMESTAMP;
+BEGIN
+    SELECT systimestamp
+    INTO l_systimestamp
+    FROM dual;
+    RETURN l_systimestamp;
+END;
+/
+SELECT get_current_time() FROM dual;
+
+
+/* Task – create a function that returns the length of a mediatype from the mediatype table */
