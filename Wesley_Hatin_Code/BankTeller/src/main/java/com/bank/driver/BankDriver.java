@@ -164,7 +164,7 @@ public class BankDriver {
 					} 
 				}while (answer=="");
 				
-				System.out.println("Your new balance is $" + String.format("%.2f", t.getBalance(accountChoice)));
+				System.out.println("Your new balance is $" + String.format("%.2f", t.getBalance(accountList.get(Integer.valueOf(accountChoice)-1))));
 				System.out.println("");
 				break;
 				
@@ -191,7 +191,7 @@ public class BankDriver {
 						if(t.withdraw((accountList.get(Integer.valueOf(accountChoice)-1)), amount)) {
 							
 							System.out.println("");
-							System.out.println("Your new balance is $" + String.format("%.2f", t.getBalance(accountChoice)));
+							System.out.println("Your new balance is $" + String.format("%.2f", t.getBalance(accountList.get(Integer.valueOf(accountChoice)-1))));
 						}
 						else {
 							System.out.println("");
@@ -223,7 +223,7 @@ public class BankDriver {
 				} while (accountChoice == "");
 				
 				System.out.println("Your current balance is $" + String.format("%.2f", 
-						t.getBalance((accountList.get(Integer.valueOf(accountChoice)-1)).getAccountName())));
+						t.getBalance((accountList.get(Integer.valueOf(accountChoice)-1)))));
 				System.out.println("");
 				break;
 				
@@ -269,7 +269,7 @@ public class BankDriver {
 								
 								System.out.println("");
 								System.out.println("The new balance of " + 
-										toAccount + "is $" + String.format("%.2f", t.getBalance(toAccount.getAccountName())));
+										toAccount + "is $" + String.format("%.2f", t.getBalance(toAccount)));
 							}
 							else {
 								System.out.println("");
@@ -295,7 +295,15 @@ public class BankDriver {
 				
 			//Add account
 			case "5":
-				//t.createAccount(username, newAccount, false);
+				System.out.println("Enter a name for your account: ");
+				String newAccount = String.valueOf(menu.nextLine());
+				System.out.println("");
+				
+				while (!t.createAccount(t.getUsername(), newAccount, false)) {
+					System.out.println("Sorry, you already have an account named that.");
+					System.out.println("");
+				}
+				System.out.println("Congratulations on your new account!");
 				break;
 				
 			//Log-out

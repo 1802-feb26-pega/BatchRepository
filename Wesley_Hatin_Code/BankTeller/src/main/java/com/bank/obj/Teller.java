@@ -113,11 +113,11 @@ public class Teller {
 		return db.retrieveAccounts(username);
 	}
 	
-	public Double getBalance(String accountName) {
+	public Double getBalance(Account accountName) {
 		List <Account> accountList = db.retrieveAccounts(username);
 		
 		for(Account account : accountList) {
-			if(account.getAccountName().equals(accountName)) {
+			if(account.equals(accountName)) {
 				return account.getBalance();
 			}
 		}

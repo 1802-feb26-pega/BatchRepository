@@ -139,12 +139,14 @@ public class BankDatabaseImpl implements BankDatabase{
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			
-			PreparedStatement pstat = conn.prepareStatement("SELECT firstname, lastname FROM users WHERE user = ?");
+			String sql = "SELECT firstname, lastname FROM users WHERE username = ?";
+			PreparedStatement pstat = conn.prepareStatement(sql);
 			pstat.setString(1, givenUser);
 			
-			ResultSet rs = pstat.executeQuery();
-			name[0]=rs.getString(1);
-			name[1]=rs.getString(2);
+			ResultSet rs = pstat.executeQuery(sql);
+			name[0] = rs.getString(1);
+			name[1] = rs.getString(2);
+			
 			
 			pstat.close();
 			conn.close();
@@ -160,12 +162,13 @@ public class BankDatabaseImpl implements BankDatabase{
 		List <Account> accountList = new ArrayList <Account>();
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			
-			StringBuilder sql = new StringBuilder("SELECT * FROM accounts WHERE user = '"); 
+			StringBuilder sql = new StringBuilder("SELECT * FROM accounts WHERE username = '"); 
 			sql.append(givenUser);
 			sql.append("'");
 			Statement stat = conn.createStatement();
 
 			ResultSet rs = stat.executeQuery(sql.substring(0));
+			
 			while(rs.next()) {
 				Account newAccount = new Account();
 				newAccount.setAccountName(rs.getString(1));
@@ -188,7 +191,7 @@ public class BankDatabaseImpl implements BankDatabase{
 	public void writeBalance(String username, Account account, double newBal) {
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			
-			PreparedStatement pstat = conn.prepareStatement("UPDATE accounts SET balance = ? WHERE user = ? AND accountname = ?");
+			PreparedStatement pstat = conn.prepareStatement("UPDATE accounts SET balance = ? WHERE username = ? AND accountname = ?");
 			pstat.setDouble(1, newBal);
 			pstat.setString(2, username);
 			pstat.setString(3, account.getAccountName());
