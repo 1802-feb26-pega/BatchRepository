@@ -194,5 +194,40 @@ PL/SQL = Procedural Language extension of SQL
 -- Statements for use in JBDC demo
 drop table test;
 
+truncate table test;
+
 select *
 from test;
+
+-- Procedure for JBDC demo
+CREATE OR REPLACE PROCEDURE insertTest(
+  testid IN NUMBER,
+  testname IN VARCHAR2,
+  testvalue IN NUMBER)
+IS
+BEGIN
+  INSERT INTO test VALUES(testid, testname, testvalue);
+END;
+/
+
+-- Sequence example
+CREATE SEQUENCE artist_seq
+MINVALUE 1
+MAXVALUE 999999999999
+INCREMENT BY 1
+START WITH 276;
+/
+
+-- Trigger example
+CREATE OR REPLACE TRIGGER artist_trigger
+BEFORE INSERT ON artist
+FOR EACH ROW
+
+BEGIN
+    SELECT artist_seq.NEXTVAL
+    INTO :new.artistid
+    FROM dual;
+END;
+/
+
+INSERT INTO artist(name) VALUES('Casting Crowns');

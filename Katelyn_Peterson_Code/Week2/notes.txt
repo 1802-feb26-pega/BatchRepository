@@ -2,3 +2,6 @@ SQL Resources
 http://plsql-tutorial.com/plsql-procedures.htm - PL/SQL Procedures
 http://plsql-tutorial.com/plsql-functions.htm - PL/SQL Functions
 http://plsql-tutorial.com/plsql-triggers.htm - PL/SQL Triggers
+https://www.progress.com/tutorials/jdbc/jdbc-jdbc-connection-pooling - JDBC Connection Pooling
+http://ws-jdbc-notes-webpage.s3-website-us-east-1.amazonaws.com/ - JDBC notes
+http://www.vogella.com/tutorials/JUnit/article.html - JUnit

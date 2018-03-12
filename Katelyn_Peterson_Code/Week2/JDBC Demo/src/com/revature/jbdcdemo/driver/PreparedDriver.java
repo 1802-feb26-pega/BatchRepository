@@ -16,11 +16,12 @@ public class PreparedDriver
 		Properties prop = new Properties();
 		String sql;
 		int value;
+		PreparedStatement pstmt;
 		
 		try
 		{
-			prop.load(new FileReader("D:/Users/Katelyn/Documents/"
-					+ "GitHub/BatchRepository/Katelyn_Peterson_Code/Week2/JDBC Demo/src/resources"));
+			prop.load(new FileReader("D:/Users/Katelyn/Documents/GitHub/BatchRepository/Katelyn_Peterson_Code/"
+					+ "Week2/JDBC Demo/src/resources/application.properties"));
 			Class.forName(prop.getProperty("driver"));
 		}
 		catch(FileNotFoundException fnfe)
@@ -44,13 +45,58 @@ public class PreparedDriver
 			sql = "INSERT INTO test VALUES (?, ?, ?)";
 			
 			// Similar syntax, except we use the Connection function 'prepareStatement'
-			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql);
 			
 			// Here we are going to bind the values of our parameters inside of our parameterized query
 			pstmt.setInt(1, 1);
 			pstmt.setString(2,  "TestOne");
 			pstmt.setDouble(3, 42.0);
 			
+			// Execute as usual
+			value = pstmt.executeUpdate();
+			PreparedDriver.helper(value);
+			
+			// 2
+			pstmt.setInt(1, 2);
+			pstmt.setString(2,  "TestTwo");
+			pstmt.setDouble(3, 99.99);
+			
+			value = pstmt.executeUpdate();
+			PreparedDriver.helper(value);
+			
+			// 3
+			pstmt.setInt(1, 3);
+			pstmt.setString(2,  "TestThree");
+			pstmt.setDouble(3, 54.55);
+			
+			value = pstmt.executeUpdate();
+			PreparedDriver.helper(value);
+			
+			// 4
+			pstmt.setInt(1, 4);
+			pstmt.setString(2,  "TestFour");
+			pstmt.setDouble(3, 4875.1);
+			
+			value = pstmt.executeUpdate();
+			PreparedDriver.helper(value);
+			
+			// Example: Updating Records using PreparedStatement
+			sql = "UPDATE test SET test_value = ? WHERE test_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setDouble(1, 5000);
+			pstmt.setInt(2, 3);
+			
+			value = pstmt.executeUpdate();
+			PreparedDriver.helper(value);
+			
+			// Example: Deleting records using PreparedStatement
+			sql = "DELETE FROM test WHERE test_value > ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setDouble(1, 1000.00);
+			value = pstmt.executeUpdate();
+			PreparedDriver.helper(value);
 		}
 		catch (SQLException e)
 		{
