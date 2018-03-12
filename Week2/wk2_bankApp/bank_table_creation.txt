@@ -93,7 +93,7 @@
 --IS
 --BEGIN
 --	INSERT INTO customer(userid,username,firstname,lastname,password)
---	VALUES (user_seq.NEXTVAL,newusername,newfirstname,newlastname,newpassword);
+--	VALUES (user_seq.CURRVAL,newusername,newfirstname,newlastname,newpassword);
 --	COMMIT;
 --END;
 --/
@@ -104,7 +104,7 @@
 --IS
 --BEGIN
 --	INSERT INTO account(accountnumber,userid,balance)
---	VALUES (account_seq.NEXTVAL,newuserid,newbalance);
+--	VALUES (account_seq.CURRVAL,newuserid,newbalance);
 --	COMMIT;
 --END;
 --/
