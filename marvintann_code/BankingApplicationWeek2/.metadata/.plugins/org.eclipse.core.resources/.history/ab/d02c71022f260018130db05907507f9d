@@ -201,14 +201,13 @@ public class UserInterface {
 	}
 	
 	// BANK ACCOUNT OPTIONS
-	public static void bankAccount(String userName, int accountId) {
+	public static void bankAccount (String userName, int accountId) {
 		System.out.println("What would you like to do?");
 		System.out.println("View Balance         '1'");
 		System.out.println("Make a Deposit       '2'");
 		System.out.println("Make a Withdrawal    '3'");
-		System.out.println("Transfer Funds       '4'");
-		System.out.println("Change Bank Accounts '5'");
-		System.out.println("Logout               '6'");
+		System.out.println("Change Bank Accounts '4'");
+		System.out.println("Logout               '5'");
 		
 		Scanner input = new Scanner(System.in);
 		String ip1 = input.nextLine();
@@ -223,10 +222,8 @@ public class UserInterface {
 		} else if (ip1.equals("3")) {
 			makeWithdrawal(userName, accountId);
 		} else if (ip1.equals("4")) {
-			makeTransfer(userName, accountId);
-	    } else if (ip1.equals("5")) {
 			userOptions(userName);
-		} else if (ip1.equals("6")) {
+		} else if (ip1.equals("5")) {
 			System.out.println("Successfully logged out!");
 			closing();
 		} else {
@@ -261,14 +258,8 @@ public class UserInterface {
 		
 		if (depo.hasNextDouble()) {
 			dep = depo.nextDouble();
-			if (dep >= 0) {
-				// continue
-			} else {
-				System.out.println("You cannot deposit a negative amount:");
-				makeDeposit(userName, accountId);
-			}
 		} else {
-			System.out.println("Please enter a valid amount: ");
+			System.out.println("Please enter a valid amount:");
 			makeDeposit(userName, accountId);
 		}
 		
@@ -292,14 +283,8 @@ public class UserInterface {
 		Scanner amount = new Scanner(System.in);
 		double wd = 0;
 		
-		if (amount.hasNextDouble()) {
+		if (amount.hasNextInt()) {
 			wd = amount.nextDouble();
-			if (wd >= 0) {
-				//
-			} else {
-				System.out.println("You cannot withdraw a negative amount:");
-				makeDeposit(userName, accountId);
-			}
 		} else {
 			System.out.println("Please enter a correct value:");
 			makeWithdrawal(userName, accountId);
@@ -319,87 +304,6 @@ public class UserInterface {
 			System.out.println("New total is "+curr.getBalance());
 			
 			bankAccount(userName, accountId);
-		}
-		
-	}
-	
-	// TANSFER BLOCK
-	public static void makeTransfer(String userName, int accountId) {
-		System.out.println("Which account would you like to transfer funds to?");
-		
-		ArrayList<Account> accounts = new ArrayList<Account>();
-		
-		accounts = account_dao.getAllAcounts(user_dao.getUser(userName).getUser_id());
-		for (int i = 0; i < accounts.size(); i++) {
-			System.out.println("Bank Account ID "+accounts.get(i).getAccount_id()+"      '"+(i)+"'");
-		}
-		System.out.println("Go Back                '999'");
-		Scanner ac = new Scanner(System.in);
-		String acc = ac.nextLine();
-		
-		if (is_Int(acc)) {
-			if (Integer.parseInt(acc) == 999) {
-				bankAccount(userName, accountId);
-			}
-			try {
-				accounts.get(Integer.parseInt(acc));
-				if (accounts.get(Integer.parseInt(acc)).getAccount_id() == accountId) {
-					System.out.println("Cannot transfer funds to Current Account, please Select a Different Account: ");
-					makeTransfer(userName, accountId);
-				}
-				System.out.println("Account Selected Successfully!");
-				transferAction(userName, accountId, accounts.get(Integer.parseInt(acc)).getAccount_id());
-			} catch (IndexOutOfBoundsException ioobe) {
-				
-				System.out.println("No such Bank Account exists for this user");
-				makeTransfer(userName, accountId);
-			} 
-		} else {
-			System.out.println("Enter a valid choice:");
-			makeTransfer(userName, accountId);
-		}
-	}
-	
-	public static void transferAction(String userName, int accountId1, int accountId2) {
-		System.out.println("How much do you want to transfer?");
-		Scanner amount = new Scanner(System.in);
-		double ta = 0.0;
-		Account acc1 = account_dao.getAccount(accountId1);
-		Account acc2 = account_dao.getAccount(accountId2);
-		
-		if (amount.hasNextDouble()) {
-			ta = amount.nextDouble();
-			if (ta >= 0) {
-				// continue
-			} else {
-				System.out.println("You cannot transfer a negative amount:");
-				transferAction(userName, accountId1, accountId2);
-			}
-		} else {
-			System.out.println("Please enter a correct value:");
-			transferAction(userName, accountId1, accountId2);
-		}
-		
-		if (ta > acc1.getBalance()) {
-			System.out.println("Insufficient funds, cannot complete transaction: ");
-			transferAction(userName, accountId1, accountId2);
-		} else {
-			
-			Double prevBal1 = acc1.getBalance();
-			account_dao.updateAccount(accountId1, prevBal1-ta);
-			
-			acc1 = account_dao.getAccount(accountId1); // update Account object
-			
-			Double prevBal2 = acc2.getBalance();
-			account_dao.updateAccount(accountId2, prevBal2+ta);
-			
-			acc2 = account_dao.getAccount(accountId2); // update Account object
-			
-			System.out.println("Transfer successful!");
-			System.out.println("Account with id "+acc1.getAccount_id()+" has a balance of: "+acc1.getBalance());
-			System.out.println("Account with id "+acc2.getAccount_id()+" has a balance of: "+acc2.getBalance());
-			
-			bankAccount(userName, accountId1);
 		}
 		
 	}

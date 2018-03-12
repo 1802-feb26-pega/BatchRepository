@@ -228,6 +228,7 @@ public class UserInterface {
 			userOptions(userName);
 		} else if (ip1.equals("6")) {
 			System.out.println("Successfully logged out!");
+			
 			closing();
 		} else {
 			System.out.println("Please enter a valid option:");

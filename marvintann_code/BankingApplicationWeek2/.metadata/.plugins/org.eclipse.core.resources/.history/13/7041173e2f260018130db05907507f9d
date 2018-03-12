@@ -260,9 +260,8 @@ public class UserInterface {
 		Double dep = 0.0;
 		
 		if (depo.hasNextDouble()) {
-			dep = depo.nextDouble();
-			if (dep >= 0) {
-				// continue
+			if (depo.nextDouble() >= 0) {
+				dep = depo.nextDouble();
 			} else {
 				System.out.println("You cannot deposit a negative amount:");
 				makeDeposit(userName, accountId);
@@ -293,9 +292,8 @@ public class UserInterface {
 		double wd = 0;
 		
 		if (amount.hasNextDouble()) {
-			wd = amount.nextDouble();
-			if (wd >= 0) {
-				//
+			if (amount.nextDouble() >= 0) {
+				wd = amount.nextDouble();
 			} else {
 				System.out.println("You cannot withdraw a negative amount:");
 				makeDeposit(userName, accountId);
@@ -343,9 +341,8 @@ public class UserInterface {
 			}
 			try {
 				accounts.get(Integer.parseInt(acc));
-				if (accounts.get(Integer.parseInt(acc)).getAccount_id() == accountId) {
-					System.out.println("Cannot transfer funds to Current Account, please Select a Different Account: ");
-					makeTransfer(userName, accountId);
+				if (accounts.get(Integer.parseInt(acc)) == account_dao.getAccount(accountId)) {
+					System.out.println("That is the current account, please pick a different account");
 				}
 				System.out.println("Account Selected Successfully!");
 				transferAction(userName, accountId, accounts.get(Integer.parseInt(acc)).getAccount_id());
@@ -363,14 +360,13 @@ public class UserInterface {
 	public static void transferAction(String userName, int accountId1, int accountId2) {
 		System.out.println("How much do you want to transfer?");
 		Scanner amount = new Scanner(System.in);
-		double ta = 0.0;
+		double ta;
 		Account acc1 = account_dao.getAccount(accountId1);
 		Account acc2 = account_dao.getAccount(accountId2);
 		
 		if (amount.hasNextDouble()) {
-			ta = amount.nextDouble();
-			if (ta >= 0) {
-				// continue
+			if (amount.nextDouble() >= 0) {
+				ta = amount.nextDouble();
 			} else {
 				System.out.println("You cannot transfer a negative amount:");
 				transferAction(userName, accountId1, accountId2);
