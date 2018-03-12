@@ -25,11 +25,12 @@ public class MemberUI {
 			userInput = -1;
 			System.out.println("\n\nMake your selection:");
 			System.out.println("1 - Display Account Information");
-			System.out.println("2 - Check Balance");
+			//System.out.println("2 - Check Balance");
+			System.out.println("2 - Change Username");
 			System.out.println("3 - Change First Name");
 			System.out.println("4 - Change Last Name");
-			System.out.println("5 - Withdraw Funds");
-			System.out.println("6 - Deposit Funds");
+			//System.out.println("5 - Withdraw Funds");
+			//System.out.println("6 - Deposit Funds");
 			System.out.println("0 - Exit");
 			try
 			{
@@ -60,8 +61,8 @@ public class MemberUI {
 				valid = false;
 				break;
 			case 2:
-				//check balance
-				checkBalance();
+				//change username
+				changeUsername();
 				valid = false;
 				break;
 			case 3:
@@ -106,6 +107,7 @@ public class MemberUI {
 		System.out.println("  Username = " + this.loggedIn.getUsername());
 		System.out.println("First Name = " + this.loggedIn.getFirstName());
 		System.out.println(" Last Name = " + this.loggedIn.getLastName());
+		
 	}//display account information
 
 	//==========================================================
@@ -207,58 +209,48 @@ public class MemberUI {
 	//=====================================================================
 
 	public void changeFirstName()
-	{
-		String newF;
-		boolean valid = false;
-
-		while(!valid)
-		{
-			System.out.println("\n\nEnter first name: (1-12 characters, letters only)");
-			newF = Main.sc.nextLine();
-			if(newF.length() >= 1 && newF.length() <= 10)
-			{
-				if(newF.matches("[A-Za-z]*"))
-				{
-					System.out.println("Good first name: " + newF +"\n");
-					this.loggedIn.setFirstName(newF);
-					valid = true;
-				}else
-				{
-					System.out.println("\nIllegal characters\n");
-				}//if-else
-			}else
-			{
-				System.out.println("\nBad length\n");
-			}//if-else
-		}//while
-	}//changeFIrstName
+	{	
+		ClientUI cui = new ClientUI();
+		String newF = "";
+		String uname = this.loggedIn.getUsername();
+		
+		newF = cui.validateFirstName();
+		this.loggedIn.setFirstName(newF);
+		Main.uDao.updateFirstName(newF,uname);
+		System.out.println("first name changed");
+	}//changeFirstName
 
 	//==================================================================
 
 	public void changeLastName()
 	{
-		String newL;
-		boolean valid = false;
-
-		while(!valid)
-		{
-			System.out.println("\n\nEnter last name: (1-12 characters, letters only)");
-			newL = Main.sc.nextLine();
-			if(newL.length() >= 1 && newL.length() <= 12)
-			{
-				if(newL.matches("[A-Za-z]*"))
-				{
-					System.out.println("Good last name: " + newL + "\n");
-					this.loggedIn.setLastName(newL);
-					valid = true;
-				}else
-				{
-					System.out.println("\nIllegal characters\n");
-				}//if-else
-			}else
-			{
-				System.out.println("\nBad length\n");
-			}//if-else
-		}//while
+		ClientUI cui = new ClientUI();
+		String newL = "";
+		String uname = this.loggedIn.getUsername();
+		
+		newL = cui.validateLastName();
+		this.loggedIn.setLastName(newL);
+		Main.uDao.updateLastName(newL,uname);
+		System.out.println("last name changed");
 	}//changeLastName
+	
+	//==================================================================
+	
+	public void changeUsername()
+	{
+		ClientUI cui = new ClientUI();
+		String newU = "";
+		String old = this.loggedIn.getUsername();
+		
+		
+		
+		newU = cui.validateUsername();
+		this.loggedIn.setUsername(newU);
+		Main.uDao.updateUsername(newU,old);
+		System.out.println("username changed");
+		
+		//use prepared statement to update db with new username
+		
+	}//changeUsername
+	
 }

@@ -77,15 +77,127 @@ public class UserDaoImpl implements UserDao{
 		}
 		return value;
 	}//addUser
-
-
-
-	public User getUserByUsername(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	//================================================================================
+	
+	public User getUserByUsername(String name)
+	{
+		User result = null;
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection())
+		{
+			
+			String sql = "SELECT * FROM customer WHERE username = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,name);
+			ResultSet rs = pstmt.executeQuery(sql);
+			
+			while(rs.next())
+			{
+				result.setUsername(rs.getString(1));
+				result.setFirstName(rs.getString(2));
+				result.setLastName(rs.getString(3));
+				result.setPassHash(rs.getString(4));
+			}
+			
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
+	
+	//================================================================================
+	
+	public int updateUsername(String newU,String old)
+	{
+		int value = -1;
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection())
+		{
+			
+			String sql = "UPDATE customer SET username=? WHERE username=?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,newU);
+			pstmt.setString(2,old);
+			value = pstmt.executeUpdate();
+			
+			if(value!=-1)
+			{
+				sql = "COMMIT";
+				Statement stmt = conn.createStatement();
+				stmt.executeUpdate(sql);
+			}
+			
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return value;
+	}//updateUsername
 
+	//=============================================================================
+	
+	public int updateFirstName(String newF,String uname)
+	{
+		int value = -1;
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection())
+		{
+			
+			String sql = "UPDATE customer SET firstname=? WHERE username=?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,newF);
+			pstmt.setString(2,uname);
+			value = pstmt.executeUpdate();
+			
+			if(value!=-1)
+			{
+				sql = "COMMIT";
+				Statement stmt = conn.createStatement();
+				stmt.executeUpdate(sql);
+			}
+			
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return value;
+	}//updateUsername
 
+	//=============================================================================
+
+	public int updateLastName(String newL,String uname)
+	{
+		int value = -1;
+
+		try(Connection conn = ConnectionFactory.getInstance().getConnection())
+		{
+
+			String sql = "UPDATE customer SET lastname=? WHERE username=?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,newL);
+			pstmt.setString(2,uname);
+			value = pstmt.executeUpdate();
+
+			if(value!=-1)
+			{
+				sql = "COMMIT";
+				Statement stmt = conn.createStatement();
+				stmt.executeUpdate(sql);
+			}
+
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return value;
+	}//updateUsername
+	
+	
+	
+	
 
 	public int removeUserByUsername(String name) {
 		// TODO Auto-generated method stub

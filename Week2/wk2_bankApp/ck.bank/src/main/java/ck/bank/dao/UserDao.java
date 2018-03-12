@@ -10,4 +10,7 @@ public interface UserDao {
 	public int addUser(User newUser);
 	//public int updateArtist(int id, Artist updatedArtist);
 	public int removeUserByUsername(String name);
+	public int updateUsername(String newU,String old);
+	public int updateFirstName(String newF,String uname);
+	public int updateLastName(String newL, String uname);
 }
