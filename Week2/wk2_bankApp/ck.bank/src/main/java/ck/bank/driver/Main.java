@@ -3,6 +3,8 @@ package ck.bank.driver;
 import java.util.List;
 import java.util.Scanner;
 
+import ck.bank.dao.AccountDao;
+import ck.bank.dao.AccountDaoImpl;
 import ck.bank.dao.ClientUI;
 import ck.bank.dao.MemberUI;
 import ck.bank.dao.UserDao;
@@ -14,6 +16,7 @@ public class Main {
 	public static UserIO io = new UserIO();
 	public static Scanner sc = new Scanner(System.in);
 	public static UserDao uDao = new UserDaoImpl();
+	public static AccountDao aDao = new AccountDaoImpl();
 	
 	public static void main(String[] args)
 	{

@@ -208,39 +208,6 @@ public class ClientUI {
 		return newL;
 	}//validateLastName
 
-	//========================================================
-
-	public double validateBalance()
-	{
-		double newB = 0;
-		boolean valid = false;
-
-		while(!valid)
-		{
-			System.out.println("Enter starting balance: (greater than 0)");
-			try
-			{
-				newB = Main.sc.nextDouble();
-				if(newB>=0)
-				{
-					System.out.println("Good balance: " + newB);
-					valid = true;
-				}else
-				{
-					System.out.println("\nStarting balance must be greater than 0\n");
-					Main.sc.nextLine();
-				}//if-else
-			}catch(InputMismatchException ime)
-			{
-				System.out.println("\nNon-double entry\n");
-				Main.sc.nextLine();
-			}//try-catch
-		}//while
-
-
-		return newB;
-	}//validateBalance
-
 	//========================================================================
 
 	public User userLogin()

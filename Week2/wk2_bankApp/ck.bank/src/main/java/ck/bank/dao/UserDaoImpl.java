@@ -21,18 +21,19 @@ public class UserDaoImpl implements UserDao{
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection())
 		{
-			String sql = "SELECT * FROM customer";
+			String sql = "SELECT * FROM customer";										//statement
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while(rs.next())
 			{	
 				User temp = new User();
-				//the first element will be userid -- dont know if this will be needed in the java app
-				temp.setUsername(rs.getString(2));
-				temp.setFirstName(rs.getString(3));
-				temp.setLastName(rs.getString(4));
-				temp.setPassHash(rs.getString(5));
+
+				temp.setUserId(rs.getInt(1));			//user id
+				temp.setUsername(rs.getString(2));		//username
+				temp.setFirstName(rs.getString(3));		//first name
+				temp.setLastName(rs.getString(4));		//last name
+				temp.setPassHash(rs.getString(5));		//password hash
 				users.add(temp);
 				
 			}//while
@@ -46,7 +47,7 @@ public class UserDaoImpl implements UserDao{
 		return users;
 	}//getAllUsers
 	
-	
+	//================================================================================
 	
 	public int addUser(User newUser)
 	{
@@ -54,16 +55,7 @@ public class UserDaoImpl implements UserDao{
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection())
 		{
-			/*
-			String sql = "INSERT INTO artist VALUES(?,?)";
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, newArtist.getId());
-			pstmt.setString(3, newArtist.getName());
-			value = pstmt.executeUpdate();
-			*/
-			
-//			String sql = "EXECUTE create_new_user(?,?,?,?);";
-			String sql = "{CALL create_new_user(?,?,?,?)}";
+			String sql = "{CALL create_new_user(?,?,?,?)}";										//callable statement
 			CallableStatement cstmt = conn.prepareCall(sql);
 			cstmt.setString(1,newUser.getUsername());
 			cstmt.setString(2,newUser.getFirstName());
@@ -87,7 +79,7 @@ public class UserDaoImpl implements UserDao{
 		try(Connection conn = ConnectionFactory.getInstance().getConnection())
 		{
 			
-			String sql = "SELECT * FROM customer WHERE username = ?";
+			String sql = "SELECT * FROM customer WHERE username = ?";							//prepared statement
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,name);
 			ResultSet rs = pstmt.executeQuery(sql);
@@ -117,7 +109,7 @@ public class UserDaoImpl implements UserDao{
 		try(Connection conn = ConnectionFactory.getInstance().getConnection())
 		{
 			
-			String sql = "UPDATE customer SET username=? WHERE username=?";
+			String sql = "UPDATE customer SET username=? WHERE username=?";						//prepared statement
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,newU);
 			pstmt.setString(2,old);
@@ -125,7 +117,7 @@ public class UserDaoImpl implements UserDao{
 			
 			if(value!=-1)
 			{
-				sql = "COMMIT";
+				sql = "COMMIT";																	//statement
 				Statement stmt = conn.createStatement();
 				stmt.executeUpdate(sql);
 			}
@@ -146,7 +138,7 @@ public class UserDaoImpl implements UserDao{
 		try(Connection conn = ConnectionFactory.getInstance().getConnection())
 		{
 			
-			String sql = "UPDATE customer SET firstname=? WHERE username=?";
+			String sql = "UPDATE customer SET firstname=? WHERE username=?";					//prepared statement
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,newF);
 			pstmt.setString(2,uname);
@@ -154,7 +146,7 @@ public class UserDaoImpl implements UserDao{
 			
 			if(value!=-1)
 			{
-				sql = "COMMIT";
+				sql = "COMMIT";																	//statement
 				Statement stmt = conn.createStatement();
 				stmt.executeUpdate(sql);
 			}
@@ -175,7 +167,7 @@ public class UserDaoImpl implements UserDao{
 		try(Connection conn = ConnectionFactory.getInstance().getConnection())
 		{
 
-			String sql = "UPDATE customer SET lastname=? WHERE username=?";
+			String sql = "UPDATE customer SET lastname=? WHERE username=?";					//prepared statement
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,newL);
 			pstmt.setString(2,uname);
@@ -183,7 +175,7 @@ public class UserDaoImpl implements UserDao{
 
 			if(value!=-1)
 			{
-				sql = "COMMIT";
+				sql = "COMMIT";																//statement
 				Statement stmt = conn.createStatement();
 				stmt.executeUpdate(sql);
 			}

@@ -8,17 +8,18 @@ public class User {
 	private String passHash;
 	private String firstName;
 	private String lastName;
-	private double balance;
+	private int	userId;
 
 	public User() {}
 
-	public User(String uName,String fName,String lName,double bal)
+	public User(String uName,String fName,String lName)
 	{
+		super();
 		username = uName;
 		passHash = null;
 		firstName = fName;
 		lastName = lName;
-		balance = bal;
+		userId = 0;
 	}
 	//===========================
 	public String getUsername()
@@ -48,13 +49,13 @@ public class User {
 		this.lastName = lName;
 	}
 	//===========================
-	public double getBalance()
+	public int getUserId()
 	{
-		return balance;
+		return userId;
 	}
-	public void setBalance(double newBalance)
+	public void setUserId(int newId)
 	{
-		this.balance = newBalance;
+		this.userId = newId;
 	}
 	//===========================
 	public String getPassHash()

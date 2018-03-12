@@ -13,8 +13,10 @@ public class MemberUI {
 
 	public MemberUI(User u)
 	{
+		super();
 		this.loggedIn = u;
 	}
+	
 	public void topUI()
 	{
 		int userInput = -1;
@@ -24,13 +26,12 @@ public class MemberUI {
 		{
 			userInput = -1;
 			System.out.println("\n\nMake your selection:");
-			System.out.println("1 - Display Account Information");
-			//System.out.println("2 - Check Balance");
+			System.out.println("1 - Display Member Information");
 			System.out.println("2 - Change Username");
 			System.out.println("3 - Change First Name");
 			System.out.println("4 - Change Last Name");
-			//System.out.println("5 - Withdraw Funds");
-			//System.out.println("6 - Deposit Funds");
+			System.out.println("5 - Check Balance");
+			System.out.println("6 - Access Accounts");
 			System.out.println("0 - Exit");
 			try
 			{
@@ -76,15 +77,16 @@ public class MemberUI {
 				valid = false;
 				break;
 			case 5:
-				//withdraw funds
-				withdrawFunds();
+				//check balance
+				//checkBalanceAllAccounts();
+				//withdrawFunds();
 				valid = false;
 				break;
 			case 6:
-				//deposit funds
-				depositFunds();
+				//access accounts
+				AccountUI aui = new AccountUI(this.loggedIn);
+				aui.topUI();
 				valid = false;
-				break;
 			case 0:
 				//exit MemberUI
 				System.out.println("Exit MemberUI");
@@ -111,14 +113,14 @@ public class MemberUI {
 	}//display account information
 
 	//==========================================================
-
+/*
 	public void checkBalance()
 	{
 		System.out.println("Available balance: $" + this.loggedIn.getBalance());
 	}//check balance
-
+*/
 	//==========================================================
-
+/*
 	public void withdrawFunds()
 	{
 		double amountToWithdraw = 0;
@@ -164,9 +166,9 @@ public class MemberUI {
 		}//while
 		//sc.close();
 	}//withdraw funds
-
+*/
 	//=================================================================
-
+/*
 	public void depositFunds()
 	{
 		double amountToDeposit;
@@ -205,7 +207,7 @@ public class MemberUI {
 		}//while
 		//sc.close();
 	}//deposit funds
-
+*/
 	//=====================================================================
 
 	public void changeFirstName()
@@ -253,4 +255,4 @@ public class MemberUI {
 		
 	}//changeUsername
 	
-}
+}//MemberUI
