@@ -1,9 +1,6 @@
 package com.revature.bank.driver;
 
-
-import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 import com.revature.bank.dao.BankDAO;
@@ -60,7 +57,7 @@ public class BankDriver {
 
 	public static void login(Scanner scan, BankDAO bankDao ) {
 		
-		String un,pw,checkPw;
+		String un,pw;
 		System.out.println("Login");
 		System.out.println("Username:");
 		un = scan.nextLine();
@@ -121,7 +118,7 @@ public class BankDriver {
 	}
 	
 	public static void transfer(Scanner scan, BankDAO bankDao, Customer customer) {
-		int currentBalance = 0;
+		
 		int amount1 = 0; 
 		int amount2 = 0;
 		int accNum1 = 0;
@@ -280,9 +277,7 @@ public class BankDriver {
 	public static void showBalance(Scanner scan, BankDAO bankDao, Customer customer) {
 		
 		int currentBalance = 0;
-		int amount = 0; 
 		int accNum = 0;
-		int newBalance = 0;
 		Account account = new Account();
 		
 		System.out.println("Which account would you like to view?");
@@ -305,30 +300,4 @@ public class BankDriver {
 			atm(scan, bankDao, customer);
 		}
 	}
-//		List<Customer> customers = bankDao.getAllCustomers();
-//		
-//		for(Customer a : customers) {
-//			System.out.println(a);
-//		}
-//		
-//		
-//		Customer customer = new Customer();
-//		customer = bankDao.getCustomerById(1);
-//		System.out.println(customer);
-//		
-//		Account account = new Account();
-//		account = bankDao.getAccountById(1);
-//		System.out.println(account);
-//		
-//		Customer temp = new Customer("Edgar","Martinez","edog","mariners");
-//		
-//		customer = bankDao.registerCustomer(temp);
-//		System.out.println(customer);
-//		
-//		Account tempA = new Account(1);
-//		account = bankDao.registerAccount(tempA);
-//		System.out.println(account);
-//		
-//		System.out.println(bankDao.balance(account));
-
 }
