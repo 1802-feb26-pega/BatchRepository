@@ -1,8 +1,11 @@
-package com.bank.applications;
+package com.bank.driver;
 
 import java.util.Scanner;
 
-public class UserInterface {
+import com.bank.obj.Account;
+import com.bank.obj.Teller;
+
+public class BankDriver {
 
 	public static void main(String[] args) {
 		Teller t = new Teller();
@@ -10,8 +13,8 @@ public class UserInterface {
 		Scanner menu = new Scanner(System.in);
 		
 		System.out.println("Welcome to your automated bank terminal!");
-		System.out.println("If you would like to log in to your account, please press 1.");
-		System.out.println("If you would like to create a new account, please press 2.");
+		System.out.println("If you already have an account, press 1.");
+		System.out.println("If you do not have an account, please press 2.");
 		
 		do {
 			option = String.valueOf(menu.nextLine());
@@ -81,7 +84,7 @@ public class UserInterface {
 				newLast = String.valueOf(menu.nextLine());
 				System.out.println("");
 				
-				if(t.createAccount(newUser, newFirst, newLast, newPass)) {
+				if(t.createUser(newUser, newFirst, newLast, newPass)) {
 					System.out.println("Congratulations on your new account!");
 					System.out.println("");
 				}
@@ -104,10 +107,12 @@ public class UserInterface {
 				e.printStackTrace();
 			}
 			System.out.println(name[0] + ", what action would you like to take now?");
-			System.out.println("If you would like to make a deposit, please press 1.");
-			System.out.println("If you would like to make a withdrawl, please press 2.");
-			System.out.println("If you would like to check your balance, please press 3.");
-			System.out.println("If you would like to log out, please press 4.");
+			System.out.println("If you would like to make a deposit, press 1.");
+			System.out.println("If you would like to make a withdrawl, press 2.");
+			System.out.println("If you would like to check your balance, press 3.");
+			System.out.println("If you would like to transfer money between accounts, press 4.");
+			System.out.println("If you would like to create another account under this username, press 5.");
+			System.out.println("If you would like to log out, press 0.");
 			option=String.valueOf(menu.nextLine());
 			System.out.println("");
 			
@@ -162,7 +167,6 @@ public class UserInterface {
 							System.out.println("We're nice though, so we won't fee you for it.");
 						}
 						System.out.println("");
-						System.out.println("");
 					}
 					else if((answer.toLowerCase()).equals("n")){
 						System.out.println("Returning to menu...\n");
@@ -176,12 +180,50 @@ public class UserInterface {
 				
 			//Balance
 			case "3":
-				System.out.println("Your current balance is $" + String.format("%.2f", t.getBalance()));
+				System.out.println("Your current balance is $" + String.format("%.2f", t.getBalance(answer)));
 				System.out.println("");
 				break;
 				
-			//Log-out
+			//Transfer
 			case "4":
+				Account fromAccount = t.getAccount(String.valueOf(menu.nextLine()));
+				Account toAccount = t.getAccount(String.valueOf(menu.nextLine()));
+				System.out.println("How much would you like to transfer?");
+				amount = Double.valueOf(menu.nextLine());
+				System.out.println("Are you sure you want to transfer from " + fromAccount + " to " + toAccount + "?");
+				System.out.println("Type Y or N: ");
+				
+				do {
+					answer = menu.nextLine();
+					if ((answer.toLowerCase()).equals("y")) {
+						if(t.transfer(amount)) {
+							
+							System.out.println("");
+							System.out.println("Your new balance is $" + String.format("%.2f", t.getBalance()));
+						}
+						else {
+							System.out.println("");
+							System.out.println("You do not have enough funds to make that withdrawl.");
+							System.out.println("We're nice though, so we won't fee you for it.");
+						}
+						System.out.println("");
+					}
+					else if((answer.toLowerCase()).equals("n")){
+						System.out.println("Returning to menu...\n");
+					} else {
+						System.out.println("That was not a valid entry. Please type Y or N: ");
+						answer="";
+
+					} 
+				}while (answer=="");
+				break;
+				
+			//Add account
+			case "5":
+				break;
+				
+			//Log-out
+			case "0":
 				System.out.println("Are you sure you want to log out?");
 				System.out.println("Type Y or N: ");
 				do {
@@ -201,7 +243,7 @@ public class UserInterface {
 			default:
 				System.out.println("That was not a valid input.");
 			}
-			if(!option.equals("4")) {
+			if(!option.equals("0")) {
 				System.out.println("Please re-enter your password, or enter E to exit: ");
 				String repeatResponse = String.valueOf(menu.nextLine());
 				while(!repeatResponse.toLowerCase().equals((String)"e")&&!repeatResponse.equals(String.valueOf(t.getPassword()))) {

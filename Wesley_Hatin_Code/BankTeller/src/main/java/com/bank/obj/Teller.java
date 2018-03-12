@@ -1,41 +1,32 @@
-package com.bank.applications;
+package com.bank.obj;
+
+import com.bank.dao.BankDatabaseImpl;
 
 public class Teller {
 	
 	private String username;
-	private String firstName;
-	private String lastName;
 	private String password="";
-	private double balance;
-	private BankDatabase db=new BankDatabase();
+	private BankDatabaseImpl db=new BankDatabaseImpl();
 	
 	// create an account with a unique email or username
-	public boolean createAccount(String newUser, String newFirst, String newLast, String newPass) {
-		if(!db.usernameValidation(newUser)) {
-			db.writeNewClient(newUser, newFirst, newLast, newPass);
+	public boolean createUser(String newUser, String newPass) {
+		if(!db.userValidation(newUser)) {
+			db.writeNewClient(newUser, newPass);
 			username = newUser;
-			firstName=newFirst;
-			lastName=newLast;
 			password = newPass;
-			balance = 0;
 			return true;
 		}
-		return false;
+		else {
+			return false;
+		}
 	}
 	
 	// log in 
 	public boolean logIn(String username, String password) {
-		if(db.usernameValidation(username)) {
-			String[] entry = db.retrieveClientEntry(username);
-			
-			if(String.valueOf(password).equals(String.valueOf(entry[3]))) {
+		if(db.userValidation(username, password)) {
 				this.username=username;
 				this.password=password;
-				firstName=entry[1];
-				lastName=entry[2];
-				balance=Double.valueOf(entry[4]);
 				return true;
-			}
 		}
 		return false;
 	}
@@ -47,26 +38,19 @@ public class Teller {
 	}
 	
 	//deposit money
-	public void deposit(double amount) {
-		db.writeBalance(username, balance + amount);
-		balance+=amount;
+	public void deposit(Account account, double amount) {
+		db.writeBalance(username, account.getAccountName(), account.getBalance() + amount);
 	}
 	
 	//withdraw money
-	public boolean withdraw(double amount) {
-		if((balance-amount)<0) {
+	public boolean withdraw(Account account, double amount) {
+		if(account.getBalance() < 0) {
 			return false;
 		}
 		else {
-			db.writeBalance(username, balance-amount);
-			balance-=amount;
+			db.writeBalance(username, account.getAccountName(), account.getBalance()-amount);
 			return true;
 		}
-	}
-	
-	//view balance
-	public double getBalance() {
-		return balance;
 	}
 
 	public String getUsername() {
@@ -76,9 +60,20 @@ public class Teller {
 	public String getPassword() {
 		return password;
 	}
+	
+	public Double getBalance(String accountName) {
+		Account account = db.retrieveAccountInfo(username, accountName);
+		return account.getBalance();
+	}
 
-	public String getName() {
-		return (firstName+" "+lastName);
+	public Account getAccount(String valueOf) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean transfer(Double amount) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
