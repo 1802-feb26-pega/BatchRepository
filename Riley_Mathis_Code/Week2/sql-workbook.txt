@@ -1,0 +1,255 @@
+SELECT *
+FROM employee;
+
+SELECT *
+FROM employee
+WHERE lastname = 'King';
+
+SELECT *
+FROM employee
+WHERE firstname = 'Andrew'
+    AND reportsto IS NULL;
+    
+SELECT *
+FROM album
+ORDER BY title;
+
+SELECT firstname
+FROM customer
+ORDER BY city DESC;
+
+INSERT INTO genre (genreid, name)
+VALUES (26, 'genre1');
+
+INSERT INTO genre (genreid, name)
+VALUES (27, 'genre2');
+
+INSERT INTO employee (employeeid, lastname, firstname)
+VALUES (9, 'firstname1', 'lastname1');
+
+INSERT INTO employee (employeeid, lastname, firstname)
+VALUES (10, 'firstname2', 'lastname2');
+
+INSERT INTO customer (customerid, lastname, firstname, email)
+VALUES (60, 'firstname1', 'lastname1', 'fn1@gmail.com');
+
+INSERT INTO customer (customerid, lastname, firstname, email)
+VALUES (61, 'firstname2', 'lastname2', 'fn2@gmail.com');
+
+UPDATE customer
+SET firstname = 'Robert', lastname = 'Walter'
+WHERE firstname = 'Aaron' AND lastname = 'Mitchell';
+
+UPDATE artist
+SET name = 'CCR'
+WHERE name = 'Creedence Clearwater Revival';
+
+SELECT *
+FROM invoice
+WHERE billingaddress LIKE 'T%';
+
+SELECT *
+FROM invoice
+WHERE total BETWEEN 15 AND 20;
+
+SELECT *
+FROM employee
+WHERE hiredate BETWEEN DATE '2003-06-01' AND DATE '2004-03-01';
+
+DELETE
+FROM customer
+WHERE firstname = 'Robert' AND lastname = 'Walter';
+
+ALTER TABLE invoice
+DROP CONSTRAINT fk_invoicecustomerid;
+ALTER TABLE invoice
+ADD CONSTRAINT fk_customer
+    FOREIGN KEY (customerid)
+    REFERENCES customer(customerid)
+    ON DELETE CASCADE;
+    
+ALTER TABLE invoiceline
+DROP CONSTRAINT fk_invoicelineinvoiceid;
+ALTER TABLE invoiceline
+ADD CONSTRAINT fk_invoice
+    FOREIGN KEY (invoiceid)
+    REFERENCES invoice(invoiceid)
+    ON DELETE CASCADE;
+
+
+
+--create a function that returns the current time
+CREATE OR REPLACE FUNCTION get_current_time
+RETURN TIMESTAMP IS l_systimestamp TIMESTAMP;
+BEGIN
+    SELECT systimestamp
+    INTO l_systimestamp
+    FROM dual;
+    RETURN l_systimestamp;
+END;
+/
+SELECT get_current_time() FROM dual;
+
+
+create or replace FUNCTION get_mediatype_length(id NUMBER)
+RETURN NUMBER IS m_length NUMBER;
+BEGIN
+    SELECT LENGTH(name)
+    INTO m_length
+    FROM mediatype
+    WHERE mediatypeid = id;
+    RETURN m_length;
+END;
+
+CREATE OR REPLACE FUNCTION avg_invoice
+RETURN NUMBER IS average NUMBER;
+BEGIN
+    SELECT AVG(total)
+    INTO average
+    FROM invoice;
+    RETURN average;
+END;
+/
+
+SELECT avg_invoice() FROM dual;
+
+CREATE OR REPLACE FUNCTION exp_track
+RETURN VARCHAR2 IS track_name VARCHAR2(50);
+BEGIN
+    SELECT name
+    INTO track_name
+    FROM track
+    WHERE unitprice = (SELECT MAX(unitprice) AS "max" FROM track);
+    RETURN track_name;
+END;
+/
+SELECT exp_track() FROM dual;
+
+CREATE OR REPLACE FUNCTION invoiceline_avg
+RETURN NUMBER IS average NUMBER;
+BEGIN
+    SELECT AVG(unitprice)
+    INTO average
+    FROM invoiceline;
+    RETURN average;
+END;
+/
+SELECT invoiceline_avg() FROM dual;
+
+CREATE OR REPLACE FUNCTION employees_1968
+RETURN SYS_REFCURSOR AS my_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN my_cursor FOR
+    SELECT *
+    FROM employee
+    WHERE birthdate > '1-1-1968';
+    RETURN my_cursor;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE emp_fn_ln(cursorParam OUT SYS_REFCURSOR)
+IS
+BEGIN
+    OPEN cursorParam FOR
+    SELECT firstname, lastname
+    FROM employee;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE update_employee(fn IN VARCHAR2, ln IN VARCHAR2)
+IS
+BEGIN
+    UPDATE employee
+    SET firstname = fn, lastname = ln
+    WHERE firstname = fn AND lastname = ln;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE managers(id IN NUMBER, cursorParam OUT SYS_REFCURSOR)
+IS
+BEGIN
+    OPEN cursorParam FOR
+    SELECT reportsto
+    FROM employee
+    WHERE employeeid = id;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE name_company(id IN NUMBER, cursorParam OUT SYS_REFCURSOR)
+IS
+BEGIN
+    OPEN cursorParam FOR
+    SELECT firstname, lastname, company
+    FROM customer
+    WHERE customerid = id;
+END;
+/
+
+
+CREATE OR REPLACE PROCEDURE delete_invoice(id IN NUMBER)
+IS
+BEGIN
+    DELETE FROM invoice
+    WHERE invoiceid = id;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE new_customer(id IN NUMBER)
+IS
+BEGIN
+    INSERT INTO customer (customerid)
+    VALUES (id);
+END;
+/
+
+CREATE SEQUENCE employee_seq;
+CREATE OR REPLACE TRIGGER employee_trgr
+BEFORE INSERT ON employee
+FOR EACH ROW
+BEGIN  
+    SELECT employee_seq.NEXTVAL
+    INTO :new.employeeid
+    FROM dual;
+END;
+
+CREATE SEQUENCE album_seq;
+CREATE OR REPLACE TRIGGER album_trgr
+BEFORE UPDATE ON album
+FOR EACH ROW
+BEGIN  
+    SELECT album_seq.NEXTVAL
+    FROM dual;
+END;
+
+CREATE SEQUENCE customer_seq;
+CREATE OR REPLACE TRIGGER customer_trgr
+BEFORE DELETE ON customer
+FOR EACH ROW
+BEGIN  
+    SELECT customer_seq.NEXTVAL
+    FROM dual;
+END;
+
+SELECT customer.firstname, customer.lastname, invoice.invoiceid
+FROM customer
+JOIN invoice ON customer.customerid=invoice.customerid;
+
+SELECT customer.customerid, customer.firstname, customer.lastname, invoice.invoiceid, invoice.total
+FROM customer
+FULL OUTER JOIN invoice ON customer.customerid = invoice.customerid;
+
+SELECT album.title, artist.name
+FROM artist
+RIGHT JOIN album
+ON artist.artistid = album.artistid;
+
+SELECT *
+FROM album
+CROSS JOIN artist
+ORDER BY artist.name;
+
+SELECT *
+FROM employee a, employee b
+WHERE a.reportsto = b.reportsto;
+
+
