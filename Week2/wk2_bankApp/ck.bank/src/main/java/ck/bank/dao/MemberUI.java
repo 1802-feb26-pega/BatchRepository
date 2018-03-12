@@ -126,7 +126,7 @@ public class MemberUI {
 			accountsTotal += a.getBalance();
 		}
 		
-		System.out.println("Total funds available across all accounts:\n" + accountsTotal);
+		System.out.println("Total funds available across all accounts:\n	$" + accountsTotal);
 	}//check balance
 
 	//=====================================================================

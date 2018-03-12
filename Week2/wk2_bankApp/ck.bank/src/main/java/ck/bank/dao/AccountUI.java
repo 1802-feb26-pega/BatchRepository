@@ -31,17 +31,18 @@ public class AccountUI {
 			System.out.println("2 - Create New Account");
 			System.out.println("3 - Withdraw Funds");
 			System.out.println("4 - Deposit Funds");
+			System.out.println("5 - Transfer Funds");
 			System.out.println("0 - Exit");
 			try
 			{
 				userInput = Main.sc.nextInt();
-				if(userInput >= 0 && userInput <= 4)
+				if(userInput >= 0 && userInput <= 5)
 				{
 					System.out.println("\nGood selection: "+userInput + "\n");
 					valid = true;
 				}else
 				{
-					System.out.println("\nBad, need 0-3. Try again.\n");
+					System.out.println("\nBad, need 0-5. Try again.\n");
 					Main.sc.nextLine();
 				}//if-else
 			}catch(InputMismatchException ime)
@@ -120,8 +121,27 @@ public class AccountUI {
 				}//if-else
 				valid = false;
 				break;
+			case 5:
+				//transfer funds between accounts
+				List<Account> accountsTransfer = Main.aDao.getAllAccounts(this.loggedIn.getUserId());
+				
+				//if number of accounts is 0 or 1, print appropriate message --> need at least two active accounts to transfer funds
+				if(accountsTransfer.size() == 0)
+				{
+					System.out.println("\n\nNo active accounts\n\n");
+				}else if(accountsTransfer.size() == 1)
+				{
+					System.out.println("\n\nOnly 1 active account. Need at least 2 to transfer funds\n\n");
+				}else
+				{
+					transferFunds(accountsTransfer);
+				}
+				
+				
+				valid = false;
+				break;
 			case 0:
-				//exit MemberUI
+				//exit AccountUI
 				System.out.println("Exit AccountUI");
 				break;
 			default:
@@ -306,6 +326,134 @@ public class AccountUI {
 			}//try-catch
 		}//while
 	}//deposit funds
+	
+	//==============================================================================
+	
+	public void transferFunds(List<Account> accounts)
+	{
+		double amountToTransfer;
+		double senderNewBalance;
+		double receiverNewBalance;
+		Account sender=null;
+		Account receiver=null;
+		int value = -1;
+		boolean valid = false;
+		int iterate = 1;
+
+		//account selection
+		while(!valid)
+		{
+			value = -1;
+			for(Account a : accounts)
+			{
+				System.out.println(a.toString());
+			}
+			
+			if(iterate ==1)
+			{
+				System.out.println("\nenter account # (sender):");
+			}else
+			{
+				System.out.println("\nenter account # (receiver):");
+			}
+			try
+			{
+				value = Main.sc.nextInt();
+				for(Account a : accounts)
+				{
+					if(a.getAccountNumber() == value)
+					{
+						if(iterate == 1)
+						{
+							System.out.println("Good account selection for sender: " + value);
+							sender = a;
+							iterate = 2;
+						}else
+						{
+							if(a.equals(sender))
+							{
+								System.out.println("Account already selected");
+							}else
+							{
+								System.out.println("Good account selection for receiver: " + value);
+								receiver = a;
+								valid = true;
+							}//if-else
+						}//if-else
+					}else
+					{
+						continue;
+					}//if-else
+				}//for
+				
+				if(!valid)
+				{
+					System.out.println("\nBad account selection\n");
+					value = -1;
+					Main.sc.nextLine();
+				}
+
+			}catch(InputMismatchException ime)
+			{
+				System.out.println("\nNon-int entry\n");
+				Main.sc.nextLine();
+			}//try-catch
+		}//while
+
+		
+		
+		//input amount to transfer and then transfer funds
+		valid = false;
+		System.out.println("Available balance: $" + sender.getBalance());
+		System.out.println("Account transfers cannot go below $0");
+		System.out.println("Enter amount to transfer:");
+
+		while(!valid)
+		{
+			try
+			{
+				amountToTransfer = Main.sc.nextDouble();
+				if((sender.getBalance()-amountToTransfer) < 0)
+				{
+					System.out.println("\n\nTransfer too big\n");
+					System.out.println("Account transfers cannot go below $0");
+					System.out.println("Available Balance: $" + sender.getBalance());
+					System.out.println("Enter amount to transfer:");
+					Main.sc.nextLine();
+				}else if(amountToTransfer < 0)
+				{
+					System.out.println("\n\nNegative input\n");
+					System.out.println("Account transfers cannot go below $0");
+					System.out.println("Available Balance: $" + sender.getBalance());
+					System.out.println("Enter amount to transfer:");
+					Main.sc.nextLine();
+				}else
+				{
+					//transfer funds if amount entered is accepted
+					senderNewBalance = sender.getBalance()-amountToTransfer;
+					receiverNewBalance = receiver.getBalance()+amountToTransfer;
+					Main.aDao.updateAccountBalance(sender.getAccountNumber(),senderNewBalance);
+					Main.aDao.updateAccountBalance(receiver.getAccountNumber(),receiverNewBalance);
+					sender.setBalance(senderNewBalance);
+					receiver.setBalance(receiverNewBalance);
+					System.out.println("\n\nTransfer completed successfully");
+					System.out.println("(Act# "+sender.getAccountNumber()+") ---|$"+amountToTransfer+"|---> (Act# "+receiver.getAccountNumber()+")");
+					System.out.println("New account balances after transfer:");
+					System.out.println("Account #: "+sender.getAccountNumber()+ " = $" + sender.getBalance());
+					System.out.println("Account #: "+receiver.getAccountNumber()+ " = $" + receiver.getBalance());
+					valid = true;
+				}//if-else
+			}catch(InputMismatchException ime)
+			{
+				System.out.println("\n\nNon-number input\n");
+				System.out.println("Account transfers cannot go below $0");
+				System.out.println("Available balance: $" + sender.getBalance());
+				System.out.println("Enter the amount to withdraw:");
+				Main.sc.nextLine();
+			}//try-catch
+		}//while
+		
+	}//transfer funds
 	
 	
 }//AccountUI

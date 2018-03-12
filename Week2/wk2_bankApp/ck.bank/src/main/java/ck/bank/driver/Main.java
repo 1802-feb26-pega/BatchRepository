@@ -38,7 +38,7 @@ public class Main {
 			//start member ui
 			break;
 		case 2:
-			//login for existing user
+			//login for existing user 
 
 			loggedIn = cui.userLogin();
 			if(loggedIn != null)
