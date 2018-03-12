@@ -2,7 +2,7 @@ package com.revature.bank.pojos;
 
 public class Account {
 	private int id;
-	private int customerid;
+	private int customerId;
 	private int balance;
 	public Account() {
 		super();
@@ -11,7 +11,7 @@ public class Account {
 	public Account(int id, int customerid, int balance) {
 		super();
 		this.id = id;
-		this.customerid = customerid;
+		this.customerId = customerid;
 		this.balance = balance;
 	}
 	public int getId() {
@@ -21,10 +21,10 @@ public class Account {
 		this.id = id;
 	}
 	public int getCustomerid() {
-		return customerid;
+		return customerId;
 	}
-	public void setCustomerid(int customerid) {
-		this.customerid = customerid;
+	public void setCustomerId(int customerid) {
+		this.customerId = customerid;
 	}
 	public int getBalance() {
 		return balance;
@@ -37,7 +37,7 @@ public class Account {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + balance;
-		result = prime * result + customerid;
+		result = prime * result + customerId;
 		result = prime * result + id;
 		return result;
 	}
@@ -52,7 +52,7 @@ public class Account {
 		Account other = (Account) obj;
 		if (balance != other.balance)
 			return false;
-		if (customerid != other.customerid)
+		if (customerId != other.customerId)
 			return false;
 		if (id != other.id)
 			return false;
@@ -60,7 +60,7 @@ public class Account {
 	}
 	@Override
 	public String toString() {
-		return "Account [id=" + id + ", customerid=" + customerid + ", balance=" + balance + "]";
+		return "Account [id=" + id + ", customerid=" + customerId + ", balance=" + balance + "]";
 	}
 	
 	

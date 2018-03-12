@@ -10,9 +10,8 @@ public class Customer {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Customer(int id, String firstname, String lastname, String username, String password) {
+	public Customer(String firstname, String lastname, String username, String password) {
 		super();
-		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
