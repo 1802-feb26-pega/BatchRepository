@@ -74,6 +74,7 @@ public class AccountUI {
 				break;
 			case 2:
 				//create new account
+				
 				//get starting balance - validate balance
 				double newBalance = validateBalance();
 				//send starting balance and userid to accountdao to create new account
@@ -84,26 +85,38 @@ public class AccountUI {
 			case 3:
 				//withdraw funds
 				//display list of active accounts
-				List<Account> accountWithdraw = Main.aDao.getAllAccounts(this.loggedIn.getUserId());
+				List<Account> accountsWithdraw = Main.aDao.getAllAccounts(this.loggedIn.getUserId());
 				Account withdrawSelection=null;
 				double amountToWithdraw=-1;
 
 				//select account to withdraw from
-				if(accountWithdraw.isEmpty())
+				if(accountsWithdraw.isEmpty())
 				{
 					System.out.println("\n\nNo active accounts\n\n");
 				}else
 				{
 					System.out.println("select account to withdraw from:");
-					withdrawSelection = validateAccountSelection(accountWithdraw);
+					withdrawSelection = validateAccountSelection(accountsWithdraw);
 					withdrawFunds(withdrawSelection);
-
 				}//if-else
-
 				valid = false;
 				break;
 			case 4:
 				//deposit funds
+				List<Account> accountsDeposit = Main.aDao.getAllAccounts(this.loggedIn.getUserId());
+				Account depositSelection=null;
+				double amountToDeposit=-1;
+
+				//select account to withdraw from
+				if(accountsDeposit.isEmpty())
+				{
+					System.out.println("\n\nNo active accounts\n\n");
+				}else
+				{
+					System.out.println("select account to withdraw from:");
+					depositSelection = validateAccountSelection(accountsDeposit);
+					depositFunds(depositSelection);
+				}//if-else
 				valid = false;
 				break;
 			case 0:
@@ -174,7 +187,7 @@ public class AccountUI {
 					if(a.getAccountNumber() == value)
 					{
 						System.out.println("Good account selection: " + value);
-						
+
 						return a;
 					}else
 					{
@@ -228,9 +241,8 @@ public class AccountUI {
 				{
 					newBalance = a.getBalance()-amountToWithdraw;
 					Main.aDao.updateAccountBalance(a.getAccountNumber(),newBalance);
-					
-					System.out.println("\n\nWithdrawal completed successfully.");
 					a.setBalance(newBalance);
+					System.out.println("\n\nWithdrawal completed successfully.");
 					System.out.println("Your new available balance is: $" + a.getBalance());
 					valid = true;
 				}//if-else
@@ -243,6 +255,50 @@ public class AccountUI {
 				Main.sc.nextLine();
 			}//try-catch
 		}//while
-		//sc.close();
 	}//withdraw funds
+
+	//=============================================================================
+
+	public void depositFunds(Account a)
+	{
+		double amountToDeposit;
+		boolean valid = false;
+		double newBalance;
+		System.out.println("Current balance: $" + a.getBalance());
+		System.out.println("Enter amount to deposit:");
+
+		while(!valid)
+		{
+			try
+			{
+				amountToDeposit = Main.sc.nextDouble();
+				if(amountToDeposit < 0)
+				{
+					System.out.println("\n\nNegative input\n");
+
+					System.out.println("Current Balance: $" + a.getBalance());
+					System.out.println("Enter amount to deposit:");
+				}else
+				{
+					newBalance = a.getBalance() + amountToDeposit;
+					
+					Main.aDao.updateAccountBalance(a.getAccountNumber(),newBalance);
+					a.setBalance(newBalance);
+					System.out.println("\n\nDeposit completed successfully");
+					System.out.println("Your new balance is: $" + a.getBalance());
+					valid = true;
+				}//if-else
+
+			}catch(InputMismatchException ime)
+			{
+
+				System.out.println("\n\nNon-number input\n");
+				System.out.println("Current balance is: $" + a.getBalance());
+				System.out.println("Enter amount to deposit:");
+				Main.sc.nextLine();
+			}//try-catch
+		}//while
+	}//deposit funds
+	
+	
 }//AccountUI

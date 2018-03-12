@@ -13,39 +13,14 @@ import ck.bank.pojos.User;
 import ck.bank.dao.UserIO;
 
 public class Main {
-	public static UserIO io = new UserIO();
 	public static Scanner sc = new Scanner(System.in);
 	public static UserDao uDao = new UserDaoImpl();
 	public static AccountDao aDao = new AccountDaoImpl();
 	
 	public static void main(String[] args)
 	{
-		//UserIO io = new UserIO();
-		
-		//List<User> users = uDao.getAllUsers();// keep this
 		List<User> users;
-//
-//		/*
-//		for(User u : users)
-//		{
-//			u.displayAccountInformation();
-//			u.checkBalance();
-//		}	
-//		
-//		System.out.println("====================\n====================");
-//		User bb = new User("j","K","L",4.0);
-//		users.add(bb);
-//		
-//		for(User u: users)
-//		{
-//			u.displayAccountInformation();
-//			u.checkBalance();
-//		}
-//		
-//		io.writeAllUsers(users);
-//		System.out.println("\n\nwritten to file");
-//		*/
-//		
+		
 		//initialize top level client UI - make a selection to create new account, login with an existing account, or exit
 		ClientUI cui = new ClientUI();
 		int topSelection;
@@ -64,8 +39,7 @@ public class Main {
 			break;
 		case 2:
 			//login for existing user
-			//need to find user via username
-			//users = uDao.getAllUsers();	//dont think we need this anymore
+
 			loggedIn = cui.userLogin();
 			if(loggedIn != null)
 			{
@@ -74,8 +48,6 @@ public class Main {
 				mui.topUI();
 				//call memberUI for logged in user
 			}
-			//set as currentUser
-			//start memberUI
 			break;
 		case 3:
 			//exit - print message/do nothing
@@ -84,9 +56,7 @@ public class Main {
 		default:
 			System.out.println("Something went wrong");
 		}//switch
-//
-//		System.out.println("Writing accounts.txt");
-//		io.writeAllUsers(users);
+
 		
 		
 		
@@ -94,22 +64,13 @@ public class Main {
 		
 
 		
-		
-		users = uDao.getAllUsers();
-		
-		for(User u : users)
-		{
-			System.out.println(u.toString());
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
+//		//print user information -- for testing only
+//		users = uDao.getAllUsers();
+//		
+//		for(User u : users)
+//		{
+//			System.out.println(u.toString());
+//		}
 		
 		
 		sc.close();

@@ -1,9 +1,11 @@
 package ck.bank.dao;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import ck.bank.driver.Main;
+import ck.bank.pojos.Account;
 import ck.bank.pojos.User;
 
 
@@ -78,8 +80,7 @@ public class MemberUI {
 				break;
 			case 5:
 				//check balance
-				//checkBalanceAllAccounts();
-				//withdrawFunds();
+				checkBalance();
 				valid = false;
 				break;
 			case 6:
@@ -113,101 +114,20 @@ public class MemberUI {
 	}//display account information
 
 	//==========================================================
-/*
+	
 	public void checkBalance()
 	{
-		System.out.println("Available balance: $" + this.loggedIn.getBalance());
+		List<Account> accounts = Main.aDao.getAllAccounts(this.loggedIn.getUserId());
+		double accountsTotal = 0;
+		
+		for(Account a : accounts)
+		{
+			accountsTotal += a.getBalance();
+		}
+		
+		System.out.println("Total funds available accross all accounts:\n" + accountsTotal);
 	}//check balance
-*/
-	//==========================================================
-/*
-	public void withdrawFunds()
-	{
-		double amountToWithdraw = 0;
-		boolean valid = false;
-		System.out.println("Available balance: $" + this.loggedIn.getBalance());
-		System.out.println("Your account cannot overdraw more than $100.00");
-		System.out.println("Enter amount to withdraw:");
 
-		while(!valid)
-		{
-			try
-			{
-				amountToWithdraw = Main.sc.nextDouble();
-				if((this.loggedIn.getBalance()-amountToWithdraw) < 100)
-				{
-					System.out.println("\n\nYou cannot withdraw that much");
-					System.out.println("Your account cannot overdraw more than $100.00");
-					System.out.println("Available Balance: $" + this.loggedIn.getBalance());
-					System.out.println("Enter amount to withdraw:");
-					Main.sc.nextLine();
-				}else if(amountToWithdraw < 0)
-				{
-					System.out.println("\n\nNegative input");
-					System.out.println("You cannot withdraw negative amounts!");
-					System.out.println("Available Balance: $" + this.loggedIn.getBalance());
-					System.out.println("Enter amount to withdraw:");
-					Main.sc.nextLine();
-				}else
-				{
-					this.loggedIn.setBalance(this.loggedIn.getBalance()-amountToWithdraw);
-					System.out.println("\n\nWithdrawal completed successfully.");
-					System.out.println("Your new available balance is: $" + this.loggedIn.getBalance());
-					valid = true;
-				}//if-else
-			}catch(InputMismatchException ime)
-			{
-				System.out.println("\n\nNon-number input");
-				System.out.println("Your account cannot overdraw more than $100.00");
-				System.out.println("Available balance: $" + this.loggedIn.getBalance());
-				System.out.println("Enter the amount to withdraw:");
-				Main.sc.nextLine();
-			}//try-catch
-		}//while
-		//sc.close();
-	}//withdraw funds
-*/
-	//=================================================================
-/*
-	public void depositFunds()
-	{
-		double amountToDeposit;
-		boolean valid = false;
-		System.out.println("Current balance: $" + this.loggedIn.getBalance());
-		System.out.println("Enter amount to deposit:");
-
-		while(!valid)
-		{
-			try
-			{
-				amountToDeposit = Main.sc.nextDouble();
-				if(amountToDeposit < 0)
-				{
-					System.out.println("\n\nNegative input");
-					//System.out.println("You cannot deposit negative amounts!");
-					System.out.println("Current Balance: $" + this.loggedIn.getBalance());
-					System.out.println("Enter amount to deposit:");
-				}else
-				{
-					this.loggedIn.setBalance(this.loggedIn.getBalance() + amountToDeposit);
-					System.out.println("\n\nDeposit completed successfully");
-					System.out.println("Your new balance is: $" + this.loggedIn.getBalance());
-					valid = true;
-				}//if-else
-
-			}catch(InputMismatchException ime)
-			{
-				//System.out.println("--INVALID ENTRY--INVALID ENTRY--");
-				//System.out.println("================================");
-				System.out.println("\n\nNon-number input");
-				System.out.println("Current balance is: $" + this.loggedIn.getBalance());
-				System.out.println("Enter amount to deposit:");
-				Main.sc.nextLine();
-			}//try-catch
-		}//while
-		//sc.close();
-	}//deposit funds
-*/
 	//=====================================================================
 
 	public void changeFirstName()
