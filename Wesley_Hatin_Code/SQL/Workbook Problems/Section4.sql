@@ -3,9 +3,13 @@
 CREATE OR REPLACE PROCEDURE employee_names
 IS
 BEGIN
-    SELECT firstname, lastname FROM employee;
+   FOR t IN (SELECT firstname, lastname FROM employee) 
+   LOOP 
+      dbms_output.put_line(t.firstname || ', ' || t.lastname); 
+   END LOOP; 
 END;
 /
+dbms_output.put_line('idk');
 EXECUTE employee_names;
 --4.2 Stored Procedure Input Parameters
 --Task – Create a stored procedure that updates the personal information of an employee.

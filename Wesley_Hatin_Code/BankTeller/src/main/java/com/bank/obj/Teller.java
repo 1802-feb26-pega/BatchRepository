@@ -1,19 +1,25 @@
 package com.bank.obj;
 
+import java.util.List;
+
 import com.bank.dao.BankDatabaseImpl;
 
 public class Teller {
 	
 	private String username;
 	private String password="";
+	private String firstname;
+	private String lastname;
 	private BankDatabaseImpl db=new BankDatabaseImpl();
 	
-	// create an account with a unique email or username
-	public boolean createUser(String newUser, String newPass) {
+	// create a new user entry with a unique username, returns true if successful
+	public boolean createUser(String newUser, String newPass, String newFirst, String newLast) {
 		if(!db.userValidation(newUser)) {
-			db.writeNewClient(newUser, newPass);
+			db.writeNewUser(newUser, newPass, newFirst, newLast);
 			username = newUser;
 			password = newPass;
+			firstname = newFirst;
+			lastname = newLast;
 			return true;
 		}
 		else {
@@ -21,11 +27,31 @@ public class Teller {
 		}
 	}
 	
+	// create a new account under a username, returns true if successful
+	public boolean createAccount(String username, String newAccount, boolean firstAccount) {
+		if(firstAccount) {
+			db.writeNewAccount(username, newAccount);
+			return false;
+		}
+		else {
+			if(!db.accountValidation(username, newAccount)) {
+				db.writeNewAccount(username, newAccount);
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+	
 	// log in 
 	public boolean logIn(String username, String password) {
-		if(db.userValidation(username, password)) {
+		if(db.passwordValidation(username, password)) {
 				this.username=username;
 				this.password=password;
+				String[] names = db.retrieveName(username);
+				this.firstname=names[0];
+				this.lastname=names[1];
 				return true;
 		}
 		return false;
@@ -35,11 +61,13 @@ public class Teller {
 	public void logOut() {
 		this.username=null;
 		this.password=null;
+		this.firstname=null;
+		this.lastname=null;
 	}
 	
 	//deposit money
 	public void deposit(Account account, double amount) {
-		db.writeBalance(username, account.getAccountName(), account.getBalance() + amount);
+		db.writeBalance(username, account, account.getBalance() + amount);
 	}
 	
 	//withdraw money
@@ -48,9 +76,21 @@ public class Teller {
 			return false;
 		}
 		else {
-			db.writeBalance(username, account.getAccountName(), account.getBalance()-amount);
+			db.writeBalance(username, account, account.getBalance() - amount);
 			return true;
 		}
+	}
+
+	public boolean transfer(Account fromAccount, Account toAccount, Double amount) {
+		if(fromAccount.getBalance()>amount) {
+			db.writeBalance(username, fromAccount, fromAccount.getBalance() - amount);
+			db.writeBalance(username, toAccount, toAccount.getBalance() + amount);
+			return true;
+		}
+		else {
+			return false;
+		}
+		
 	}
 
 	public String getUsername() {
@@ -61,19 +101,29 @@ public class Teller {
 		return password;
 	}
 	
+	public String getFirstName() {
+		return firstname;
+	}
+	
+	public String getLastName() {
+		return lastname;
+	}
+	
+	public List<Account> getAllAccounts() {
+		return db.retrieveAccounts(username);
+	}
+	
 	public Double getBalance(String accountName) {
-		Account account = db.retrieveAccountInfo(username, accountName);
-		return account.getBalance();
-	}
-
-	public Account getAccount(String valueOf) {
-		// TODO Auto-generated method stub
+		List <Account> accountList = db.retrieveAccounts(username);
+		
+		for(Account account : accountList) {
+			if(account.getAccountName().equals(accountName)) {
+				return account.getBalance();
+			}
+		}
+		
 		return null;
-	}
-
-	public boolean transfer(Double amount) {
-		// TODO Auto-generated method stub
-		return false;
+		
 	}
 
 }
