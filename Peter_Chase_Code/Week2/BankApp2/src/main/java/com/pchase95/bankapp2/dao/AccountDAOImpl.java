@@ -131,6 +131,7 @@ public class AccountDAOImpl implements AccountDAO {
 			int rowsAffected = pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			
+			
 			if (rowsAffected > 0) {
 				while (rs.next()) {
 					newAccount.setId(rs.getLong(1));
