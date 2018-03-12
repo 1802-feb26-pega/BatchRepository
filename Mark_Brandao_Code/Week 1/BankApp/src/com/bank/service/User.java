@@ -62,6 +62,14 @@ public class User {
 		}
 	}
 	
+	public void adjustBalance(double adjustment) {
+		if(this.balance + adjustment < 0) {
+			System.out.println("You can't have a negative balance!");
+		} else {
+			this.balance += adjustment;
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return this.username + "," + this.password + "," + this.firstname + "," + this.lastname + "," + this.balance + "\n";

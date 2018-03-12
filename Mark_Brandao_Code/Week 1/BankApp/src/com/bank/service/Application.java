@@ -65,17 +65,28 @@ public class Application {
 			}
 			else if (getOption() == 2) {
 				System.out.println("Enter how much you would like to deposit: ");
+<<<<<<< HEAD
 				double withdraw = scan.nextDouble();
 				double total = user.getBalance() + withdraw;
 				user.setBalance(total);
 				System.out.println("\nYour current balance is: $" + user.getBalance());
+=======
+				double deposit = scan.nextDouble();
+				user.adjustBalance(deposit);
+				System.out.println("Your current balance is: $" + user.getBalance());
+>>>>>>> 2c144edc650abac473a572d116be280d87ef3dcc
 			}
 			else if(getOption() == 3) {
 				System.out.println("Enter how much you would like to withdraw: ");
 				double withdraw = scan.nextDouble();
+<<<<<<< HEAD
 				double total = user.getBalance() - withdraw;
 				user.setBalance(total);
 				System.out.println("\nYour current balance is: $" + user.getBalance());
+=======
+				user.adjustBalance(-1.0*withdraw);
+				System.out.println("Your current balance is: $" + user.getBalance());
+>>>>>>> 2c144edc650abac473a572d116be280d87ef3dcc
 			}
 			else if (getOption () == 4) {
 				cont = false;
