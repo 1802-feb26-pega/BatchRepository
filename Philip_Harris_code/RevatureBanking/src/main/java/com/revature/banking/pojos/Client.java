@@ -79,7 +79,7 @@ public class Client {
 		return Id;
 	}
 
-	public void setId(int id) {
+	public static void setId(int id) {
 		Id = id;
 	}
 

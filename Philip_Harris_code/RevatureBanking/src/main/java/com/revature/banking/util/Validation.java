@@ -8,10 +8,10 @@ import com.revature.banking.pojos.Client;
 
 public class Validation {
 	static Scanner scan = new Scanner(System.in);
-
+	static DaoImpl dao = new DaoImpl();
 	public static boolean access(Client c, Account a, String usrname, String pass) {
 
-		DaoImpl.readCustomer(c, usrname, pass);
+		dao.readCustomer(c, usrname, pass);
 		if(c.getUsrName() == null | c.getPassword() == null) return false;
 		else if(c.getUsrName().equals(usrname) & c.getPassword().equals(pass)) {
 			DaoImpl.readAccount(c,a);
@@ -130,7 +130,7 @@ public class Validation {
 		return false;		
 	}
 	public static boolean writeNewUser(Client c, Account a) {
-		return DaoImpl.writeUser(c, a);
+		return dao.writeUser(c, a);
 
 	}
 	public static boolean check_update(int num) {

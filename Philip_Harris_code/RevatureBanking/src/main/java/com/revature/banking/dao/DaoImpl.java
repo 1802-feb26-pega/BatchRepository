@@ -16,7 +16,7 @@ import com.revature.banking.util.Validation;
 
 
 public class DaoImpl implements Client_Interface, Account_Interface{
-	public static boolean writeUser(Client c, Account a) {
+	public boolean writeUser(Client c, Account a) {
 		int ara = -1;
 		int cra = -1;
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
@@ -73,7 +73,7 @@ public class DaoImpl implements Client_Interface, Account_Interface{
 		return false;
 	}
 
-	public static void readCustomer(Client c, String usrname, String pass) {
+	public void readCustomer(Client c, String usrname, String pass) {
 		// TODO Auto-generated method stub
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 
