@@ -7,6 +7,19 @@ import com.bank.obj.Account;
 import com.bank.obj.Teller;
 
 public class BankDriver {
+	
+	public static boolean isANumber(String input) {
+		String[] characters = input.split("");
+		if(characters.length==0) {
+			return false;
+		}
+		for(String character : characters) {
+			if(!character.matches("-?\\d+(\\.\\d+)?")){
+				return false;
+			}
+		}
+		return true;
+	}
 
 	public static void main(String[] args) {
 		Teller t = new Teller();
@@ -239,12 +252,22 @@ public class BankDriver {
 						counter++;
 					}
 					accountChoice = menu.nextLine(); 
+					 
+					if(!isANumber(accountChoice)) {
+						System.out.println("That's not a number. Try again.");
+						accountChoice = "";
+					}
+					else if(Integer.valueOf(accountChoice)<=0&&Integer.valueOf(accountChoice)>=accountList.size()) {
+						System.out.println("That's not one of the options, try again.");
+						accountChoice = "";
+					}
+					
 					} while (accountChoice == "");
 					fromAccount = accountList.get(Integer.valueOf(accountChoice)-1);
 					
-					counter = 0;
+					counter = 1;
 					do {
-						System.out.println("Which account would you like to withdraw to?");
+						System.out.println("Which account would you like to transfer to?");
 						System.out.print("Your options are: ");
 						for(Account account : accountList) {
 							if(!fromAccount.equals(account)) {
@@ -253,6 +276,15 @@ public class BankDriver {
 							}
 						}
 						accountChoice = menu.nextLine(); 
+						if(!isANumber(accountChoice)) {
+							System.out.println("That's not a number. Try again.");
+							accountChoice = "";
+						}
+						else if(Integer.valueOf(accountChoice)<=0&&Integer.valueOf(accountChoice)>=accountList.size()) {
+							System.out.println("That's not one of the options, try again.");
+							accountChoice = "";
+						}
+						
 					} while (accountChoice == "");
 					toAccount = accountList.get(Integer.valueOf(accountChoice)-1);
 					

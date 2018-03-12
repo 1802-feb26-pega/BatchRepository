@@ -9,8 +9,7 @@ BEGIN
    END LOOP; 
 END;
 /
-dbms_output.put_line('idk');
-EXECUTE employee_names;
+
 --4.2 Stored Procedure Input Parameters
 --Task – Create a stored procedure that updates the personal information of an employee.
 CREATE OR REPLACE PROCEDURE update_employee_info(employee_id IN number)

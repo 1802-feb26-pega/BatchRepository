@@ -11,8 +11,6 @@ BEGIN
 END;
 /
 
-select get_current_time from dual;
-
 --Task: create a function that returns the length of a mediatype from the mediatype table
 CREATE OR REPLACE FUNCTION get_mediatype_len(media_type_id IN number)
 RETURN number 
