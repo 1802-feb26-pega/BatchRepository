@@ -27,6 +27,7 @@ public class ClientUI {
 
 		while(!valid)
 		{
+			System.out.println("\nBANK INTERFACE");
 			System.out.println("Make your selection:");
 			System.out.println("1 - Create new user");
 			System.out.println("2 - Login");

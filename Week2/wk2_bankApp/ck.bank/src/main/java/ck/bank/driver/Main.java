@@ -10,7 +10,7 @@ import ck.bank.dao.MemberUI;
 import ck.bank.dao.UserDao;
 import ck.bank.dao.UserDaoImpl;
 import ck.bank.pojos.User;
-import ck.bank.dao.UserIO;
+
 
 public class Main {
 	public static Scanner sc = new Scanner(System.in);
@@ -47,8 +47,11 @@ public class Main {
 				MemberUI mui = new MemberUI(loggedIn);
 				mui.topUI();
 				//call memberUI for logged in user
+			}else
+			{
+				System.out.println("User not found - exiting");
 			}
-			break;
+			//break;
 		case 3:
 			//exit - print message/do nothing
 			System.out.println("\n\nExiting program. Thank you.\n\n");

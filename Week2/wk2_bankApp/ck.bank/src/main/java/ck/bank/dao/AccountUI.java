@@ -25,7 +25,8 @@ public class AccountUI {
 		while(!valid)
 		{
 			userInput = -1;
-			System.out.println("\n\nMake your selection:");
+			System.out.println("\nACCOUNT INTERFACE");
+			System.out.println("Make your selection:");
 			System.out.println("1 - Display Accounts");
 			System.out.println("2 - Create New Account");
 			System.out.println("3 - Withdraw Funds");
@@ -191,10 +192,16 @@ public class AccountUI {
 						return a;
 					}else
 					{
-						System.out.println("\nBad account selection\n");
-						Main.sc.nextLine();
+						continue;
 					}//if-else
 				}//for
+				
+				if(!valid)
+				{
+					System.out.println("\nBad account selection\n");
+					value = -1;
+					Main.sc.nextLine();
+				}
 
 			}catch(InputMismatchException ime)
 			{

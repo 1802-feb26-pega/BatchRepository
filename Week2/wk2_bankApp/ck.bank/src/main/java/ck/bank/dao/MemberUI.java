@@ -27,7 +27,8 @@ public class MemberUI {
 		while(!valid)
 		{
 			userInput = -1;
-			System.out.println("\n\nMake your selection:");
+			System.out.println("\nMEMBER INTERFACE");
+			System.out.println("Make your selection:");
 			System.out.println("1 - Display Member Information");
 			System.out.println("2 - Change Username");
 			System.out.println("3 - Change First Name");
@@ -125,7 +126,7 @@ public class MemberUI {
 			accountsTotal += a.getBalance();
 		}
 		
-		System.out.println("Total funds available accross all accounts:\n" + accountsTotal);
+		System.out.println("Total funds available across all accounts:\n" + accountsTotal);
 	}//check balance
 
 	//=====================================================================
