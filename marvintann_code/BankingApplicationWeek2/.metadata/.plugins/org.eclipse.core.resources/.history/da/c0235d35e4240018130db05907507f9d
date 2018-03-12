@@ -1,0 +1,36 @@
+package com.revature.bankapp.dao;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import com.revature.bankapp.pojos.Account;
+import com.revature.bankapp.util.ConnectionFactory;
+
+public class AccountDAOImplement implements AccountDAO {
+
+	@Override
+	public int addAccount(Account newAccount) {
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
+
+	@Override
+	public int updateAccount(int account_id, int user_id, int balance) {
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
+	
+	
+}

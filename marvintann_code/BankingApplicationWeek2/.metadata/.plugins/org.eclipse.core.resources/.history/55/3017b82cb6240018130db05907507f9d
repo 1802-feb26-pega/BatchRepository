@@ -1,0 +1,9 @@
+package com.revature.bankapp.dao;
+
+import java.sql.Connection;
+
+import com.revature.bankapp.util.ConnectionFactory;
+
+public class updateDatabase {
+	Connection conn = ConnectionFactory.getConnection();
+}

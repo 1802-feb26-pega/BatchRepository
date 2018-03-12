@@ -1,0 +1,26 @@
+package com.revature.bankapp.dao;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import com.revature.bankapp.util.ConnectionFactory;
+
+public class updateDatabase {
+	
+	
+	public static void statementWrite(String sql) {
+		
+		int value;
+		
+		try (Connection conn = ConnectionFactory.getConnection()) {
+			Statement stmt = conn.createStatement();
+			
+			value = stmt.executeUpdate(sql);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+}

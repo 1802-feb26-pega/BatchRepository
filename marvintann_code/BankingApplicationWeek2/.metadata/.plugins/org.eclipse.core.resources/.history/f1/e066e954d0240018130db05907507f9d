@@ -1,0 +1,20 @@
+package com.revature.bankapp.dao;
+
+import com.revature.bankapp.pojos.Account;
+
+public class AccountDAOImplement implements AccountDAO {
+
+	@Override
+	public int addAccount(Account newAccount) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateAccount(int account_id, int user_id, int balance) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
+}

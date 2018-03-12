@@ -1,0 +1,358 @@
+package com.revature.bankapp.driver;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+
+import com.revature.bankapp.dao.AccountDAOImplement;
+import com.revature.bankapp.dao.UserDAO;
+import com.revature.bankapp.dao.UserDAOImplement;
+import com.revature.bankapp.pojos.Account;
+import com.revature.bankapp.pojos.User;
+
+public class UserInterface {
+	
+	public static boolean running = true;
+	
+	// below is magic for using methods from the DAO implementations without making everything static
+	static UserInterface bar = new UserInterface();
+	static UserDAOImplement user_dao = new UserDAOImplement(bar); // we just call foo.method() for the DAO Implementations now
+	static AccountDAOImplement account_dao = new AccountDAOImplement(bar);
+	
+	// used to check if a string is a number or not
+	public static boolean is_Int(String str) {  
+		try {  
+			int i = Integer.parseInt(str);  
+		}  
+		catch(NumberFormatException nfe) {  
+			return false;  
+		}  
+		return true;  
+	}
+
+	// MAIN MENU BLOCK
+	public static void mainMenu() {
+		System.out.println("What would you like to do?");
+		System.out.println("To create an account press '1'");
+		System.out.println("To login press '2'");
+
+		Scanner input0 = new Scanner(System.in);
+		int inputInt = input0.nextInt();
+		
+		if (inputInt == 1) {
+			createUser();
+		} else if (inputInt == 2) {
+			login();
+		} else {
+			System.out.println("Please enter a valid option:");
+			mainMenu();
+		}
+	}
+	
+	// LOGIN BLOCK
+	public static void login() {
+		System.out.println("Please enter your username:");
+		Scanner input1 = new Scanner(System.in);
+		String userName = input1.nextLine();
+		
+		User user = new User();
+		
+		if(userName.equals(user.getUser_name()) == false) {
+			System.out.println("Username does not exist");
+			System.out.println("Press '9' to create an account or any other key to try again");
+			
+			Scanner input2 = new Scanner(System.in);
+			String ip2 = input2.nextLine();
+			
+			if (ip2.charAt(0) == '9') {
+				createUser();
+			} else {
+				login();
+			}
+		} 
+		
+		boolean pass = false;
+		
+		do {
+			System.out.println("Please enter your password");
+			Scanner input2 = new Scanner(System.in);
+			String pw = input1.nextLine();
+
+			if(user.getPwd().equals(pw) == false) {
+				
+				System.out.println("Password incorrect");
+				System.out.println("Log in as a different user? '9'");
+				System.out.println("Or try again by pressing any key");
+
+				Scanner input3 = new Scanner(System.in);
+				String ip3 = input2.nextLine();
+
+				if (ip3.charAt(0) != '9') {
+					login();
+				} else {
+					pass = false;
+				}
+			} else {
+				System.out.println("Login successful!");
+				pass = true;
+				userOptions(userName);
+			}
+		} while (pass = false);
+		
+	}
+	
+	// CREATE USER BLOCK
+	public static void createUser() {
+		System.out.println("Please enter a unique username:");
+		Scanner input1 = new Scanner(System.in);
+		String userName = input1.nextLine();
+		
+		User user = new User();
+		
+		if (user.getUser_name().equals(userName) == true) {
+			System.out.println("Username already exists");
+			System.out.println("Press '9' to login or any other key to enter a unque user name");
+			Scanner input2 = new Scanner(System.in);
+			String ip2 = input2.nextLine();
+			
+			if (ip2.charAt(0) != '9') {
+				createUser();
+			} else {
+				mainMenu();
+			}
+		}
+		
+		System.out.println("Please enter a password:");
+		Scanner pass1 = new Scanner(System.in);
+		String pw1 = pass1.nextLine();
+		System.out.println("Please re-enter the password:");
+		Scanner pass2 = new Scanner(System.in);
+		String pw2 = pass2.nextLine();
+		
+		if (pw1.equals(pw2)) {
+			System.out.println("Passwords match!");
+			User newUser = new User();
+			newUser.setUser_name(userName);
+			newUser.setPwd(pw1);
+			
+			
+			user_dao.addUser(newUser);
+			
+			
+			System.out.println("User account created!");
+			mainMenu();
+		} else {
+			System.out.println("Passwords do NOT match!");
+			System.out.println("Try again:");
+			createUser();
+		}
+		
+	}
+	
+	// USER OPTIONS BLOCK
+	public static void userOptions(String userName) {
+		System.out.println("What would you like to do?");
+		System.out.println("Select a Bank Account '1'");
+		System.out.println("Create a Bank Account '2'");
+		System.out.println("Logout                '3'");
+		
+		/*
+		System.out.println("View Balance      '1'");
+		System.out.println("Make a Deposit    '2'");
+		System.out.println("Make a Withdrawal '3'");
+		System.out.println("Logout            '4'");
+		*/
+		
+		Scanner input = new Scanner(System.in);
+		String ip1 = input.nextLine();
+		
+		ArrayList<Account> accounts = new ArrayList<Account>();
+		
+		if (ip1.equals("1")) {
+			System.out.println("Please choose a Bank Account: ");
+			accounts = account_dao.getAllAcounts(userName);
+			for (int i = 0; i < accounts.size(); i++) {
+				System.out.println("Bank Account ID "+accounts.get(i).getAccount_id()+"    "+(i+1));
+			}
+			Scanner ac = new Scanner(System.in);
+			String acc = ac.nextLine();
+			
+			if (is_Int(acc)) {
+				
+				try {
+					accounts.get(Integer.parseInt(acc));
+					
+					System.out.println("Account Selected Successfully!");
+					bankAccount(userName, accounts.get(Integer.parseInt(acc)).getAccount_id());
+					
+				} catch (IndexOutOfBoundsException ioobe) {
+					
+					System.out.println("No such Bank Account exists for this user");
+					
+				} 
+			} else {
+				System.out.println("Enter a valid choice:");
+				userOptions(userName);
+			}
+		} else if (ip1.equals("2")) {
+			createBankAccount(userName);
+		} else if (ip1.equals("3")) {
+			System.out.println("Successfully logged out!");
+			closing();
+		} else {
+			System.out.println("Please choose a valid option");
+			userOptions(userName);
+		}
+		
+		/*
+		if (ip1.equals("1")) {
+			System.out.println("Your balance is "+accounts.get(userName)[1]);
+			userOptions(userName);
+		} else if (ip1.equals("2")) {
+			makeDeposit(userName);
+		} else if (ip1.equals("3")) {
+			makeWithdrawal(userName);
+		} else if (ip1.equals("4")) {
+			System.out.println("Successfully logged out!");
+			closing();
+		} else {
+			System.out.println("Please enter a valid option:");
+			userOptions(userName);
+		}*/
+		
+	}
+	
+	// BANK ACCOUNT OPTIONS
+	
+	public static void bankAccount (String userName, int accountId) {
+		System.out.println("What would you like to do?");
+		System.out.println("View Balance         '1'");
+		System.out.println("Make a Deposit       '2'");
+		System.out.println("Make a Withdrawal    '3'");
+		System.out.println("Change Bank Accounts '4'");
+		System.out.println("Logout               '5'");
+		
+		Scanner input = new Scanner(System.in);
+		String ip1 = input.nextLine();
+		
+		ArrayList<Account> accounts = new ArrayList<Account>();
+		accounts = account_dao.getAllAcounts(userName);
+		Account curr = accounts.get(index)
+		
+		if (ip1.equals("1")) {
+			System.out.println("Your balance is "+11);
+			userOptions(userName);
+		} else if (ip1.equals("2")) {
+			makeDeposit(userName);
+		} else if (ip1.equals("3")) {
+			makeWithdrawal(userName);
+		} else if (ip1.equals("4")) {
+			System.out.println("Successfully logged out!");
+			closing();
+		} else if (ip1.equals("5")) {
+			
+		} else {
+			System.out.println("Please enter a valid option:");
+			bankAccount(accountId);
+		}
+	}
+	
+	// CREATE BANK ACCOUNT BLOCK
+	public static void createBankAccount(String userName) {
+		
+	}
+	
+	// DEPOSIT BLOCK
+	public static void makeDeposit (String userName) {
+		Map<String, String[]> accounts = readFromFile();
+		
+		System.out.println("How much do you want to deposit?");
+		Scanner depo = new Scanner(System.in);
+		Double dep = 0.0;
+		
+		if (depo.hasNextDouble()) {
+			dep = depo.nextDouble();
+		} else {
+			System.out.println("Please enter a valid amount:");
+			makeDeposit(userName);
+		}
+		
+		Double curr = Double.parseDouble(accounts.get(userName)[1]);
+		curr = curr + dep;
+		String toAdd = Double.toString(curr);
+		accounts.get(userName)[1] = toAdd;
+		
+		System.out.println("Deposit successful!");
+		System.out.println("New total is "+accounts.get(userName)[1]);
+		
+		updateUserInfo(accounts);
+		userOptions(userName);
+	}
+	
+	// WITHDRAW BLOCK
+	public static void makeWithdrawal (String userName) {
+		Map<String, String[]> accounts = readFromFile();
+		
+		System.out.println("Your current balance is "+accounts.get(userName)[1]);
+		System.out.println("How much do you want to withdraw?");
+		Scanner amount = new Scanner(System.in);
+		double wd = 0;
+		
+		if (amount.hasNextInt()) {
+			wd = amount.nextDouble();
+		} else {
+			System.out.println("Please enter a correct value:");
+			makeWithdrawal(userName);
+		}
+		
+		if (wd > Double.parseDouble(accounts.get(userName)[1])) {
+			System.out.println("Insufficient funds, cannot complete transaction: ");
+			makeWithdrawal(userName);
+		} else {
+			
+			Double curr = Double.parseDouble(accounts.get(userName)[1]);
+			curr = curr - wd;
+			String toAdd = Double.toString(curr);
+			accounts.get(userName)[1] = toAdd;
+			
+			System.out.println("Withdrawal successful!");
+			System.out.println("New total is "+accounts.get(userName)[1]);
+			updateUserInfo(accounts);
+			userOptions(userName);
+		}
+		
+	}
+	
+	public static void closing() {
+		running = false;
+	}
+	
+	public static void main(String[] args) {
+		
+		// create file to store things if not already exists
+		/*try {
+			Files.createFile(file);
+		} catch (FileAlreadyExistsException faee) {
+			// do nothing file already exists
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
+		if (running = true) {
+			mainMenu();
+		}
+		
+	}
+
+}

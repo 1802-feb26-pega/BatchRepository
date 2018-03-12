@@ -1,0 +1,51 @@
+package com.revature.bankapp.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import com.revature.bankapp.util.ConnectionFactory;
+
+public class updateDatabase {
+	
+	public static void check(int value) {
+		if (value == 0) {
+			System.out.println("0 rows affected: was it a DDL statement?");
+		} else {
+			System.out.println(value + "rows affected:");
+		}
+	}
+	
+	public void statementWrite(String sql) {
+		
+		int value = 0;
+		
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			Statement stmt = conn.createStatement();
+			
+			value = stmt.executeUpdate(sql);
+			check(value);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void preparedWrite(String ) {
+		
+		int value = 0;
+		
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			PreparedStatement pstmt = conn.prepareStatement();
+			
+			value = stmt.executeUpdate(sql);
+			check(value);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+}

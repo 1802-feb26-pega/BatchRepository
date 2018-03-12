@@ -1,0 +1,104 @@
+package com.revature.bankapp.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.revature.bankapp.pojos.Account;
+import com.revature.bankapp.util.ConnectionFactory;
+
+public class AccountDAOImplement implements AccountDAO {
+
+
+	@Override
+	public Account addAccount(Account newAccount) {
+
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+			conn.setAutoCommit(false);
+
+			String sql = "INSERT INTO accounts(user_id, balance) VALUES (?, ?)";
+
+			String[] key = new String[1]; // for key auto incrementing, need to pass in an array for the second argument of overloaded prepareStatement method
+			key[0] = "account_id";
+
+			PreparedStatement pstmt = conn.prepareStatement(sql, key);
+			pstmt.setInt(1, newAccount.getUser_id());
+			pstmt.setDouble(2, newAccount.getBalance());
+			int rowsAffected = pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+
+			if (rowsAffected > 0) {
+				while(rs.next()) {
+					newAccount.setAccount_id(rs.getInt(1));
+				}
+				conn.commit();
+			}
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return newAccount;
+	}
+
+
+	@Override
+	public void updateAccount(int account_id, double newbalance) {
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+			conn.setAutoCommit(false);
+			
+			String sql = "UPDATE balance = ? WHERE ";
+
+			String[] key = new String[1]; // for key auto incrementing, need to pass in an array for the second argument of overloaded prepareStatement method
+			key[0] = "account_id";
+
+			PreparedStatement pstmt = conn.prepareStatement(sql, key);
+			pstmt.setDouble(1, newbalance);
+			int rowsAffected = pstmt.executeUpdate();
+
+			if (rowsAffected > 0) {
+				
+				conn.commit();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+
+	@Override
+	public double getBalanceDB(int account_id) {
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+			conn.setAutoCommit(false);
+			
+			String sql = "SELECT balance FROM accounts WHERE account_id = ?";
+
+			String[] key = new String[1]; // for key auto incrementing, need to pass in an array for the second argument of overloaded prepareStatement method
+			key[0] = "account_id";
+
+			PreparedStatement pstmt = conn.prepareStatement(sql, key);
+			pstmt.setInt(1, account_id);
+			int rowsAffected = pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+
+			return rs.getDouble(1);
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return -1;
+	}
+	
+	
+}

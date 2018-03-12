@@ -1,0 +1,38 @@
+package com.revature.bankapp.dao;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.revature.bankapp.pojos.User;
+import com.revature.bankapp.util.ConnectionFactory;
+
+public class UserDAOImplement implements UserDAO{
+
+	@Override
+	public User addUser(User newUser) {
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	@Override
+	public int updateUser(int user_id, String user_name, String pwd) {
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
+	
+	
+	
+}

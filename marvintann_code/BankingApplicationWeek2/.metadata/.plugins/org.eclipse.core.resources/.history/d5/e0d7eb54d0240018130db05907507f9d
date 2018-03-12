@@ -1,0 +1,23 @@
+package com.revature.bankapp.dao;
+
+import java.util.List;
+
+import com.revature.bankapp.pojos.User;
+
+public class UserDAOImplement implements UserDAO{
+
+	@Override
+	public User addUser(User newUser) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateUser(int user_id, String user_name, String pwd) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
+	
+}

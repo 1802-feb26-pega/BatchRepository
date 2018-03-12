@@ -1,0 +1,10 @@
+package com.revature.bankapp.dao;
+
+import com.revature.bankapp.pojos.Account;
+
+public interface AccountDAO {
+	
+	public Account addAccount(Account newAccount);
+	public double getBalanceDB(int account_id);
+	public void updateAccount(int account_id, double newbalance);
+}

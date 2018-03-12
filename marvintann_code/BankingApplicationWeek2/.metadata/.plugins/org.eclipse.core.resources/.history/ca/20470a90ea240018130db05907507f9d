@@ -1,0 +1,10 @@
+package com.revature.bankapp.dao;
+
+import com.revature.bankapp.pojos.User;
+
+public interface UserDAO {
+	
+	public User addUser(User newUser);
+	public int getUser_idDB(String user_name);
+	
+}
