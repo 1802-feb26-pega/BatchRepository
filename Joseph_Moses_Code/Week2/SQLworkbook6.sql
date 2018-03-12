@@ -6,24 +6,27 @@
 CREATE OR REPLACE TRIGGER after_employee_insert
 AFTER
 INSERT ON employee
+FOR EACH ROW
 BEGIN
     dbms_output.put_line('employee added');
 END;
 /
 
-
 --Task – Create an after update trigger on the album table that fires after a row is inserted in the table
 CREATE OR REPLACE TRIGGER after_album_insert
 AFTER
 UPDATE ON album
+FOR EACH ROW
 BEGIN
     dbms_output.put_line('album added');
 END;
 /
+
 --Task – Create an after delete trigger on the customer table that fires after a row is deleted from the table.
 CREATE OR REPLACE TRIGGER after_customer_delete
 AFTER
 DELETE ON customer
+FOR EACH ROW
 BEGIN
     dbms_output.put_line('customer deleted');
 END;
