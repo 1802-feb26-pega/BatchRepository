@@ -26,14 +26,21 @@ public class BankDriver {
 		System.out.println("Hello welcome to Revature Banking!");
 		System.out.println("Where we take care of all your banking needs.");
 
+		//Keeps the menu up and running even after completing a list of commands 
+		//Also allows the user to log out if nesscary
+		//Allows user to Sign in or Sign up
 		while(loop) {
 			System.out.println("Please read the following menu as our options may have changed:");
 			System.out.println("If you would like to SIGN IN please PRESS 1");
 			System.out.println("If you would like to SIGN UP please PRESS 2");
 			System.out.println("If you you feel like you are in the wrong place and/or you would like to exit please PRESS 3");
 			System.out.print("Input Here:");
-			choice = Validation.validateNum(scan.next());//input validation needed
-
+			//validateNum() validates all numbers
+			choice = Validation.validateNum(scan.next());
+			
+			//Calls the sign up or the sign in method
+			//inputvalidation where if the user did not enter a valid input
+			//Forces user to input a valid number
 			switch(choice) {
 			case 1: signin();break;
 			case 2: signup(); break;
@@ -52,7 +59,10 @@ public class BankDriver {
 
 
 
-
+	//User inputs infomation about account and self
+	//to create a new user and account
+	//Everything will be sent to the DB after being validated in the 
+	//Service layer
 	private static void signup() {
 		// TODO Auto-generated method stub
 
@@ -72,6 +82,7 @@ public class BankDriver {
 
 		String usr = scan.next();
 
+		//Blocks user from using a non unique password
 		while(true) {
 			if(!Client.getClient(usr)) break;
 			System.out.println("Username is already taken please choose another: ");
@@ -100,6 +111,8 @@ public class BankDriver {
 		String checkInfo; 
 		String type = null;
 
+		//Asks user to verify that the information entered in is correct and
+		//will allow them to restart process is incorrect
 
 		while(true) {
 
@@ -157,7 +170,8 @@ public class BankDriver {
 		}
 	}
 
-
+	
+	//List of type of accounts
 	public static int user_type(int wants) {
 		int temp = 0;
 
@@ -172,6 +186,9 @@ public class BankDriver {
 
 	}
 
+	//Allows the user to sign in if the user credetentails are correct
+	//Calls startBanking to start interacting with own accoutns
+	
 	private static void signin() {
 
 		boolean bankloop = true;
@@ -189,7 +206,8 @@ public class BankDriver {
 
 		customer = new Client();
 		account = new Account();
-		//Implement multiple login in attempts
+		//Multiple login in attempts 3
+		//After 3 attempts returns to main menu
 		if (Validation.access(customer,account,usrName,pwd))
 			while(bankloop) 
 				bankloop = startBanking();
@@ -212,6 +230,10 @@ public class BankDriver {
 
 	}
 
+	//Starts the process of interacting with owned accounts
+	//USer can add, delete, withdraw and transfer money from accounts
+	//In order to transfer money one must have and empty account.
+	//Also allows user to create accounts
 	private static boolean startBanking() {
 		// TODO Auto-generated method stub
 		System.out.println("Welcome " + customer.getfName() + " " + customer.getlName());
@@ -307,8 +329,13 @@ public class BankDriver {
 			}
 			break;
 		case 5:
+			if(Account.getAcc().isEmpty()) {
+				System.out.println("You currently have no accounts.");
+				System.out.println("Please create a new account.");
+				break;
+			}
 			System.out.println("Here is the list of your accounts:");
-			//print
+			//print			
 			for(Account x: Account.getAcc()) {
 				System.out.println(x.toString());
 				System.out.println();
@@ -437,6 +464,12 @@ public class BankDriver {
 			System.out.println("");
 			System.out.println("");
 			System.out.println("");
+			customer.setfName("");
+			customer.setlName("");
+			customer.setPassword("");
+			customer.setSsn(0);
+			customer.setUsrName("");
+			customer.setId(0);
 			return false;
 		}
 		return true;

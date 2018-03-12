@@ -16,21 +16,25 @@ public class Account {
 
 
 
-
+	//Set up account constructor
 	public Account(int type, int balance, List<String> usrs) {
 		super();
 		this.type = type;
 		this.balance = balance;
-		this.usrs = usrs;
 		this.accountNumber = account_Gen();
 		
 		
 	}
+	
+	//Default Constructor
+	public Account() {
+		// TODO Auto-generated constructor stub
+	}
 
+	//Getters and Setters
 	public void setAccountNumber(long accountNumber) {
 		this.accountNumber = accountNumber;
 	}
-
 	public long getAccountNumber() {
 		return accountNumber;
 	}
@@ -40,24 +44,23 @@ public class Account {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public List<String> getUsrs() {
-		return usrs;
-	}
-	public void setUsrs(List<String> usrs) {
-		this.usrs = usrs;
-	}
-	public Account() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public void setBalance(int balance) {
 		this.balance = balance;
 	}
-
 	public int getBalance() {
 		return balance;
 
 	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	
+	
+	//Method that withdraws the balance and checks to see if account
+	//would go negative. If negative throws back false and warns user
 	public boolean withdraw(int w) {
 		int temp = balance - w;
 		if(temp > 0) {
@@ -66,39 +69,24 @@ public class Account {
 		}
 		return false;
 	}
-	public void access() {
-		System.out.println("The follwing people have access to this account: ");//MOVE TO MAIN ONCE IMPLMENTED
-		for(String x: usrs)
-			System.out.println(x);
-	}
-	public void addUser() {
-		//Add users here
-	}
-	private void removeUsr() {
-		//Remove users
-	}
-	public int getType() {
-		return type;
-	}
-	public void setType(int type) {
-		this.type = type;
-	}
-
+	
+	//Method that deposits money into account
 	public boolean deposit(int d) {
 		// TODO Auto-generated method stub
 		balance += d;
 		 return dao.updateBalance(this);
 	}
-
-
-	private static Long account_Gen() {
+	
+	//Method that generates an Account number that is 9 digits long
+	public static Long account_Gen() {
 		Random r = new Random();
 		Long Low = 100000000L;
 		Long High = 999999999L;
 		Long Result = r.nextInt((int)(High-Low)) + Low;
 		return Result;
-	}
+	}	
 	
+	//Creates an account with users input
 	public boolean createAccount(Account a,int amount, int typeof) {
 		// TODO Auto-generated method stub
 		
@@ -109,14 +97,19 @@ public class Account {
 		if(dao.createAcc(this)) return true;
 			return false;
 	}
+	
+	//Return list of accounts that current user has
 	public static List<Account> getAcc(){
-		return DaoImpl.getAccounts();
+		return dao.getAccounts();
 	}
+	
+	//Overrides toString method for custom output
 	@Override
 	public String toString() {
 		return  "[Account Number: " + accountNumber + "  ] [Balance: " + balance +" ] [Account Type: " + type + "]";
 	}
 
+	//Method that transfers money from one account to another.
 	public static boolean transfer(Account debit, Account credit,int m) {
 		// TODO Auto-generated method stub
 			debit.balance -= m;

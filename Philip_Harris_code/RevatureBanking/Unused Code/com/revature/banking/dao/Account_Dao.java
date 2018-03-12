@@ -11,7 +11,7 @@ import com.revature.banking.pojos.Account;
 import com.revature.banking.pojos.Client;
 import com.revature.banking.util.ConnectionFactory;
 
-public class Account_Dao implements Account_Interface{		
+public class Account_Dao {		
 	public static int writeAccount(Account a,Client c) {
 		int ra = -1;
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){

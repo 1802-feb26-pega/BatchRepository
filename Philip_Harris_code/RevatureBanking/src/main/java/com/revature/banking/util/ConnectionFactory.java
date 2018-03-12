@@ -28,6 +28,11 @@ public class ConnectionFactory {
 	}
  * */
  
+	
+	//The connections factory is a singleton and factory based connection
+	//There can only be on instance of the connection at all times
+	//Which reduces the ammount of conns that have to open and close.
+	//Also contains the DB info in a property file
 	private ConnectionFactory() {
 		build = false;
 	}

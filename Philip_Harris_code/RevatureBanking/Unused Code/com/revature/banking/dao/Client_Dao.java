@@ -10,7 +10,7 @@ import com.revature.banking.pojos.Client;
 import com.revature.banking.util.ConnectionFactory;
 
 
-public class Client_Dao  implements Client_Interface{
+public class Client_Dao{
 
 	public static int writeClient(Client c) {
 		int ra = -1;
