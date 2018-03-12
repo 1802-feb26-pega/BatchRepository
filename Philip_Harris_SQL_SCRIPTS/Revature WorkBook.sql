@@ -169,7 +169,7 @@ END;
 SELECT get_invoice_avg FROM DUAL;
 
 
---3.2.1
+--3.2.2
 create or replace function get_most_exp_track
 RETURN NUMBER is mx Number(3,2);
 BEGIN
@@ -305,14 +305,18 @@ EXECUTE ins_new();
 
 --6.1
 create or replace TRIGGER Q6_1 
-BEFORE INSERT ON CUSTOMER 
+BEFORE INSERT OF customerid
+ON CUSTOMER 
+FOR EACH ROW
 BEGIN
-dbms_output.put_line('IT Works when it wants too'); 
+INSERT INTO CUSTOMER (CUSTOMERID,FIRSTNAME,LASTNAME,COMPANY,ADDRESS,CITY,state,country,postalcode,phone,fax,email,supportrepid)
+    VALUES(CUSTOMER_SEQ.nextval,'test','test','Revature','13000 Revature Way','Reston','VA','USA',13579,1234560000,0000654321,'harrisphilip@yahoo.com'
+    ,2);
 END;
 /
 
 INSERT INTO CUSTOMER (CUSTOMERID,FIRSTNAME,LASTNAME,COMPANY,ADDRESS,CITY,state,country,postalcode,phone,fax,email,supportrepid)
-    VALUES(CUSTOMER_SEQ.nextval,'theGREATEST','theGREATEST','Revature','13000 Revature Way','Reston','VA','USA',13579,1234560000,0000654321,'harrisphilip@yahoo.com'
+    VALUES(CUSTOMER_SEQ.nextval,'GREATEST','GREATEST','Revature','13000 Revature Way','Reston','VA','USA',13579,1234560000,0000654321,'harrisphilip@yahoo.com'
     ,2);
 --6.2
 create or replace TRIGGER Q6_2
