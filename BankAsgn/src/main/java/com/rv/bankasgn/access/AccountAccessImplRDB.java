@@ -101,7 +101,7 @@ public class AccountAccessImplRDB implements AccountAccess {
             ps.setInt(3, a.getAccountId());
 
             int updateValue = ps.executeUpdate();
-            System.out.println(updateValue + " updated.");
+            //System.out.println(updateValue + " updated.");
         } catch (SQLException e) {
             e.printStackTrace();
         }

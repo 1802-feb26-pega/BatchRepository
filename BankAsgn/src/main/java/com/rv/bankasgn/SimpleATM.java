@@ -5,6 +5,7 @@ import com.rv.bankasgn.pojos.User;
 import com.rv.bankasgn.service.AccountService;
 import com.rv.bankasgn.service.UserService;
 
+import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -31,7 +32,7 @@ public class SimpleATM {
     static void create(){
         User x = null;
         boolean finished = false;
-        System.out.println("Okay, give us an email you would like to use: ");
+        System.out.println("Okay, give us a username you would like to use: ");
         String email = KB.nextLine();
 
         System.out.println("Okay, give us a password: ");
@@ -46,14 +47,18 @@ public class SimpleATM {
         x = new User(fname, lname, email, pw);
 
         while(!finished) {
-            if (USERVICE.registerUser(x) != null) {
-                System.out.println("Registered, now logging in.");
-                currentUser = USERVICE.getOneUser(x.getEmail(), x.getPassword());
-                finished = true;
-            } else {
-                System.out.println("Sorry, that email is already in use, please enter another: ");
-                email = KB.nextLine();
-                x.setEmail(email);
+            try {
+                if (USERVICE.registerUser(x) != null) {
+                    System.out.println("Registered, now logging in.");
+                    currentUser = USERVICE.getOneUser(x.getEmail(), x.getPassword());
+                    finished = true;
+                } else {
+                    System.out.println("Sorry, that username is already in use, please enter another: ");
+                    email = KB.nextLine();
+                    x.setEmail(email);
+                }
+            } catch(Exception e) {
+                System.out.println("Something really bad happened (It's not your fault). Try again later.");
             }
         }
 
@@ -62,7 +67,7 @@ public class SimpleATM {
         User target = null;
         boolean finished = false;
         while(!finished) {
-            System.out.println("Okay, give us your email (or type \"cancel\" to exit): ");
+            System.out.println("Okay, give us your username (or type \"cancel\" to exit): ");
             String email = KB.nextLine();
 
             if(email.equals("cancel")) {
@@ -86,7 +91,7 @@ public class SimpleATM {
         currentUser = target;
     }
 
-    static void logout() {
+    static void logout() throws SQLException{
         if(currentUser != null) {
             USERVICE.updateUser(currentUser);
 
@@ -128,24 +133,17 @@ public class SimpleATM {
             to = getOneAccount(toId);
 
             System.out.println("Okay, how many dollars?");
-            float amount = 0.0f;
+            double amount = 0.0;
             int amountD = Integer.parseInt(KB.nextLine());
 
             System.out.println("How many cents? (don't give more than 100)");
             int amountC = Integer.parseInt(KB.nextLine());
 
             if(amountD >= 0 && (amountC >= 0 && amountC < 100)) {
-                amount = amountD + ((float) amountC / 100);
-                if(amount <= from.getBalance()) {
-                    System.out.println("Transferring " + USD.format(amount) + " from account " + fromId + " to account " + toId);
-                    from.setBalance(from.getBalance() - amount);
-                    to.setBalance(to.getBalance() + amount);
-                } else {
+                amount = amountD + (amountC * .01);
+                System.out.println("Transferring " + USD.format(amount) + " from account " + from.getAccountId() + " to account " + to.getAccountId());
+                if(!ASERVICE.transfer(to,from,amount))
                     System.out.println("You don't have that much money... try again.");
-                    return;
-                }
-                ASERVICE.updateAccount(from);
-                ASERVICE.updateAccount(to);
             } else {
                 System.out.println("Oi, one of your inputs aren't valid. Try again later.");
             }
@@ -176,14 +174,14 @@ public class SimpleATM {
             }
 
             System.out.println("Okay, how many dollars?");
-            float amount = 0.0f;
+            double amount = 0.0;
             int amountD = Integer.parseInt(KB.nextLine());
 
             System.out.println("How many cents? (don't give more than 100)");
             int amountC = Integer.parseInt(KB.nextLine());
 
             if(amountD >= 0 && (amountC >= 0 && amountC < 100)) {
-                amount = amountD + ((float) amountC / 100);
+                amount = amountD + (amountC * .01);
                 if(isDeposit) {
                     System.out.println("Depositing " + USD.format(amount));
                     target.setBalance(target.getBalance() + amount);
@@ -206,7 +204,7 @@ public class SimpleATM {
         }
     }
 
-    public static void main(String... args) {
+    public static void main(String... args) throws SQLException{
         boolean done = false;
         System.out.println("\nWelcome to the Absurdly Simplified Bank.\n");
 
@@ -293,7 +291,6 @@ public class SimpleATM {
 
         System.out.println("Ending program.");
         System.out.print("Saving user data...");
-        USERVICE.backup();
         System.out.print("done!\n");
 
     }

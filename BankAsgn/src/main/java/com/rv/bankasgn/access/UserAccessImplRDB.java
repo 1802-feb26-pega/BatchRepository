@@ -90,7 +90,7 @@ public class UserAccessImplRDB implements UserAccess{
     }
 
     @Override
-    public void saveUser(User u) {
+    public void saveUser(User u) throws SQLException{
         try(Connection c = ConnectionFactory.getInstance().getConnection()) {
             String query = "INSERT INTO users (firstname,lastname,username,pw)" +
                     "VALUES (?,?,?,?)";
@@ -101,15 +101,18 @@ public class UserAccessImplRDB implements UserAccess{
             ps.setString(4,u.getPassword());
 
             int updateValue = ps.executeUpdate();
-            System.out.println(updateValue + " updated.");
+            //System.out.println(updateValue + " updated.");
         } catch (SQLException e) {
             e.printStackTrace();
+            throw e;
+        } catch(Exception ex) {
+            ex.printStackTrace();
         }
 
     }
 
     @Override
-    public void updateUser(User u) {
+    public void updateUser(User u) throws SQLException{
         try(Connection c = ConnectionFactory.getInstance().getConnection()) {
             String query = "{CALL update_user(?,?,?,?,?)}";
             CallableStatement ps = c.prepareCall(query);
@@ -120,9 +123,12 @@ public class UserAccessImplRDB implements UserAccess{
             ps.setInt(1, u.getUserId());
 
             int updateValue = ps.executeUpdate();
-            System.out.println(updateValue + " updated.");
+            //System.out.println(updateValue + " updated.");
         } catch (SQLException e) {
             e.printStackTrace();
+            throw e;
+        } catch(Exception ex) {
+            ex.printStackTrace();
         }
     }
 
