@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TRMS - Tuition Reimbursment Management System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<style>
+    .login-form{
+        width: 340px;
+        margin: 50px auto;
+    }
+
+    .login-form form{
+        margin-bottom: 15px;
+        background: #ffffff;
+        box-shadow: 0px 2px 2px rbga(0,0,0.3);
+    }
+
+    .login-form h2{
+        margin: 0 0 15px;
+    }
+
+    .login-form p a{
+        color: black;
+    }
+
+    .form-control, .btn{
+        min-height: 38px;
+        border-radius: 5px;
+        border-width: 2px;
+    }
+
+    .btn{
+        font-size: 15px;
+        font-weight: bold;
+        background: rgb(0, 92, 128);
+    }
+
+    div form{
+        padding: 15px;
+        border-radius: 5px;
+    }
+
+    .page-header{
+        width: 500px;
+        margin: auto;
+        background: rgb(0, 92, 128);
+        border-radius: 5px;
+    }
+
+    .page-header h1{
+        font-size: 5rem;
+        color: rgb(255, 255, 255);
+    }
+
+    .page-header p{
+        font-size: 1.5rem;
+        color: rgb(255, 255, 255);
+    }
+
+    body{
+        background: linear-gradient(to right, white, black);
+    }
+
+</style>
+
+<body>
+    <div class=page-header>
+        <h1 class="text-center">TRMS</h1>
+        <p class="text-center">Tuition Reimbursment Management System</p>
+    </div>
+
+    <div class="login-form">
+        <form action="">
+            <h2 class="text-center">Login</h2>
+            <div class="form-group">
+                <input type="email" class="form-control" required="required" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" required="required" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block">login</button>
+            </div>
+
+            <div class="clearfix">
+                <label for="" class="pull-left checkbox-inline">
+                    <input type="checkbox">Remember Me
+                </label>
+                <a herf ="#" class="pull-right"></a>
+            </div>
+        </form>
+        <p class="text-center">
+            <a href="#">Create Account</a>
+        </p>
+    </div>
+</body>
+</html>
