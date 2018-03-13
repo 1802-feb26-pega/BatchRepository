@@ -19,7 +19,6 @@ public class Application {
 	
 	public static User getUser() { return currentUser; }
 	
-	
 	public static void main(String[] args) {
 		WindowController.launchLogIn();
 	}
@@ -54,11 +53,11 @@ public class Application {
 		Account other = accountDAO.getAccountById(recipientAccountId);
 		
 		if (other == null) {
-			return TransferResult.NOUSER;
+			return TransferResult.NOACCOUNT;
 		}
 
 		if (account.getId() == other.getId()) {
-			return TransferResult.SAMEUSER;
+			return TransferResult.SAMEACCOUNT;
 		}
 		
 		account.setBalance(account.getBalance() - amount);

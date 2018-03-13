@@ -34,7 +34,7 @@ public class Sanitizer {
 			Integer.parseInt(pin);
 			return pin.length() == 4;
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			// Do nothing
 		}
 		
 		return false;
