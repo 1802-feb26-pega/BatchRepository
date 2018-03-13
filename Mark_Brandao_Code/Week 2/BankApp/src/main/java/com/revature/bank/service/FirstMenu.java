@@ -16,24 +16,21 @@ public class FirstMenu {
 
 		System.out.println("To log in, enter 1");
 		System.out.println("To create an account, enter 2");
+		System.out.println("To close the system, enter 3.");
 		try {
 			option = Integer.parseInt(scan.nextLine());
-//			scan.nextLine();
-			if(option != 1 && option != 2) {
-				System.out.println("Enter a valid menu option.\n");
-				fm.initialMenu();
-			} 
 		} catch (NumberFormatException ime) {
 			System.out.println("Enter a valid menu option.\n");
-			fm.initialMenu();
+			option = 0;
 		}
 		
 		if(option == 1) {
 			fm.loginMenu();
 		} else if(option == 2){
 			fm.createUser();
+		} else if(option == 3){
+			System.out.println("Goodbye!");
 		} else {
-			System.out.println("Something went wrong; please try again.");
 			fm.initialMenu();
 		}
 	}
@@ -72,19 +69,20 @@ public class FirstMenu {
 		if(validUN == false) {
 			System.out.println("There is no user with that username.");
 			fm.initialMenu();
-		}
-		System.out.println("Enter your password.");
-		String pwd = scan.nextLine();
-		boolean validPWD = fm.verifyPassword(un, pwd);
-		if(validPWD == false) {
-			System.out.println("Invalid password.");
-			fm.initialMenu();
 		} else {
-			UserDAO userDao = new UserDAOImpl();
-			MainMenu mm = new MainMenu();
-			User user = userDao.getUserByUsername(un);
-			System.out.println("Logged in.\n");
-			mm.mainMenu(user);
+			System.out.println("Enter your password.");
+			String pwd = scan.nextLine();
+			boolean validPWD = fm.verifyPassword(un, pwd);
+			if(validPWD == false) {
+				System.out.println("Invalid password.");
+				fm.initialMenu();
+			} else {
+				UserDAO userDao = new UserDAOImpl();
+				MainMenu mm = new MainMenu();
+				User user = userDao.getUserByUsername(un);
+				System.out.println("Logged in.\n");
+				mm.mainMenu(user);
+			}
 		}
 	}
 	
