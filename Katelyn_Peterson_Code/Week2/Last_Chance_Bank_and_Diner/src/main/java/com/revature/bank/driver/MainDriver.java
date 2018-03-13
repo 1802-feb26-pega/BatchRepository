@@ -7,17 +7,27 @@ import java.util.Scanner;
 import com.revature.bank.dao.UserDAOImpl;
 import com.revature.bank.pojos.User;
 
+//Name: Katelyn Peterson
+//Date: Mar. 9th, 2018
+
+/**
+* <h1> MainDriver </h1> 
+* The MainDriver class includes the main string method and calls the MenuDriver class.
+* 
+* @author Katelyn Peterson
+* @version 1.0
+* @since 03-09-2018 
+*
+*/
 public class MainDriver
 {
 	// DAO Variables
 	static private UserDAOImpl userDao = new UserDAOImpl();
 	
-	// Menu Driver
-	//private MenuDriver menu;
-	
-	// Validation Driver
-	
-
+	 /**
+	  * This is the main method which starts the Banking application and calls the MenuDriver.
+	  * @param args Unused.
+	  */
 	public static void main(String[] args)
 	{
 		// 1. Variables

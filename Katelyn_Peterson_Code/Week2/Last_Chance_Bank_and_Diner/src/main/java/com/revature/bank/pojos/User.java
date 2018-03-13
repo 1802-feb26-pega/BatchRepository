@@ -54,62 +54,112 @@ public class User
 		this.accounts = new ArrayList<>();
 	}
 	
-	// Getters and Setters
+	// Getters
+	/**
+	 * This is the method to get a particular User's ID.
+	 * @return userId - This is a User's ID.
+	 */
 	public int getUserId()
 	{
 		return userId;
 	}
 	
+	/**
+	 * This is the method to get a particular User's username.
+	 * @return userName - This is a User's username.
+	 */
 	public String getUserName()
 	{
 		return userName;
 	}
 	
+	/**
+	 * This is the method to get a particular User's password.
+	 * @return password - This is a User's password.
+	 */
 	public String getPassword()
 	{
 		return password;
 	}
 	
+	/**
+	 * This is the method to get a particular User's first name.
+	 * @return firstName - This is a User's first name.
+	 */
 	public String getFirstName()
 	{
 		return firstName;
 	}
 	
+	/**
+	 * This is the method to get a particular User's last name.
+	 * @return lastName - This is a User's last name.
+	 */
 	public String getLastName()
 	{
 		return lastName;
 	}
-
+	
+	/**
+	 * This is the method to get a particular User's Accounts.
+	 * @return accounts - This is an ArrayList of a User's Accounts.
+	 */
+	public ArrayList<Account> getAccounts()
+	{
+		return accounts;
+	}
+	
+	// Setters
+	/**
+	 * This is the method to set a particular User's ID.
+	 * @param userId  This is the new ID for a User.
+	 */
 	public void setUserId(int userId)
 	{
 		this.userId = userId;
 	}
-
+	
+	/**
+	 * This is the method to set a particular User's username.
+	 * @param userName  This is the new username for a User.
+	 */
 	public void setUsername(String userName)
 	{
 		this.userName = userName;
 	}
-
+	
+	/**
+	 * This is the method to set a particular User's password.
+	 * @param password  This is the new password for a User.
+	 */
 	public void setPassword(String password)
 	{
 		this.password = password;
 	}
 	
+	/**
+	 * This is the method to set a particular User's first name.
+	 * @param firstName  This is the new first name for a User.
+	 */
 	public void setFirstName(String firstName)
 	{
 		this.firstName = firstName;
 	}
 	
+	/**
+	 * This is the method to set a particular User's last name.
+	 * @param lastName  This is the new last name for a User.
+	 */
 	public void setLastName(String lastName)
 	{
 		this.lastName = lastName;
 	}
-
-	public ArrayList<Account> getAccounts()
-	{
-		return accounts;
-	}
-
+	
+	// Overrides
+	/**
+	 * This is the method to get a particular User's hash code.
+	 * @return result - This is the hash code.
+	 */
 	@Override
 	public int hashCode()
 	{
@@ -123,7 +173,12 @@ public class User
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
-
+	
+	/**
+	 * This is the method to check if this User is equal to another User.
+	 * @return false - If the two Users are not equal.
+	 * @return true - If the two Users are equal.
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -173,7 +228,11 @@ public class User
 			return false;
 		return true;
 	}
-
+	
+	/**
+	 * This is the toString method for User.
+	 * @return String - This is all the information concerning a User, except for their password.
+	 */
 	@Override
 	public String toString()
 	{

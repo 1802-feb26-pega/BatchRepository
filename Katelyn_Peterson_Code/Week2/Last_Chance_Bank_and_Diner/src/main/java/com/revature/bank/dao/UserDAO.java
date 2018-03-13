@@ -4,6 +4,15 @@ import java.util.List;
 
 import com.revature.bank.pojos.User;
 
+/**
+* <h1> UserDAO </h1> 
+* The UserDAO Interface lists all the methods used by UserDAOImpl.
+* 
+* @author Katelyn Peterson
+* @version 1.0
+* @since 03-09-2018 
+*
+*/
 public interface UserDAO
 {
 	public List<User> getAllUsers();

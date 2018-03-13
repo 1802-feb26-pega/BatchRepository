@@ -12,6 +12,18 @@ import java.util.List;
 import com.revature.bank.pojos.Account;
 import com.revature.bank.util.ConnectionFactory;
 
+/**
+* <h1> AccountDAOImpl </h1> 
+* The AccountDAOImpl class includes a String, a ResultSet, a Statement, a Prepared Statement, and a 
+* Callable Statement.  It also implements the AccountDAO Interface.
+* 
+* This class handles all Account related database calls for the program.
+* 
+* @author Katelyn Peterson
+* @version 1.0
+* @since 03-09-2018 
+*
+*/
 public class AccountDAOImpl implements AccountDAO
 {
 	// Variables
@@ -20,7 +32,12 @@ public class AccountDAOImpl implements AccountDAO
 	private Statement stmt;
 	private PreparedStatement pstmt;
 	private CallableStatement cstmt;
-
+	
+	/**
+	 * This is the method to find all Accounts in the database. 
+	 * 
+	 * @return accounts - This is a List of all accounts in the database.
+	 */
 	@Override
 	public List<Account> getAllAccounts()
 	{
@@ -48,7 +65,13 @@ public class AccountDAOImpl implements AccountDAO
 		}
 		return accounts;
 	}
-
+	
+	/**
+	 * This is the method to find all Accounts belonging to a particular User. 
+	 * 
+	 * @param userId  This is the user ID of the User being searched for.
+	 * @return accounts - This is a List of all accounts in the database belonging to a particular User.
+	 */
 	@Override
 	public List<Account> getAccountsByUserId(int userId)
 	{
@@ -77,7 +100,13 @@ public class AccountDAOImpl implements AccountDAO
 		}
 		return accounts;
 	}
-
+	
+	/**
+	 * This is the method to find an Account in the database via their Account ID. 
+	 * 
+	 * @param accountId  This is the account ID of the Account being searched for.
+	 * @return account - This is the Account belonging to the account ID.
+	 */
 	@Override
 	public Account getAccountByAccountId(int accountId)
 	{
@@ -104,7 +133,14 @@ public class AccountDAOImpl implements AccountDAO
 		
 		return account;
 	}
-
+	
+	/**
+	 * This is the method to add a new Account to the database. 
+	 * 
+	 * @param newAccount  This is the user ID for the User creating a new Account.
+	 * @param newAccount  This is the information for the Account being added, minus their Account ID.
+	 * @return newAccount - This is information for the Account being added, plus their Account ID.
+	 */
 	@Override
 	public Account addAccount(int userId, Account newAccount)
 	{
@@ -177,7 +213,14 @@ public class AccountDAOImpl implements AccountDAO
 		// TODO Auto-generated method stub
 		return null;
 	}*/
-
+	
+	/**
+	 * This is the method to update an Account's information in the database. 
+	 * 
+	 * @param accountId  This is the ID of the Account being updated.
+	 * @param updatedAccount  This is all the information for the Account being updated.
+	 * @return changeRows - This is confirmation that the Account has either been updated or that the operation has failed.
+	 */
 	@Override
 	public int updateAccount(int accountId, Account updatedAccount)
 	{
@@ -207,7 +250,13 @@ public class AccountDAOImpl implements AccountDAO
 		
 		return changeRows;
 	}
-
+	
+	/**
+	 * This is one method to remove an Account from the database. 
+	 * 
+	 * @param accountId  This is ID of the Account being removed.
+	 * @return changeRows - This confirms that either the Account has been removed or that the operation failed.
+	 */
 	@Override
 	public int removeAccountByAccountId(int accountId)
 	{
@@ -237,7 +286,13 @@ public class AccountDAOImpl implements AccountDAO
 		
 		return changeRows;
 	}
-
+	
+	/**
+	 * This is the method to remove all of a User's Accounts from the database. 
+	 * 
+	 * @param userId  This is ID of the User whose Accounts are being removed.
+	 * @return changeRows - This confirms that either the Accounts have been removed or that the operation failed.
+	 */
 	@Override
 	public int removeAccountsByUserId(int userId)
 	{

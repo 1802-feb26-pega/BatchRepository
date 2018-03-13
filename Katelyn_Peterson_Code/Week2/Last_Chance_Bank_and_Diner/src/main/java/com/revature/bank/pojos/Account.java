@@ -25,40 +25,69 @@ public class Account
 	static private DecimalFormat newFormat = new DecimalFormat("#.00");
 	
 	// Constructor
+	/**
+	 * This is the default constructor for the Account class.
+	 */
 	public Account()
 	{
 		this.balance = 0.00;
 		this.accountId = 0;
 	}
 	
+	/**
+	 * This is the full constructor for the Account class.
+	 * @param balance  This is the amount of money in an Account.
+	 */
 	public Account(Double balance)
 	{
 		super();
 		this.balance = balance;
+		this.accountId = 0;
 	}
 	
 	// Getters
+	/**
+	 * This is the method to get a particular Account's ID.
+	 * @return accountId - This is an Account's ID.
+	 */
 	public int getAccountId()
 	{
 		return accountId;
 	}
 	
+	/**
+	 * This is the method to get a particular Account's balance.
+	 * @return balance - This is an Account's balance.
+	 */
 	public Double getBalance()
 	{
 		return balance;
 	}
 	
+	/**
+	 * This is the method to set a particular Account's ID.
+	 * @param accountId  This is the new ID for an Account.
+	 */
 	public void setAccountId(int accountId)
 	{
 		this.accountId = accountId;
 	}
 	
+	/**
+	 * This is the method to set a particular Account's balance.  However, this method should not be used.
+	 * Use credit or debit instead.
+	 * @param balance  This is the new balance for an Account.
+	 */
 	public void setBalance(Double balance)
 	{
 		this.balance = balance;
 	}
 	
 	// Credit and Debit
+	/**
+	 * This method credits money to the Account's balance.
+	 * @param accountCredit - This is the credit to add to the Account balance.
+	 */
 	public void credit(double accountCredit)
 	{
 		if (accountCredit > 0)
@@ -67,6 +96,13 @@ public class Account
 		}		
 	}
 	
+	/**
+	  * This function debits money from the Account's balance if the balance is higher than the debit.
+	  * If the debit is greater, an IllegalArgumentException is thrown, since the debit amount is an 
+	  * inappropriate argument.
+	  * @param accountDebit - This is the debit to subtract from the Account balance.
+	  * @throws IllegalArgumentException
+	  */
 	public void debit(double accountDebit)
 	{
 		if (accountDebit > 0)
@@ -82,13 +118,11 @@ public class Account
 			}
 		}
 	}
-
-	@Override
-	public String toString()
-	{
-		return "Account: " + accountId + ", Balance: $" + Double.valueOf(newFormat.format(balance));
-	}
-
+	
+	/**
+	 * This is the method to get a particular Account's hash code.
+	 * @return result - This is the hash code.
+	 */
 	@Override
 	public int hashCode()
 	{
@@ -98,7 +132,12 @@ public class Account
 		result = prime * result + ((balance == null) ? 0 : balance.hashCode());
 		return result;
 	}
-
+	
+	/**
+	 * This is the method to check if this Account is equal to another Account.
+	 * @return false - If the two Accounts are not equal.
+	 * @return true - If the two Accounts are equal.
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -118,4 +157,15 @@ public class Account
 			return false;
 		return true;
 	}
+	
+	/**
+	 * This is the toString method for Account.
+	 * @return String - This is all the information concerning an Account.
+	 */
+	@Override
+	public String toString()
+	{
+		return "Account: " + accountId + ", Balance: $" + Double.valueOf(newFormat.format(balance));
+	}
+
 }

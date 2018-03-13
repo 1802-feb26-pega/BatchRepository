@@ -10,6 +10,19 @@ import com.revature.bank.dao.UserDAOImpl;
 import com.revature.bank.pojos.Account;
 import com.revature.bank.pojos.User;
 
+/**
+* <h1> MenuDriver </h1> 
+* The MenuDriver class includes the User and Account DAO implementation classes, a Scanner, a regular User, 
+* Strings for user, password, first name, and last name, an int, a double, a DecimalFormat, and a boolean.
+* 
+* This class performs the majority of the work, displaying menus to users for log in, registration, and 
+* handles account information as well as transactions.
+* 
+* @author Katelyn Peterson
+* @version 1.0
+* @since 03-09-2018 
+*
+*/
 public class MenuDriver
 {
 	// DAO
@@ -30,42 +43,52 @@ public class MenuDriver
 	static private Boolean valid = false;
 	
 	// Log In
+	/**
+	 * This is the method to log into the banking program.  It is called by MainDriver and, once complete, returns to
+	 * MenuDriver.
+	 * 
+	 * @param users  This is a HashMap that holds all of the program Users.
+	 */
 	static public void logIn(HashMap<String, User> users)
 	{
 		boolean valid = false;
 		
 		do
 		{
-			System.out.println("Username? ");
-        	userName = userInput.nextLine();
-        	
         	// Validation
         	if(!users.isEmpty())
         	{
-	        	for(String key : users.keySet())
-	        	{
-	        		//System.out.println("Key: " + key);
-	        		//System.out.println("userName: " + userName);
-	        		if (key.equals(userName))
-	        		{
-	        			valid = true;
-	        			break;
-	        		}
-	        	}
-	        	
-	        	if(!valid)
-	        	{
-	        		System.out.println("That Username does not match our files.");
-	        		System.out.println("Type 1 to try again: ");
-	        		ValidationDriver.validateInput(userInput, "Choice");
-	    	        option = userInput.nextInt();
-	    	        userInput.nextLine();
-	    	        
-	    	        if (option != 1)
-	    	        {
-	    	        	return;
-	    	        }
-	        	}
+    			do
+    			{
+	        		System.out.println("Username? ");
+	            	userName = userInput.nextLine();
+	            	
+	        		
+	        		for(String key : users.keySet())
+		        	{
+		        		//System.out.println("Key: " + key);
+		        		//System.out.println("userName: " + userName);
+		        		if (key.equals(userName))
+		        		{
+		        			valid = true;
+		        			break;
+		        		}
+		        	}
+		        	
+		        	if(!valid)
+		        	{
+		        		System.out.println("That Username does not match our files.");
+		        		System.out.println("Type 1 to try again: ");
+		        		ValidationDriver.validateInput(userInput, "Choice");
+		    	        option = userInput.nextInt();
+		    	        userInput.nextLine();
+		    	        
+		    	        if (option != 1)
+		    	        {
+		    	        	return;
+		    	        }
+		        	}
+    			}while(!valid);
 	        	
 				// Password
 				do
@@ -114,6 +137,10 @@ public class MenuDriver
 	}
 	
 	// Accounts
+	/**
+	 * This is the method to access a logged in User's accounts.  It will list a User's accounts, their balance, 
+	 * and provide options for them to either proceed or log out.
+	 */
 	static private void accountAccess()
 	{
 		boolean valid = false;
@@ -146,14 +173,30 @@ public class MenuDriver
 			System.out.println("Please Select an Account, Create a New One, or Log Out: ");
 			System.out.println("Select an Account by typing the Choice Number.");
 			System.out.println("To Create a New Account, type " + (options[options.length - 1] + 1));
-			System.out.println("To Transfer Money between Accounts, type " + (options[options.length - 1] + 2));
-			System.out.println("Or Log Out by typing " + (options[options.length - 1] + 3));
-			ValidationDriver.validateInput(userInput, "Choice");
-	        option = userInput.nextInt();
-	        
-	        userInput.nextLine();
-	        
-	        option = ValidationDriver.choiceVal(option, 1, (options.length + 3));
+			
+			if (options.length > 1)
+			{
+				System.out.println("To Transfer Money between Accounts, type " + (options[options.length - 1] + 2));
+				System.out.println("Or Log Out by typing " + (options[options.length - 1] + 3));
+				
+				ValidationDriver.validateInput(userInput, "Choice");
+		        option = userInput.nextInt();
+		        
+		        userInput.nextLine();
+		        
+		        option = ValidationDriver.choiceVal(option, 1, (options.length + 3));
+			}
+			else
+			{
+				System.out.println("Or Log Out by typing " + (options[options.length - 1] + 2));
+				
+				ValidationDriver.validateInput(userInput, "Choice");
+		        option = userInput.nextInt();
+		        
+		        userInput.nextLine();
+		        
+		        option = ValidationDriver.choiceVal(option, 1, (options.length + 2));
+			}
 	        
 	        if (option < (options.length + 1))
 	        {
@@ -224,7 +267,16 @@ public class MenuDriver
 		}while(!valid);
 	}
 	
-	// Deposit/Withdraw
+	// Deposit
+	/**
+	 * This is the method to deposit money into a particular account.
+	 * 
+	 * It calls ValidationDriver to ensure that all User inputs are valid, then adds money 
+	 * to the active account and calls AccountDAOImpl to ensure that the new balance is 
+	 * logged in the database.
+	 * 
+	 * @param currAccount  This is the Account being deposited into.
+	 */
 	static private void accountCred(Account currAccount)
 	{
 		// Variables
@@ -253,6 +305,15 @@ public class MenuDriver
 	}
 	
 	// Withdraw
+	/**
+	 * This is the method to withdraw money from a particular account.
+	 * 
+	 * It calls ValidationDriver to ensure that all User inputs are valid, then removes 
+	 * money from the active account and calls AccountDAOImpl to ensure that the 
+	 * new balance is logged in the database.
+	 * 
+	 * @param currAccount  This is the Account being withdrawn from.
+	 */
 	static private void accountDeb(Account currAccount)
 	{
 		// Variables
@@ -293,6 +354,9 @@ public class MenuDriver
 	}
 	
 	// New Account
+	/**
+	 * This is the method to create a new Account for the logged in User.  Once complete, it returns to AccountAccess.
+	 */
 	static private void newAccount()
 	{
     	Account temp = new Account();
@@ -310,6 +374,15 @@ public class MenuDriver
 	}
 	
 	// Transfer Money Between Accounts
+	/**
+	 * This is the method to transfer money between two Accounts.
+	 * 
+	 * It calls ValidationDriver to ensure that all User inputs are valid, then removes money from 
+	 * the first account and adds it to the second account.  During  this process, it calls AccountDAOImpl 
+	 * to log the new balances for both accounts into the database.
+	 * 
+	 * @param transferring  This is the array of Accounts involved in the transfer.
+	 */
 	static private void transfer(Account[] transferring)
 	{
 		// Variables
@@ -356,6 +429,12 @@ public class MenuDriver
 	}
 	
 	// Registration
+	/**
+	 * This is the method to register for the banking program.  It is called by MainDriver and, once complete, returns to
+	 * MenuDriver.  It also ensures that all new Users have a unique username.
+	 * 
+	 * @param users  This is a HashMap that holds all of the program Users.
+	 */
 	static public void register(HashMap<String, User> users)
 	{
 		do

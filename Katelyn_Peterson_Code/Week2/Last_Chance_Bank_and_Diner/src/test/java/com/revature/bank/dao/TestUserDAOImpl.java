@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.revature.bank.pojos.User;
@@ -50,7 +49,7 @@ public class TestUserDAOImpl
 		assertEquals(temp, testUser);
 	}
 	
-	@Ignore
+	@Test
 	public void testAddUser()
 	{
 		boolean testAdd = false;
@@ -58,12 +57,11 @@ public class TestUserDAOImpl
 		
 		tester = userDao.addUser(tester);
 		
-		if (tester == userDao.getUserByUserId(tester.getUserId()))
+		if (tester.equals(userDao.getUserByUserId(tester.getUserId())))
 		{
 			testAdd = true;
 		}
 		
 		assertTrue(testAdd);
 	}
-
 }
