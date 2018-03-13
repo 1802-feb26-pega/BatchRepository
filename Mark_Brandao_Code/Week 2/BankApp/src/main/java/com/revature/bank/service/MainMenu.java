@@ -23,7 +23,8 @@ public class MainMenu {
 		System.out.println("\nTo create an account, enter 1.");
 		System.out.println("To see available accounts, enter 2.");
 		System.out.println("To transfer funds between accounts, enter 3.");
-		System.out.println("To log out, enter 4.");
+		System.out.println("To view your total balance across accounts, enter 4.");
+		System.out.println("To log out, enter 5.");
 		int option = 0;
 		try{
 			option = Integer.parseInt(scan.nextLine());
@@ -39,15 +40,24 @@ public class MainMenu {
 		} else if(option == 3) {
 			mm.transferFunds(user);
 		} else if(option == 4) {
+			mm.sumTotal(user);
+		} else if(option == 5) {
 			System.out.println("\nLogged out.");
-		} else {
+		}
+		
+		else {
 			System.out.println("Invalid input; try again.\n");
 			mm.mainMenu(user);
 		}
 	}
 
-
-
+	private void sumTotal(User user) {
+		MainMenu mm = new MainMenu();
+		UserDAO userDao = new UserDAOImpl();
+		double total = userDao.getTotalBalance(user);
+		System.out.println("Your total balance is: $" + total);
+		mm.mainMenu(user);
+	}
 
 	private void createAccount(User user) {
 		MainMenu mm = new MainMenu();

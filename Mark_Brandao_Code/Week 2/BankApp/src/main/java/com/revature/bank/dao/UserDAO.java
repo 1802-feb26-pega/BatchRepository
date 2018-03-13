@@ -12,4 +12,5 @@ public interface UserDAO {
 	public int updateUser(int userId, User updatedUser);
 	public int removeUser(int userId);
 	public boolean hasAccount(int userId);
+	public double getTotalBalance(User user);
 }

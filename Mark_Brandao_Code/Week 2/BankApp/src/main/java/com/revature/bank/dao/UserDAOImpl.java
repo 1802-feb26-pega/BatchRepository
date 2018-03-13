@@ -1,5 +1,6 @@
 package com.revature.bank.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -180,6 +181,22 @@ public class UserDAOImpl implements UserDAO {
 		}
 		
 		return true;
+	}
+
+	@Override
+	public double getTotalBalance(User user) {
+		double total = 0D;
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			String sql = "{CALL total_balance(?, ?)}";
+			CallableStatement cstmt = conn.prepareCall(sql);
+			cstmt.setInt(1, user.getUserId());
+			cstmt.registerOutParameter(2, java.sql.Types.DECIMAL);
+			cstmt.executeUpdate();
+			total = cstmt.getDouble(2);
+		} catch (SQLException e) {
+			// do nothing
+		}
+		return total;
 	}
 
 }
