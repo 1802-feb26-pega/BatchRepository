@@ -58,5 +58,11 @@ var someFn = function() {
 
 ### exception handling
 * `throw`, `try` and `catch` statements
-
-
+* 7 built in errors
+  * EvalError
+  * InternalError
+  * RangeError
+  * ReferenceError
+  * SyntaxError
+  * TypeError
+  * URIError

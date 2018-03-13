@@ -5,6 +5,7 @@
 * two ways to create an object
   * object literal `{}` (preferred)
   * constructor (ok, but should not use `new Object()`)
+
 ```
 var someObject = {};
 
@@ -22,6 +23,7 @@ function Person(name, age) {
 
 var john = new Person("John", 28);
 ```
+
 * `:` separates names and values
 * `,` separates pairs
 * as you can see, objects in JavaScript are basically hash tables
@@ -49,6 +51,7 @@ var john = makePerson("John", 28);
 
 ### object augmentation
 * objects are very dynamic
+
 ```
 var obj = {};
 

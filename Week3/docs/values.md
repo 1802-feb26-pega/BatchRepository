@@ -7,6 +7,10 @@
 * NaN
 * **objects**
 
+### Loosely Typed
+* Any of these types can be stored in a variable, or passed as a parameter to any function
+* the language is not *untyped*
+
 ### numbers
 * 64 bit floating point
 * floating point numbers are not accurate
@@ -42,7 +46,9 @@ var x = 0.3 - 0.2; // does not equal 0.1
 ### null and undefined
 * *null* is a value that is not anything
 * *undefined* is not even that...
+
 <br/>
+
 * You can assign a value to be null
 * *undefined* is the default value for variables, parameters, nonexistent members, etc.
 ```
@@ -54,7 +60,7 @@ var y = null; //null
 * *not a number*
 
 ```
-var x = 1/0; //NaN
+var x = 0/0; //NaN
 ```
 
 

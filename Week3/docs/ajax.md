@@ -11,6 +11,7 @@
   +  open request *(can configure HTTP method and url)*
   +  send request *(can send data in request body)*
 * naive example - do not run
+
 ```
 var xhr = new XMLHttpRequest();
 
@@ -30,6 +31,7 @@ xhr.send();
 ### creating the object
 * most of the time, the object we need is XMLHttpRequest
 * older versions of IE had a different object from everyone else
+
 ```
 var xhr;
 if(XMLHttpRequest) {
@@ -69,11 +71,12 @@ if(XMLHttpRequest) {
 * **string** is optional
   * use to send data in the request body
   * cannot use with GET requests
-  
+
 ### example
 * open a browser and enter following url: `https://pokeapi.co/api/v2/pokemon/pikachu/`
 * we are going to get that data using JavaScript
 * you can enter the following into JSFiddle *(JavaScript section)*
+
 ```
 var xhr = new XMLHttpRequest();
 
@@ -89,7 +92,3 @@ xhr.open("GET", "https://pokeapi.co/api/v2/pokemon/pikachu/");
 
 xhr.send();
 ```
-
-
-
-

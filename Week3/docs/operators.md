@@ -10,6 +10,7 @@
 
 ### comparison
 * one note about **equality** operators (==, !=) and **identity** operators (===, !==)
+
 ```
 var x =  5 ;
 var y = "5";
@@ -28,7 +29,9 @@ x === y //false
 * && is called the **guard operator**
   * if first operand is *truthy*, then return **second** operand
   * if first operand is *falsy*,  then return **first** operand
+  
 ```
+
 //long version
 if(a) {
   return a.member;
@@ -38,17 +41,21 @@ if(a) {
 
 //using guard operator
 return a && a.member;
+
 ```
 
 * || is called the **default operator**
   * if first operand is *truthy*, then return **first** operand
   * if first operand is *falsy*,  then return **second** operand
+
 ```
+
 var language = input || "en";
 
 ```
 
 * basic examples
+
 ```
 false || false  //false
 true  || false  //true
@@ -62,6 +69,7 @@ true  && true   //true
 ```
 
 * other examples
+
 ```
 null || 0     //0
 0    || null  //null
@@ -73,6 +81,7 @@ null && 0     //null
 1    && 2     //2
 2    && 1     //1
 ```
+
 * Can you explain why boolean primitives are better to use than Boolean objects?
 
 
@@ -87,11 +96,14 @@ null && 0     //null
 
 ### ternary
 * short and sweet
+
 ```
 var x = true  ? 1 : 0; //1
 var y = false ? 1 : 0; //0
 ```
+
 * bad practice because it is tough to understand
+
 ```
 //what is x?
 

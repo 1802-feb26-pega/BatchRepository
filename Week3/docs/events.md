@@ -19,6 +19,7 @@
 ### the two bad ways
 * these are perfect examples of obtrusive / bad JavaScript
 * put in HTML section of JSFiddle
+
 ```
 <div onclick="someFn()">my div</div>
 
@@ -44,6 +45,7 @@
 ### the one good way
 * this is unobtrusive / good JavaScript
 * put in HTML section of JSFiddle
+
 ```
 <div id="my-div">my div</div>
 
@@ -55,6 +57,7 @@
   element.addEventListener("click", someFn);
 </script>
 ```
+
 ```
 <div id="my-div">my div</div>
 
@@ -81,7 +84,8 @@
 * `event.target` is an important member
   * always points to the lowest element on the tree that was clicked
 * while inside the event handler, `this` points to the element that was clicked on
-* 
+*
+
 ```
 <div id="my-div">my div</div>
 
@@ -98,11 +102,13 @@
 * when you click on something, you are actually clicking on many different elements
 * bubble and capture determine how you traverse those elements and call their event handlers
 * assume I have an event handler for `click` on the elements `body` and `div`
+
 ```
 <body>
   <div>hello</div>
 </body>
 ```
+
 * **bubble** starts at the bottom of the tree and works its way up
   * first the event handler for the `div` is called, then the event handler for the `body` is called
 * **capture** starts at the top of the tree and works its way down
@@ -117,6 +123,7 @@
 <br/>
 
 * CSS
+
 ```
 div {
   text-align:center;
@@ -141,6 +148,7 @@ div {
 ```
 
 * HTML
+
 ```
 <div id='three'>3
   <div id="two">2
@@ -150,6 +158,7 @@ div {
 ```
 
 * JavaScript
+
 ```
 var myEventHandler = function(event){
   alert("target: " + event.target.id + " - this: " + this.id);
@@ -161,7 +170,6 @@ for(var i = 0; i < divs.length; i++){
   divs[i].addEventListener("click", myEventHandler);
 }
 ```
+
 * try adding a third parameter of `true` to the `addEventListener` method
   * how does the output change?
-
-

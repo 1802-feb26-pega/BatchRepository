@@ -1,11 +1,13 @@
 # functions.md
-* functions are first-class objects
+* functions are first-class citizens
   * they can be passed, returned, and stored just like any other value
 * Function inherits from Object and can store name/value pairs
 * What JavaScript calls function, other language call lambda
   * JavaScript was the first lambda based language to go mainstream
 * function statement is shorthand for var statement
   * `function foo(){}` *expands to* `var foo = function(){}`
+* no function overloading
+  * number of parameters can vary
 
 
 
@@ -19,12 +21,15 @@
 ### closure
 * this is how we achieve encapsulation
 * basically a function in a function
+
 ```
 function abc() {
   function def() {}
 }
 ```
+
 * inner function retains its *environment*
+
 ```
 function abc () {
   var str = "hello from outer function";
@@ -64,6 +69,7 @@ abc()();
 
 ### method form
 * `this` points to the object which was used during method invocation
+
 ```
 someObj.someFn(); //inside of someFn, 'this' will point to someObj
 ```
@@ -73,6 +79,7 @@ someObj.someFn(); //inside of someFn, 'this' will point to someObj
 * if there is no explicit return statement, then `this` will be returned
 * **best practice** is to capitalize functions that are meant to be constructors
   * see below example for why
+
 ```
 var Person = function(name, age) {
   this.name = name;
@@ -88,9 +95,3 @@ console.log(john);
 * looks weird
 * allows you to invoke a method while dynamically setting the object
 * `this` points to the object that you pass into the `apply` method
-
-
-
-
-
-
