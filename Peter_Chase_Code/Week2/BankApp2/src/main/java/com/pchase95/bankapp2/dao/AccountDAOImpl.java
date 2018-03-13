@@ -1,5 +1,6 @@
 package com.pchase95.bankapp2.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -155,6 +156,21 @@ public class AccountDAOImpl implements AccountDAO {
 		}
 		
 		return rowsAffected > 0;
+	}
+	
+	@Override
+	public double totalBalance() {
+		double value = 0.0;
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			String sql = "{ call total_money(?) }";
+			CallableStatement cstmt = conn.prepareCall(sql);
+			cstmt.registerOutParameter(1, java.sql.Types.DOUBLE);
+			cstmt.executeQuery();
+			value = cstmt.getDouble(1);			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return value;
 	}
 
 }

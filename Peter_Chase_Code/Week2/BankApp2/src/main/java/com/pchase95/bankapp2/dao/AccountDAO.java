@@ -11,4 +11,5 @@ public interface AccountDAO {
 	public boolean addAccount(Account newAccount);
 	public boolean updateAccount(long accountId, Account updatedAccount);
 	public boolean removeAccount(long accountId);
+	public double totalBalance();
 }

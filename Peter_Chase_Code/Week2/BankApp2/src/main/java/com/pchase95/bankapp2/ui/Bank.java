@@ -68,6 +68,7 @@ public class Bank extends JFrame {
 						JOptionPane.showInputDialog(null, "Enter recipient accound id"));
 				Application.transfer(account, amount, recipientAccountId);
 				lblSuccess.setText("Transfer Success");
+				updateBalance();
 			} catch (NumberFormatException e) {
 				lblSuccess.setText("Invalid id");
 			}
@@ -140,7 +141,7 @@ public class Bank extends JFrame {
 		lblBalance = new JLabel("Balance");
 		lblBalance.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBalance.setFont(new Font("SansSerif", Font.PLAIN, 36));
-		lblBalance.setBounds(40, 55, 476, 54);
+		lblBalance.setBounds(40, 53, 476, 54);
 		contentPane.add(lblBalance);
 		
 		moneyField = new JTextField();

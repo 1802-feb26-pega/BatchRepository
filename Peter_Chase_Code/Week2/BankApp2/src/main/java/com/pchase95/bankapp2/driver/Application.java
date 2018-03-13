@@ -42,6 +42,10 @@ public class Application {
 		return accountDAO.getAccountById(accountId);
 	}
 	
+	public static double getTotalMoney() {
+		return accountDAO.totalBalance();
+	}
+	
 	public static TransferResult transfer(Account account, double amount, long recipientAccountId) {
 		if (account.getBalance() - amount < 0.0) {
 			return TransferResult.NOFUNDS;
@@ -68,6 +72,7 @@ public class Application {
 	
 	public static void deposit(Account account, double amount) {
 		account.setBalance(account.getBalance() + amount);
+		accountDAO.updateAccount(account.getId(), account);
 	}
 	
 	public static List<Account> fetchUserAccounts() {

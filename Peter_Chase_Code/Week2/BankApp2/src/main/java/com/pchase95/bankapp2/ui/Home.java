@@ -60,7 +60,7 @@ public class Home extends JFrame {
 		long id = model.get(list.getSelectedIndex()).getId();
 		String pin = JOptionPane.showInputDialog(null, "Enter 4 digit pin");
 		Account account = Application.getAccountById(id);
-		if (pin.equals(account.getPin())) {
+		if (pin != null && pin.equals(account.getPin())) {
 			WindowController.launchBank(id, this);
 			lblStatus.setText("");
 		} else {

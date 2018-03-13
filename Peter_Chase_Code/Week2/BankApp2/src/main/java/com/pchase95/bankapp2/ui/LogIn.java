@@ -24,9 +24,13 @@ public class LogIn extends JFrame {
 	private JLabel lblUsername;
 	private JLabel lblPassword;
 	private JLabel lblStatus;
+	private JLabel lblCurrrentMoney;
+	private JLabel lblCurrentMoney;
 
 	public LogIn() {
 		initialize();
+		lblCurrentMoney.setText(
+				String.format("$%.2f", Application.getTotalMoney()));
 	}
 	
 	private void btnSignUpClick() {
@@ -50,35 +54,35 @@ public class LogIn extends JFrame {
 	 * Initialize the contents of the 
 	 */
 	private void initialize() {
-		setBounds(100, 100, 539, 467);
+		setBounds(100, 100, 539, 502);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
 		lblPetesBank = new JLabel("Pete's Bank");
 		lblPetesBank.setFont(new Font("SansSerif", Font.PLAIN, 24));
-		lblPetesBank.setBounds(191, 50, 141, 51);
+		lblPetesBank.setBounds(190, 11, 141, 51);
 		getContentPane().add(lblPetesBank);
 		
 		lblLogin = new JLabel("Login");
 		lblLogin.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		lblLogin.setBounds(190, 108, 71, 51);
+		lblLogin.setBounds(190, 129, 71, 51);
 		getContentPane().add(lblLogin);
 		
 		textFieldUsername = new JTextField();
 		textFieldUsername.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		textFieldUsername.setBounds(190, 165, 192, 34);
+		textFieldUsername.setBounds(190, 186, 192, 34);
 		getContentPane().add(textFieldUsername);
 		textFieldUsername.setColumns(10);
 		
 		textFieldPassword = new JTextField();
 		textFieldPassword.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		textFieldPassword.setBounds(190, 212, 192, 34);
+		textFieldPassword.setBounds(190, 233, 192, 34);
 		getContentPane().add(textFieldPassword);
 		textFieldPassword.setColumns(10);
 		
 		btnSignIn = new JButton("Submit");
 		btnSignIn.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		btnSignIn.setBounds(190, 259, 97, 25);
+		btnSignIn.setBounds(190, 280, 97, 25);
 		getContentPane().add(btnSignIn);
 		
 		btnSignUp = new JButton("Sign Up");
@@ -88,24 +92,35 @@ public class LogIn extends JFrame {
 			}
 		});
 		btnSignUp.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		btnSignUp.setBounds(191, 362, 109, 34);
+		btnSignUp.setBounds(191, 383, 109, 34);
 		getContentPane().add(btnSignUp);
 		
 		lblUsername = new JLabel("Username / Email");
 		lblUsername.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblUsername.setBounds(71, 166, 107, 34);
+		lblUsername.setBounds(71, 187, 107, 34);
 		getContentPane().add(lblUsername);
 		
 		lblPassword = new JLabel("Password");
 		lblPassword.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblPassword.setBounds(71, 213, 59, 34);
+		lblPassword.setBounds(71, 234, 59, 34);
 		getContentPane().add(lblPassword);
 		
 		lblStatus = new JLabel("");
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStatus.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		lblStatus.setBounds(107, 297, 297, 34);
+		lblStatus.setBounds(107, 318, 297, 34);
 		getContentPane().add(lblStatus);
+		
+		lblCurrrentMoney = new JLabel("Currently holding");
+		lblCurrrentMoney.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblCurrrentMoney.setBounds(211, 50, 107, 34);
+		getContentPane().add(lblCurrrentMoney);
+		
+		lblCurrentMoney = new JLabel("$0.00");
+		lblCurrentMoney.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCurrentMoney.setFont(new Font("SansSerif", Font.PLAIN, 36));
+		lblCurrentMoney.setBounds(22, 75, 476, 41);
+		getContentPane().add(lblCurrentMoney);
 		btnSignIn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

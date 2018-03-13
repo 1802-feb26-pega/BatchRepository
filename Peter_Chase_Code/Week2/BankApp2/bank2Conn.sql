@@ -58,6 +58,15 @@ CREATE OR REPLACE TRIGGER account_id_trigger
         FROM dual;
     END;
 /
+CREATE OR REPLACE PROCEDURE total_money(all_money OUT NUMBER)
+IS
+BEGIN
+    SELECT SUM(account_balance) INTO all_money FROM baccount;
+END;
+/
+
+CALL total_money;
+
 ------------------------------
 ------------------------------
 --------- MOCK DATA ----------
