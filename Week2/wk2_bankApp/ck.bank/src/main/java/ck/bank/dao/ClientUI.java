@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 
@@ -18,7 +17,6 @@ import ck.bank.pojos.User;
 import ck.bank.util.ConnectionFactory;
 
 public class ClientUI {
-	//public static Scanner sc = new Scanner(System.in);
 
 	public int topUI()
 	{
@@ -73,14 +71,7 @@ public class ClientUI {
 		//validateLastName
 		newPerson.setLastName(validateLastName());
 
-		//validateBalance
-		//newPerson.setBalance(validateBalance());
-
-		//add new person to the list
-		//users.add(newPerson);
-
 		Main.uDao.addUser(newPerson);
-		//return users;
 	}//createNewUser
 
 	//========================================================
@@ -99,6 +90,7 @@ public class ClientUI {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			
+			//convert result set from db into list of usernames in java
 			while(rs.next())
 			{
 				usernames.add(rs.getString(1));
@@ -249,7 +241,7 @@ public class ClientUI {
 						return u;
 					}else
 					{
-						System.out.println("Bad login");
+						System.out.println("");
 						return null;
 					}//if-else
 
@@ -321,4 +313,4 @@ public class ClientUI {
 		return temp.toString();
 	}//validatePassword
 
-}
+}//ClientUI

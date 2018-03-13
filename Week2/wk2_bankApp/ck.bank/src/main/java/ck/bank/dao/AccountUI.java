@@ -86,10 +86,8 @@ public class AccountUI {
 				break;
 			case 3:
 				//withdraw funds
-				//display list of active accounts
 				List<Account> accountsWithdraw = Main.aDao.getAllAccounts(this.loggedIn.getUserId());
 				Account withdrawSelection=null;
-				double amountToWithdraw=-1;
 
 				//select account to withdraw from
 				if(accountsWithdraw.isEmpty())
@@ -107,9 +105,8 @@ public class AccountUI {
 				//deposit funds
 				List<Account> accountsDeposit = Main.aDao.getAllAccounts(this.loggedIn.getUserId());
 				Account depositSelection=null;
-				double amountToDeposit=-1;
 
-				//select account to withdraw from
+				//select account for deposit
 				if(accountsDeposit.isEmpty())
 				{
 					System.out.println("\n\nNo active accounts\n\n");

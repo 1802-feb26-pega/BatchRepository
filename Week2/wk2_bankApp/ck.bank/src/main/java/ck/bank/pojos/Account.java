@@ -59,7 +59,4 @@ public class Account {
 		return "Account #: " + accountNumber + " | Balance: $" + balance;
 	}
 	
-	
-	
-	
 }//Account

@@ -19,13 +19,12 @@ public class Main {
 	
 	public static void main(String[] args)
 	{
-		List<User> users;
+//		List<User> users; //used in testing
 		
 		//initialize top level client UI - make a selection to create new account, login with an existing account, or exit
 		ClientUI cui = new ClientUI();
 		int topSelection;
 		User loggedIn;
-		boolean userExit = false; //maybe put the topUI in a loop until the user manually exits?
 		
 		topSelection = cui.topUI();
 
@@ -35,23 +34,23 @@ public class Main {
 			//create new user
 			cui.createNewUser();
 			System.out.println("User created successfully");
-			//start member ui
 			break;
 		case 2:
 			//login for existing user 
-
 			loggedIn = cui.userLogin();
 			if(loggedIn != null)
 			{
+				//call memberUI for logged in user
 				System.out.println("\n\nLogin successful.\nHello, " + loggedIn.getUsername());
 				MemberUI mui = new MemberUI(loggedIn);
 				mui.topUI();
-				//call memberUI for logged in user
 			}else
 			{
-				System.out.println("User not found - exiting");
+				System.out.println("Login failed (username/password incorrect) - exiting");
 			}
-			//break;
+			//no break
+			//if the user isnt found, program exits
+			//if the user is found, then start login prompt and the program will exit back to this point
 		case 3:
 			//exit - print message/do nothing
 			System.out.println("\n\nExiting program. Thank you.\n\n");

@@ -17,14 +17,16 @@ import ck.bank.util.ConnectionFactory;
 public class UserDaoImpl implements UserDao{
 	public List<User> getAllUsers()
 	{
-		List<User> users = new ArrayList<User>();
+		List<User> users = new ArrayList<User>();	//container
 		
+		//get users from db
 		try(Connection conn = ConnectionFactory.getInstance().getConnection())
 		{
 			String sql = "SELECT * FROM customer";										//statement
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			
+			//convert result set to java objects
 			while(rs.next())
 			{	
 				User temp = new User();
@@ -37,7 +39,6 @@ public class UserDaoImpl implements UserDao{
 				users.add(temp);
 				
 			}//while
-			
 			
 		} catch (SQLException e)
 		{
@@ -187,13 +188,5 @@ public class UserDaoImpl implements UserDao{
 		return value;
 	}//updateUsername
 	
+}//UserDaoImpl
 	
-	
-	
-
-	public int removeUserByUsername(String name) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-}

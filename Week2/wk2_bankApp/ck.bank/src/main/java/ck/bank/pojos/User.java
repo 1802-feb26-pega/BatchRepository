@@ -1,8 +1,6 @@
 package ck.bank.pojos;
 
 
-import java.util.Arrays;
-
 public class User {
 	private String username;
 	private String passHash;
@@ -74,13 +72,5 @@ public class User {
 				+ ":" + lastName;
 	}
 
-
-	//		@Override
-	//		public String toString()
-	//		{
-	//			return new String(username + ":" + firstName + ":" + lastName + ":" + balance + "\n");
-	//		}
-
-
-}
+}//User
 

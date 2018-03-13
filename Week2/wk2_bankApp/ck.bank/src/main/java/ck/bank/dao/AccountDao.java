@@ -8,4 +8,4 @@ public interface AccountDao {
 	public List<Account> getAllAccounts(int uid);
 	public int createNewAccount(int uid,double newB);
 	public int updateAccountBalance(int aNumber,double bal);
-}
+}//AccountDao

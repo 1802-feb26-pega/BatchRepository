@@ -2,13 +2,9 @@ package ck.bank.dao;
 
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
-
 import ck.bank.driver.Main;
 import ck.bank.pojos.Account;
 import ck.bank.pojos.User;
-
-
 
 public class MemberUI {
 	User loggedIn;
