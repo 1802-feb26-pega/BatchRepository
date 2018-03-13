@@ -1,8 +1,10 @@
 package com.revature.bank.pojo;
 
-import java.util.ArrayList;
-import java.util.Collection;
 
+/*
+ * pogo for a User object.  Stores values for a single 
+ * entry of the bank_user table.  
+ */
 public class User {
 
 	private String userName;

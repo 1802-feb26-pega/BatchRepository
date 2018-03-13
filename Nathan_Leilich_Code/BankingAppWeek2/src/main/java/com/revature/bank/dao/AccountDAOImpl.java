@@ -1,5 +1,6 @@
 package com.revature.bank.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,11 +14,14 @@ import com.revature.bank.util.ConnectionFactory;
 public class AccountDAOImpl implements AccountDAO{
 
 	/*
-	 *
+	 * Updates a single entry in the bank_account table using an Account
+	 * object.  
+	 * Throws an SQLException if the account was not updated.
 	 */
 	@Override
 	public void updateAccount(Account account) throws SQLException {
 
+		System.out.println("processing...\n_______________________");
 		int rowsAffected = -1;
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			
@@ -40,11 +44,15 @@ public class AccountDAOImpl implements AccountDAO{
 	
 
 	/*
-	 * 
+	 * Returns all the accounts belonging to a specific user as
+	 * a Collection of accounts using bank_user.u_id.
+	 * Throws an SQLExcption if there are no Accounts are associated
+	 * with the input userID.
 	 */
 	@Override
 	public Collection<Account> getAccountsByUserID(int userID) throws SQLException {
 		
+		System.out.println("processing...\n_______________________");
 		HashSet<Account> accounts = new HashSet<Account>();
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
@@ -75,11 +83,15 @@ public class AccountDAOImpl implements AccountDAO{
 
 	
 	/*
-	 * 
+	 * Inserts a new row entry into the bank_account table using
+	 * data provided by the input account object.  Once inserted,
+	 * the account object is updated with generated keys fetched
+	 * from the database and returned.
 	 */
 	@Override
 	public Account addAccount(Account newAccount) {
 
+		System.out.println("processing...\n_______________________");
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			
 			String sql = "INSERT INTO bank_account(u_id, accountname, balance) VALUES(?, ?, ?)";
@@ -108,5 +120,32 @@ public class AccountDAOImpl implements AccountDAO{
 		}//catch
 		return newAccount;
 	}//addAccount()
-
-}
+	
+	
+	/*
+	 * deletes an entry from the bank_account table that has
+	 * an entered accountID
+	 */
+	public void deleteAccount(int accountID) throws SQLException {
+		
+		System.out.println("processing...\n_______________________");
+		int rowsAffected = 0;
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			
+			String sql = "CALL delete_account(?)";
+			
+			CallableStatement cstmt = conn.prepareCall(sql);
+			cstmt.setInt(1, accountID);
+			rowsAffected = cstmt.executeUpdate();
+			
+		}//try
+		catch(SQLException e) {
+			
+			e.printStackTrace();
+		}//catch
+		if(rowsAffected == 0) {
+			
+			throw new SQLException("account with accountId of " + accountID + " exists");
+		}//if
+	}//deleteAccount()
+}//class

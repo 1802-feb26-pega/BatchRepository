@@ -7,6 +7,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/*
+ * This class provides data base connections for DAO objects 
+ */
 public class ConnectionFactory {
 
 	private static ConnectionFactory cf = null;
@@ -34,6 +37,10 @@ public class ConnectionFactory {
 ////Methods////
 ///////////////
 	
+	/*
+	 * returns a connection object allowing for access 
+	 * to the bank database
+	 */
 	public Connection getConnection() {
 		
 		Connection conn = null;

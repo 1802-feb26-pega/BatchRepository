@@ -1,5 +1,6 @@
 package com.revature.bank.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,11 +12,20 @@ import java.util.HashSet;
 import com.revature.bank.pojo.User;
 import com.revature.bank.util.ConnectionFactory;
 
+
+
 public class UserDAOImpl implements UserDAO{
 
+	
+	/*
+	 * Updates a single entry in the bank_user table using a User
+	 * object.  
+	 * Throws an SQLException if the user was not updated.
+	 */
 	@Override
 	public void updateUser(User user) throws SQLException{
-
+		
+		System.out.println("processing...\n_______________________");
 		int rowsAffected = -1;
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			
@@ -35,9 +45,17 @@ public class UserDAOImpl implements UserDAO{
 		}//if
 	}
 
+	
+	/*
+	 * Returns a collection object containing all entries in 
+	 * the username column of the bank_user table.  
+	 * If there are no entries in the bank_User table, an
+	 * exception is thrown instead
+	 */
 	@Override
 	public Collection<String> getAllUserNames() throws SQLException {
 
+		System.out.println("processing...\n_______________________");
 		HashSet<String> userNames = new HashSet<String>();
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
@@ -64,9 +82,17 @@ public class UserDAOImpl implements UserDAO{
 		return userNames;
 	}
 
+	
+	/*
+	 * Returns a new User object containing the input username
+	 * and password.
+	 * If no entry exists in the bank_user table with the input
+	 * uername and password, an exception is thrown instead
+	 */
 	@Override
 	public User getUser(String userName, String password) throws SQLException{
 		
+		System.out.println("processing...\n_______________________");
 		User user = null;
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			
@@ -93,9 +119,17 @@ public class UserDAOImpl implements UserDAO{
 		return user;
 	}
 
+	
+	/*
+	 * Inserts a new row entry into the bank_user table using
+	 * data provided by the input User object.  Once inserted,
+	 * the user object is updated with generated keys fetched
+	 * from the database and returned.
+	 */
 	@Override
 	public User addUser(User newUser) {
 
+		System.out.println("processing...\n_______________________");
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			
 			String sql = "INSERT INTO bank_user(username, user_password) VALUES(?, ?)";
@@ -125,5 +159,31 @@ public class UserDAOImpl implements UserDAO{
 	}
 	
 	
+	/*
+	 * deletes an entry from the bank_user table that has
+	 * an entered userID
+	 */
+	public void deleteUser(int userID) throws SQLException {
+		
+		System.out.println("processing...\n_______________________");
+		int rowsAffected = 0;
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			
+			String sql = "CALL delete_user(?)";
+			
+			CallableStatement cstmt = conn.prepareCall(sql);
+			cstmt.setInt(1, userID);
+			rowsAffected = cstmt.executeUpdate();
+			
+		}//try
+		catch(SQLException e) {
+			
+			e.printStackTrace();
+		}//catch
+		if(rowsAffected == 0) {
+			
+			throw new SQLException("user with userId of " + userID + " exists");
+		}//if
+	}//deleteUser()
 
-}
+}//class

@@ -46,8 +46,7 @@ public class Driver {
 	
 	/*
 	 * prints a welcome message to the end user.  allows user to login,
-	 * create an account, or exit the program.  to options are also 
-	 * available for testing purposes: exit with serializing and admin tools
+	 * create a user, or exit the program.
 	 */
 	private static void welcome() throws IOException {
 		
@@ -56,11 +55,12 @@ public class Driver {
 		
 							"1:  login" + "\n" + 
 							"2:  new user" + "\n" + 
-							"3:  exit");
+							"3:  exit" + "\n" + 
+							"____________________________________");
 		String input = "";
 		while(invalidInput) {
 			
-			input = stdin.readLine();
+			input = readNonEmptyString();
 			switch(input) {
 			
 			case "1":
@@ -79,11 +79,12 @@ public class Driver {
 				break;
 
 			default:
-				System.out.println("\n" + "Invalid menu option.  Here are the options again:" + "\n\n" +
+				System.out.println("\n" + "****Invalid menu option.  Here are the options again:" + "\n\n" +
 			
 									"1:  login" + "\n" + 
 									"2:  new user" + "\n" + 
-									"3:  exit");
+									"3:  exit" + "\n" + 
+									"____________________________________");
 				break;
 			}//switch	
 		}//while
@@ -91,15 +92,15 @@ public class Driver {
 	
 	
 	/*
-	 * end user can create a new account
+	 * end user can create a new user
 	 */
 	private static void newUser() throws IOException {
 		
 		UserDAO udao = new UserDAOImpl();
 		HashSet<String> userNames = null;
-		try {
+		try {								//grab usernames from database
 			
-			userNames = new HashSet<String>(udao.getAllUserNames());
+			userNames = new HashSet<String>(udao.getAllUserNames());  
 		}//try
 		catch(SQLException e) {
 			
@@ -118,7 +119,7 @@ public class Driver {
 				
 				if(userNames.contains(userName)) {  
 					
-					System.out.println("that name is already in use.  Try another");
+					System.out.println("****that name is already in use.  Try another****");
 				}//if
 				else {
 					
@@ -138,7 +139,8 @@ public class Driver {
 		
 		User newUser = new User(userName, password);
 		newUser = udao.addUser(newUser);
-		manageAccounts(newUser);
+		System.out.println("\naccont created\nlogging in...\n");
+		manageAccounts(newUser);           //user is automatically logged after creation
 		
 	}//newUser()
 	
@@ -151,11 +153,11 @@ public class Driver {
 		UserDAO udao = new UserDAOImpl();
 		try{
 			
-			udao.getAllUserNames();
+			udao.getAllUserNames();		//grab all usernames from database
 		}//try
 		catch(SQLException e) {
 			
-			System.out.println("there are no user");
+			System.out.println("****there are no user****");    //return if there are no users
 			return;
 		}//catch
 		boolean invalidUser = true;
@@ -179,18 +181,20 @@ public class Driver {
 			
 			catch(SQLException e) {
 				
-				System.out.println("invalid username or password");
+				System.out.println("****invalid username or password****");
 				count++;
 				if(count > 2) {		//if user fails to login on third attempt, 
 									//they are prompted to return to the main menu
-					System.out.println("you have failed " + count + " login attempts" + "\n" +
-										"exit to main menu?  (y/n)");
+					System.out.println("****you have failed " + count + " login attempts" + "\n" +
+										"    exit to main menu?  (y/n)" + "\n" + 
+										"____________________________________");
 					boolean invalidInput = true;
 					String input = "";
 					
 					while(invalidInput) {
 						
-						input = stdin.readLine();
+						
+						input = readNonEmptyString();
 						switch(input) {
 						
 						case "y":
@@ -203,7 +207,7 @@ public class Driver {
 							break;
 							
 						default:
-							System.out.println("invalid input.  type (y/n)");
+							System.out.println("****invalid input.  type (y/n)****");
 							break;
 						
 						}//switch
@@ -211,13 +215,14 @@ public class Driver {
 				}//if
 			}//catch
 		}//while)
-		System.out.println("logging in");
+		System.out.println("\nlogging in...\n");
 		manageAccounts(user);
 	}//login()
 	
 	
 	/*
-	 * 
+	 * users can make a transaction (select account and go to transaction screen),
+	 * create an account, change password, and logout
 	 */
 	private static void manageAccounts(User user) throws IOException{
 		
@@ -230,11 +235,13 @@ public class Driver {
 								"1:  make a transaction" + "\n" + 
 								"2:  creat an account" + "\n" + 
 								"3:  change password" + "\n" +
-								"4:  logout");
+								"4:  logout" + "\n" + 
+								"____________________________________");
 			String input = "";
 			while(invalidInput) {
 				
-				input = stdin.readLine();
+				
+				input = readNonEmptyString();
 				switch(input) {
 				
 				case "1":
@@ -270,12 +277,13 @@ public class Driver {
 					break;
 					
 				default:
-					System.out.println("\n" + "Invalid menu option.  Here are the options again:" + "\n\n" +
+					System.out.println("\n" + "****Invalid menu option.  Here are the options again:" + "\n\n" +
 				
 										"1:  make a transaction" + "\n" + 
 										"2:  creat an account" + "\n" + 
 										"3:  change password" + "\n" +
-										"4:  logout");
+										"4:  logout" + "\n" + 
+										"____________________________________");
 					break;
 				}//switch
 			}//while
@@ -286,16 +294,56 @@ public class Driver {
 	
 	
 	/*
-	 * 
+	 * user creates a new account for the input user
 	 */
 	private static void createAccount(User user) throws IOException {
 		
 		AccountDAO adao = new AccountDAOImpl();
-
-		System.out.println("enter an account name");
-		String name = readNonEmptyString();
-		System.out.println("enter a starting balance");
-		double balance = readDouble();
+		ArrayList<Account> accounts = null;
+		try {						//get all accounts of the input user
+			
+			accounts = new ArrayList<Account>(adao.getAccountsByUserID(user.getUserID()));
+		}//try
+		catch(SQLException e) {
+			
+			//do nothing
+		}//catch
+		
+		boolean invalidInput = true;
+		String name = "";
+		double balance = 0;
+		while(invalidInput) {   //program loops until a valid account name is entered
+			
+			System.out.println("enter an account name");
+			name = readNonEmptyString();
+			boolean nameInUses = false;
+			try {
+				
+				for(int i = 0; i < accounts.size(); i++)
+					
+					if(accounts.get(i).getAccountName().equals(name)) {  
+						
+						nameInUses = true;
+						
+					}//if
+				//for
+				if(nameInUses) {
+					
+					System.out.println("****that name is already in use.  Try another****");
+				}//if
+				else {
+					
+					invalidInput = false;
+				}//else
+			}//try
+			catch(NullPointerException e) {
+			
+				invalidInput = false;
+			}//catch
+		}//while
+		System.out.println("enter starting ballance");
+		balance = readDouble();
+		invalidInput = false;
 		Account newAccount = new Account(name, user.getUserID(), balance);
 		adao.addAccount(newAccount);
 		System.out.println("new account created...");
@@ -303,7 +351,7 @@ public class Driver {
 	
 	
 	/*
-	 * 
+	 * user views and picks an account
 	 */
 	private static void accountView(User user) throws IOException{
 	    
@@ -315,7 +363,7 @@ public class Driver {
 		}//try
 		catch(SQLException e) {
 			
-			System.out.println("user has no accounts");
+			System.out.println("****user has no accounts****");
 			return;		
 		}//catch
 		int index = accountViewHelper(accounts);
@@ -327,7 +375,8 @@ public class Driver {
 	
 	
 	/*
-	 * 
+	 * helper method that takes a list of Accounts as a paramiter and promts the user
+	 * to select one via the console.  The index of the selected Account is returned.
 	 */
 	private static int accountViewHelper(List<Account> accounts) throws IOException{
 		
@@ -342,12 +391,13 @@ public class Driver {
 	    boolean invalidInput = true;
 	    int index = -1;
 	    
-	    while(invalidInput) {
+	    while(invalidInput) {   //program loops until valid input is taken
 	    	
-	    	String input = stdin.readLine();
+	    	
+	    	String input = readNonEmptyString();
 	    	if(input.equals("cancel")) {
 	    		
-	    		System.out.println("canceling...");
+	    		System.out.println("canceling...");   //canels selection
 	    		invalidInput = false;
 	    	}//if
 	    	else {
@@ -355,19 +405,19 @@ public class Driver {
 	    		try {
 	    			
 	    			index = Integer.parseInt(input);
-	    			if(index > 0 && index <= accounts.size()) {
+	    			if(index > 0 && index <= accounts.size()) {   //valid numeral input
 		    			
 	    				index--;
 		    			invalidInput = false;
 		    		}//if
-		    		else {
+		    		else {    //invalid numeral input
 		    			
-		    			System.out.println("invalid input");
+		    			System.out.println("****invalid input****");
 		    		}//else
 	    		}//try
 	    		catch(NumberFormatException nfe) {
 	    			
-	    			System.out.println("invalid input");
+	    			System.out.println("****invalid input****");
 	    		}//catch	
 	    	}
 	    }//while
@@ -392,11 +442,13 @@ public class Driver {
 								"2:  withdraw" + "\n" + 
 								"3:  deposite" + "\n" +
 								"4:  transfer money" + "\n" +
-								"5:  back to user menu");
+								"5:  back to user menu" + "\n" + 
+								"____________________________________");
 			String input = "";
 			while(invalidInput) {
 				
-				input = stdin.readLine();
+				
+				input = readNonEmptyString();
 				switch(input) {
 				
 				case "1":
@@ -424,7 +476,7 @@ public class Driver {
 					}//if
 					else {
 						
-						System.out.println("insoficant funds");
+						System.out.println("****insoficant funds****");
 					}//else
 					invalidInput = false;
 					break;
@@ -453,7 +505,7 @@ public class Driver {
 					if(account.getBalance() >= transfer) {
 						
 						ArrayList<Account> accounts = null;
-						try {
+						try {									//get a list of accounts belonging to the user
 							
 							accounts = new ArrayList<Account>(adao.getAccountsByUserID(account.getUserID()));
 						}//try
@@ -464,26 +516,28 @@ public class Driver {
 							e.toString();
 						}//catch
 						
-					    int index = accountViewHelper(accounts);
-					    if(index < 0) {
+					    int index = accountViewHelper(accounts);   //select a recipient account
+					    if(index < 0) {  // invalid result from accountViewHelper()
 					    	
 					    	System.out.println( "1:  balance" + "\n" + 
 												"2:  withdraw" + "\n" + 
 												"3:  deposite" + "\n" +
 												"4:  transfer money" + "\n" +
-												"5:  back to user menu");
+												"5:  back to user menu" + "\n" + 
+												"____________________________________");
 					    	break;
 					    }
-					    Account recipient = accounts.get(index);
+					    Account recipient = accounts.get(index);  
 					    
-					    if(account.getAccountName().equals(recipient.getAccountName())) {
+					    if(account.getAccountName().equals(recipient.getAccountName())) {  //two were the same
 					    	
 					    	System.out.println("cannot transfer money to the same account" + "\n" +
 								    			"1:  balance" + "\n" + 
 												"2:  withdraw" + "\n" + 
 												"3:  deposite" + "\n" +
 												"4:  transfer money" + "\n" +
-												"5:  back to user menu");
+												"5:  back to user menu" + "\n" + 
+												"____________________________________");
 					    	break;
 					    }//if
 						
@@ -507,7 +561,7 @@ public class Driver {
 					}//if
 					else {
 						
-						System.out.println("insoficant funds");
+						System.out.println("****insoficant funds****");
 					}//else
 					invalidInput = false;
 					break;
@@ -519,13 +573,14 @@ public class Driver {
 					break;
 					
 				default:
-					System.out.println("\n" + "Invalid menu option.  Here are the options again:" + "\n\n" +
+					System.out.println("\n" + "****Invalid menu option.  Here are the options again:" + "\n\n" +
 				
 										"1:  balance" + "\n" + 
 										"2:  withdraw" + "\n" + 
 										"3:  deposite" + "\n" +
 										"4:  transfer money" + "\n" +
-										"5:  back to user menu");
+										"5:  back to user menu" + "\n" + 
+									"____________________________________");
 					break;
 				}//switch	
 			}//while
@@ -553,10 +608,11 @@ public class Driver {
 		String returnString = "";
 		while(invalidInput) {
 			
+			System.out.print(">> ");
 			returnString = stdin.readLine();
 			if(returnString.equals("")){
 				
-				System.out.println("Invald input.  cannot be empty string");
+				System.out.println("****Invald input.  cannot be empty string****");
 			}//if
 			else {
 				
@@ -579,13 +635,14 @@ public class Driver {
 			
 			try {
 				
+				System.out.print(">> ");
 				returnDouble = Double.parseDouble(stdin.readLine());
 				invalidInput = false;
 				
 			}//try
 			catch (NumberFormatException nfe) {
 				
-				System.out.println("Invald input.  Must enter a decimal number");
+				System.out.println("****Invald input.  Must enter a decimal number");
 			}//catch
 			catch (IOException e) {
 				

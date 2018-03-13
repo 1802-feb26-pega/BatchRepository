@@ -1,5 +1,10 @@
 package com.revature.bank.pojo;
 
+
+/*
+ * pogo for a Account object.  Stores values for a single 
+ * entry of the bank_account table.  
+ */
 public class Account {
 	
 	private int accountID;
