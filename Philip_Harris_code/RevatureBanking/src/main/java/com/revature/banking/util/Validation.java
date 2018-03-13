@@ -195,4 +195,20 @@ public class Validation {
 		if(d == c) return false;
 		return true;
 	}
+
+	//Validates the input for the type of accounts
+	public static int valid_type(int x) {
+		while(true) {
+			if(x >= 1 & x <= 4) {
+				return x;
+			}
+			else {
+				System.out.println("Please enter in a valid option:");
+				System.out.println("Input here: ");
+				x = validateNum(scan.next());
+				System.out.println();
+				System.out.println();
+			}
+		}
+	}
 }

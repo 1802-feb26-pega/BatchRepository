@@ -126,6 +126,9 @@ public class BankDriver {
 		int typeof = user_type(Validation.validateNum(scan.next()));
 		System.out.println();
 		System.out.println();
+		
+		//Validation for typeof
+		typeof = Validation.valid_type(typeof);
 
 
 		String checkInfo; 
