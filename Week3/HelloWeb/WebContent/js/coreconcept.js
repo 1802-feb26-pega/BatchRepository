@@ -201,7 +201,7 @@ friends.forEach( function(eachName, index){
 
 /*
  * Closures allow JS programmers to write better code. A closure is an inner function that has
- * access to the outer  (enclosing) function's variables. The inner function has access to not
+ * access to the outer (enclosing) function's variables. The inner function has access to not
  * only the outer function's variables, but also to the outer function's parameters.
  * Further Reading: http://javascriptissexy.com/understand-javascript-closures-with-ease/
  * Basic example: 
