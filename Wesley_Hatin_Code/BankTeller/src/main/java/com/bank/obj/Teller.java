@@ -72,7 +72,7 @@ public class Teller {
 	
 	//withdraw money
 	public boolean withdraw(Account account, double amount) {
-		if(account.getBalance() < 0) {
+		if(account.getBalance() < amount) {
 			return false;
 		}
 		else {

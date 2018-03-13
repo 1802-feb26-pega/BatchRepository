@@ -43,7 +43,7 @@ public class BankDriver {
 			System.out.println("");
 			
 			if (t.logIn(user, pass)) {
-				System.out.println("Password accepted: Welcome, " + t.getFirstName() + " "  + t.getLastName());
+				System.out.println("Password accepted: Welcome, " + t.getFirstName() + " "  + t.getLastName() + ".");
 			} 
 			else {
 				System.out.println("Sorry, that's not a valid username/password combination.");

@@ -137,11 +137,11 @@ public class BankDatabaseImpl implements BankDatabase{
 	public String[] retrieveName(String givenUser) {
 		String[] name = new String[2];
 		
-		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+		/*try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			
-			String sql = "SELECT firstname, lastname FROM users WHERE username = 'wjhatin'";
+			String sql = "SELECT firstname, lastname FROM users WHERE username = ?";
 			PreparedStatement pstat = conn.prepareStatement(sql);
-			//pstat.setString(1, givenUser);
+			pstat.setString(1, givenUser);
 			
 			ResultSet rs = pstat.executeQuery(sql);
 			while(rs.next()) {
@@ -154,7 +154,9 @@ public class BankDatabaseImpl implements BankDatabase{
 			
 		}catch(SQLException s) {
 			s.printStackTrace();
-		}
+		}*/
+		name[0]="valued";
+		name[1]="user";
 		return name;
 	}
 	
@@ -163,19 +165,18 @@ public class BankDatabaseImpl implements BankDatabase{
 		List <Account> accountList = new ArrayList <Account>();
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			
-			StringBuilder sql = new StringBuilder("SELECT * FROM accounts WHERE username = '"); 
-			sql.append(givenUser);
-			sql.append("'");
+			String sql = new String("SELECT * FROM accounts"); 
 			Statement stat = conn.createStatement();
-
-			ResultSet rs = stat.executeQuery(sql.substring(0));
+			ResultSet rs = stat.executeQuery(sql);
 			
 			while(rs.next()) {
 				Account newAccount = new Account();
 				newAccount.setAccountName(rs.getString(1));
 				newAccount.setUsername(rs.getString(2));
 				newAccount.setBalance(rs.getDouble(3));
-				accountList.add(newAccount);
+				if((newAccount.getUsername()).equals(givenUser)){
+					accountList.add(newAccount);
+				}
 				
 			}
 			
