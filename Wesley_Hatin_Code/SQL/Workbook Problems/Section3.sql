@@ -11,6 +11,8 @@ BEGIN
 END;
 /
 
+/*select get_current_time from dual;*/
+
 --Task: create a function that returns the length of a mediatype from the mediatype table
 CREATE OR REPLACE FUNCTION get_mediatype_len(media_type_id IN number)
 RETURN number 
@@ -25,7 +27,7 @@ BEGIN
 END;
 /
 
-select get_mediatype_len(3)from dual;
+/*select get_mediatype_len(3)from dual;*/
 
 --3.2 System Defined Aggregate Functions
 --Task: Create a function that returns the average total of all invoices
@@ -39,7 +41,7 @@ BEGIN
     RETURN invoice_avg;
 END;
 /
-SELECT get_invoice_avg from dual;
+/*SELECT get_invoice_avg from dual;*/
 
 --Task: Create a function that returns the most expensive track
 CREATE OR REPLACE FUNCTION get_expensive_track
@@ -54,7 +56,7 @@ BEGIN
 END;
 /
 
-SELECT get_expensive_track FROM dual;
+/*SELECT get_expensive_track FROM dual;*/
 
 --3.3 User Defined Scalar Functions
 --Task: Create a function that returns the average price of invoiceline items in the invoiceline table
@@ -70,7 +72,7 @@ BEGIN
 END;
 /
 
-SELECT get_invoiceline_avg_price(180) FROM dual;
+/*SELECT get_invoiceline_avg_price(180) FROM dual;*/
 
 --3.4 User Defined Table Valued Functions
 --Task: Create a function that returns all employees who are born after 1968.
@@ -86,6 +88,6 @@ BEGIN
 END;
 /
 
-var rc refcursor 
+/*var rc refcursor 
 EXEC :rc := employee_after_1968;
-PRINT rc;
+PRINT rc;*/

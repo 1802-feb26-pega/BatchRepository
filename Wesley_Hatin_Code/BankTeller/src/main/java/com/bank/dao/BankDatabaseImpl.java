@@ -139,14 +139,15 @@ public class BankDatabaseImpl implements BankDatabase{
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			
-			String sql = "SELECT firstname, lastname FROM users WHERE username = ?";
+			String sql = "SELECT firstname, lastname FROM users WHERE username = 'wjhatin'";
 			PreparedStatement pstat = conn.prepareStatement(sql);
-			pstat.setString(1, givenUser);
+			//pstat.setString(1, givenUser);
 			
 			ResultSet rs = pstat.executeQuery(sql);
-			name[0] = rs.getString(1);
-			name[1] = rs.getString(2);
-			
+			while(rs.next()) {
+				name[0] = rs.getString(1);
+				name[1] = rs.getString(2);
+			}
 			
 			pstat.close();
 			conn.close();
@@ -191,7 +192,7 @@ public class BankDatabaseImpl implements BankDatabase{
 	public void writeBalance(String username, Account account, double newBal) {
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			
-			PreparedStatement pstat = conn.prepareStatement("UPDATE accounts SET balance = ? WHERE username = ? AND accountname = ?");
+			PreparedStatement pstat = conn.prepareStatement("UPDATE accounts SET balance = ? WHERE (username = ? AND accountname = ?)");
 			pstat.setDouble(1, newBal);
 			pstat.setString(2, username);
 			pstat.setString(3, account.getAccountName());
