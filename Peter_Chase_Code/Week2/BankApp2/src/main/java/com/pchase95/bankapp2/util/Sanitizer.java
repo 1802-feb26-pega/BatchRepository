@@ -28,4 +28,15 @@ public class Sanitizer {
 	public static boolean sanitizePassword(String password) {
 		return passwordPattern.matcher(password).matches();
 	}
+	
+	public static boolean sanitizePin(String pin) {
+		try {
+			Integer.parseInt(pin);
+			return pin.length() == 4;
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 }

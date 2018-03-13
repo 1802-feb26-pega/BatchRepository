@@ -30,7 +30,7 @@ public class LogIn extends JFrame {
 	}
 	
 	private void btnSignUpClick() {
-		Application.launchSignUp();
+		WindowController.launchSignUp();
 	}
 	
 	private void btnSignInClick() {
@@ -38,7 +38,7 @@ public class LogIn extends JFrame {
 		String password = textFieldPassword.getText();
 		
 		if (Application.attemptSignIn(nameOrEmail, password)) {
-			Application.launchBank();
+			WindowController.launchHome();
 			dispose();
 		} else {
 			lblStatus.setText("Wrong username/email or password");

@@ -13,21 +13,22 @@ import com.pchase95.bankapp2.util.ConnectionFactory;
 
 public class AccountDAOImpl implements AccountDAO {
 
+	@Override
 	public List<Account> getAllAccounts() {
 		List<Account> accounts = new LinkedList<>();
 		
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-			String sql = "SELECT * FROM account";
+			String sql = "SELECT * FROM baccount";
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				Account act = new Account();
-				act.setId(rs.getLong(1));
-				act.setName(rs.getString(2));
-				act.setEmail(rs.getString(3));
-				act.setPassword(rs.getString(4));
-				act.setBalance(rs.getDouble(5));
-				accounts.add(act);
+				Account account = new Account();
+				account.setId(rs.getLong(1));
+				account.setOwnerId(rs.getLong(2));
+				account.setName(rs.getString(3));
+				account.setPin(rs.getString(4));
+				account.setBalance(rs.getDouble(5));
+				accounts.add(account);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -36,112 +37,80 @@ public class AccountDAOImpl implements AccountDAO {
 		return accounts;
 	}
 
-	public Account getAccountById(long accountId) {
-		Account act = null;
-		
+	@Override
+	public List<Account> getUserAccounts(long userId) {
+		List<Account> userAccounts = new LinkedList<>();
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-			String sql = "SELECT * FROM account WHERE act_id = ?";
+			String sql = "SELECT * FROM baccount WHERE buser_id = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1,  userId);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Account account = new Account();
+				account.setId(rs.getLong(1));
+				account.setOwnerId(rs.getLong(2));
+				account.setName(rs.getString(3));
+				account.setPin(rs.getString(4));
+				account.setBalance(rs.getDouble(5));
+				userAccounts.add(account);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return userAccounts;
+	}
+
+	@Override
+	public Account getAccountById(long accountId) {
+		Account account = null;
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			String sql = "SELECT * FROM baccount WHERE account_id = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, accountId);
 			ResultSet rs = pstmt.executeQuery();
-
+			
 			while (rs.next()) {
-				act = new Account();
-				act.setId(rs.getLong(1));
-				act.setName(rs.getString(2));
-				act.setEmail(rs.getString(3));
-				act.setPassword(rs.getString(4));
-				act.setBalance(rs.getDouble(5));
+				account = new Account();
+				account.setId(rs.getLong(1));
+				account.setOwnerId(rs.getLong(2));
+				account.setName(rs.getString(3));
+				account.setPin(rs.getString(4));
+				account.setBalance(rs.getDouble(5));
 			}
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return act;
+		return account;
 	}
 
 	@Override
-	public Account getAccountByName(String accountName) {
-		Account act = null;
-		
-		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-			String sql = "SELECT * FROM account WHERE act_name = ?";
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, accountName);
-			ResultSet rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				act = new Account();
-				act.setId(rs.getLong(1));
-				act.setName(rs.getString(2));
-				act.setEmail(rs.getString(3));
-				act.setPassword(rs.getString(4));
-				act.setBalance(rs.getDouble(5));
-			}
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return act;
-	}
-	
-	@Override
-	public Account getAccountByEmail(String accountEmail) {
-		Account act = null;
-		
-		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-			String sql = "SELECT * FROM account WHERE act_email = ?";
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, accountEmail);
-			ResultSet rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				act = new Account();
-				act.setId(rs.getLong(1));
-				act.setName(rs.getString(2));
-				act.setEmail(rs.getString(3));
-				act.setPassword(rs.getString(4));
-				act.setBalance(rs.getDouble(5));
-			}
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return act;
-	}
-	
 	public boolean addAccount(Account newAccount) {
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			conn.setAutoCommit(false);
 			
 			String sql =
-				"INSERT INTO account (act_name, act_email, act_password, act_balance) VALUES (?, ?, ?, ?)";
-			String[] keys = { "act_id" };
+				"INSERT INTO baccount (buser_id, account_name, account_pin, account_balance) VALUES (?, ?, ?, ?)";
+			String[] keys = { "account_id" };
 			PreparedStatement pstmt = conn.prepareStatement(sql, keys);
-			pstmt.setString(1, newAccount.getName());
-			pstmt.setString(2, newAccount.getEmail());
-			pstmt.setString(3, newAccount.getPassword());
+			pstmt.setLong(1, newAccount.getOwnerId());
+			pstmt.setString(2, newAccount.getName());
+			pstmt.setString(3, newAccount.getPin());
 			pstmt.setDouble(4, newAccount.getBalance());
+			
 			int rowsAffected = pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
-			
 			
 			if (rowsAffected > 0) {
 				while (rs.next()) {
 					newAccount.setId(rs.getLong(1));
-				}
-				
-				conn.commit();
-				return true;
+				}	
 			}
 			
-			return false;
+			conn.commit();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -149,19 +118,20 @@ public class AccountDAOImpl implements AccountDAO {
 		return false;
 	}
 
+	@Override
 	public boolean updateAccount(long accountId, Account updatedAccount) {
 		int rowsAffected = 0;
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			conn.setAutoCommit(false);
 			
 			String sql =
-				"UPDATE account SET act_name = ?, act_email = ?, act_password = ?, act_balance = ? WHERE act_id = ?";
+				"UPDATE baccount SET buser_id = ?, account_name = ?, account_pin = ?, account_balance = ? WHERE account_id = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, updatedAccount.getName());
-			pstmt.setString(2, updatedAccount.getEmail());
-			pstmt.setString(3, updatedAccount.getPassword());
+			pstmt.setLong(1, updatedAccount.getOwnerId());
+			pstmt.setString(2, updatedAccount.getName());
+			pstmt.setString(3, updatedAccount.getPin());
 			pstmt.setDouble(4, updatedAccount.getBalance());
-			pstmt.setLong(5, updatedAccount.getId());
+			pstmt.setLong(5, accountId);
 			
 			rowsAffected = pstmt.executeUpdate();
 			conn.commit();
@@ -172,10 +142,11 @@ public class AccountDAOImpl implements AccountDAO {
 		return rowsAffected > 0;
 	}
 
+	@Override
 	public boolean removeAccount(long accountId) {
 		int rowsAffected = 0;
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-			String sql = "DELETE FROM account WHERE act_id = ?";
+			String sql = "DELETE FROM baccount WHERE account_id = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, accountId);
 			rowsAffected = pstmt.executeUpdate();

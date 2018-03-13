@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.pchase95.bankapp2.driver.Application;
-import com.pchase95.bankapp2.pojos.TransferResult;
+import com.pchase95.bankapp2.pojos.Account;
 
 public class Bank extends JFrame {
 	private static final long serialVersionUID = -6882150152101214273L;
@@ -28,15 +28,16 @@ public class Bank extends JFrame {
 	private JButton btnWidthdraw;
 	private JButton btnDeposit;
 	private JLabel lblSuccess;
-	private JButton btnSignOut;
-
 	private JLabel lblValidValue;
-
 	private JButton btnDeleteAccount;
-
 	private JButton btnTransfer;
 	
-	public Bank() {
+	private Account account;
+	private Home home;
+	
+	public Bank(long accountId, Home home) {
+		this.account = Application.getAccountFromDB(accountId);
+		this.home = home;
 		initialize();
 	}
 	
@@ -56,37 +57,23 @@ public class Bank extends JFrame {
 	}
 	
 	private void updateBalance() {
-		lblBalance.setText(String.format("$%.2f", Application.getAccount().getBalance()));
+		lblBalance.setText(String.format("$%.2f", account.getBalance()));
 	}
 	
 	private void btnTransferClick() {
 		double amount = parseField();
 		if (amount != 0.0) {
-			String nameOrEmail = JOptionPane.showInputDialog("Enter name or email of recipient");
-			TransferResult result = Application.transfer(amount, nameOrEmail);
-			
-			switch (result) {
-			case SUCCESS:
-				Application.updateAccount();
-				updateBalance();
+			try {
+				long recipientAccountId = Long.parseLong(
+						JOptionPane.showInputDialog(null, "Enter recipient accound id"));
+				Application.transfer(account, amount, recipientAccountId);
 				lblSuccess.setText("Transfer Success");
-				break;
-			case NOFUNDS:
-				lblSuccess.setText("Insufficient Funds");
-				break;
-			case NOUSER:
-				lblSuccess.setText("Recipient doesn't exist");
-				break;
-			case SAMEUSER:
-				lblSuccess.setText("You cannot transfer funds to yourself");
-				break;
-			default:
-				lblSuccess.setText("");
-				break;
+			} catch (NumberFormatException e) {
+				lblSuccess.setText("Invalid id");
 			}
 		}
 	}
-	
+
 	private void btnDeleteAccountClick() {
 		int reply = JOptionPane.showConfirmDialog(
 			null,
@@ -95,7 +82,8 @@ public class Bank extends JFrame {
 			JOptionPane.YES_NO_OPTION);
 		
 		if (reply == JOptionPane.YES_OPTION) {
-			Application.deleteAccount();
+			Application.deleteAccount(account);
+			home.update();
 			dispose();
 		}
 	}
@@ -103,7 +91,7 @@ public class Bank extends JFrame {
 	private void btnWithdrawClick() {
 		double amount = parseField();
 		if (amount != 0.0) {
-			boolean success = Application.withdraw(amount);
+			boolean success = Application.withdraw(account, amount);
 			if (success) {
 				lblSuccess.setText("");
 				updateBalance();
@@ -116,7 +104,7 @@ public class Bank extends JFrame {
 	private void btnDepositClick() {
 		double amount = parseField();
 		if (amount != 0.0) {
-			Application.deposit(amount);
+			Application.deposit(account, amount);
 			updateBalance();			
 		}
 	}
@@ -141,13 +129,8 @@ public class Bank extends JFrame {
 		return amount;
 	}
 	
-	private void btnSignOutClick() {
-		Application.logOut();
-		dispose();
-	}
-	
 	private void initialize() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 559, 396);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -199,16 +182,6 @@ public class Bank extends JFrame {
 		lblSuccess.setFont(new Font("SansSerif", Font.PLAIN, 16));
 		lblSuccess.setBounds(88, 148, 359, 25);
 		contentPane.add(lblSuccess);
-		
-		btnSignOut = new JButton("Sign Out");
-		btnSignOut.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnSignOutClick();
-			}
-		});
-		btnSignOut.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		btnSignOut.setBounds(432, 13, 97, 25);
-		contentPane.add(btnSignOut);
 		
 		lblValidValue = new JLabel("");
 		lblValidValue.setHorizontalAlignment(SwingConstants.CENTER);

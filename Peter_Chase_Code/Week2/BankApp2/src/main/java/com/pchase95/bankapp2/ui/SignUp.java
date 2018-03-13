@@ -13,7 +13,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.pchase95.bankapp2.driver.Application;
-import com.pchase95.bankapp2.pojos.Account;
+import com.pchase95.bankapp2.pojos.User;
 import com.pchase95.bankapp2.util.Sanitizer;
 
 public class SignUp extends JFrame {
@@ -65,14 +65,14 @@ public class SignUp extends JFrame {
 				
 		
 		if (validUsername && validEmail && validPassword) {
-			if (Application.addAccount(new Account(username, email, password, 0.0))) {
+			if (Application.addUser(new User(username, email, password))) {
 				btnSubmit.setEnabled(false);
 				nameTextField.setEnabled(false);
 				emailTextField.setEnabled(false);
 				passwordField.setEnabled(false);
-				lblSuccess.setText("Account created successfully");
+				lblSuccess.setText("User created successfully");
 			} else {
-				lblSuccess.setText("Account creation failed");
+				lblSuccess.setText("User creation failed");
 			}
 		}
 	}
