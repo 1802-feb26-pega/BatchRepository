@@ -1,6 +1,6 @@
 package com.pchase95.bankapp2.ui;
 
-public class IDString {
+class IDString {
 	private long id;
 	private String text;
 	
