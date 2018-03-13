@@ -158,26 +158,14 @@ public class BankDAOImpl implements BankDAO{
 
 	public Account updateBalance(Account account, int num) {
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-			conn.setAutoCommit(false);
 			
 			String sql = "UPDATE account SET balance = ? WHERE accountid = ?";
-			String[] key = new String[3];
-			key[0] = "accountid";
-			key[1] = "customerid";
-			key[2] = "balance";
-			PreparedStatement pstmt = conn.prepareStatement(sql, key);
+
+			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			pstmt.setInt(2, account.getId());
-			int rowsAffected = pstmt.executeUpdate();
-			ResultSet rs = pstmt.getGeneratedKeys();
-			if(rowsAffected > 0) {
-				while(rs.next()) {
-					account.setId(rs.getInt(1));
-					account.setCustomerId(rs.getInt(2));
-					account.setBalance(rs.getInt(3));
-				}
-				conn.commit();
-			}
+			int value = pstmt.executeUpdate();
+			System.out.println(value + " rows affected");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

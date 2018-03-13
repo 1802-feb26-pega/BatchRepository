@@ -161,7 +161,8 @@ public class BankDriver {
 					amount2 = accTo.getBalance();
 					newBalance = amount1 + amount2;
 					accTo = bankDao.updateBalance(accTo, newBalance);
-					showBalance(scan, bankDao, customer);
+					accFrom = bankDao.updateBalance(accFrom, (accFrom.getBalance() - amount1));
+					
 					atm(scan, bankDao, customer);
 					
 				} else {
@@ -199,7 +200,8 @@ public class BankDriver {
 			System.out.println("Invalid input!");
 			atm(scan, bankDao, customer);
 		}
-		if(bankDao.getAccountById(accNum).getCustomerId() == customer.getId()) {
+		account = bankDao.getAccountById(accNum);
+		if(account.getCustomerId() == customer.getId()) {
 		
 			System.out.println("How much to deposit?");
 			try {
@@ -215,7 +217,7 @@ public class BankDriver {
 				newBalance = currentBalance + amount;
 				account = bankDao.updateBalance(account, newBalance);
 			
-				showBalance(scan, bankDao, customer);
+				//showBalance(scan, bankDao, customer);
 				atm(scan, bankDao, customer);
 			}
 			else {
@@ -244,7 +246,8 @@ public class BankDriver {
 			System.out.println("Invalid input!");
 			atm(scan, bankDao, customer);
 		}
-		if(bankDao.getAccountById(accNum).getCustomerId() == customer.getId()) {
+		account = bankDao.getAccountById(accNum);
+		if(account.getCustomerId() == customer.getId()) {
 		
 			System.out.println("How much to withdraw?");
 			try {
@@ -260,11 +263,10 @@ public class BankDriver {
 				newBalance = currentBalance - amount;
 				account = bankDao.updateBalance(account, newBalance);
 			
-				showBalance(scan, bankDao, customer);
 				atm(scan, bankDao, customer);
 			}
 			else {
-				System.out.println("Input a valid amount!");
+				System.out.println("Input a valid amount!!");
 				atm(scan, bankDao, customer);
 			}
 		}
