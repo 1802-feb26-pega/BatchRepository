@@ -62,8 +62,8 @@ public class BankDriver {
 		System.out.println("Username:");
 		un = scan.nextLine();
 		Customer customer = new Customer();
-
 		customer = bankDao.getCustomerByUsername(un);
+		
 		if(customer.getUsername() == null) {
 			System.out.println("That username doesn't exist!");
 			login(scan, bankDao);
@@ -81,6 +81,7 @@ public class BankDriver {
 			}
 		}
 	}
+	
 	public static void atm(Scanner scan, BankDAO bankDao, Customer customer) {
 		
 		String choice;
@@ -230,6 +231,7 @@ public class BankDriver {
 			atm(scan, bankDao, customer);
 		}
 	}
+	
 	public static void withdraw(Scanner scan, BankDAO bankDao, Customer customer) {
 
 		int currentBalance = 0;

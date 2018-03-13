@@ -74,7 +74,7 @@ public class BankDAOImpl implements BankDAO{
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Database error or account does not exist!");
 		}
 		
 		return account;
@@ -155,7 +155,6 @@ public class BankDAOImpl implements BankDAO{
 		return account;
 	}
 
-
 	public Account updateBalance(Account account, int num) {
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			
@@ -164,8 +163,8 @@ public class BankDAOImpl implements BankDAO{
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			pstmt.setInt(2, account.getId());
-			int value = pstmt.executeUpdate();
-			System.out.println(value + " rows affected");
+			pstmt.executeUpdate();
+			System.out.println("Balance Updated!");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -175,7 +174,6 @@ public class BankDAOImpl implements BankDAO{
 	}
 
 	public int balance(Account account) {
-		// TODO Auto-generated method stub
 		int balance = 0;
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			String sql = "{CALL showBalance(?,?)}";
@@ -183,7 +181,7 @@ public class BankDAOImpl implements BankDAO{
 			cstmt.setInt(1, account.getId());
 			cstmt.registerOutParameter(2, java.sql.Types.INTEGER);
 			int value = cstmt.executeUpdate();
-			//rs.next();
+
 			balance = cstmt.getInt(2);
 			if(value < 1) {
 				System.out.println("Couldn't get balance for that account!");
