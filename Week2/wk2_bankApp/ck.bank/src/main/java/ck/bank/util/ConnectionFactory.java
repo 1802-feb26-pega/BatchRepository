@@ -30,7 +30,7 @@ public class ConnectionFactory {
 	{
 		Connection conn = null;
 		Properties prop = new Properties();
-		//application.properties will go into src/main/resources
+		//application.properties goes in src/main/java/resources
 		
 		try {
 			prop.load(new FileReader("C:\\Users\\Chris Kopacz\\Documents\\GitHub\\BatchRepository\\Week2\\wk2_bankApp\\ck.bank\\src\\main\\java\\resources\\application.properties"));

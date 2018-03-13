@@ -229,7 +229,7 @@ public class ClientUI {
 
 				try
 				{
-					md = MessageDigest.getInstance("MD5");
+					md = MessageDigest.getInstance("MD5");				//get password hash
 					passHash = md.digest(bytesOfPass);
 					for(byte b : passHash)
 					{
