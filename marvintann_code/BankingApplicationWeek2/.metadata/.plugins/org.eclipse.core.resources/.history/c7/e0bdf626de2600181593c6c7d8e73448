@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+
+var capture = false;
+
+var a = 10;
+
+a

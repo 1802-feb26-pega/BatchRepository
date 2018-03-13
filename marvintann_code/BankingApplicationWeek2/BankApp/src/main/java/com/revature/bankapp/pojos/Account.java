@@ -12,7 +12,7 @@ public class Account {
 	
 	public Account() {}
 	
-	public Account(int account_id, int user_id, int balance) {
+	public Account(int account_id, int user_id, double balance) {
 		super();
 		this.account_id = account_id;
 		this.user_id = user_id;

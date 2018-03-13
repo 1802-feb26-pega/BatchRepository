@@ -1,0 +1,13 @@
+/**
+ * 
+ */
+
+var capture = false;
+
+document.getElementyId("Inner").addEventListener("click", function(e) {
+	
+})
+
+var a = 10;
+
+a

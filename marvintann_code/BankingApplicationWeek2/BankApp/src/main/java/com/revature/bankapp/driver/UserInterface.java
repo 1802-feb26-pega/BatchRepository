@@ -229,6 +229,7 @@ public class UserInterface {
 		} else if (ip1.equals("6")) {
 			System.out.println("Successfully logged out!");
 			closing();
+			closing();
 		} else {
 			System.out.println("Please enter a valid option:");
 			bankAccount(userName, accountId);
@@ -409,8 +410,25 @@ public class UserInterface {
 	}
 	
 	public static void main(String[] args) {
-		
+		/*
 		//System.out.println(user_dao.getUser("popipo").getPwd());
+		Scanner pp = new Scanner(System.in);
+		double jj = pp.nextDouble();
+		
+		System.out.println("val is "+jj);
+		
+		Account newAccount = new Account();
+		newAccount.setAccount_id(546);
+		newAccount.setUser_id(643);
+		newAccount.setBalance(jj);
+		
+		System.out.println(newAccount.getBalance());
+		
+		account_dao.addAccount(newAccount);
+		
+		Account fetched = account_dao.getAccount(546);
+		
+		System.out.println("val from database is "+fetched.getBalance());*/
 		
 		
 		if (running = true) {
