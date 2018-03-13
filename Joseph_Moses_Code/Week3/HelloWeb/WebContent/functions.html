@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Intro to DOM Manipulation</title>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+	<div class="jumbotron container">
+		<h1>Function Viewer</h1>
+		<hr>
+		<h3>Problem 1: Fibonacci</h3><br>
+		
+		<input type="number" id="fib" class="form-control" placeholder="Enter n"/>
+		
+		<button id="doFib" class="btn btn-primary">Fibonacc'ed</button>
+		<br>
+		<strong> Answer is = 
+			<p id="fibDisplay"></p>
+		</strong>
+		<h3>Change on mouse over</h3>
+		<strong>
+			<p id="counter">0</p>
+		</strong>
+	</div>
+	
+	<div class="jumbotron container">
+		<h1>More event handling</h1>
+		<hr>
+		<h3>Event propagation & Drag Drop Example</h3>
+		
+		<div style="background-color: red">
+		
+			<br> <h4 draggable="true"  id="outer">Outer</h4> <br>
+			
+			<div style="background-color: blue">
+			
+				<br> <h4 draggable="true"  id="middle">Middle</h4> <br>
+				
+				<div style="background-color: green">
+					<br> <h4 draggable="true"  id="inner">Inner</h4> <br>
+				</div>
+				<br><br>
+			</div>
+			<br><br>
+		</div>
+		
+	</div>
+	
+	<script type="text/javascript" src="js/functions.js"></script>
+</body>
+</html>

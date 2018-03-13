@@ -154,6 +154,9 @@ public class BankDriver {
 				bankOpen = myBank.closeBank();
 				System.out.println("myBank is now closed.");
 			}
+			else {
+				System.out.println("You have not selected an option that was listed.");
+			}
 		}
 		
 		scan.close();

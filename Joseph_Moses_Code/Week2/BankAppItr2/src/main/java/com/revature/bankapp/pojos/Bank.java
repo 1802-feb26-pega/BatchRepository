@@ -76,7 +76,6 @@ public class Bank{
 	public Account createAccount() {
 		Account newAccount = new Account(currentUser.getUserId());
 		newAccount = accountDAO.addAccount(newAccount);
-		System.out.println(newAccount);
 		return newAccount;
 	}
 	

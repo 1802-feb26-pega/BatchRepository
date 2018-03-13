@@ -3,26 +3,30 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>TRMS - Tuition Reimbursment Management System</title>
+    <title>Bank of Moses</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
 
 <style>
-    .register-form{
+    .login-form{
         width: 340px;
         margin: 50px auto;
     }
 
-    .register-form form{
+    .login-form form{
         margin-bottom: 15px;
         background: #ffffff;
         box-shadow: 0px 2px 2px rbga(0,0,0.3);
     }
 
-    .register-form h2{
+    .login-form h2{
         margin: 0 0 15px;
+    }
+
+    .login-form p a{
+        color: black;
     }
 
     .form-control, .btn{
@@ -45,7 +49,6 @@
     .page-header{
         margin: auto;
         background: rgb(0, 92, 128);
-        border-radius: 5px;
     }
 
     .page-header h1{
@@ -69,23 +72,14 @@
         <h1 class="text-center">The Bank of Moses</h1>
     </div>
 
-    <div class="register-form">
+    <div class="login-form">
         <form action="">
-            <h2 class="text-center">Register</h2>
+            <h2 class="text-center">Login</h2>
             <div class="form-group">
-                <input type="text" class="form-control" required="required" placeholder="Frist Name">
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" required="required" placeholder="Last Name">
-            </div>
-            <div class="form-group">
-                <input type="email" class="form-control" required="required" placeholder="Email">
+                <input type="email" class="form-control" required="required" placeholder="Username">
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" required="required" placeholder="Password">
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" required="required" placeholder="Verify Password">
             </div>
             <div class="form-group">
                 <button class="btn btn-primary btn-block">login</button>
@@ -98,6 +92,9 @@
                 <a herf ="#" class="pull-right"></a>
             </div>
         </form>
+        <p class="text-center">
+            <a href="#">Create Account</a>
+        </p>
     </div>
 </body>
 </html>
