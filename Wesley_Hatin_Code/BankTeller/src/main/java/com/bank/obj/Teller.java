@@ -44,7 +44,7 @@ public class Teller {
 		}
 	}
 	
-	// log in 
+	// login to a user with a unique username and a password
 	public boolean logIn(String username, String password) {
 		if(db.passwordValidation(username, password)) {
 				this.username=username;
@@ -57,7 +57,7 @@ public class Teller {
 		return false;
 	}
 	
-	//log out
+	//logout of the current user
 	public void logOut() {
 		this.username=null;
 		this.password=null;
@@ -65,12 +65,12 @@ public class Teller {
 		this.lastname=null;
 	}
 	
-	//deposit money
+	//deposit money into the chosen account
 	public void deposit(Account account, double amount) {
 		db.writeBalance(username, account, account.getBalance() + amount);
 	}
 	
-	//withdraw money
+	//withdraw money into the chosen
 	public boolean withdraw(Account account, double amount) {
 		if(account.getBalance() < amount) {
 			return false;
@@ -81,6 +81,7 @@ public class Teller {
 		}
 	}
 
+	//transer money between chosen accounts
 	public boolean transfer(Account fromAccount, Account toAccount, Double amount) {
 		if(fromAccount.getBalance()>amount) {
 			db.writeBalance(username, fromAccount, fromAccount.getBalance() - amount);

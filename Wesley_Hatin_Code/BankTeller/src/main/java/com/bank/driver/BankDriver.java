@@ -17,14 +17,16 @@ public class BankDriver {
 		option = String.valueOf(menu.nextLine());
 		System.out.println("");
 		
-		if(!option.equals("1")) {
+		if(option.equals("0")) {
+			return option;
+		}
+		else if(!option.equals("1")) {
 			if(!option.equals("2")) {
 				System.out.println("Sorry, that is not a valid response. Please press 1 or 2.");
 				System.out.println("");
 				option = "";
 			}
-		}
-		
+		}		
 		return option;
 	}
 	
@@ -368,7 +370,8 @@ public class BankDriver {
 		
 		System.out.println("Welcome to your automated bank terminal!");
 		System.out.println("If you already have an account, press 1.");
-		System.out.println("If you do not have an account, please press 2.");
+		System.out.println("If you do not have an account, press 2.");
+		System.out.println("If you would like to exit, press 0.");
 		
 		do {
 			option = bd.loginMenu(option);
@@ -385,6 +388,8 @@ public class BankDriver {
 		//Register new user
 		case "2":
 			bd.newUser();
+			break;
+		default:
 			break;
 		}
 		
