@@ -148,7 +148,7 @@ public class MenuDriver
 		
 		do
 		{
-			for(int x = 0; x < 10; x++)
+			for(int x = 0; x < 5; x++)
 			{
 				System.out.println();
 			}
