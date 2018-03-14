@@ -1,0 +1,9 @@
+package com.ex.io;
+
+public class StudentIO {
+	
+	void writeStudent(Student student) {
+		
+	}
+
+}
