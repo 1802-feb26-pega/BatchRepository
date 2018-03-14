@@ -110,13 +110,7 @@ public class AccountDAOImpl implements AccountDAO {
 		int id = updated.getAccountID();
 		if(id <= 0) return -1;	
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-			conn.setAutoCommit(false);
-//			String sql = "UPDATE accounts SET balance = " + updated.getBalance() 
-//			+ ", account_name = '" + updated.getAccountName() + "' where account_id = " + updated.getAccountID();
-//			System.out.println(sql);
-//			Statement stmt = conn.createStatement();
-//			int val = stmt.executeUpdate(sql);
-			
+			conn.setAutoCommit(false);		
 			String sql = "UPDATE accounts SET balance = ?, account_name = ? WHERE account_id = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setDouble(1, updated.getBalance());
