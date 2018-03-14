@@ -194,7 +194,7 @@ public class UserDAOImpl implements UserDAO {
 			cstmt.executeUpdate();
 			total = cstmt.getDouble(2);
 		} catch (SQLException e) {
-			// do nothing
+			// do nothing; if no accounts, expect 0 balance
 		}
 		return total;
 	}

@@ -13,10 +13,11 @@ public class FirstMenu {
 		FirstMenu fm = new FirstMenu();
 		int option = 0;
 		Scanner scan = ConsoleConnectionFactory.getInstance().getConnection();
-
-		System.out.println("To log in, enter 1");
-		System.out.println("To create an account, enter 2");
-		System.out.println("To close the system, enter 3.");
+		System.out.println("Welcome to The Bank. The one and only.");
+		System.out.println("Make your selection.");
+		System.out.println("1: Log in.");
+		System.out.println("2: Create an account.");
+		System.out.println("3: Exit the system.");
 		try {
 			option = Integer.parseInt(scan.nextLine());
 		} catch (NumberFormatException ime) {
@@ -67,7 +68,7 @@ public class FirstMenu {
 		String un = scan.nextLine();
 		boolean validUN = fm.verifyUsername(un);
 		if(validUN == false) {
-			System.out.println("There is no user with that username.");
+			System.out.println("There is no user with that username.\n");
 			fm.initialMenu();
 		} else {
 			System.out.println("Enter your password.");

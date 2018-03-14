@@ -20,11 +20,12 @@ public class MainMenu {
 	public void mainMenu(User user) {
 		Scanner scan = ConsoleConnectionFactory.getInstance().getConnection();
 		MainMenu mm = new MainMenu();
-		System.out.println("\nTo create an account, enter 1.");
-		System.out.println("To see available accounts, enter 2.");
-		System.out.println("To transfer funds between accounts, enter 3.");
-		System.out.println("To view your total balance across accounts, enter 4.");
-		System.out.println("To log out, enter 5.");
+		System.out.println("\nHello, " + user.getFirstname() + ".");
+		System.out.println("1: Create a new account.");
+		System.out.println("2: See available accounts.");
+		System.out.println("3: Transfer funds between accounts.");
+		System.out.println("4: View your total balance across accounts.");
+		System.out.println("5: Log out.");
 		int option = 0;
 		try{
 			option = Integer.parseInt(scan.nextLine());
@@ -41,7 +42,9 @@ public class MainMenu {
 		} else if(option == 4) {
 			mm.sumTotal(user);
 		} else if(option == 5) {
-			System.out.println("\nLogged out.");
+			FirstMenu fm = new FirstMenu();
+			System.out.println("\nLogged out.\n");
+			fm.initialMenu();
 		} else {
 			System.out.println("Invalid input; try again.\n");
 			mm.mainMenu(user);
@@ -64,9 +67,9 @@ public class MainMenu {
 		AccountDAO accountDao = new AccountDAOImpl();
 		Map<Integer, String> accountTypes = accountDao.getAccountTypes();
 		for (Integer key: accountTypes.keySet()) {
-			System.out.println("For an account of type " + accountTypes.get(key) + ", enter " + key + ".");
+			System.out.println(key + ": Create an account of type " + accountTypes.get(key) + ".");
 		}
-		System.out.println("To cancel and return to the main menu, enter " + (accountTypes.size()+1) + ".");
+		System.out.println((accountTypes.size()+1) + ": Cancel and return to the main menu.");
 		Scanner scan = ConsoleConnectionFactory.getInstance().getConnection();
 		try{
 			option = Integer.parseInt(scan.nextLine());
@@ -113,14 +116,13 @@ public class MainMenu {
 			Account temp = new Account();
 			temp = accountDao.getAccountById(accountid);
 			accounts.add(temp);
-			System.out.println("To access your " + temp.getAccountType() + "-" + temp.getAccountId() +
-							   " account, enter " + counter++ + ".");
+			System.out.println(counter++ + ": Access your " + temp.getAccountType() + "-" + temp.getAccountId() + ".");
 		}
 		if(counter == 1) {
 			System.out.println("You do not have any accounts yet.");
 			mmFlag = true;
 		} else {
-			System.out.println("To cancel and return to the main menu, enter " + counter + ".");
+			System.out.println(counter + ": Cancel and return to the main menu.");
 			try{
 				option = Integer.parseInt(scan.nextLine());
 				if(option == counter) {
@@ -145,11 +147,11 @@ public class MainMenu {
 		MainMenu mm = new MainMenu();
 		AccountDAO accountDao = new AccountDAOImpl();
 		int option = 0;
-		System.out.println("\nTo view this account's balance, enter 1.");
-		System.out.println("To deposit money, enter 2.");
-		System.out.println("To withdraw money, enter 3.");
-		System.out.println("To authorize another user to access this account, enter 4.");
-		System.out.println("To go back to the main menu, enter 5.");
+		System.out.println("\n" + 1 + ": View this account's balance.");
+		System.out.println(2 + ": Deposit money.");
+		System.out.println(3 + ": Withdraw money.");
+		System.out.println(4 + ": Authorize another user to access this account.");
+		System.out.println(5 + ": Go back to the main menu.");
 		try{
 			option = Integer.parseInt(scan.nextLine());
 			if(option == 5) {
@@ -236,8 +238,8 @@ public class MainMenu {
 				Account temp = new Account();
 				temp = accountDao.getAccountById(accountid);
 				accounts.add(temp);
-				System.out.println("To select your " + temp.getAccountType() + "-" + temp.getAccountId() +
-								   " account, enter " + counter++ + ".");
+				System.out.println(counter++ + ": Select your " + temp.getAccountType() + "-" + temp.getAccountId() +
+								   " account.");
 			}
 			try{
 				option = Integer.parseInt(scan.nextLine());
@@ -254,8 +256,8 @@ public class MainMenu {
 				dummyList.remove(option-1);
 				counter = 1;
 				for(Account dummyAccount : dummyList) {
-					System.out.println("To select your " + dummyAccount.getAccountType() + "-" + dummyAccount.getAccountType() +
-										" account, enter " + counter++ + ".");
+					System.out.println(counter++ + ": Select your " + dummyAccount.getAccountType() + "-" + dummyAccount.getAccountType() +
+										" account.");
 				}
 				
 				try{
