@@ -1,0 +1,17 @@
+package com.ex.pojos;
+
+import java.io.Serializable;
+
+public class SecureStudent implements Serializable{
+	
+
+	private static final long serialVersionUID = -5899531588187378184L;
+	
+	private String name;
+	private String username;
+	private transient String password;
+	static int counter;
+	
+	
+
+}

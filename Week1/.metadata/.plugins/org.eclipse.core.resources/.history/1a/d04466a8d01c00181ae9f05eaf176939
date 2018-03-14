@@ -1,0 +1,5 @@
+package com.ex.gc;
+
+public class GarbageCollection {
+
+}
