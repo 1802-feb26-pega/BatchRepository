@@ -17,6 +17,7 @@ window.onload = function(){
 	console.log("window loaded");
 	$('#submit').on('click', getInfo);
 }
+var jedi; //make jedi global so we can inspect
 
 function getInfo(){
 	var id = $('#id').val();
@@ -37,7 +38,7 @@ function getInfo(){
 		console.log(xhr.readyState);
 		if(xhr.readyState == 4 && xhr.status == 200){
 			//HERE IS WHERE YOU PROCESS YOUR RESPONSE!
-			var jedi = JSON.parse(xhr.responseText);
+			jedi = JSON.parse(xhr.responseText);
 			console.log("THIS IS THE RESPONSE TEXT");
 			console.log(xhr.responseText);
 			console.log("WHEREAS THIS IS THE JS OBJECT");
