@@ -1,4 +1,4 @@
-//INTRO TO DOM MANIPULATION
+//******************************INTRO TO DOM MANIPULATION
 /*1. Fibonacci
 Define function: fib(n) 
 Return the nth number in the fibonacci sequence.*/
@@ -32,7 +32,9 @@ function runFib(){
 document.getElementById("doFib").addEventListener("click", runFib);
 
 
-//EVENT PROPAGATION AND DRAG DROP
+//*****************************************EVENT PROPAGATION
+// https://javascript.info/bubbling-and-capturing
+
 var capture = true; // false = bubbling
 
 /*
@@ -49,6 +51,10 @@ document.getElementById("outer").addEventListener("click", function() {
 	alert("OUTER");
 }, capture);
  */
+
+//*********************************DRAG AND DROP
+//https://www.w3schools.com/html/html5_draganddrop.asp
+
 var counter = 0;
 
 function click(event){
