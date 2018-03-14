@@ -2,8 +2,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>DOM Manipulation</title>
-
+<title>Intro to jQuery</title>
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
@@ -22,35 +21,35 @@
 	integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
 	crossorigin="anonymous"></script>
 
-
 </head>
 <body>
 
-<h1>Student Information</h1>
+	<div class="jumbotron">
+		<input type="text" id="newItem" class="form-control"
+			placeholder="new item..." /> <br>
+		<button id="add" class="btn btn-primary">Add Item</button>
+		<div class="row">
 
-<br><br>
-<!-- 
-<h4>Id:</h4> 
-<input type="text" class="form-control" id="id"/>
-<br>  -->
-<h4>Name:</h4>
-<input type="text" class="form-control" id="name"/>
-<br>
-<h4>Major:</h4>
-<input type="text" class="form-control" id="major"/>
-<br>
-<button id="add" class="btn btn-primary">Add Student</button>
 
-<br><br>
-<table id="students" class="table">
-	<tr>
-		<th>ID</th>
-		<th>Name</th>
-		<th>Major</th>
-	</tr>
-</table>
+			<div class="col">
+				<h3>To Buy:</h3>
+				<br>
+				<ul id="toBuy">
+					<li id="one" class="test">ribs</li>
+					<li id="two" class="test">fruits</li>
+					<li id="three" class="test">wine</li>
+				</ul>
+			</div>
 
-<script src="js/students.js"></script>
+			<div class="col">
+				<h3>Purchased:</h3>
+				<br>
+				<ul id="bought">
+				</ul>
+			</div>
+		</div>
+	</div>
+
 
 </body>
 </html>
