@@ -66,8 +66,8 @@ public class Main {
 		
 
 		
-//		//print user information -- for testing only
-//		users = uDao.getAllUsers();
+		//print user information -- for testing only
+//		List<User> users = uDao.getAllUsers();
 //		
 //		for(User u : users)
 //		{
