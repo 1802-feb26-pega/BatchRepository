@@ -1,0 +1,50 @@
+package com.proj.services;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import com.proj.pojos.Employee;
+import com.proj.util.ConnectionFactory;
+
+public class DatabaseDao implements DatabaseDaoImpl{
+
+	@Override
+	public Employee getEmployeeLogin(Employee e) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Employee> getEmployees() {
+		// TODO Auto-generated method stub
+		ArrayList<Employee> emp = new ArrayList<Employee>();
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+
+			String sql = "SELECT USERNAME FROM CUSTOMER";
+
+			Statement statement = conn.createStatement();
+
+
+			ResultSet crs = statement.executeQuery(sql);
+
+			while(crs.next()) {
+				Client old = new Client();
+				old.setUsrName(crs.getString(1));
+				emp.add(old);
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (NullPointerException npe) {
+			npe.printStackTrace();
+		}
+		return list;
+	}
+
+}
+

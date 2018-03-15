@@ -1,0 +1,12 @@
+package com.proj.services;
+
+import com.proj.pojos.Employee;
+//Sets the contract for the Dao
+/*Methods includes:
+* getEmpolyeeLogin grabs employee info at login
+* getEmployees grabs list of employees
+* */
+public interface DatabaseDaoImpl {
+		public Employee getEmployeeLogin(Employee e);
+		public ArrayList<Employee> = new ArrayList<Employee>();
+}

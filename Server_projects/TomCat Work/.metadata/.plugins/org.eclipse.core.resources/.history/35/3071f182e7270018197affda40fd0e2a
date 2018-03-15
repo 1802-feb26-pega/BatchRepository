@@ -1,0 +1,7 @@
+package com.proj.services;
+
+import com.proj.pojos.Employee;
+
+public interface databaseDaoImpl {
+		public Employee getEmployee(Employee e);
+}

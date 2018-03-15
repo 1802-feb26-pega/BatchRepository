@@ -1,0 +1,14 @@
+package com.ex.services;
+
+import java.util.ArrayList;
+
+import com.ex.pojos.User;
+
+public class UserService {
+
+		public static ArrayList<User> users = new ArrayList<>();
+		static{
+			users.add(new User("Philip","Harris"));
+		}
+	
+}

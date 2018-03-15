@@ -1,0 +1,11 @@
+package com.proj.services;
+
+import com.proj.pojos.Employee;
+
+public class EmployeeServices implements EmployeeInterfaces {
+	public Employee validateEmployee(String user, String pass){
+		
+		
+		return null;
+	}
+}

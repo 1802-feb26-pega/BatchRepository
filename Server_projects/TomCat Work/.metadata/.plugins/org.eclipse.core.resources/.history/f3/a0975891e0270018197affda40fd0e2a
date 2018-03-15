@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+	background-color: purple;
+}
+
+h1 {
+	color: yellow;
+	text-align: center;
+}
+
+p {
+	font-family: verdana;
+	font-size: 20px;
+}
+
+form {
+	color: black;
+}
+
+Input[type=text] {
+	background-color: white;
+	color: black;
+}
+
+a:link {
+	color: black;
+}
+
+a:hover {
+	color: yellow;
+}
+
+a:visited {
+	color: blue;
+}
+</style>
+<title>TRM System</title>
+</head>
+<body>
+
+	<h1>Welcome to Wakanda!</h1>
+	<p>Please log in:</p>
+	<img
+		src="https://cnet3.cbsistatic.com/img/hRLR52cs7Vkty5_5LaiZIt76EAs=/670x503/2018/02/24/ba28837c-f067-48b2-93cc-c53faa4c9ad5/blackpantherthrone.jpg"
+		alt="Wakanda" style="width: 250px; height: 200px;">
+	<br>
+	<form
+		method="POST" action="loggedin">
+		<input type="text" name="username" placeholder="Username"> <br>
+		<br> <input type="password" name="password" placeholder="Password">
+		<br>
+		<br> <input type="submit" value="Submit">
+	</form>
+	<br>
+	<br>
+	<div name="LoginError" /div>
+
+
+</body>
+</html>

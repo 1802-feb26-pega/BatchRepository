@@ -1,0 +1,22 @@
+package com.proj.services;
+
+import java.util.ArrayList;
+import com.proj.pojos.Employee;
+
+public class EmployeeServices implements EmployeeInterfaces {
+	public static ArrayList<Employee> users = new ArrayList<>();
+	static{
+		users.add(new User("Philip","Harris"));
+	}
+	public ArrayList<User> getUsers(){
+		return users;
+	}
+	public Employee validateUser(String name, String password){
+		for(User u: users){
+			if(u.getName().equals(name) & u.getPass().equals(pass)){
+				return u;
+			}
+		}
+		return null;
+	}
+}
