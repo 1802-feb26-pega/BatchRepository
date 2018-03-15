@@ -4,7 +4,7 @@ window.onload = function(){
 
 function loadLanding(){
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "loadhome" , true);
+	xhr.open("GET", "loadhome.view" , true);
 	xhr.send();
 
 	xhr.onreadystatechange = function(){
@@ -16,8 +16,23 @@ function loadLanding(){
 	}
 }
 
+
+function loadNav(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadnav.view" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#navbar').html(xhr.responseText);
+			// after text is loaded, add event listeners/functionality to view
+		}
+	}
+}
+
+
 function login(){
-	$('#username').on('click', $('#message').hide());
+	$('#message').hide();
 	var email = $('#email').val();
 	var password = $('#pass').val();
 
@@ -33,16 +48,17 @@ function login(){
 			var message = "";
 			if(user==null) {
 				$('#message').show();
-				 $("#message").attr("style", "display:inline");
+				$("#message").attr("style", "display:inline");
 				message = "You have entered the wrong username and/or password. Please try again";
 				$('#message').html(message);
-
 			}
 			else{
-				alert("success");
+				//alert("success");
+				loadNav();
 			}
 		}
 	}
+	
 
 
 

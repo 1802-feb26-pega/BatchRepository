@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.bank.pojos.User;
 import com.ex.service.Service;
@@ -17,7 +18,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+	
 	static Service service = new Service();
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
@@ -45,8 +48,12 @@ public class LoginServlet extends HttpServlet {
 		
 		if(user!= null) {
 		String userJSON = mapper.writeValueAsString(user);
-		System.out.println("JSON: " + userJSON);
+		
+		HttpSession session = req.getSession();
+		session.setAttribute("user", user);
+		
 		out.write(userJSON);
+		
 		}
 		else {
 			out.write("null"); //null as JSON string
