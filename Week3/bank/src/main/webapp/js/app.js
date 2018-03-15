@@ -25,7 +25,9 @@ function loadNav(){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#navbar').html(xhr.responseText);
-			
+			//$('#home').on('click',);
+			$('#logout').click(logout);
+
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
 		}
 	}
@@ -74,8 +76,11 @@ function login(){
 			}
 		}
 	}
-	
+}
 
-
-
+function logout(){
+	console.log("logging out");
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "logout" , true);
+	xhr.send();
 }
