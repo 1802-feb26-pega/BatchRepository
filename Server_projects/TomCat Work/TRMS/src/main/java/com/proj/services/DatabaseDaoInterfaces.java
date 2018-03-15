@@ -8,7 +8,7 @@ import com.proj.pojos.Employee;
 * getEmpolyeeLogin grabs employee info at login
 * getEmployees grabs list of employees
 * */
-public interface DatabaseDaoImpl {
-		public Employee getEmployeeLogin(String s);
+public interface DatabaseDaoInterfaces {
+		public Employee getEmployeeLogin(String name,String password);
 		public ArrayList<Employee> getEmployeesUsername();
 }

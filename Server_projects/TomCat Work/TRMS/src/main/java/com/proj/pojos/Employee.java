@@ -1,5 +1,8 @@
 package com.proj.pojos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Employee {
 		
 		private int key;
@@ -62,9 +65,26 @@ public class Employee {
 			return "Employee [key=" + key + ", firstname=" + firstname + ", lastname=" + lastname + ", username="
 					+ username + ", password=" + password + "]";
 		}
-	
+		//-------------------------------------------------------------------------------------
+		//TESTING AREA	
 		
+		private ArrayList<String> skills;
 		
+		public static Employee toJSON() {
+			// TODO Auto-generated constructor stub
+			
+			Employee emp = new Employee();
+			emp.setFirstname("Philip");
+			emp.setLastname("Harris");
+			
+
+	        List<String> skills = new ArrayList<>();
+	        skills.add("java");
+	        skills.add("python");
+	        skills.add("shell");
+			
+			return emp;
+		}
 		
 		
 }

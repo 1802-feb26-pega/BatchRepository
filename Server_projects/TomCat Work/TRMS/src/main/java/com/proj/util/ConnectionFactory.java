@@ -53,7 +53,7 @@ public class ConnectionFactory {
 		
 		try {
 			prop.load(new FileReader(
-					"C:/Users/phili/my_git_repos/BatchRepository/Philip_Harris_code/RevatureBanking/src/main/resources/Application.properties"));
+					"C:/Users/phili/my_git_repos/BatchRepository/Server_projects/TomCat Work/TRMS/src/main/resources/Application.properties"));
 			
 			Class.forName(prop.getProperty("driver"));
 			

@@ -1,56 +1,61 @@
 package com.proj.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.proj.pojos.Employee;
 import com.proj.services.EmployeeServices;
 
 /*A servlet used for the login page
  * accepts user name and password
  * then attempts to log into TRMS
- * 
- * 
- * 
- * 
  */
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet{
 
+	EmployeeServices employServices= new EmployeeServices();
+	Employee employee;
+	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) 
-		throws IOException,ServletException{
+			throws IOException,ServletException{		
+
+		work(req);
+
+	}		
+
+	public void work(HttpServletRequest req) throws IOException{
+		//1. get request body from request object
+		BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
+		String json = br.readLine();
+
+		System.out.println(json);
+
+		//2. instantiate jackson mapper 
+		ObjectMapper mapper = new ObjectMapper();
+
+		//3. Convert received JSON string into appropriate object
+
+		String[] userInfo = mapper.readValue(json, String[].class);
+		String username = userInfo[0];
+		String password = userInfo[1];		
 		
-		String name = req.getParameter("username");
-		String password = req.getParameter("password");
-		
-		EmployeeServices employService = new EmployeeServices();
-		
-		Employee employee = employService.validateEmployee(name, password);
-		
-		
-		//Need to use AJAX here!
-		//If employee credentials is correct log in
-		if(employee != null){
-			HttpSession session = req.getSession();
-			session.setAttribute("Employee", employee);
-			
-			
-			req.getRequestDispatcher("loggedin.html").forward(req, resp);
-		}
-		else{
-			//code here if incorrect
-			//returns user to the Login screen
-		}
+		Login(username,password);
 		
 	}
-	
-	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-		throws IOException,ServletException{
-		
+	public void Login(String username, String password){
+		if(employee != null){
+			System.out.println("IT WORKS");
+		}else{
+			
+		}
+			
 	}
 }

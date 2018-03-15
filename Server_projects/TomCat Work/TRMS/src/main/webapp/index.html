@@ -1,8 +1,27 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-<style>
+<meta charset="ISO-8859-1">
+<title>Bank App Full Stack!</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+	integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+	crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+	integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+	integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<style>
 body {
 	background-color: purple;
 }
@@ -11,54 +30,19 @@ h1 {
 	color: yellow;
 	text-align: center;
 }
-
-p {
-	font-family: verdana;
-	font-size: 20px;
-}
-
-form {
-	color: black;
-}
-
-Input[type=text] {
-	background-color: white;
-	color: black;
-}
-
-a:link {
-	color: black;
-}
-
-a:hover {
-	color: yellow;
-}
-
-a:visited {
-	color: blue;
-}
 </style>
-<title>TRM System</title>
-</head>
-<body>
 
-	<h1>Welcome to Wakanda!</h1>
-	<p>Please log in:</p>
+	<h1>Welcome to Wakanda TRMS!</h1>
 	<img
 		src="https://cnet3.cbsistatic.com/img/hRLR52cs7Vkty5_5LaiZIt76EAs=/670x503/2018/02/24/ba28837c-f067-48b2-93cc-c53faa4c9ad5/blackpantherthrone.jpg"
-		alt="Wakanda" style="width: 250px; height: 200px;">
+		alt="Wakanda" style="width: 250px; height: 200px; class: Center">
 	<br>
-	<form
-		method="POST" action="loggedin">
-		<input type="text" name="username" placeholder="Username"> <br>
-		<br> <input type="password" name="password" placeholder="Password">
-		<br>
-		<br> <input type="submit" value="Submit">
-	</form>
-	<br>
-	<br>
-	<h3 id="LoginError"> </h3> 
 
+	<div id="view">
+		<!-- could start with login view, and replace as the app path continues  -->
+	</div>
+
+	<script src="js/login.js"></script>
 
 </body>
 </html>

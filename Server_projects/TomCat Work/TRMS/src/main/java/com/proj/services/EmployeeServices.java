@@ -3,8 +3,14 @@ package com.proj.services;
 import java.util.ArrayList;
 import com.proj.pojos.Employee;
 
+
+/*
+ * Employee services is a class that handles majority if no all
+ * of the employess transactions
+ */
 public class EmployeeServices implements EmployeeInterfaces {
 	public static DatabaseDao dao = new DatabaseDao();
+	public Employee employee;
 	
 	public static ArrayList<Employee> employees = new ArrayList<Employee>();
 	static{
@@ -13,18 +19,26 @@ public class EmployeeServices implements EmployeeInterfaces {
 	
 //-------------------------------------------------------------------------------
 	
-	public Employee validateEmployee(String emp, String password) {
+	//RETURNS an EMPLOYEE if and only if they are in the database
+	public Employee validateEmployee(String usrname, String password) {
 		// TODO Auto-generated method stub
-		for(Employee e: dao.getEmployeesUsername()){
-			if(e.getUsername().equals(emp) & e.getPassword().equals(password)){
-				dao.getEmployeeLogin(e.getUsername());
-			}
+			
+		employee = dao.getEmployeeLogin(usrname, password);
+		System.out.println(employee.toString());
+		if(employee.getKey() == 0){
+			return null;
 		}
-		return null;
+		else if(employee.getUsername().equals(usrname) & 
+				employee.getPassword().equals(password)){	
+			return employee;
+		}
+		else 
+			return null;
 	}
 
 	public ArrayList<Employee> getEmployees() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }
