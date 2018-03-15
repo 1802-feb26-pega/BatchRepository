@@ -4,30 +4,38 @@ CREATE TABLE employees(
     last_name varchar2(50) NULL,
     password varchar2(50) NOT NULL,
     reimburse_remain number NOT NULL,
-    reimburse_pend number NULL,
+    email varchar2(50)NULL,
+    date_of_birth DATE NOT NULL,
+    job_level number NOT NULL,
+    zip number NOT NULL,
     CONSTRAINT employee_pk PRIMARY KEY (employee_id)
 );
 
-CREATE TABLE reimbursements(
-    reimburse_id number NOT NULL,
+CREATE TABLE course(
+    course_id number NOT NULL,
     employee_id number NOT NULL,
     event_date DATE NOT NULL,
     event_time TIMESTAMP NOT NULL,
-    location varchar2(50) NOT NULL,
+    street varchar2(50) NOT NULL,
+    zip number NOT NULL,
     cost binary_double NOT NULL,
     proj_reimburse binary_double NOT NULL,
     description varchar2(140) NOT NULL,
     grading_format varchar2(50) NOT NULL,
     event_type varchar2(50) NOT NULL,
-    event_attach varchar2(100) NULL,
-    approval_attach varchar2(100) NULL,
+    attach_id number NULL,
+    approval_id number NOT NULL,
     work_missed number NULL,
     
     CONSTRAINT reimburse_pk PRIMARY KEY (reimburse_id),
     CONSTRAINT employee_fk FOREIGN KEY (employee_id)
     REFERENCES employees(employee_id),
     CONSTRAINT event_type_fk FOREIGN KEY (event_type)
-    REFERENCES event_types(event_type)
+    REFERENCES event_types(event_type),
+    CONSTRAINT attach_fk FOREIGN KEY (attach_id)
+    REFERENCES attachments(attach_id),
+    CONSTRAINT approval_fk FOREIGN KEY (approval_id)
+    REFERENCES approval(approval_id)
 );
 
 CREATE TABLE grading_format(

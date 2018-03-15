@@ -76,3 +76,4 @@ CREATE OR REPLACE PROCEDURE account_check(user_name IN varchar2,
               result := 0;
     END;
 /
+Select * from users;

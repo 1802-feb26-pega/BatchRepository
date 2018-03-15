@@ -89,7 +89,7 @@ public class BankDriver {
 			newLast = String.valueOf(menu.nextLine());
 			System.out.println("");
 			
-			if(t.createUser(newUser, newFirst, newLast, newPass)) {
+			if(t.createUser(newUser, newPass, newFirst, newLast)) {
 				System.out.println("Enter a name for your account: ");
 				newAccount = String.valueOf(menu.nextLine());
 				System.out.println("");
@@ -451,7 +451,7 @@ public class BankDriver {
 			if(!option.equals("0")) {
 				System.out.println("Please re-enter your password, or enter E to exit: ");
 				String repeatResponse = String.valueOf(menu.nextLine());
-				while(!repeatResponse.toLowerCase().equals((String)"e")&&!repeatResponse.equals(String.valueOf(t.getPassword()))) {
+				while(!repeatResponse.toLowerCase().equals((String)"e")&&!t.getPassword().equals(repeatResponse)) {
 					System.out.println("Sorry, that was not the correct password.");
 					System.out.println("Please re-enter your password or enter E to exit: ");
 					System.out.println("");
