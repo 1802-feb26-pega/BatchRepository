@@ -28,10 +28,4 @@ public class Employee {
 	@Column(name="email")
 	private String empEmail;
 	
-	/**
-	 * 
-	 * Establish an EMPLOYEETITLE lookup so that we can see the hierarchy of approvals
-	 * 
-	 */
-	
 }

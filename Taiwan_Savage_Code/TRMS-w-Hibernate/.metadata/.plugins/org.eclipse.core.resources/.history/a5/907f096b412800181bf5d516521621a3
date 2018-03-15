@@ -31,7 +31,7 @@ public class AdditionalAttachments {
 	@Column(name = "file_name")
 	private String fileName;
 	
-	//file needs to be stored as a blob, may need to add more || SWITCHING TO LOCATION OF ATTACHMENT
+	//file needs to be stored as a blob, may need to add more
 	@Column(name = "file_blob")
 	@Lob
 	private byte[] fileBlob;
@@ -41,8 +41,6 @@ public class AdditionalAttachments {
 	 * necessary approval
 	 * 
 	 * Will Reference approval type needed look-up table [[DONT FORGET TO DO THIS]]
-	 * 
-	 * 
 	 */
 	
 }

@@ -49,7 +49,7 @@ public class ReimbursementRequest {
 	 * because a request can either be urgent or not urgent, we need to track the start date of
 	 * the course
 	 */
-	@Column(name = "event_start_date")
+	@Column(name = "course_start_date")
 	private Date startDate;
 	
 	//this uses type date, will test later
@@ -57,11 +57,8 @@ public class ReimbursementRequest {
 	@Type(type="date")
 	private Date dateOfRequest;
 	
-	@Column(name = "location_of_event")
-	private String locationOfEvent;
-	
-	@Column(name = "time_of_event")
-	private int timeOfEvent;
+	@Column(name = "location_of_request")
+	private String locationOfRequest;
 	
 	//employees must add a description their request
 	@Column(name = "request_desc")
@@ -95,7 +92,7 @@ public class ReimbursementRequest {
 	/**
 	 * there needs to be a few reference tables for some of the columns needed in this table
 	 * 
-	 *  ADD LATER: REQTYPE, GRADEFORMAT, EVENTTYPE, PRIORITY, STATUS 
+	 *  ADD LATER
 	 */
 	
 }
