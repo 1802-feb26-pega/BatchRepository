@@ -1,0 +1,41 @@
+package com.tailock.pojos;
+
+import java.sql.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
+
+@Entity
+@Table(name="REIMBURSEMENTREQUEST")
+public class ReimbursementRequest {
+	
+	@Id @GeneratedValue
+	@Column(name="request_id")
+	private int requestId;
+	
+	@ManyToOne
+	@JoinColumn(name = "employee_id")
+	private Employee employee;
+	
+	//this can be a 
+	@Column(name = "date_of_request")
+	@Type(type="date")
+	private Date dateOfRequest;
+	
+	@Column(name = "location_of_request")
+	private String locationOfRequest;
+	
+	@Column(name = "request_desc")
+	private String requestDescription;
+	
+	@Column(name = "request_cost")
+	private int cost;
+	
+}
