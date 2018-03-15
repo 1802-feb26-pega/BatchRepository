@@ -23,7 +23,7 @@ public class LogoutServlet extends HttpServlet {
 			session.invalidate();
 			System.out.println("Session invalidated!");
 		}
-		resp.sendRedirect("loadlanding.view");
+		resp.sendRedirect("index.html");
 		
 	
 	}

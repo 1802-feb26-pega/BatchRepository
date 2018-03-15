@@ -11,9 +11,52 @@ function loadLanding(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
 			$('#login').on('click', login);
+			$('#pass').keydown(function(event){
+				var keypressed = event.keyCode || event.which;
+				if(keypressed == 13)  login();
+			}); //submit upon pressing enter from password input
+			$('#register').on('click', loadRegister);
 			// after text is loaded, add event listeners/functionality to view
 		}
 	}
+}
+
+function loadRegister(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadregister.view" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			$('#message').hide();
+			$('#username').blur(validate);
+			$('#register').click(register);
+		}
+	}
+}
+
+function validate(){
+	console.log("blurred username");
+}
+
+function register(){
+	console.log("register");
+	var fn = $('#fn').val();
+	var ln = $('#ln').val();
+	var uname = $('#username').val();
+	var pass = $('#pass').val();
+	
+	var user = {
+			firstname: fn, 
+			lastname: ln, 
+			email: uname, 
+			password: pass
+	};
+	
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "register", true);
+	xhr.send(JSON.stringify(user));
 }
 
 
@@ -49,6 +92,7 @@ function loadHome(user){
 
 
 function login(){
+	console.log("logging in");
 	$('#message').hide();
 	var email = $('#email').val();
 	var password = $('#pass').val();
@@ -83,4 +127,13 @@ function logout(){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "logout" , true);
 	xhr.send();
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			console.log("attempting to redirect");
+			window.location.replace("index.html");
+		}
+
+	}
+
 }
+

@@ -16,5 +16,9 @@ public class Service {
 		}
 		else return null;
 	}
+	
+	public User addUser(User u) {
+		return dao.addUser(u.getFirstname(), u.getLastname(), u.getEmail(), u.getPassword());
+	}
 
 }
