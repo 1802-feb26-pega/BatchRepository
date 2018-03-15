@@ -1,0 +1,14 @@
+package com.tailock.pojos;
+
+/**
+ * 
+ * @author taikwando
+ *
+ *
+ *	this table will provide reimbursement information to the employee
+ *		!!NOT ABOUT A SPECIFIC REIMBURSEMENT BUT ABOUT ABOUT ALL REIMBURSEMENTS!!
+ *		CAN HAVE A MAX OF $1000 PER YEAR
+ */
+public class EmployeeReimbursementInfo {
+
+}
