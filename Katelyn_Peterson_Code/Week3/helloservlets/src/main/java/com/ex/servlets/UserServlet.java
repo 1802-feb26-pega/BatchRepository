@@ -1,6 +1,8 @@
 package com.ex.servlets;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -23,7 +25,7 @@ public class UserServlet extends HttpServlet
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException
 	{
-		System.out.println("In Do Get Method in user servlet");
+		//System.out.println("In Do Get Method in user servlet");
 		ArrayList<User> users = service.getAll();
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(users.toArray());
@@ -32,4 +34,35 @@ public class UserServlet extends HttpServlet
 		resp.setContentType("application/json");
 		out.write(json);
 	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException
+	{
+		System.out.println("In Post method of user servlet");
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
+		String json = "";
+		
+		if (br != null)
+		{
+			json = br.readLine();
+		}
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		User u = mapper.readValue(json,  User.class);
+		
+		service.addUser(u);
+		
+		System.out.println(service.getAll().toString());
+	}
 }
+
+
+
+
+
+
+
+
