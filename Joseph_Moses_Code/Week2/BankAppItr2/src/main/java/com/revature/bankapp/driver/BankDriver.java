@@ -72,7 +72,7 @@ public class BankDriver {
 									System.out.println("Enter the amount to Deposit:");
 									String depositAmount = UserInputValidation.validateInput(3, scan);
 									if(!myBank.deposit(Integer.parseInt(accountId), Double.valueOf(depositAmount))) {
-										System.out.println("You have entered an account number you don't have access to.");
+										System.out.println("You have entered an account number you don't have deposit access to.");
 									} else {
 										System.out.println("Deposit completed.");
 									}
@@ -82,7 +82,7 @@ public class BankDriver {
 									System.out.println("Enter the amount to Withdraw:");
 									String withdrawAmount = UserInputValidation.validateInput(3, scan);
 									switch(myBank.withdraw(Integer.parseInt(accountId), Double.valueOf(withdrawAmount))) {
-									case 1: System.out.println("You have entered an account number you don't have access to.");
+									case 1: System.out.println("You have entered an account number you don't have withdrawl access to.");
 											break;
 									case 2: System.out.println("You have insufficiant funds.");
 											break;
@@ -97,7 +97,7 @@ public class BankDriver {
 									System.out.println("Enter the amount to Withdraw:");
 									String transferAmount = UserInputValidation.validateInput(3, scan);
 									switch(myBank.transfer(Integer.parseInt(accountId), Integer.parseInt(accountId2), Double.valueOf(transferAmount))) {
-										case 1: System.out.println("You have entered an account number you don't have access to.");
+										case 1: System.out.println("You have entered an account number you don't have transfer access to.");
 												break;
 										case 2: System.out.println("You have insufficiant funds.");
 												break;

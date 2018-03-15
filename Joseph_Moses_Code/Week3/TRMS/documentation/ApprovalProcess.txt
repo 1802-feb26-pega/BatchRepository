@@ -54,5 +54,5 @@ TRMS Approval process
     -if presentatio, Driect Super must confirm satisfactory presentation
 
 8. reimbursment awarded
-    -Only occures after confirmation through 6 or 7.
+    -Only occures after confirmation through 7. or 8.
     -update employees reimbursment values

@@ -131,7 +131,7 @@ public class Bank{
 		Account accountFrom = accountDAO.getAccountByIds(accountIdFrom, currentUser.getUserId());
 		Account accountTo = accountDAO.getAccountByIds(accountIdTo, currentUser.getUserId());
 		
-		if(accountFrom.getAccId() == 0 || accountTo.getAccId() == 0){
+		if(accountFrom.getAccId() == 0 || accountTo.getAccId() == 0 || accountFrom.getAccId() == accountTo.getAccId()){
 			return 1;
 		}
 		else if(accountFrom.getBalance() < amount) {
