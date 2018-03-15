@@ -1,10 +1,9 @@
 package com.trms.pojos;
 
-public class DepartmentHead implements User{
+public class DepartmentHead extends Employee{
 
-	public String getWholeName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	private int dep_head_id;
+	
+	
+	
 }
