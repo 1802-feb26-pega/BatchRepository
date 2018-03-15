@@ -1,0 +1,48 @@
+body {
+	background-color: lightgray;
+}
+
+h1 {
+	text-align: center;
+	font-size: 3em;
+}
+
+h2 {
+	text-align: center;
+	font-size: 2em;
+}
+
+#login_box {
+	width: 30%;
+	margin: auto;
+	border-style: solid;
+	border-width: 0.5px;
+	border-radius: 12px;
+	box-shadow: 5px 5px 5px grey;
+	background-color: white;
+}
+
+#login_box div {
+	padding: 6px;
+	width: 100%;
+}
+
+#un_box, #pw_box {
+	background-color: #fff;
+	max-width: 70%;
+}
+
+#un_box:focus, #pw_box:focus {
+	background-color: #eee;
+}
+
+input[type=submit] {
+	border-radius: 5px;
+	border: none;
+	padding: 5px;
+}
+
+input[type=submit]:hover {
+	background-color: darkgrey;
+	color: white;
+}
