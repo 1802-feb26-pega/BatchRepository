@@ -114,11 +114,11 @@
 ALTER TABLE InvoiceLine DROP CONSTRAINT FK_InvoiceLineInvoiceId;
 ALTER TABLE Invoice DROP CONSTRAINT FK_INVOICE_CUSTOMERID;
 
-ALTER TABLE InvoiceLine ADD CONSTRAINT FK_InvoiceLine_InvoiceId
+ALTER TABLE InvoiceLine ADD CONSTRAINT FK_InvoiceLineInvoice_Id
     FOREIGN KEY (InvoiceId) REFERENCES Invoice (InvoiceId) ON DELETE CASCADE ;
     
 
-ALTER TABLE Invoice ADD CONSTRAINT FK_Invoice_CustomerId
+ALTER TABLE Invoice ADD CONSTRAINT FK_Invoice_Customer_Id
     FOREIGN KEY (CustomerId) REFERENCES Customer (CustomerId) ON DELETE CASCADE ;
 
     DELETE 
@@ -144,7 +144,7 @@ SELECT get_current_time() FROM DUAL;
 
 -- 2
 
-create or replace function get_mediatype_len
+create or replace function get_media_type_len
 RETURN INT is l int;
 BEGIN 
     Select LENGTH(name)
@@ -154,7 +154,7 @@ BEGIN
     RETURN l;
 END;
 /
-SELECT get_mediatype_len() FROM DUAL;
+SELECT get_media_type_len() FROM DUAL;
 
 
 --3.2
@@ -172,7 +172,7 @@ SELECT get_invoice_avg FROM DUAL;
 
 
 -- 2
-CREATE or REPLACE FUNCTION get_most_exp_track
+CREATE or REPLACE FUNCTION get_mostexp_track
 RETURN NUMBER is mx Number(3,2);
 BEGIN
     SELECT MAX(unitprice)
@@ -182,10 +182,10 @@ BEGIN
 END;
 /
 
-SELECT get_most_exp_track() FROM DUAL;
+SELECT get_mostexp_track() FROM DUAL;
 
 --3.3
-CREATE OR REPLACE FUNCTION get_avg_invoiceline_items
+CREATE OR REPLACE FUNCTION get_avginvoicelineitems
 RETURN NUMBER is average NUMBER(3,2);
 BEGIN
     SELECT AVG(unitprice)
@@ -195,13 +195,13 @@ BEGIN
 END;
 /
 
-SELECT get_avg_invoiceline_items() FROM DUAL;
+SELECT get_avginvoicelineitems() FROM DUAL;
 
 --3.4 
 
 -- 4
 -- 1 
-CREATE OR REPLACE PROCEDURE get_nameof_employee(cursorParam OUT SYS_REFCURSOR)
+CREATE OR REPLACE PROCEDURE get_name_of_employee(cursorParam OUT SYS_REFCURSOR)
 IS 
 BEGIN
     OPEN cursorParam FOR
@@ -211,7 +211,7 @@ END;
 /
 
 VARIABLE rc REFCURSOR;
-EXECUTE get_nameof_employee(:rc);
+EXECUTE get_name_of_employee(:rc);
 print rc;
 
 -- 4.2
@@ -281,7 +281,7 @@ EXECUTE randomName(:i);
 print i;
 
 -- 2
-CREATE or replace procedure ins_new
+CREATE or replace procedure insertnew
 AS
 BEGIN
     INSERT INTO CUSTOMER (CUSTOMERID,FIRSTNAME,LASTNAME,COMPANY,ADDRESS,CITY,state,country,postalcode,phone,fax,email,supportrepid)
@@ -291,11 +291,11 @@ BEGIN
 END;
 /
 
-EXECUTE ins_new();
+EXECUTE insertnew();
 
 --6
 --6.1
-create or replace TRIGGER Q6_1 
+create or replace TRIGGER Trigger1 
 BEFORE INSERT OF customerid
 ON CUSTOMER 
 FOR EACH ROW
