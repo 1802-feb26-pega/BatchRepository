@@ -21,10 +21,12 @@ public class LoadViewServlet extends HttpServlet{
 	
 	static String process(HttpServletRequest req, HttpServletResponse resp) {
 		switch(req.getRequestURI()) {
-		case("/bank/loadhome.view") :
+		case("/bank/loadlanding.view") :
 			return "partials/login.html";
 		case("/bank/loadnav.view") :
 			return "partials/navbar.html";
+		case("/bank/loadhome.view") :
+			return "partials/home.html";
 		
 		}
 		

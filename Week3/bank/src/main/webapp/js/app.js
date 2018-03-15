@@ -4,7 +4,7 @@ window.onload = function(){
 
 function loadLanding(){
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "loadhome.view" , true);
+	xhr.open("GET", "loadlanding.view" , true);
 	xhr.send();
 
 	xhr.onreadystatechange = function(){
@@ -25,7 +25,22 @@ function loadNav(){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#navbar').html(xhr.responseText);
-			// after text is loaded, add event listeners/functionality to view
+			
+			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
+		}
+	}
+}
+
+function loadHome(user){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadhome.view" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			$('#name').html(user.firstname);
+			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
 		}
 	}
 }
@@ -55,6 +70,7 @@ function login(){
 			else{
 				//alert("success");
 				loadNav();
+				loadHome(user);
 			}
 		}
 	}
