@@ -1057,3 +1057,18 @@ org.eclipse.core.runtime.CoreException: Could not resolve artifact ojdbc14:ojdbc
 2018-03-15 09:49:23,735 [Worker-355] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/taikwando/git/BatchRepository/Taiwan_Savage_Code/TRMS-w-Hibernate/TaiLock/src/main/resources
 2018-03-15 09:49:23,812 [Worker-355] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
 2018-03-15 09:49:23,813 [Worker-355] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/taikwando/git/BatchRepository/Taiwan_Savage_Code/TRMS-w-Hibernate/TaiLock/src/test/resources
+2018-03-15 11:46:11,400 [Worker-2] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: TaiLock:TaiLock:0.0.1-SNAPSHOT @ /Users/taikwando/git/BatchRepository/Taiwan_Savage_Code/TRMS-w-Hibernate/TaiLock/pom.xml.
+2018-03-15 11:46:11,551 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.oracle:ojdbc7:jar:11.2.0 is missing, no dependency information available
+2018-03-15 11:46:11,788 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.oracle:ojdbc7:jar:11.2.0 is missing, no dependency information available
+2018-03-15 11:46:12,994 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-15 11:46:12,996 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/taikwando/git/BatchRepository/Taiwan_Savage_Code/TRMS-w-Hibernate/TaiLock/src/main/resources
+2018-03-15 11:46:12,998 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-15 11:46:12,999 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/taikwando/git/BatchRepository/Taiwan_Savage_Code/TRMS-w-Hibernate/TaiLock/src/test/resources
+2018-03-15 11:46:14,019 [Worker-14] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: TaiLock:TaiLock:0.0.1-SNAPSHOT @ /Users/taikwando/git/BatchRepository/Taiwan_Savage_Code/TRMS-w-Hibernate/TaiLock/pom.xml.
+2018-03-15 11:46:14,091 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.oracle:ojdbc7:jar:11.2.0 is missing, no dependency information available
+2018-03-15 11:46:14,238 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.oracle:ojdbc7:jar:11.2.0 is missing, no dependency information available
+2018-03-15 11:46:15,246 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.oracle:ojdbc7:jar:11.2.0 is missing, no dependency information available
+2018-03-15 11:46:15,429 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-15 11:46:15,429 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/taikwando/git/BatchRepository/Taiwan_Savage_Code/TRMS-w-Hibernate/TaiLock/src/main/resources
+2018-03-15 11:46:15,432 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-15 11:46:15,433 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/taikwando/git/BatchRepository/Taiwan_Savage_Code/TRMS-w-Hibernate/TaiLock/src/test/resources
