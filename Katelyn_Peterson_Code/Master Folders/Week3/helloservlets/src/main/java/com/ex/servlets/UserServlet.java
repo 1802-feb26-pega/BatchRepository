@@ -1,6 +1,8 @@
 package com.ex.servlets;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -36,8 +38,21 @@ public class UserServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
+		System.out.println("IN POST METHOD OF USER SERVLET");
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
+		String json = "";
+		if(br != null) {
+			json = br.readLine();
+		}
+
+		ObjectMapper mapper = new ObjectMapper();
+		
+		User u = mapper.readValue(json, User.class);
+		
+		service.addUser(u);
+		System.out.println(service.getAll().toString());
+	
 	}
 	
 

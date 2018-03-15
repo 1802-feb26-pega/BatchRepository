@@ -6,12 +6,11 @@ public class Employee
 	private Integer employeeId;
 	private String firstName;
 	private String lastName;
-	private String address;
-	private String city;
-	private String state;
-	private Integer postal;
+	private String email;
 	private String phone;
 	private Double reimburse;
+	private Integer reportsto;
+	private Integer departId;
 	
 	// Constructors
 	public Employee()
@@ -19,20 +18,20 @@ public class Employee
 		super();
 	}
 
-	public Employee(String firstName, String lastName, String address, String city, String state, Integer postal,
-			String phone, Double reimburse)
+	public Employee(Integer employeeId, String firstName, String lastName, String email, String phone, Double reimburse,
+			Integer reportsto, Integer departId)
 	{
 		super();
+		this.employeeId = employeeId;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.address = address;
-		this.city = city;
-		this.state = state;
-		this.postal = postal;
+		this.email = email;
 		this.phone = phone;
 		this.reimburse = reimburse;
+		this.reportsto = reportsto;
+		this.departId = departId;
 	}
-
+	
 	// Getters
 	public Integer getEmployeeId()
 	{
@@ -49,24 +48,9 @@ public class Employee
 		return lastName;
 	}
 
-	public String getAddress()
+	public String getEmail()
 	{
-		return address;
-	}
-
-	public String getCity()
-	{
-		return city;
-	}
-
-	public String getState()
-	{
-		return state;
-	}
-
-	public Integer getPostal()
-	{
-		return postal;
+		return email;
 	}
 
 	public String getPhone()
@@ -77,6 +61,16 @@ public class Employee
 	public Double getReimburse()
 	{
 		return reimburse;
+	}
+
+	public Integer getReportsto()
+	{
+		return reportsto;
+	}
+
+	public Integer getDepartId()
+	{
+		return departId;
 	}
 	
 	// Setters
@@ -95,24 +89,9 @@ public class Employee
 		this.lastName = lastName;
 	}
 
-	public void setAddress(String address)
+	public void setEmail(String email)
 	{
-		this.address = address;
-	}
-
-	public void setCity(String city)
-	{
-		this.city = city;
-	}
-
-	public void setState(String state)
-	{
-		this.state = state;
-	}
-
-	public void setPostal(Integer postal)
-	{
-		this.postal = postal;
+		this.email = email;
 	}
 
 	public void setPhone(String phone)
@@ -124,7 +103,16 @@ public class Employee
 	{
 		this.reimburse = reimburse;
 	}
-	
+
+	public void setReportsto(Integer reportsto)
+	{
+		this.reportsto = reportsto;
+	}
+
+	public void setDepartId(Integer departId)
+	{
+		this.departId = departId;
+	}
 	
 	// Other Functions
 	
@@ -134,15 +122,14 @@ public class Employee
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((address == null) ? 0 : address.hashCode());
-		result = prime * result + ((city == null) ? 0 : city.hashCode());
+		result = prime * result + ((departId == null) ? 0 : departId.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((employeeId == null) ? 0 : employeeId.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
-		result = prime * result + ((postal == null) ? 0 : postal.hashCode());
 		result = prime * result + ((reimburse == null) ? 0 : reimburse.hashCode());
-		result = prime * result + ((state == null) ? 0 : state.hashCode());
+		result = prime * result + ((reportsto == null) ? 0 : reportsto.hashCode());
 		return result;
 	}
 
@@ -156,19 +143,19 @@ public class Employee
 		if (getClass() != obj.getClass())
 			return false;
 		Employee other = (Employee) obj;
-		if (address == null)
+		if (departId == null)
 		{
-			if (other.address != null)
+			if (other.departId != null)
 				return false;
 		}
-		else if (!address.equals(other.address))
+		else if (!departId.equals(other.departId))
 			return false;
-		if (city == null)
+		if (email == null)
 		{
-			if (other.city != null)
+			if (other.email != null)
 				return false;
 		}
-		else if (!city.equals(other.city))
+		else if (!email.equals(other.email))
 			return false;
 		if (employeeId == null)
 		{
@@ -198,13 +185,6 @@ public class Employee
 		}
 		else if (!phone.equals(other.phone))
 			return false;
-		if (postal == null)
-		{
-			if (other.postal != null)
-				return false;
-		}
-		else if (!postal.equals(other.postal))
-			return false;
 		if (reimburse == null)
 		{
 			if (other.reimburse != null)
@@ -212,12 +192,12 @@ public class Employee
 		}
 		else if (!reimburse.equals(other.reimburse))
 			return false;
-		if (state == null)
+		if (reportsto == null)
 		{
-			if (other.state != null)
+			if (other.reportsto != null)
 				return false;
 		}
-		else if (!state.equals(other.state))
+		else if (!reportsto.equals(other.reportsto))
 			return false;
 		return true;
 	}
@@ -225,8 +205,8 @@ public class Employee
 	@Override
 	public String toString()
 	{
-		return "Employee [employeeId=" + employeeId + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", address=" + address + ", city=" + city + ", state=" + state + ", postal=" + postal + ", phone="
-				+ phone + ", reimburse=" + reimburse + "]";
+		return "Employee [employeeId=" + employeeId + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
+				+ email + ", phone=" + phone + ", reimburse=" + reimburse + ", reportsto=" + reportsto + ", departId="
+				+ departId + "]";
 	}
 }

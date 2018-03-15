@@ -4,9 +4,29 @@ window.onload = function(){
 }
 var users;
 
-
+//introduction to POST. remember that in POST requests, we can send objects in the request body
 function addUser(){
+		var user = {};
+		user.name = $('#name').val();
+		user.bio = $('#bio').val();
+		user.email = $('#email').val();
+		
+		var data = JSON.stringify(user);
+		console.log(data);
 	
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "users", true);
+		xhr.send(data);
+		
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				let u = [user]; // our populate Data method takes 
+				populateData(u);
+	
+			}
+		}
+		
+		
 }
 
 function initialize(){
