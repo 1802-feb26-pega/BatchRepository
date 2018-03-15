@@ -1,3 +1,0 @@
-# JavaScript materials
-* overview
-* dom
