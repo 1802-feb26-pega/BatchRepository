@@ -2,11 +2,10 @@ package com.trms.pojos;
 
 public class BenCo extends Employee{
 
-	private int myBenCoId;
+	private int myBenCoId = -1;
 
 	public BenCo() {
 		super();
-		this.myBenCoId = -1;
 	}
 
 	public BenCo(int uid, int benCoId, String firstName, String lastName, double paidReimbursments, int supervisorId, int depHeadId,
@@ -18,7 +17,6 @@ public class BenCo extends Employee{
 
 	public BenCo(String firstName, String lastName, String username, String password) {
 		super(firstName, lastName, username, password);
-		this.myBenCoId = -1;
 	}
 
 	public int getMyBenCoId() {

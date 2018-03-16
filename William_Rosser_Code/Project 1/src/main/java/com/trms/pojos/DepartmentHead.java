@@ -2,11 +2,11 @@ package com.trms.pojos;
 
 public class DepartmentHead extends Employee{
 
-	private int myDepHeadId;
+	private int myDepHeadId = -1;
 
 	public DepartmentHead() {
 		super();
-		this.myDepHeadId = -1;
+
 	}
 
 	public DepartmentHead(int emp_id,int myDepHeadId, String firstName, String lastName, double paidReimbursments, int supervisorId,
@@ -18,7 +18,7 @@ public class DepartmentHead extends Employee{
 
 	public DepartmentHead(String firstName, String lastName, String username, String password) {
 		super(firstName, lastName, username, password);
-		this.myDepHeadId = -1;
+
 	}
 
 	public int getMyDepHeadId() {

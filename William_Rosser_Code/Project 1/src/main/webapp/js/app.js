@@ -38,6 +38,7 @@ function login(){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			var user = JSON.parse(xhr.responseText);
+			console.log(user)
 			var message = "";
 			if(user==null) {
 				$('#message').show();
@@ -61,34 +62,91 @@ function loadRegister(){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
-			$('#message').hide();
-			$('#username').blur(validate);
-			$('#register').click(register);
+			$('.hide').hide();
+			$('#username').blur(function() {
+				validate(username);
+			})
+			$('#reg_submit').click(register);
+			$('#cancel').click(loadLogin);
 		}
 	}
 }
 
-function validate(){
-	console.log("blurred username");
+function validate(username){
+	console.log(username);
+	//TODO: Username validation
+	return true;
 }
 
 function register(){
+	$('.hide').hide();
 	console.log("register");
-	var fn = $('#fn').val();
-	var ln = $('#ln').val();
-	var uname = $('#username').val();
+	var fn = $('#firstName').val();
+	var ln = $('#lastName').val();
+	var sID = $('#supID').val();
+	var dhID = $('#dhID').val();
+	var bencoID = $('#BenCoID').val();
+	var dep = $('#department').val();
+	var jt = $('#job').val();
+	var un = $('#username').val();
 	var pass = $('#pass').val();
-	
-	var user = {
-			firstname: fn, 
-			lastname: ln, 
-			email: uname, 
-			password: pass
-	};
-	
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "register", true);
-	xhr.send(JSON.stringify(user));
+	var pass2 = $('#passVerify').val();
+	var acctype = $('#account_type').val();
+	var valid = validate(un)
+	var good = (fn&&ln&&un&&pass&&pass2&&(pass==pass2)&&valid) ? true : false;
+	var dest = "";
+	if (acctype==0) {
+		 dest = "reg_employee";
+	} else if (acctype==1) {
+		dest = "reg_supervisor";
+	} else if (acctype==2) {
+		dest = "reg_dephead";
+	} else if (acctype==3) {
+		dest = "reg_benco";
+	}
+	if (good) {
+		var user = {
+				firstName: fn,
+				lastName: ln,
+				supervisorId: sID,
+				depHeadId: dhID,
+				benCoId: bencoID,
+				department: dep,
+				jobTitle: jt,
+				username:un,
+				password:pass
+		}
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", dest, true);
+		xhr.send(JSON.stringify(user));
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				var loadedUser = JSON.parse(xhr.responseText);
+				console.log(loadedUser);
+				if (loadedUser.id != -1) {
+					login();
+				}
+			}
+		}
+	} else {
+		if(!fn) {
+			$("#fn-danger").show();
+		}
+		if(!ln) {
+			$("#ln-danger").show();
+		}
+		if(!un) {
+			$("#un-danger-needed").show();
+		}
+		if(!pass) {
+			$("#pw-danger").show();
+		}
+		if(!pass2) {
+			$("#pw2-danger-needed").show();
+		} else if(pass!=pass2) {
+			$("#pw2-danger").show();
+		}
+	}
 }
 
 function loadNav(){

@@ -2,7 +2,7 @@ package com.trms.pojos;
 
 public class DirectSupervisor extends Employee{
 
-	private int dsId;
+	private int dsId = -1;
 
 	public DirectSupervisor() {
 		super();
@@ -19,7 +19,6 @@ public class DirectSupervisor extends Employee{
 
 	public DirectSupervisor(String firstName, String lastName, String username, String password) {
 		super(firstName, lastName, username, password);
-		this.dsId = -1;
 	}
 
 	@Override

@@ -2,10 +2,10 @@ package com.trms.service;
 
 import com.trms.dao.EmployeeDao;
 import com.trms.dao.EmployeeDaoImpl;
-import com.trms.pojos.User;
+import com.trms.pojos.*;
 
 public class Service {
-	
+
 	static EmployeeDao eDao = EmployeeDaoImpl.getInstance();
 
 	public static User login(String username, String password) {
@@ -16,8 +16,14 @@ public class Service {
 			return user;
 		} else return null;
 	}
-	
-	public User addUser(User u) {
-		return eDao.addUser(u);
+
+	public static User addUser(User u, int type) {
+		switch(type) {
+		case 0: eDao.addEmployee((Employee) u); break;
+		case 1: eDao.addDirectSupervisor((DirectSupervisor) u); break;
+		case 2: eDao.addDepHead((DepartmentHead) u); break;
+		case 3: eDao.addBenCo((BenCo) u); break;
+		}
+		return u;
 	}
 }

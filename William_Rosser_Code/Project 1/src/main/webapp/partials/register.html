@@ -1,1 +1,81 @@
-Registration
+<div id="reg_form" class="container">
+	<h1>TRMS Registration</h1>
+	<br>
+
+	<p style="font-style: italic; color: red;">*Required</p>
+	<p>
+		First Name:* <input type="text" id="firstName" name="firstName"
+			placeholder="First Name"> <span class="hide text-danger"
+			id="fn-danger">First name is required.</span>
+	</p>
+
+
+	<p>
+		Last Name:* <input type="text" id="lastName" name="lastName"
+			placeholder="Last Name"> <span class="hide text-danger"
+			id="ln-danger">Last name is required.</span>
+	</p>
+
+
+	<p>
+		Supervisor ID: <input type="number" id="supID" name="supervisorID"
+			placeholder="Supervisor ID">
+	</p>
+
+	<p>
+		Department Head ID: <input type="number" id="dhID"
+			name="DepartmentHeadID" placeholder="Department Head ID">
+	</p>
+
+	<p>
+		Benefits Coordinator ID: <input type="number" id="BenCoID"
+			name="BenCoID" placeholder="Benefits Coordinator ID">
+	</p>
+
+	<p>
+		Department: <input type="text" id="department" name="department"
+			placeholder="Department">
+	</p>
+
+	<p>
+		Job Title: <input type="text" id="job" name="jobTile"
+			placeholder="Job Title">
+	</p>
+
+	<p>
+		Username:* <input type="text" id="username" name="username"
+			placeholder="Username"> <span class="hide text-danger"
+			id="un-danger-needed">Username is required.</span> <span
+			class="hide text-danger" id="un-danger-taken">Username is
+			already taken.</span>
+	</p>
+
+
+	<p>
+		Password:* <input type="password" id="pass" name="password"
+			placeholder="Password"> <span class="hide text-danger"
+			id="pw-danger">Password is required.</span>
+	</p>
+
+
+	<p>
+		Verify password:* <input type="password" id="passVerify"
+			name="passwordVerify" placeholder="Re-enter your password.">
+		<span class="hide text-danger" id="pw2-danger">Passwords do not
+			match.</span> <span class="hide text-danger" id="pw2-danger-needed">Password
+			must be re-entered.</span>
+	</p>
+
+
+	<p>
+		Account Type: <select id="account_type">
+			<option value=0>Standard Employee</option>
+			<option value=1>Supervisor</option>
+			<option value=2>Department Head</option>
+			<option value=3>Benefits Coordinator</option>
+		</select>
+	</p>
+
+	<button id="reg_submit">Register</button>
+	<button id="cancel">Cancel</button>
+</div>

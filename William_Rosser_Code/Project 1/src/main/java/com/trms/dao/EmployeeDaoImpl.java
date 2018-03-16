@@ -93,10 +93,60 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		// TODO: implement getEmployeeByID
 		return null;
 	}
-	
-	public User addUser(User u) {
-		//TODO: Implement add user
-		return u;
+
+	@Override
+	public User addBenCo(BenCo bc) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public User addDepHead(DepartmentHead dh) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User addDirectSupervisor(DirectSupervisor ds) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User addEmployee(Employee e) {
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			conn.setAutoCommit(false);
+			String sql = "INSERT INTO employee(first_name,last_name,supervisor_id,dep_head_id,benco_id,department,job_title,username,password) "+
+					"VALUES (?,?,?,?,?,?,?,?,?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, e.getFirstName());
+			ps.setString(2, e.getLastName());
+			ps.setInt(3, e.getSupervisorId());
+			ps.setInt(4, e.getDepHeadId());
+			ps.setInt(5, e.getBenCoId());
+			ps.setString(6, e.getDepartment());
+			ps.setString(7, e.getJobTitle());
+			ps.setString(8, e.getUsername());
+			ps.setString(9, e.getPassword());
+			int val = ps.executeUpdate();
+			if (val > 0) {
+				conn.commit();
+				sql = "SELECT employee_id FROM employee WHERE username = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, e.getUsername());
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					e.setId(rs.getInt(1));
+				}
+				return e;
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return null;
+	}
+	
+	//TODO: Other DB access methods
 	
 }
