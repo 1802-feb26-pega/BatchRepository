@@ -1,8 +1,8 @@
-window.onload = function(){
+window.onload = function(){ //1 
 	loadLanding();
 }
 
-function loadLanding(){
+function loadLanding(){ //1 
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "loadlanding.view" , true);
 	xhr.send();
@@ -10,7 +10,7 @@ function loadLanding(){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
-			$('#login').on('click', login);
+			$('#login').on('click', login); 
 			$('#pass').keydown(function(event){
 				var keypressed = event.keyCode || event.which;
 				if(keypressed == 13)  login();
@@ -118,6 +118,18 @@ function getUserAccounts(){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "accounts" , true);
 	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var accounts = JSON.parse(xhr.responseText);
+			if(accounts.length == 0){
+				console.log("you have no accounts");
+			}
+			else{
+				console.log(accounts);
+			}
+		}
+	}
 
 }
 
