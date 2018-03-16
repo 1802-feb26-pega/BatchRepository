@@ -37,10 +37,33 @@ function loadRegister(){
 }
 
 function validate(){
-	console.log("blurred username");
+	console.log($('#username').val());
+	var username = $('#username').val();
+	
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "validate", true);
+	xhr.send(JSON.stringify(username));
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var exists = JSON.parse(xhr.responseText);
+			if(exists){
+				$('#message').html('Sorry, that username exists, please try again');
+				$('#message').show();
+				$('#register').attr('disabled', true);
+			}
+			else{
+				$('#message').hide();
+				$('#register').attr('disabled', false);
+			}
+		}
+	}
+	
+	
 }
 
-function register(){
+
+function register(){ 
 	console.log("register");
 	var fn = $('#fn').val();
 	var ln = $('#ln').val();
@@ -86,9 +109,19 @@ function loadHome(user){
 			$('#view').html(xhr.responseText);
 			$('#name').html(user.firstname);
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
+			getUserAccounts();
 		}
 	}
 }
+
+function getUserAccounts(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "accounts" , true);
+	xhr.send();
+
+}
+
+
 
 
 function login(){
