@@ -13,10 +13,10 @@ public class Employee implements User {
 	protected String jobTitle;
 	protected String username;
 	protected String password;
-	
-	
-	
-	
+
+
+
+
 	public Employee(int id, String firstName, String lastName, double paidReimbursments, int supervisorId,
 			int depHeadId, int benCoId, String department, String jobTitle, String username, String password) {
 		super();
@@ -32,9 +32,6 @@ public class Employee implements User {
 		this.username = username;
 		this.password = password;
 	}
-
-	
-
 
 	public Employee(String firstName, String lastName, String username, String password) {
 		super();
@@ -64,141 +61,82 @@ public class Employee implements User {
 		this.username = "";
 		this.password = "";
 	}
-	
-
 
 	public int getId() {
 		return id;
 	}
 
-
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
-
 
 	public String getLastName() {
 		return lastName;
 	}
 
-
-
-
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
-
-
 
 	public double getPaidReimbursments() {
 		return paidReimbursments;
 	}
 
-
-
-
 	public void setPaidReimbursments(double paidReimbursments) {
 		this.paidReimbursments = paidReimbursments;
 	}
-
-
-
 
 	public int getSupervisorId() {
 		return supervisorId;
 	}
 
-
-
-
 	public void setSupervisorId(int supervisorId) {
 		this.supervisorId = supervisorId;
 	}
-
-
-
 
 	public int getDepHeadId() {
 		return depHeadId;
 	}
 
-
-
-
 	public void setDepHeadId(int depHeadId) {
 		this.depHeadId = depHeadId;
 	}
-
-
-
 
 	public int getBenCoId() {
 		return benCoId;
 	}
 
-
-
-
 	public void setBenCoId(int benCoId) {
 		this.benCoId = benCoId;
 	}
-
-
-
 
 	public String getDepartment() {
 		return department;
 	}
 
-
-
-
 	public void setDepartment(String department) {
 		this.department = department;
 	}
-
-
-
 
 	public String getJobTitle() {
 		return jobTitle;
 	}
 
-
-
-
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
 	}
-
-
-
 
 	public String getUsername() {
 		return username;
 	}
 
-
-
-
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
-
-
-
 	public String getPassword() {
 		return password;
 	}
-
-
-
 
 	public void setPassword(String password) {
 		this.password = password;
@@ -206,12 +144,8 @@ public class Employee implements User {
 
 
 	public String getWholeName() {
-		
 		return firstName + " " + lastName;
 	}
-
-
-
 
 	@Override
 	public int hashCode() {
@@ -232,9 +166,6 @@ public class Employee implements User {
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
-
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -288,9 +219,6 @@ public class Employee implements User {
 		return true;
 	}
 
-
-
-
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", paidReimbursments="
@@ -299,24 +227,14 @@ public class Employee implements User {
 				+ ", password=" + password + "]";
 	}
 
-
-
-
 	@Override
 	public String getFirstName() {
 		return firstName;
 	}
 
-
-
-
 	@Override
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
-		
-	}
-	
-	
-	
 
+	}
 }

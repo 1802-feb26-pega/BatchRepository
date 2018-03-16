@@ -7,6 +7,7 @@ public class TRFormDao {
 	}
 
 	public static TRFormDao getInstance() {
+		if (me == null) me = new TRFormDao();
 		return me;
 	}
 }

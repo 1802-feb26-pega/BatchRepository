@@ -27,10 +27,10 @@ public class ConnectionFactory {
 	public Connection getConnection() {
 		Connection conn = null;
 		Properties prop = new Properties();
-		
-
+		//System.out.println("Building a connection.");
 		try {
-			prop.load(new FileReader("src/main/resources/app.properties"));
+			prop.load(new FileReader("C:/Users/wille_000/Desktop/Revature Classes/BatchRepository/William_Rosser_Code/Project 1/src/main/resources/app.properties"));
+			//System.out.println(prop.getProperty("driver"));
 			Class.forName(prop.getProperty("driver"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

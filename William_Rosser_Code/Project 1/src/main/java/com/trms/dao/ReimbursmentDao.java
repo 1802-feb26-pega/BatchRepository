@@ -7,6 +7,7 @@ public class ReimbursmentDao {
 	}
 
 	public static ReimbursmentDao getInstance() {
+		if (me == null) me = new ReimbursmentDao();
 		return me;
 	}
 }

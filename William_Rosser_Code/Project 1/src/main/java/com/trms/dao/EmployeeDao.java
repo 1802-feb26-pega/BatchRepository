@@ -1,12 +1,9 @@
 package com.trms.dao;
 
-public class EmployeeDao {
-	private static EmployeeDao me;
-	private EmployeeDao() {
-		me = this;
-	}
+import com.trms.pojos.User;
 
-	public static EmployeeDao getInstance() {
-		return me;
-	}
+public interface EmployeeDao {
+	public User getEmployee(String username);
+	public User getEmployeeById(int id);
+	public User addUser(User u);
 }

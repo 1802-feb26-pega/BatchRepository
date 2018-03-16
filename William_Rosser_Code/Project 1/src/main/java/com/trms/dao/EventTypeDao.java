@@ -7,6 +7,7 @@ public class EventTypeDao {
 	}
 
 	public static EventTypeDao getInstance() {
+		if (me == null) me = new EventTypeDao();
 		return me;
 	}
 }

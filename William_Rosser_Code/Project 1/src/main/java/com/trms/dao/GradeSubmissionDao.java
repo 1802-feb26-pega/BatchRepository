@@ -7,6 +7,7 @@ public class GradeSubmissionDao {
 	}
 
 	public static GradeSubmissionDao getInstance() {
+		if (me == null) me = new GradeSubmissionDao();
 		return me;
 	}
 }
