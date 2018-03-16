@@ -7,9 +7,9 @@ import com.ex.pojos.User;
 public class DemoService {
 	static ArrayList<User> users = new ArrayList<>();
 	static {
-		users.add(new User("Peter", "the pumpkin eater", "peter@mail.com"));
-		users.add(new User("Dog", "the bum sniffer", "dog@mail.com"));
-		users.add(new User("Sheep", "the mutton chopper", "sheep@mail.com"));
+		users.add(new User("Peter", "peter@mail.com", "password"));
+		users.add(new User("Dog", "dog@mail.com", "password"));
+		users.add(new User("Sheep", "sheep@mail.com", "password"));
 	}
 	
 	public ArrayList<User>getAll() {
