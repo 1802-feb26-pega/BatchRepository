@@ -18,6 +18,7 @@ public class Employee
 	public Employee()
 	{
 		super();
+		this.employeeId = 0;
 	}
 
 	public Employee(Integer employeeId, String firstName, String lastName, String email, String password, String phone,

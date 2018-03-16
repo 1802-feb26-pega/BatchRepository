@@ -1,6 +1,22 @@
 package com.revature.trms.dao;
 
-public class EventDAOImpl
+import java.util.Collection;
+
+public class EventDAOImpl implements EventDAO
 {
+
+	@Override
+	public Collection<String> getAllEventTypes()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Double getEventReimbursement()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

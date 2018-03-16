@@ -26,6 +26,7 @@ function loadLogin()
 
 function logIn()
 {
+    $('#message').hide();
     var email = $('#email').val();
     var password = $('#password').val();
 
@@ -44,9 +45,9 @@ function logIn()
     {
         if(xhr.readyState == 4 && xhr.status == 200)
         {
-            var user = JSON.parse(xhr.responseText);
+            var employee = JSON.parse(xhr.responseText);
             var message = "";
-            console.log(user);
+            console.log(employee);
             if(user == null)
             {
                 $('#message').show();
@@ -59,8 +60,44 @@ function logIn()
             {
                 //alert("success");
                 //loadNav();
-                //loadHome(user);
+                loadHome(employee);
             }
         }
     }
+}
+
+function loadNav()
+{
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadNav.view" , true);
+	xhr.send();
+
+    xhr.onreadystatechange = function()
+    {
+        if(xhr.readyState == 4 && xhr.status == 200)
+        {
+			$('#navbar').html(xhr.responseText);
+			//$('#home').on('click',);
+			$('#logout').click(logout);
+
+			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
+		}
+	}
+}
+
+function loadHome(employee)
+{
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadHome.view" , true);
+	xhr.send();
+
+    xhr.onreadystatechange = function()
+    {
+        if(xhr.readyState == 4 && xhr.status == 200)
+        {
+			$('#view').html(xhr.responseText);
+			$('#name').html(employee.firstName);
+			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
+		}
+	}
 }

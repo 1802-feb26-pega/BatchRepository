@@ -37,7 +37,8 @@ public class EmployeeDAOImpl implements EmployeeDAO
 				emp.setPassword(rs.getString(5));
 				
 				// Phone transfer -- maybe move?
-				char[] transfer = String.valueOf(rs.getInt(6)).toCharArray();
+				Long dataTransfer = rs.getLong(6);
+				char[] transfer = dataTransfer.toString().toCharArray();
 				String temp = "+";
 				temp = temp + transfer[0] + " (";
 				
@@ -74,6 +75,8 @@ public class EmployeeDAOImpl implements EmployeeDAO
 		{
 			e.printStackTrace();
 		}
+		
+		if(emp.getEmployeeId() == 0) return null;
 		
 		return emp;
 	}

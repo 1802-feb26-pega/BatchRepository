@@ -31,8 +31,7 @@ public class ConnectionFactory {
 		try{
 			Properties prop = new Properties();
 			// location for properties file will be wherever you create it. include full file path
-			String path = "D:/Users/Katelyn/Documents/GitHub/BatchRepository/Katelyn_Peterson_Code/Week3/bank/"
-					+ "src/main/java/com/bank/util/database.properties";
+			String path = "D:\\Users\\Katelyn\\Documents\\GitHub\\BatchRepository\\Katelyn_Peterson_Code\\Week3\\bank\\src\\main\\java\\com\\bank\\util\\database.properties";
 			prop.load(new FileReader(path));
 			// register JDBC driver
 			Class.forName(prop.getProperty("driver"));

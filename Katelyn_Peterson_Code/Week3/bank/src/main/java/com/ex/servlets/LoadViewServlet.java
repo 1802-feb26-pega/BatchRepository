@@ -9,30 +9,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("*.view")
-public class LoadViewServlet extends HttpServlet
-{
+public class LoadViewServlet extends HttpServlet{
+	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException
-	{
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println(process(req, resp));
 		
 		String page = process(req, resp);
 		req.getRequestDispatcher(page).forward(req, resp);
 	}
 	
-	static String process(HttpServletRequest req, HttpServletResponse resp)
-	{
-		switch(req.getRequestURI())
-		{
-		case("/bank/loadlanding.view"):
+	static String process(HttpServletRequest req, HttpServletResponse resp) {
+		switch(req.getRequestURI()) {
+		case("/bank/loadlanding.view") :
 			return "partials/login.html";
-		case("/bank/loadnav.view"):
+		case("/bank/loadnav.view") :
 			return "partials/navbar.html";
-		case("/bank/loadhome.view"):
+		case("/bank/loadhome.view") :
 			return "partials/home.html";
+		case("/bank/loadregister.view") :
+			return "partials/register.html";
+			
+		
 		}
 		
 		return req.getRequestURI();
+		
 	}
+
 }

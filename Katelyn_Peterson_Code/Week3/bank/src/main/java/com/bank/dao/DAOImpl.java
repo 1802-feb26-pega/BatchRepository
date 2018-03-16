@@ -206,12 +206,7 @@ public class DAOImpl implements DAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		if(u.getId() == 0)
-		{
-			return null;
-		}
-		//System.out.println("Employee: " + u.getFirstname());
-		
+		if(u.getId() == 0) return null;
 		return u;
 	}
 

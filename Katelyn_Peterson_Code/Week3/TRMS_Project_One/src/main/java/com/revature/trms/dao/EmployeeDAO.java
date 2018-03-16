@@ -5,6 +5,6 @@ import com.revature.trms.pojos.Employee;
 public interface EmployeeDAO
 {
 
-	Employee getUserByEmail(String email);
+	public Employee getUserByEmail(String email);
 
 }

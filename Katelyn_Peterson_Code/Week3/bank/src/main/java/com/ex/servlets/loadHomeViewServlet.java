@@ -9,13 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/loadhome")
-public class loadHomeViewServlet extends HttpServlet
-{
+public class LoadHomeViewServlet extends HttpServlet{
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException
-	{
-		//System.out.println("In load home view servlet");
+		throws IOException, ServletException{
+		System.out.println("In load home view servlet");
 		
 		request.getRequestDispatcher("partials/login.html").forward(request, response);
+		
+	
 	}
+
 }

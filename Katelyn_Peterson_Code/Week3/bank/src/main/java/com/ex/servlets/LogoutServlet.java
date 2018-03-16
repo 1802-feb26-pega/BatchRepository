@@ -10,28 +10,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebServlet("/logout")
-public class LogoutServlet extends HttpServlet
-{
+public class LogoutServlet extends HttpServlet {
+
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-	{
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("in logout servlet");
 		
-		if(req.getSession(false) == null)
-		{
-			// req.getSession returns the current HttpSession, 
-			// with no param, it creates one if none exists, so we add param of false
-			// bool value of true would create session
-			resp.sendRedirect("index.html");
-		}
 		
 		HttpSession session = req.getSession(false);
-		if(session != null)
-		{
+		if(session != null){
 			session.removeAttribute("user");
 			session.invalidate();
 			System.out.println("Session invalidated!");
 		}
 		resp.sendRedirect("index.html");
+		
+	
 	}
 }

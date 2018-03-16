@@ -1,4 +1,4 @@
-package com.ex.servlets;
+package com.revature.trms.servlets;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,18 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.bank.pojos.User;
-import com.ex.service.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.trms.pojos.Employee;
+import com.revature.trms.service.EmployeeService;
 
 @WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet
+{
 	
-	static Service service = new Service();
+	static EmployeeService service = new EmployeeService();
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
-			throws ServletException, IOException {
+			throws ServletException, IOException
+	{
 		
 		System.out.println("in login servlet");
 		
@@ -38,28 +40,27 @@ public class LoginServlet extends HttpServlet {
 		
 		//3. Convert received JSON string into appropriate object
 		
-		String[] userInfo = mapper.readValue(json, String[].class);
-		String username = userInfo[0];
-		String password = userInfo[1];
+		String[] empInfo = mapper.readValue(json, String[].class);
+		String email = empInfo[0];
+		String password = empInfo[1];
 		
-		User user = service.login(username, password);
+		Employee emp = service.login(email, password);
 		PrintWriter out = resp.getWriter();
 		resp.setContentType("application/json");
 		
-		if(user!= null) {
-		String userJSON = mapper.writeValueAsString(user);
-		
-		HttpSession session = req.getSession();
-		session.setAttribute("user", user);
-		
-		out.write(userJSON);
-		
+		if(emp != null)
+		{
+			String userJSON = mapper.writeValueAsString(emp);
+			
+			HttpSession session = req.getSession();
+			session.setAttribute("employee", emp);
+			System.out.println(emp);
+			out.write(userJSON);
 		}
-		else {
+		else
+		{
 			out.write("null"); //null as JSON string
 		}
-		
-		
 	}
 
 }

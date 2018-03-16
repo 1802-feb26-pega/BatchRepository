@@ -6,11 +6,12 @@ import com.revature.trms.pojos.Employee;
 
 public class EmployeeService
 {
-	static EmployeeDAO empdao = new EmployeeDAOImpl();
+	static EmployeeDAO empDao = new EmployeeDAOImpl();
 	
 	public Employee login(String email, String password)
 	{
-		Employee emp = empdao.getUserByEmail(email);
+		Employee emp = empDao.getUserByEmail(email);
+		//System.out.println("Service: " + emp);
 		
 		if (emp == null)
 		{
