@@ -39,11 +39,11 @@ function loadRegister(){
 function validate(){
 	console.log($('#username').val());
 	var username = $('#username').val();
-	
+
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "validate", true);
 	xhr.send(JSON.stringify(username));
-	
+
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			var exists = JSON.parse(xhr.responseText);
@@ -58,8 +58,8 @@ function validate(){
 			}
 		}
 	}
-	
-	
+
+
 }
 
 
@@ -69,14 +69,14 @@ function register(){
 	var ln = $('#ln').val();
 	var uname = $('#username').val();
 	var pass = $('#pass').val();
-	
+
 	var user = {
 			firstname: fn, 
 			lastname: ln, 
 			email: uname, 
 			password: pass
 	};
-	
+
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "register", true);
 	xhr.send(JSON.stringify(user));
@@ -110,6 +110,7 @@ function loadHome(user){
 			$('#name').html(user.firstname);
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
 			getUserAccounts();
+			$('#accTable').hide();
 		}
 	}
 }
@@ -118,7 +119,7 @@ function getUserAccounts(){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "accounts" , true);
 	xhr.send();
-	
+
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			var accounts = JSON.parse(xhr.responseText);
@@ -126,14 +127,40 @@ function getUserAccounts(){
 				console.log("you have no accounts");
 			}
 			else{
+				console.log("testing----");
+				//	accounts = JSON.stringify("data") + ":" + accounts;
 				console.log(accounts);
+				var data = formatTable(accounts);
+
+				$('#accTable').DataTable({
+					data : data,
+					columns: [
+						{data : "Id" },
+						{data : "Balance" }
+						]
+				});
+				console.log("this should have worked");
+				$('#accTable').show();
 			}
 		}
 	}
-
 }
 
 
+function formatTable(accounts){
+	console.log("formatting table");
+	var data = [];
+	for(let i = 0; i < accounts.length; i++){
+		let temp = new Object();
+		console.log(accounts[i]);
+		temp.Id = `1000${accounts[i].id}`;
+		temp.Balance = accounts[i].balance;
+		console.log(temp);
+		data.push(temp);
+	}
+	console.log(data);
+	return data;
+}
 
 
 function login(){
