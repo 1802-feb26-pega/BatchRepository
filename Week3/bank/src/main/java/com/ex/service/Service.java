@@ -1,7 +1,10 @@
 package com.ex.service;
 
+import java.util.ArrayList;
+
 import com.bank.dao.DAO;
 import com.bank.dao.DAOImpl;
+import com.bank.pojos.Account;
 import com.bank.pojos.User;
 
 public class Service {
@@ -15,6 +18,20 @@ public class Service {
 			return user;
 		}
 		else return null;
+	}
+	
+	public User addUser(User u) {
+		return dao.addUser(u.getFirstname(), u.getLastname(), u.getEmail(), u.getPassword());
+	}
+	
+	public boolean emailExists(String email) {
+		User u = dao.getUser(email);
+		if(u == null) return false;
+		else return true;
+	}
+	
+	public ArrayList<Account> getAccounts (User u){
+		return dao.getAccountsByUser(u);
 	}
 
 }
