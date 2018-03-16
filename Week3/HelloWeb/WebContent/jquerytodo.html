@@ -50,6 +50,41 @@
 		</div>
 	</div>
 
+	<script>
+	$('#add').on('click', function() {
+		var text = $('#newItem').val();
+		if (text != '') {
+			var temp = document.createElement('li');
+			temp.innerHTML = text;
+			$('#toBuy').append(temp);
+			$('#newItem').val('');
+		}
+	});
+	
+	//apply this function to any li in tobuy
+	$('#toBuy').on('click', 'li', function(){
+		$('#bought').append(this);
+	})
+	
+		/*$('#add').on('click', function() {
+			var text = $('#newItem').val();
+			if (text != '') {
+				var temp = document.createElement('li');
+				temp.innerHTML = text;
+				$('#toBuy').append(temp);
+				$('#newItem').val('');
+				$(temp).on('click', done);
+			}
+		});
+		
+		$('li').on('click', done);
+		
+		function done(){
+			$('#bought').append($(this));
+		}*/
+	
+		
+	</script>
 
 </body>
 </html>
