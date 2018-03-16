@@ -29,6 +29,6 @@ function add(){
 	document.getElementById("students").appendChild(row);
 
 	// clear input fields
-	document.getElementById("name").value "";
+	document.getElementById("name").value = "";
 	document.getElementById("major").value = "";
 }
