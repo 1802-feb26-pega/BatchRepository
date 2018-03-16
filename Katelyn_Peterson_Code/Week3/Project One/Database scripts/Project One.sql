@@ -49,14 +49,17 @@ END;
 -- Add Form
 CREATE OR REPLACE PROCEDURE add_form(
 employeeid IN forms.employeeid%TYPE,
-e_location IN forms.e_location%TYPE,
+e_address IN forms.e_address%TYPE,
+e_city IN forms.e_city%TYPE,
+e_state IN forms.e_state%TYPE,
+e_postal IN forms.e_postal%TYPE,
 e_cost IN forms.e_cost%TYPE,
 event_type IN forms.event_type%TYPE,
 grade_type IN forms.grade_type%TYPE)
 IS
 BEGIN
     -- Insert New Form
-    INSERT INTO forms (employeeid, e_location, e_cost, event_type, grade_type)
-    VALUES(employeeid, e_location, e_cost, event_type, grade_type);
+    INSERT INTO forms (employeeid, e_address, e_city, e_state, e_postal, e_cost, event_type, grade_type)
+    VALUES(employeeid, e_address, e_city, e_state, e_postal, e_cost, event_type, grade_type);
 END;
 /

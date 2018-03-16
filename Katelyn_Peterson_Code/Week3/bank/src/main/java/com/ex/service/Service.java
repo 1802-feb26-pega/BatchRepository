@@ -11,6 +11,7 @@ public class Service
 	public User login(String username, String password)
 	{
 		User user = dao.getUser(username);
+		//System.out.println(user);
 		
 		if (user == null)
 		{

@@ -7,10 +7,12 @@ public class Employee
 	private String firstName;
 	private String lastName;
 	private String email;
+	private String password;
 	private String phone;
 	private Double reimburse;
 	private Integer reportsto;
 	private Integer departId;
+	private String empTitle;
 	
 	// Constructors
 	public Employee()
@@ -18,18 +20,20 @@ public class Employee
 		super();
 	}
 
-	public Employee(Integer employeeId, String firstName, String lastName, String email, String phone, Double reimburse,
-			Integer reportsto, Integer departId)
+	public Employee(Integer employeeId, String firstName, String lastName, String email, String password, String phone,
+			Double reimburse, Integer reportsto, Integer departId, String empTitle)
 	{
 		super();
 		this.employeeId = employeeId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.password = password;
 		this.phone = phone;
 		this.reimburse = reimburse;
 		this.reportsto = reportsto;
 		this.departId = departId;
+		this.empTitle = empTitle;
 	}
 	
 	// Getters
@@ -53,6 +57,11 @@ public class Employee
 		return email;
 	}
 
+	public String getPassword()
+	{
+		return password;
+	}
+
 	public String getPhone()
 	{
 		return phone;
@@ -71,6 +80,11 @@ public class Employee
 	public Integer getDepartId()
 	{
 		return departId;
+	}
+
+	public String getEmpTitle()
+	{
+		return empTitle;
 	}
 	
 	// Setters
@@ -94,6 +108,11 @@ public class Employee
 		this.email = email;
 	}
 
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
+
 	public void setPhone(String phone)
 	{
 		this.phone = phone;
@@ -113,6 +132,11 @@ public class Employee
 	{
 		this.departId = departId;
 	}
+
+	public void setEmpTitle(String empTitle)
+	{
+		this.empTitle = empTitle;
+	}
 	
 	// Other Functions
 	
@@ -124,9 +148,11 @@ public class Employee
 		int result = 1;
 		result = prime * result + ((departId == null) ? 0 : departId.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((empTitle == null) ? 0 : empTitle.hashCode());
 		result = prime * result + ((employeeId == null) ? 0 : employeeId.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
 		result = prime * result + ((reimburse == null) ? 0 : reimburse.hashCode());
 		result = prime * result + ((reportsto == null) ? 0 : reportsto.hashCode());
@@ -157,6 +183,13 @@ public class Employee
 		}
 		else if (!email.equals(other.email))
 			return false;
+		if (empTitle == null)
+		{
+			if (other.empTitle != null)
+				return false;
+		}
+		else if (!empTitle.equals(other.empTitle))
+			return false;
 		if (employeeId == null)
 		{
 			if (other.employeeId != null)
@@ -177,6 +210,13 @@ public class Employee
 				return false;
 		}
 		else if (!lastName.equals(other.lastName))
+			return false;
+		if (password == null)
+		{
+			if (other.password != null)
+				return false;
+		}
+		else if (!password.equals(other.password))
 			return false;
 		if (phone == null)
 		{
@@ -206,7 +246,8 @@ public class Employee
 	public String toString()
 	{
 		return "Employee [employeeId=" + employeeId + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
-				+ email + ", phone=" + phone + ", reimburse=" + reimburse + ", reportsto=" + reportsto + ", departId="
-				+ departId + "]";
+				+ email + ", password=" + password + ", phone=" + phone + ", reimburse=" + reimburse + ", reportsto="
+				+ reportsto + ", departId=" + departId + ", empTitle=" + empTitle + "]";
 	}
+	
 }
