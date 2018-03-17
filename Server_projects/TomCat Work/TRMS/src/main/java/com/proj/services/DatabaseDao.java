@@ -21,7 +21,7 @@ public class DatabaseDao implements DatabaseDaoInterfaces{
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 
-			String sql = "SELECT * FROM EMPLOYEES WHERE USERNAME = ? AND PASSWORD = ?";
+			String sql = "SELECT * FROM EMPLOYEE WHERE USERNAME = ? AND PASSWORD = ?";
 
 			PreparedStatement p_statement = conn.prepareStatement(sql);
 			p_statement.setString(1, usrname);
@@ -42,6 +42,7 @@ public class DatabaseDao implements DatabaseDaoInterfaces{
 		}catch (NullPointerException npe) {
 			npe.printStackTrace();
 		}
+		if(employee.getKey() ==0) return null;
 		return employee;
 	}
 	

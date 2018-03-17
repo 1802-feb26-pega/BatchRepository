@@ -24,10 +24,7 @@ public class EmployeeServices implements EmployeeInterfaces {
 		// TODO Auto-generated method stub
 			
 		employee = dao.getEmployeeLogin(usrname, password);
-		System.out.println(employee.toString());
-		if(employee.getKey() == 0){
-			return null;
-		}
+		if(employee == null) return null;
 		else if(employee.getUsername().equals(usrname) & 
 				employee.getPassword().equals(password)){	
 			return employee;
