@@ -1,5 +1,7 @@
 package com.trms.pojos;
 
+import java.sql.Date;
+
 public class User {
 	
 	private int id;
@@ -7,7 +9,7 @@ public class User {
 	private String lastname;
 	private String username;
 	private String password;
-	private String birthdate;
+	//private Date birthdate;
 	private String address;
 	private String zipcode;
 	private String title;
@@ -28,7 +30,7 @@ public class User {
 		this.lastname = lastname;
 		this.username = email;
 		this.password = password;
-		this.birthdate=birthdate;
+		//this.birthdate=Date.valueOf(birthdate);
 		this.address=address;
 		this.zipcode=zipcode;
 		this.title=title;
@@ -78,15 +80,15 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+/*
 	public String getBirthdate() {
-		return birthdate;
+		return birthdate.toString();
 	}
 
 	public void setBirthdate(String birthdate) {
-		this.birthdate = birthdate;
+		this.birthdate = Date.valueOf(birthdate);
 	}
-
+*/
 	public String getAddress() {
 		return address;
 	}
@@ -150,7 +152,7 @@ public class User {
 	public void setPendingFunds(double pendingFunds) {
 		this.pendingFunds = pendingFunds;
 	}
-
+/*
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
@@ -158,6 +160,15 @@ public class User {
 				+ zipcode + ", title=" + title + ", supervisorId=" + supervisorId + ", deptHeadId=" + deptHeadId
 				+ ", benCoId=" + benCoId + ", approvedFunds=" + approvedFunds + ", pendingFunds=" + pendingFunds + "]";
 	}
+*/
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
+				+ ", password=" + password + ", address=" + address + ", zipcode=" + zipcode + ", title=" + title
+				+ ", supervisorId=" + supervisorId + ", deptHeadId=" + deptHeadId + ", benCoId=" + benCoId
+				+ ", approvedFunds=" + approvedFunds + ", pendingFunds=" + pendingFunds + "]";
+	}
+	
 	
 }

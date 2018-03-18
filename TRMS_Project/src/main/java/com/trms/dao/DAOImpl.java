@@ -230,7 +230,7 @@ public class DAOImpl implements DAO
 				u.setLastname(temp.getString(3));
 				u.setUsername(temp.getString(4));
 				u.setPassword(temp.getString(5));
-				u.setBirthdate(temp.getString(6));
+				//u.setBirthdate(temp.getString(6));
 				u.setAddress(temp.getString(7));
 				u.setZipcode(temp.getString(8));
 				u.setTitle(temp.getString(9));
@@ -256,7 +256,7 @@ public class DAOImpl implements DAO
 	//========================================================================
 	
 	@Override
-	public int addUser(String fn,String ln,String un,String pass,String bday,String addr,String zip,String title,int sup,int head,int ben,double app,double pen)
+	public int addUser(String fn,String ln,String un,String pass,String addr,String zip,String title,int sup,int head,int ben,double app,double pen)
 	{
 		String passHash = null;
 		MessageDigest digest;
@@ -312,21 +312,21 @@ public class DAOImpl implements DAO
 			
 //			public User addUser(String fn,String ln,String un,String pass,String bday,String addr,String zip,String title,int sup,int head,int ben,double app,double pen)
 			
-			String sql = "{CALL new_employee(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+			String sql = "{CALL new_emp(?,?,?,?,?,?,?,?,?,?,?,?)}";
 			CallableStatement c = conn.prepareCall(sql);
 			c.setString(1,fn);
 			c.setString(2,ln);
 			c.setString(3,un);
-			c.setString(4,pass);
-			c.setString(5,bday);
-			c.setString(6,addr);
-			c.setString(7,zip);
-			c.setString(8,title);
-			c.setInt(9,sup);		//supervisor id
-			c.setInt(10,head);		//department head id
-			c.setInt(11,ben);		//benco id
-			c.setDouble(12,app);	//approved funds
-			c.setDouble(13,pen);	//pending funds
+			c.setString(4,passHash);
+			//c.setString(5,bday);
+			c.setString(5,addr);
+			c.setString(6,zip);
+			c.setString(7,title);
+			c.setInt(8,sup);		//supervisor id
+			c.setInt(9,head);		//department head id
+			c.setInt(10,ben);		//benco id
+			c.setDouble(11,app);	//approved funds
+			c.setDouble(12,pen);	//pending funds
 			value = c.executeUpdate();
 			
 

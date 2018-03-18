@@ -67,7 +67,7 @@ public class Service {
 	
 	public int addUser(User u)
 	{
-		return dao.addUser(u.getFirstname(),u.getLastname(),u.getUsername(),u.getPassword(),u.getBirthdate(),u.getAddress(),u.getZipcode(),u.getTitle(),u.getSupervisorId(),
+		return dao.addUser(u.getFirstname(),u.getLastname(),u.getUsername(),u.getPassword(),u.getAddress(),u.getZipcode(),u.getTitle(),u.getSupervisorId(),
 				u.getDeptHeadId(),u.getBenCoId(),u.getApprovedFunds(),u.getPendingFunds());
 	}//addUser
 

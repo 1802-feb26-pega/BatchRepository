@@ -29,7 +29,7 @@ function loadRegister(){
 			$('#view').html(xhr.responseText);
 			$('#message').hide();
 			//console.log(xhr.responseText);
-			$('#username').blur(validate);
+			//$('#username').blur(validate);
 			$('#register').click(register);
 			$('#return').click(loadLanding);
 			//added by me:
@@ -76,45 +76,45 @@ function register(){
 	console.log(fn);
 	var ln = $('#ln').val();
 	console.log(ln);
-	var uname = $('#username').val();
+	var uname = $('#uname').val();
 	//console.log(username);
 	var pass = $('#pass').val();
 	console.log(pass);
-	var ln = $('#bday').val();
-	var ln = $('#addr').val();
-	var ln = $('#zip').val();
-	var ln = $('#title').val();
-	var ln = $('#sup').val();
-	var ln = $('#head').val();
-	var ln = $('#ben').val();
-	var ln = $('#app').val();
-	var ln = $('#pen').val();
+	//var ln = $('#bday').val();
+	var addr = $('#addr').val();
+	var zip = $('#zip').val();
+	var title = $('#title').val();
+	var sup = $('#sup').val();
+	var head = $('#head').val();
+	var ben = $('#ben').val();
+	var app = $('#app').val();
+	var pen = $('#pen').val();
 
-	console.log((fn=="" || ln=="" || username=="" || pass==""));
+	console.log((fn=="" || ln=="" || uname=="" || pass==""));
 	
-	if(fn=="" || ln=="" || username=="" || pass==""){
+	if(fn=="" || ln=="" || uname=="" || pass==""){
 		alert('one or more fields empty');
 	}else{
 
 		var user = {
-				firstname: fn, 
-				lastname: ln, 
-				username: username, 
-				password: pass,
-				birthdate: bday,
-				address: addr,
-				zipcode: zip,
-				title: title,
-				supervisorId: sup,
-				deptHeadId: head,
-				benCoId: ben,
-				approvedFunds: app,
-				pendingFunds: pen
-
+				"firstname": fn, 
+				"lastname": ln, 
+				"username": uname, 
+				"password": pass,
+				//birthdate: bday,
+				"address": addr,
+				"zipcode": zip,
+				"title": title,
+				"supervisorId": sup,
+				"deptHeadId": head,
+				"benCoId": ben,
+				"approvedFunds": app,
+				"pendingFunds": pen
 		};
 
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", "register", true);
+		console.log(JSON.stringify(user));
 		xhr.send(JSON.stringify(user));
 
 		//loadNav();
