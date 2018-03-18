@@ -49,6 +49,7 @@ function loadHome(user){
 			$("#view").html(xhr.responseText);
 			$("#name").html(user.firstname);
 			getUserAccounts();
+			// $("#accTable").hide();
 		}
 	}
 }
@@ -66,8 +67,29 @@ function getUserAccounts(){
 				console.log("you have no accounts");
 			} else{
 				console.log(accounts)
+				var data = formatTable(accounts);
+
+				$("#accTable").DataTable({
+					data: data,
+					columns: [
+						{data : "accountId" },
+						{data : "balance" }
+					]
+
+				})
 			}
 		}
+	}
+}
+
+
+function formatTable(accounts){
+	console.log("formatting table");
+	var data = [];
+	for(let i = 0; i < accounts.length; i++){
+		let temp = new Object();
+		console.log(accounts[i]);
+		temp.id = `1000${accounts.accoundId}`;
 	}
 }
 
