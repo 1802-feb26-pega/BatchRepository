@@ -1,11 +1,12 @@
 package com.trms.pojos;
 
 public class Employee {
-	private int id;
+	private int employeeId;
 	private String firstname;
 	private String lastname;
 	private int position;
 	private String username;
+	private String password;
 	private int awardedRe;
 	private int pendingRe;
 	public Employee() {
@@ -19,11 +20,11 @@ public class Employee {
 		this.position = position;
 		this.username = username;
 	}
-	public int getId() {
-		return id;
+	public int getEmployeeId() {
+		return employeeId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setEmployeeId(int id) {
+		this.employeeId = id;
 	}
 	public String getFirstname() {
 		return firstname;
@@ -49,6 +50,12 @@ public class Employee {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public int getAwardedRe() {
 		return awardedRe;
 	}
@@ -66,9 +73,10 @@ public class Employee {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + awardedRe;
+		result = prime * result + employeeId;
 		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
-		result = prime * result + id;
 		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + pendingRe;
 		result = prime * result + position;
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
@@ -85,17 +93,22 @@ public class Employee {
 		Employee other = (Employee) obj;
 		if (awardedRe != other.awardedRe)
 			return false;
+		if (employeeId != other.employeeId)
+			return false;
 		if (firstname == null) {
 			if (other.firstname != null)
 				return false;
 		} else if (!firstname.equals(other.firstname))
 			return false;
-		if (id != other.id)
-			return false;
 		if (lastname == null) {
 			if (other.lastname != null)
 				return false;
 		} else if (!lastname.equals(other.lastname))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
 			return false;
 		if (pendingRe != other.pendingRe)
 			return false;
@@ -110,8 +123,9 @@ public class Employee {
 	}
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", position=" + position
-				+ ", username=" + username + ", awardedRe=" + awardedRe + ", pendingRe=" + pendingRe + "]";
+		return "Employee [employeeId=" + employeeId + ", firstname=" + firstname + ", lastname=" + lastname
+				+ ", position=" + position + ", username=" + username + ", password=" + password + ", awardedRe="
+				+ awardedRe + ", pendingRe=" + pendingRe + "]";
 	}
 	
 	

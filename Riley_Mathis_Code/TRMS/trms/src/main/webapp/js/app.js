@@ -95,7 +95,7 @@ function loadNav(){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#navbar').html(xhr.responseText);
-			//$('#home').on('click',);
+			$('#home').on('click', loadHome);
 			$('#logout').click(logout);
 
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
@@ -113,8 +113,8 @@ function loadHome(user){
 			$('#view').html(xhr.responseText);
 			$('#name').html(user.firstname);
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
-			getUserAccounts();
-			$('#accTable').hide();
+//			getUserAccounts();
+//			$('#accTable').hide();
 		}
 	}
 }
@@ -170,10 +170,10 @@ function loadHome(user){
 function login(){
 	console.log("logging in");
 	$('#message').hide();
-	var email = $('#email').val();
+	var username = $('#username').val();
 	var password = $('#pass').val();
 
-	var toSend = [email, password];
+	var toSend = [username, password];
 
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "login", true);
