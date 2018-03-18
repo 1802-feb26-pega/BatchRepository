@@ -16,8 +16,8 @@ CREATE TABLE course(
     employee_id number NOT NULL,
     event_date DATE NOT NULL,
     event_time TIMESTAMP NOT NULL,
-    street varchar2(50) NOT NULL,
-    zip number NOT NULL,
+    city varchar2(50) NOT NULL,
+    state varchar2(50) NOT NULL,
     cost binary_double NOT NULL,
     proj_reimburse binary_double NOT NULL,
     description varchar2(140) NOT NULL,
@@ -40,8 +40,8 @@ CREATE TABLE course(
 
 CREATE TABLE grading_format(
     format varchar(50) NOT NULL,
-    presentation number NOT NULL,
-    grade number NOT NULL,
+    presentation number NULL,
+    grade number NULL,
     passing_grade number NOT NULL,
     approval_email varchar2(50) NOT NULL,
     
@@ -53,4 +53,24 @@ CREATE TABLE event_types(
     percentage binary_double NOT NULL,
     
     CONSTRAINT event_type_pk PRIMARY KEY (event_type)
+);
+
+CREATE TABLE approval(
+    approval_id number NOT NULL,
+    ds_approval number NOT NULL,
+    ds_reasoning varchar(200) NULL,
+    ds_email BLOB NULL,
+    dh_approval number NOT NULL,
+    dh_email BLOB NULL,
+    bc_approval number NOT NULL,
+    bc_reasoning varchar(200) NULL,
+    
+    CONSTRAINT approval_pk PRIMARY KEY (approval_id)
+);
+
+CREATE TABLE attachments(
+    attach_id number,
+    attachment BLOB,
+    
+    CONSTRAINT attach_pk PRIMARY KEY (attach_id)
 );
