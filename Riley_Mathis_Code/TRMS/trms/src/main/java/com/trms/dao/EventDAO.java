@@ -1,5 +1,5 @@
 package com.trms.dao;
 
-public class DAOImpl {
+public class EventDAO {
 
 }
