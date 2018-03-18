@@ -19,16 +19,15 @@ public class RegisterServlet extends HttpServlet{
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
-		System.out.println("register servlet 1");
+		//System.out.println("register servlet 1");
 		int value = -2;
 		
 		ObjectMapper mapper = new ObjectMapper();
-		System.out.println("register servlet 2");
+		//System.out.println("register servlet 2");
 		User u = mapper.readValue(req.getInputStream(),User.class);
 		
 
-		System.out.println("register servlet 3\n" + u.toString());
-		//u = service.addUser(u);
+		//System.out.println("register servlet 3\n" + u.toString());
 		value = service.addUser(u);
 		
 		PrintWriter out = res.getWriter();

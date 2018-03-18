@@ -29,7 +29,7 @@ function loadRegister(){
 			$('#view').html(xhr.responseText);
 			$('#message').hide();
 			//console.log(xhr.responseText);
-			//$('#username').blur(validate);
+			$('#uname').blur(validate);
 			$('#register').click(register);
 			$('#return').click(loadLanding);
 			//added by me:
@@ -73,13 +73,13 @@ function register(){
 	//alert('register button');
 	//console.log("register");
 	var fn = $('#fn').val();
-	console.log(fn);
+	//console.log(fn);
 	var ln = $('#ln').val();
-	console.log(ln);
+	//console.log(ln);
 	var uname = $('#uname').val();
 	//console.log(username);
 	var pass = $('#pass').val();
-	console.log(pass);
+	//console.log(pass);
 	//var ln = $('#bday').val();
 	var addr = $('#addr').val();
 	var zip = $('#zip').val();
@@ -90,7 +90,7 @@ function register(){
 	var app = $('#app').val();
 	var pen = $('#pen').val();
 
-	console.log((fn=="" || ln=="" || uname=="" || pass==""));
+	//console.log((fn=="" || ln=="" || uname=="" || pass==""));
 	
 	if(fn=="" || ln=="" || uname=="" || pass==""){
 		alert('one or more fields empty');
@@ -114,7 +114,7 @@ function register(){
 
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", "register", true);
-		console.log(JSON.stringify(user));
+		//console.log(JSON.stringify(user));
 		xhr.send(JSON.stringify(user));
 
 		//loadNav();
@@ -124,7 +124,8 @@ function register(){
 //========================================
 function validate(){
 	//console.log($('#username').val());
-	var username = $('#username').val();
+	console.log("js validate");
+	var username = $('#uname').val();
 
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "validate", true);

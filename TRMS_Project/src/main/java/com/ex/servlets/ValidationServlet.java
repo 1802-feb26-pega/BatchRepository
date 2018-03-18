@@ -20,7 +20,7 @@ public class ValidationServlet extends HttpServlet{
 		ObjectMapper mapper = new ObjectMapper();
 		String username = mapper.readValue(req.getInputStream(),String.class);
 		
-		System.out.println("in validate " + username);
+		System.out.println("servlet validate " + username);
 		
 		Service service = new Service();
 		boolean exists = service.usernameExists(username);

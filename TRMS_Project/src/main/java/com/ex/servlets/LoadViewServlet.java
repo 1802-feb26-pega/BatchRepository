@@ -13,7 +13,7 @@ public class LoadViewServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException,IOException
 	{
-		System.out.println("in load view servlet");
+		//System.out.println("in load view servlet");
 		
 		String page = process(req,res);
 		req.getRequestDispatcher(page).forward(req,res);
@@ -27,7 +27,7 @@ public class LoadViewServlet extends HttpServlet{
 			return "/partials/login.html";
 
 		case("/rev/loadregister.view"):
-			System.out.println("register");
+			//System.out.println("register");
 			return"/partials/register.html";
 /*			
 		case("/bank/loadnav.view"):
