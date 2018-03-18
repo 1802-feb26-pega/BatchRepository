@@ -28,18 +28,17 @@ public class LoadViewServlet extends HttpServlet{
 
 		case("/rev/loadregister.view"):
 			//System.out.println("register");
-			return"/partials/register.html";
-/*			
-		case("/bank/loadnav.view"):
+			return"/partials/register.html";		
+		case("/rev/loadnav.view"):
 			System.out.println("navbar");
 			return "/partials/navbar.html";
 			
-		case("/bank/loadhome.view"):
+		case("/rev/loadhome.view"):
 			System.out.println("home");
-			return"/partials/Home.html";
+			return"/partials/home.html";
 			
 		
-			
+/*
 		case("/bank/loadupload.view"):
 			System.out.println("asdfasdfasdfasdfasdf");
 			return "/partials/upload.html";

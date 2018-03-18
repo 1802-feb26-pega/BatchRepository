@@ -37,6 +37,38 @@ function loadRegister(){
 		}
 	}
 }
+//===============================================
+function loadHome(user){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadhome.view" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			$('#name').html(user.firstname);
+			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
+			//getUserAccounts();
+			//$('#accTable').hide();
+		}
+	}
+}
+//================================================
+function loadNav(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadnav.view" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#navbar').html(xhr.responseText);
+			//$('#home').on('click',);
+			$('#logout').click(logout);
+
+			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
+		}
+	}
+}
 //*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+
 function login(){
 //	alert('listen button works!');
@@ -61,9 +93,9 @@ function login(){
 				message = "Incorrect username or password";
 				$('#message').html(message);
 			}else{
-				alert("success");
-				//loadNav();
-				//loadHome(user);
+				//alert("success");
+				loadNav();
+				loadHome(user);
 			}
 		}
 	}
@@ -117,8 +149,8 @@ function register(){
 		//console.log(JSON.stringify(user));
 		xhr.send(JSON.stringify(user));
 
-		//loadNav();
-		//loadHome(user);
+		loadNav();
+		loadHome(user);
 	}
 }
 //========================================
@@ -146,9 +178,67 @@ function validate(){
 		}
 	}
 }
+//==========================================
+/*
+function getUserAccounts(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "accounts" , true);
+	xhr.send();
 
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var accounts = JSON.parse(xhr.responseText);
+			if(accounts.length == 0){
+				console.log("you have no accounts");
+			}
+			else{
+				console.log("testing----");
+				//	accounts = JSON.stringify("data") + ":" + accounts;
+				console.log(accounts);
+				var data = formatTable(accounts);
 
-
+				$('#accTable').DataTable({
+					data : data,
+					columns: [
+						{data : "Id" },
+						{data : "Balance" }
+						]
+				});
+				console.log("this should have worked");
+				$('#accTable').show();
+			}
+		}
+	}
+}
+//===================================
+function formatTable(accounts){
+	console.log("formatting table");
+	var data = [];
+	for(let i = 0; i < accounts.length; i++){
+		let temp = new Object();
+		console.log(accounts[i]);
+		temp.Id = `1000${accounts[i].id}`;
+		temp.Balance = accounts[i].balance;
+		console.log(temp);
+		data.push(temp);
+	}
+	console.log(data);
+	return data;
+}
+*/
+//==========================================
+function logout(){
+	console.log("logging out");
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "logout" , true);
+	xhr.send();
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			console.log("attempting to redirect");
+			window.location.replace("index.html");
+		}
+	}
+}
 
 
 

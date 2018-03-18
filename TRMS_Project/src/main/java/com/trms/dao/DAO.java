@@ -1,7 +1,9 @@
 package com.trms.dao;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.sql.Date;
+
 
 //import com.bank.pojos.Account;
 import com.trms.pojos.User;
@@ -17,4 +19,11 @@ public interface DAO {
 //	public void updateBalance(int id, double amt);
 	public User getUserByUsername(String username);
 	public int addUser(String fn,String ln,String un,String pass,String addr,String zip,String title,int sup,int head,int ben,double app,double pen);
+	public int addRequest(String eType,Date sDate,Date eDate,String loc,String desc,
+			double cost,int gStyleId,int grade,Date rDate,Timestamp t,int flaggedId,
+			int appId,int uId);
+
+//	public int addRequest(String eType,Date sDate,Date eDate,String loc,String desc,
+//			double cost,int gStyleId,int grade,Date rDate,Timestamp t,int flaggedId,
+//			int appId,int uId)
 }

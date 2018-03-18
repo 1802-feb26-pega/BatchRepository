@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
 		//1) get request body from request object
 		BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
 		String json = br.readLine();
-		System.out.println(json);
+		//System.out.println(json);
 
 		//2) instantiate jackson mapper
 		ObjectMapper mapper = new ObjectMapper();

@@ -1,6 +1,6 @@
 package com.trms.pojos;
 
-import java.util.Date;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Request {
@@ -20,21 +20,21 @@ public class Request {
 	
 	public Request() {}
 	
-	public Request(int rId,String eType,Date sDate,Date eDate,String loc,String desc,double cost,
-			int gStyleId,int grade,Date rDate,Timestamp t,int flaggedId,int appId)
+	public Request(int rId,String eType,String sDate,String eDate,String loc,String desc,double cost,
+			int gStyleId,int grade,String rDate,String t,int flaggedId,int appId)
 	{
 		super();
 		this.requestId = rId;
 		this.eventType = eType;
-		this.startDate = sDate;
-		this.endDate = eDate;
+		this.startDate = Date.valueOf(sDate);
+		this.endDate = Date.valueOf(eDate);
 		this.location = loc;
 		this.description = desc;
 		this.cost = cost;
 		this.gradingStyleId = gStyleId;
 		this.grade = grade;
-		this.requestDate = rDate;
-		this.requestTime = t;
+		this.requestDate = Date.valueOf(rDate);
+		this.requestTime = Timestamp.valueOf(t);
 		this.flaggedId = flaggedId;
 		this.approvalId = appId;
 	}
