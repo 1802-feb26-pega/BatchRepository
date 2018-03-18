@@ -1,6 +1,7 @@
 package com.trms.servlet.register;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +22,14 @@ public class RegSupervisor extends HttpServlet {
 		ObjectMapper mapper = new ObjectMapper();
 		DirectSupervisor e = mapper.readValue(req.getInputStream(), DirectSupervisor.class);
 		System.out.println(e.toString());
-		//TODO: Add supervisor to database
+		e = (DirectSupervisor) Service.addUser(e, 1);
+		PrintWriter out = resp.getWriter();
+		resp.setContentType("application/json");
+		if (e!=null) {
+			String uJSON = mapper.writeValueAsString(e);
+			out.write(uJSON);
+		} else {
+			out.write("null");
+		}
 	}
 }

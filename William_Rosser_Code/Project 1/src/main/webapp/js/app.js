@@ -24,6 +24,7 @@ function loadLogin() {
 	}
 }
 
+
 function login(){
 	$('#message').hide();
 	var username = $('#username').val();
@@ -64,7 +65,7 @@ function loadRegister(){
 			$('#view').html(xhr.responseText);
 			$('.hide').hide();
 			$('#username').blur(function() {
-				validate(username);
+				validate($('#username').val());
 			})
 			$('#reg_submit').click(register);
 			$('#cancel').click(loadLogin);
@@ -73,9 +74,23 @@ function loadRegister(){
 }
 
 function validate(username){
-	console.log(username);
-	//TODO: Username validation
-	return true;
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "validate_username?username="+username, true);
+	xhr.send();
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var resp =xhr.responseText;
+			if(resp=="true") {
+				$("#un-danger-taken").hide();
+				return true;
+				//console.log("Took the true option.");
+			} else {
+				$("#un-danger-taken").show();
+				return false;
+				//console.log("Took the false option.");
+			}
+		}
+	}
 }
 
 function register(){
@@ -83,9 +98,16 @@ function register(){
 	console.log("register");
 	var fn = $('#firstName').val();
 	var ln = $('#lastName').val();
+
 	var sID = $('#supID').val();
+	if (sID == "") sID = -1;
+
 	var dhID = $('#dhID').val();
+	if (dhID == "") dhID = -1;
+
 	var bencoID = $('#BenCoID').val();
+	if (bencoID == "") bencoID = -1;
+
 	var dep = $('#department').val();
 	var jt = $('#job').val();
 	var un = $('#username').val();
@@ -96,7 +118,7 @@ function register(){
 	var good = (fn&&ln&&un&&pass&&pass2&&(pass==pass2)&&valid) ? true : false;
 	var dest = "";
 	if (acctype==0) {
-		 dest = "reg_employee";
+		dest = "reg_employee";
 	} else if (acctype==1) {
 		dest = "reg_supervisor";
 	} else if (acctype==2) {
@@ -172,9 +194,47 @@ function loadHome(user) {
 		if(xhr.readyState == 4 && xhr.status == 200) {
 			$("#view").html(xhr.responseText);
 			$("#name").html(user.wholeName);
+			var emp_type = ((user.type < 2) ? 
+					((user.type == 0) ? "Employee": "Supervisor") : 
+						((user.type == 2) ? "Department Head" : "Benefits Coodinator"));
+			$("#employee_type").html(emp_type);
+			if (user.type != 0) {
+				$("#approve_rr").show();
+				$("#approve_rr").addClass("col-lg-2");
+				$("#home_view").addClass("col-lg-10");
+				$("#pending_button").on("click", function() {
+					loadManageRequests(user);
+				})
+			}
 		}
 	}
 }
+
+
+function loadManageRequests(user) {
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadManageRequests.view", true);
+	xhr.send();
+
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState == 4 && xhr.status == 200) {
+			var xhr2 = new XMLHttpRequest();
+			var t = user.type;
+			var requestAddr = "pending_approval?type="+t+"&id=";
+			requestAddr += (t==1) ? user.dsId : ((t==2) ? user.myDepHeadId : user.myBenCoId);
+			console.log(requestAddr);
+			xhr2.open("GET", requestAddr, true);
+			xhr2.send();
+			xhr2.onreadystatechange = function() {
+				if (xhr2.readyState == 4 && xhr2.status == 200) {
+					$("#view").html(xhr.responseText);
+					//TODO: Fill with response values
+				}
+			}
+		}
+	}
+}
+
 
 function logout(){
 	console.log("logging out");

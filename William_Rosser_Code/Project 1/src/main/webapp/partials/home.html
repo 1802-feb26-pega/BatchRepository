@@ -1,6 +1,48 @@
-<h1>Tuition Reimbursement Management System</h1>
-<p id="employee_name"></p>
-<p id="employee_type"></p>
-<div id="home_view">
+<div class=container>
+	<h1>Tuition Reimbursement Management System</h1>
+	<span id="name"></span><br> <span id="employee_type"></span>
+</div>
 
+<div class="container">
+	<div class="row">
+		<!-- TODO: Us JS to apply narrowing with style="col-sm-4" and "col-sm-8", respectively -->
+		<div id="approve_rr" style="display: none;"
+			class="container jumbotron alert-success">
+			<h3>Special Actions:</h3>
+			<button id="pending_button" class="btn btn-primary btn-sm">
+				View Pending<br>Requests
+			</button>
+		</div>
+		<div id="home_view" class="container jumbotron">
+			<h3>Manage Reimbursements</h3>
+			Reimbursements paid: $<span id="paid_reimbursements"></span><br>
+			Reimbursement money remaining: $<span id="remaining_reimbursements"></span>
+			<br>
+			<div id="submit_rr">
+				<button id="sub_rr_button" class="btn btn-primary">Submit a
+					new Reimbursement Request.</button>
+				<br>
+			</div>
+			<br>
+			<div id="view_rr" class="container">
+				<table id="reimbursements_table"
+					class="table table-condensed table-hover">
+					<thead>
+						<tr>
+							<th>Reimbursement ID</th>
+							<th>Submission Date</th>
+							<th>Event Date</th>
+							<th>Requested Money</th>
+							<th>Status</th>
+							<th>More Info</th>
+						</tr>
+					</thead>
+					<tbody>
+
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</div>
 </div>

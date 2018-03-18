@@ -26,4 +26,11 @@ public class Service {
 		}
 		return u;
 	}
+	
+	public static boolean validateUsername(String username) {
+		User u = eDao.getEmployee(username);
+		System.out.println(username);
+		System.out.println(u);
+		return u == null;
+	}
 }
