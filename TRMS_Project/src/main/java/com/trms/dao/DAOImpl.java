@@ -5,12 +5,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.trms.pojos.Request;
 import com.trms.pojos.User;
 import com.trms.util.ConnectionFactory;
 
@@ -374,6 +377,92 @@ public class DAOImpl implements DAO
 		}
 
 		return value;
-	}
-}
+	}//addrequest
+
+	//===============================
+
+	public List<Request> getRequestsByUser(User u)
+	{
+		List<Request> requests = new ArrayList<Request>();
+		List<Integer> requestIds = new ArrayList<Integer>();
+		Request temp = new Request();
+		int id = u.getId();
+
+
+		try(Connection conn  = ConnectionFactory.getInstance().getConnection();)
+		{
+			//first access the junction and get a list of the req_id's that are paired to the given id
+			String sql = "SELECT request_id FROM employee_request_junc WHERE emp_id=?";
+			PreparedStatement p = conn.prepareStatement(sql);
+			p.setInt(1, id);
+			ResultSet rs = p.executeQuery();
+
+			while(rs.next())
+			{
+				requestIds.add(rs.getInt(1));
+			}
+
+			//now get all requests from request table from corresponding request ids from the previous query
+			while(!requestIds.isEmpty())
+			{
+				Integer current = requestIds.get(0);
+				sql = "SELECT * FROM request WHERE request_id=?";
+				p = conn.prepareStatement(sql);
+				p.setInt(1, current);
+				rs = p.executeQuery();
+
+				while(rs.next())
+				{
+					temp.setRequestId(rs.getInt(1));
+					temp.setEventType(rs.getString(2));
+					temp.setStartDate(rs.getDate(3));
+					temp.setEndDate(rs.getDate(4));
+					temp.setLocation(rs.getString(5));
+					temp.setDescription(rs.getString(6));
+					temp.setCost(rs.getDouble(7));
+					temp.setGradingStyleId(rs.getInt(8));
+					temp.setGrade(rs.getInt(9));
+					temp.setRequestDate(rs.getDate(10));
+					temp.setRequestTime(rs.getTimestamp(11));
+					temp.setFlaggedId(rs.getInt(12));
+					temp.setApprovalId(rs.getInt(13));
+					requests.add(temp);
+				}//while - rs
+				requestIds.remove(current);
+			}//while - request Ids
+
+		} catch(SQLException e)
+		{
+			e.printStackTrace();
+		}//try catch
+
+		return requests;
+	}//getrequestsbyuser
+}//daoimpl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

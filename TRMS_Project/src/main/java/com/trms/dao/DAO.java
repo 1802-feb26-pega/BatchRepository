@@ -1,10 +1,10 @@
 package com.trms.dao;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.List;
 
-
+import com.trms.pojos.Request;
 //import com.bank.pojos.Account;
 import com.trms.pojos.User;
 
@@ -22,8 +22,5 @@ public interface DAO {
 	public int addRequest(String eType,Date sDate,Date eDate,String loc,String desc,
 			double cost,int gStyleId,int grade,Date rDate,Timestamp t,int flaggedId,
 			int appId,int uId);
-
-//	public int addRequest(String eType,Date sDate,Date eDate,String loc,String desc,
-//			double cost,int gStyleId,int grade,Date rDate,Timestamp t,int flaggedId,
-//			int appId,int uId)
+	public List<Request> getRequestsByUser(User u);
 }

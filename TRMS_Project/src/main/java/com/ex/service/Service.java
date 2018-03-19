@@ -3,10 +3,11 @@ package com.ex.service;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
+import java.util.List;
 
 import com.trms.dao.DAO;
 import com.trms.dao.DAOImpl;
+import com.trms.pojos.Request;
 //import com.trms.pojos.Account;
 import com.trms.pojos.User;
 
@@ -52,6 +53,8 @@ public class Service {
 		
 	}//login
 	
+	//===================================================
+	
 	public boolean usernameExists(String un)
 	{
 		User u = dao.getUserByUsername(un);
@@ -65,17 +68,20 @@ public class Service {
 		}
 	}//email exists
 	
+	//===================================================
+	
 	public int addUser(User u)
 	{
 		return dao.addUser(u.getFirstname(),u.getLastname(),u.getUsername(),u.getPassword(),u.getAddress(),u.getZipcode(),u.getTitle(),u.getSupervisorId(),
 				u.getDeptHeadId(),u.getBenCoId(),u.getApprovedFunds(),u.getPendingFunds());
 	}//addUser
 
-/*
-	public ArrayList<Account> getAccounts(User u)
+	//===================================================
+	
+	public List<Request> getRequests(User u)
 	{
-		return dao.getAccountsByUser(u);
+		return dao.getRequestsByUser(u);
 	}//getAccounts
-*/
+
 	
 }
