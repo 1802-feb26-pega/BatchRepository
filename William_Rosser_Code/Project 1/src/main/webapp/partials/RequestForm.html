@@ -2,7 +2,7 @@
 	<h2>Submit A Reimbursement Request</h2><br>
 	<div id="request_form">
 		Name: <span id="name"></span><br>
-		Event Type:<br><select id="Event type">
+		Event Type:<br><select id="EventType">
 			<option value=1>University Courses (80%)</option>
 			<option value=2>Seminars (60%)</option>
 			<option value=3>Certification Prep Classes(75%)</option>
@@ -17,6 +17,9 @@
 		Location:<br><textarea rows="4" cols="50" id="loc" placeholder="Address"></textarea><br><br>
 		Missed Work Time (Hours):<br><input type="number" id="missed" placeholder="0"><br><br>
 		Cost of Event:<br>$<input type="number" id="cost" placeholder="0.00"><br><br>
+		Add Attachments: <button id="add_attachment" class="btn btn-primary">+</button><br>
+		<ul id="attachments">
+		</ul><br><br>
 		<button id="form_submit" class="btn btn-success">Submit</button>
 		<button id="cancel" class="btn btn-warning">Cancel</button>
 	</div>

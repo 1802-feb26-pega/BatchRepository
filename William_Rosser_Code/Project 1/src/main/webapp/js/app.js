@@ -222,6 +222,31 @@ function loadHome(user) {
 				})
 			}
 			//TODO: Populate table
+			var xhr2 = new XMLHttpRequest();
+			xhr2.open("GET", "get_user_requests",true);
+			//TODO: Get request name / rate.
+			xhr2.send();
+			xhr2.onreadystatechange = function () {
+				if (xhr2.readyState == 4 && xhr2.status == 200) {
+					var json = JSON.parse(xhr2.responseText);
+					console.log(json);
+					json.forEach(function (item, index) {
+						var row = $("<tr></tr>");
+						row.attr("id", "row_"+index);
+						var re_id = $("<td></td>").html(item.reimbursement.reId);
+						var s_date = $("<td></td>").html(item.reimbursement.requestDate);
+						var e_date = $("<td></td>").html(item.date);
+						
+						var e_type = $("<td></td>").html(item.eventType);
+						var t_cost = $("<td></td>").html("$"+item.cost);
+						var status = $("<td></td>").html(item.reimbursement.status);
+						var re_re = $("<td></td>").html("$"+item.reimbursement.ammount_paid);
+						var mi = $("<td></td>").html("X");
+						row.append(re_id,s_date,e_date,e_type,t_cost,status,re_re,mi);
+						$("#r_table_body").append(row);
+					});
+				}
+			}
 		}
 	}
 }
@@ -255,12 +280,47 @@ function loadSubmitReimbursementForm() {
 }
 
 function submitReimbursementForm(user) {
-	//TODO: submit the form
-	console.log("Submitted");
-	loadHome(user);
-	
-}
+	var id = user.id;
+	var type = $("#EventType").val();
+	var formdate = $("#date").val();
+	var formtime = $("#time").val();
+	var formreason = $("#reason").val();
+	var loc = $("#loc").val();
+	var mwt = $("#missed").val();
+	var formcost = $("#cost").val();
+	var filled = (id!=0&&formdate!=""&&formtime!=""&&formreason!=""&&loc!=""&&mwt!=0&&formcost!=0);
+	console.log(filled);
+	//TODO: Update cosmetically
+	if (filled==false) {
+		alert("Blank attachments remain.");
+		return;
+	}
 
+
+	//TODO attachments
+
+	var form = {
+			formId: -1,
+			employeeId: id,
+			eventType: type,
+			date: formdate,
+			time: formtime,
+			reason: formreason,
+			location: loc,
+			missedWorkTime: mwt,
+			cost: formcost,
+			gsId: -1
+	};
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "submit_request", true);
+	xhr.send(JSON.stringify(form));
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState == 4 && xhr.status == 200) {
+			console.log("Submitted", form);
+			reloadHome();
+		}
+	}
+}
 
 
 function loadManageRequests(user) {
@@ -271,15 +331,37 @@ function loadManageRequests(user) {
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200) {
 			var xhr2 = new XMLHttpRequest();
-			var t = user.roll;
-			var requestAddr = "pending_approval?type="+t+"&id=";
-			requestAddr += (t==1) ? user.dsId : ((t==2) ? user.myDepHeadId : user.myBenCoId);
-			console.log(requestAddr);
-			xhr2.open("GET", requestAddr, true);
+			xhr2.open("GET", "pending_approval", true);
 			xhr2.send();
 			xhr2.onreadystatechange = function() {
 				if (xhr2.readyState == 4 && xhr2.status == 200) {
 					$("#view").html(xhr.responseText);
+					$("#cancel").on("click", reloadHome);
+					var json = JSON.parse(xhr2.responseText);
+					console.log(json);
+					json.forEach(function (item, index) {
+						var row = $("<tr></tr>");
+						var rid = $("<td></td>").html(item.reimbursement.reId);
+						var sname = $("<td></td>").html(item.name);
+						var sdate = $("<td></td>").html(item.reimbursement.requestDate);
+						var edate = $("<td></td>").html(item.date);
+						var etype = $("<td></td>").html(item.eventType);
+						var ecost = $("<td></td>").html("$"+item.cost);
+						//TODO: Calculate expected REimbursement amount (java side).
+						var era = $("<td></td>").html("$TODO");
+						var status = $("<td></td>").html(item.reimbursement.status);
+						var action = $("<td></td>");
+						
+						var actionList = $("<select></select>").attr("id", "action_"+index);
+						var noAct = $("<option></option").attr("value", 0).html("No Action");
+						var approve = $("<option></option").attr("value", 1).html("Approve");
+						var reject = $("<option></option").attr("value", 2).html("Reject");
+						actionList.append(noAct,approve,reject);
+						action.append(actionList);
+						row.append(rid,sname,sdate,edate,etype,ecost,era,status,action);
+						$("#r_t_body").append(row);
+						
+					});
 					//TODO: Fill with response values
 				}
 			}

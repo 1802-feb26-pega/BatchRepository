@@ -17,15 +17,13 @@ import com.trms.service.Service;
 public class RegEmployee extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Service service = new Service();
 		ObjectMapper mapper = new ObjectMapper();
 		Employee e = mapper.readValue(req.getInputStream(), Employee.class);
-		System.out.println(e.toString());
 		e = (Employee) Service.addUser(e, 0);
 		PrintWriter out = resp.getWriter();
 		resp.setContentType("application/json");
 		if (e!=null) {
-			String uJSON = mapper.writeValueAsString(e);
+			String uJSON = Service.userToJSON(e);
 			out.write(uJSON);
 		} else {
 			out.write("null");

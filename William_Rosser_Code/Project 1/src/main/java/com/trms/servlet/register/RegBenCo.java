@@ -11,21 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trms.pojos.BenCo;
-import com.trms.pojos.DepartmentHead;
 import com.trms.service.Service;
 
 @WebServlet("/reg_benco")
 public class RegBenCo extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Service service = new Service();
 		ObjectMapper mapper = new ObjectMapper();
 		BenCo e = mapper.readValue(req.getInputStream(), BenCo.class);
-		System.out.println(e.toString());
 		e = (BenCo) Service.addUser(e, 3);
 		PrintWriter out = resp.getWriter();
 		resp.setContentType("application/json");
 		if (e!=null) {
-			String uJSON = mapper.writeValueAsString(e);
+			String uJSON = Service.userToJSON(e);
 			out.write(uJSON);
 		} else {
 			out.write("null");
