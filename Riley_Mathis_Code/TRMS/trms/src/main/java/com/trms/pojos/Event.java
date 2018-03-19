@@ -6,6 +6,7 @@ public class Event {
 	private int eventId;
 	private Date dateCreated;
 	private Date dateScheduled;
+	private String eventLocation;
 	private int eventCost;
 	private int eventTypeId;
 	private int employeeId;
@@ -14,9 +15,10 @@ public class Event {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Event(Date dateScheduled, int eventCost, int eventTypeId, int employeeId) {
+	public Event(Date dateScheduled, String eventLocation, int eventCost, int eventTypeId, int employeeId) {
 		super();
 		this.dateScheduled = dateScheduled;
+		this.eventLocation = eventLocation;
 		this.eventCost = eventCost;
 		this.eventTypeId = eventTypeId;
 		this.employeeId = employeeId;
@@ -38,6 +40,12 @@ public class Event {
 	}
 	public void setDateScheduled(Date dateScheduled) {
 		this.dateScheduled = dateScheduled;
+	}
+	public String getEventLocation() {
+		return eventLocation;
+	}
+	public void setEventLocation(String eventLocation) {
+		this.eventLocation = eventLocation;
 	}
 	public int getEventCost() {
 		return eventCost;

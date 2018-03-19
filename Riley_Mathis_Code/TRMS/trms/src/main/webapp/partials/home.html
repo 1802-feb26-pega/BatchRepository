@@ -1,5 +1,5 @@
 <h2 style="text-align:center">
-	Welcome to your bank <span id="name"></span>!
+	Welcome, <span id="name"></span>!
 </h2>
 <!-- Here are your accounts:
 <table id="reimbursementTable" class="display">
@@ -15,24 +15,30 @@
 <div class="container jumbotron">
 	<form>
 		<h1>Reimbursement Request Form</h1>
-		<input type="text" class="form-control" id="firstname" placeholder="Enter your first name">
-		<input type="text" class="form-control" id="lastname" placeholder="Enter your last name">
-		<input type="datetime" class="form-control" id="date">
-		<input type="text" class="form-control" id="location" placeholder="Enter a location">
-		<input type="text" class="form-control" id="description" placeholder="Enter a description">
-		<input type="number" class="form-control" id="cost" placeholder="Enter projected cost">
-		<select class="custom-select">
-			<option value="1" selected>Grade</option>
-			<option value="2">Presentation</option>
-		</select>
-		<select class="custom-select">
-			<option value="1" selected>University Course</option>
-			<option value="2">Seminar</option>
-			<option value="3">Certification Preparation Class</option>
-			<option value="4">Certification</option>
-			<option value="5">Technical Training</option>
-			<option value="6">Other</option>
-		</select>
+		<div class="form-group">
+			<input type="text" class="form-control" id="firstname" placeholder="Enter your first name">
+			<input type="text" class="form-control" id="lastname" placeholder="Enter your last name">
+		</div>
+		<div class="form-group">
+			<h3>Event Information</h3>
+			<input type="date" class="form-control" id="date">
+			<input type="time" class="form-control" id="time">
+			<input type="text" class="form-control" id="location" placeholder="Enter a location">
+			<input type="text" class="form-control" id="description" placeholder="Enter a description">
+			<input type="number" class="form-control" id="cost" placeholder="Enter projected cost">
+			<select class="custom-select">
+				<option value="1" selected>Grade</option>
+				<option value="2">Presentation</option>
+			</select>
+			<select class="custom-select">
+				<option value="1" selected>University Course</option>
+				<option value="2">Seminar</option>
+				<option value="3">Certification Preparation Class</option>
+				<option value="4">Certification</option>
+				<option value="5">Technical Training</option>
+				<option value="6">Other</option>
+			</select>
+		</div>
 		<input type="text" class="form-control" id="justification" placeholder="Justification">
 		<div class="custom-file">
 			<input type="file" class="custom-file-input" id="customFile">
@@ -49,6 +55,6 @@
 		<br>
 		<input type="text" class="form-control" placeholder="Projected Reimbursement" readonly>
 		<br>
-		<button type="button" class="btn btn-primary" id="submitReimbursement">Submit</button>
+		<button class="btn btn-primary" id="submitReimbursement">Submit</button>
 	</form>
 </div>

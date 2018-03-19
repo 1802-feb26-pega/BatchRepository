@@ -30,7 +30,7 @@ public class Service {
 		else return true;
 	}
 	
-//	public ArrayList<Account> getAccounts (User u){
-//		return dao.getAccountsByUser(u);
-//	}
+	public ArrayList<Event> getEvents (Employee e){
+		return empDao.getEventsByEmployee(e);
+	}
 }

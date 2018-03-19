@@ -97,11 +97,13 @@ function loadNav(){
 			$('#navbar').html(xhr.responseText);
 			//$('#home').on('click', loadHome);
 			$('#logout').on('click',logout);
+			$('#events').on('click', loadEmployeeEvents);
 
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
 		}
 	}
 }
+
 
 function loadHome(employee){
 	var xhr = new XMLHttpRequest();
@@ -113,16 +115,16 @@ function loadHome(employee){
 			$('#view').html(xhr.responseText);
 			//document.getElementById('view').innerHTML(xhr.responseText);
 			$('#name').html(employee.firstname);
-			$('#submitReimbursement').on('click', submit(employee))
+			//$('#submitReimbursement').on('click', function(){submit(employee)})
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
-//			getUserAccounts();
-//			$('#accTable').hide();
+//			getEmployeeEvents();
+//			$('#eventTable').hide();
 		}
 	}
 }
 
-function submit(employee){
-	console.log("submit");
+//function submit(employee){
+//	console.log("submit");
 //	var fn = $('#fn').val();
 //	var ln = $('#ln').val();
 //	var uname = $('#username').val();
@@ -138,55 +140,86 @@ function submit(employee){
 //	var xhr = new XMLHttpRequest();
 //	xhr.open("POST", "submit", true);
 //	xhr.send(JSON.stringify(form));
+//}
+
+function loadEmployeeEvents(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadEmployeeEvents.view", true);
+	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			//document.getElementById('view').innerHTML(xhr.responseText);
+			//$('#name').html(employee.firstname);
+			//$('#submitReimbursement').on('click', function(){submit(employee)})
+			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
+			getEmployeeEvents();
+			//$('#eventTable').hide();
+		}
+	}
 }
 
-//function getUserAccounts(){
-//	var xhr = new XMLHttpRequest();
-//	xhr.open("GET", "accounts" , true);
-//	xhr.send();
-//
-//	xhr.onreadystatechange = function(){
-//		if(xhr.readyState == 4 && xhr.status == 200){
-//			var accounts = JSON.parse(xhr.responseText);
-//			if(accounts.length == 0){
-//				console.log("you have no accounts");
-//			}
-//			else{
-//				console.log("testing----");
-//				//	accounts = JSON.stringify("data") + ":" + accounts;
-//				console.log(accounts);
-//				var data = formatTable(accounts);
-//
-//				$('#accTable').DataTable({
-//					data : data,
-//					columns: [
-//						{data : "Id" },
-//						{data : "Balance" }
-//						]
-//				});
-//				console.log("this should have worked");
-//				$('#accTable').show();
-//			}
-//		}
-//	}
-//}
+function getEmployeeEvents(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "events" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var events = JSON.parse(xhr.responseText);
+			if(events.length == 0){
+				console.log("you have no events");
+			}
+			else{
+				console.log("testing----");
+				//	accounts = JSON.stringify("data") + ":" + accounts;
+				console.log(events);
+				var data = formatTable(events);
+
+				$('#eventTable').DataTable({
+					data : data,
+					columns: [
+						{data : "eventId" },
+						{data : "dateCreated" },
+						{data : "dateScheduled" },
+						{data : "eventLocation" },
+						{data : "eventCost" },
+						{data : "eventTypeId" },
+						{data : "employeeId" },
+						{data : "grade" }
+						]
+				});
+				console.log("this should have worked");
+				$('#eventTable').show();
+			}
+		}
+	}
+}
 
 
-//function formatTable(accounts){
-//	console.log("formatting table");
-//	var data = [];
-//	for(let i = 0; i < accounts.length; i++){
-//		let temp = new Object();
-//		console.log(accounts[i]);
-//		temp.Id = `1000${accounts[i].id}`;
-//		temp.Balance = accounts[i].balance;
-//		console.log(temp);
-//		data.push(temp);
-//	}
-//	console.log(data);
-//	return data;
-//}
-(function () {/*dosomething*/}());
+function formatTable(events){
+	console.log("formatting table");
+	var data = [];
+	for(let i = 0; i < events.length; i++){
+		let temp = new Object();
+		console.log(events[i]);
+		temp.eventId = `1000${events[i].eventId}`;
+		temp.dateCreated = events[i].dateCreated;
+		temp.dateScheduled = events[i].dateScheduled;
+		temp.eventLocation = events[i].eventLocation;
+		temp.eventCost = events[i].eventCost;
+		temp.eventTypeId = events[i].eventTypeId;
+		temp.employeeId = events[i].employeeId;
+		temp.grade = events[i].grade;
+		//temp.dateCreated = events[i].dateCreated;
+		console.log(temp);
+		data.push(temp);
+	}
+	console.log(data);
+	return data;
+}
+
 
 function login(){
 	console.log("logging in");
