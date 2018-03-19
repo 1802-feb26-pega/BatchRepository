@@ -95,7 +95,7 @@ function loadNav(){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#navbar').html(xhr.responseText);
-			$('#home').on('click', loadHome);
+			//$('#home').on('click', loadHome);
 			$('#logout').click(logout);
 
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
@@ -103,7 +103,7 @@ function loadNav(){
 	}
 }
 
-function loadHome(user){
+function loadHome(employee){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "loadhome.view" , true);
 	xhr.send();
@@ -111,7 +111,8 @@ function loadHome(user){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
-			$('#name').html(user.firstname);
+			//document.getElementById('view').innerHTML(xhr.responseText);
+			$('#name').html(employee.firstname);
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
 //			getUserAccounts();
 //			$('#accTable').hide();
@@ -165,7 +166,7 @@ function loadHome(user){
 //	console.log(data);
 //	return data;
 //}
-
+(function () {/*dosomething*/}());
 
 function login(){
 	console.log("logging in");
@@ -181,9 +182,9 @@ function login(){
 
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
-			var user = JSON.parse(xhr.responseText);
+			var employee = JSON.parse(xhr.responseText);
 			var message = "";
-			if(user==null) {
+			if(employee==null) {
 				$('#message').show();
 				$("#message").attr("style", "display:inline");
 				message = "You have entered the wrong username and/or password. Please try again";
@@ -192,7 +193,7 @@ function login(){
 			else{
 				//alert("success");
 				loadNav();
-				loadHome(user);
+				loadHome(employee);
 			}
 		}
 	}
