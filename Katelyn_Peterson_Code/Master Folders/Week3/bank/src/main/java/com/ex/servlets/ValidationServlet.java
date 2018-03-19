@@ -9,26 +9,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bank.pojos.User;
 import com.ex.service.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebServlet("/register")
-public class RegisterServlet extends HttpServlet{
+@WebServlet("/validate")
+public class ValidationServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
-		Service service = new Service();
 		
 		ObjectMapper mapper = new ObjectMapper();
-		User u = mapper.readValue(req.getInputStream(), User.class);
+		String username = mapper.readValue(req.getInputStream(), String.class);
 		
-		System.out.println(u.toString());
-		u = service.addUser(u);
+		System.out.println(username);
 		
-		PrintWriter print = resp.getWriter();
+		Service service = new Service();
+		boolean exists = service.emailExists(username);
+		
+		
+		PrintWriter out = resp.getWriter();
 		resp.setContentType("application/json");
+		
+		out.write(mapper.writeValueAsString(exists));
 		
 	}
 

@@ -1,21 +1,19 @@
 package com.revature.trms.dao;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 import com.revature.trms.pojos.Employee;
 
 public class TestEmployeeDAO
 {
 	static private EmployeeDAOImpl empDao = new EmployeeDAOImpl();
-
+	
+	@Test
 	public void testGetAllUsers()
 	{
 		boolean find = false;
-		
-		/*List<User> users = new ArrayList<>();
-		User temp = new User("Tin", "1234", "Tin", "Moria");
-		temp.setUserId(1);
-		users.add(temp);*/
 		
 		Employee testUser = empDao.getUserByEmail("parker@sru.gov");
 		
@@ -25,8 +23,6 @@ public class TestEmployeeDAO
 		}
 		
 		assertTrue(find);
-		
-		//assertEquals(users, testUsers);
 	}
 
 }

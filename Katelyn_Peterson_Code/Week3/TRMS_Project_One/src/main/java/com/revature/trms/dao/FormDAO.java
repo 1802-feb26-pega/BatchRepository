@@ -10,6 +10,7 @@ public interface FormDAO
 	// For BenCo
 	public Collection<Form> getAll();
 	public Collection<Form> getAllByEmployeeId(Integer empId);
-	public Form GetByFormId(Integer formId);
-	public Form UpdateForm(Integer formID, Form updatedForm);
+	public Form getByFormId(Integer formId);
+	public Form addForm(Integer empId, Form newForm);
+	public int updateForm(Integer formID, Form updatedForm);
 }

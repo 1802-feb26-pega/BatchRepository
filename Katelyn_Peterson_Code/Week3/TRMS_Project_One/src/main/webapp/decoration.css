@@ -52,18 +52,18 @@ footer
 }
 
 /* nav elements */
-nav ul 
+nav ul, #navbar
 {
-  display: flex;
-   flex-wrap: wrap;
-   justify-content: flex-start;
-   align-items: flex-end;
-   list-style: none;
-   margin: 0;
-   padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: flex-end;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
-nav ul li 
+nav > ul > li, #navbar
 {		
    margin: 0;
    padding: 0;
@@ -71,7 +71,7 @@ nav ul li
    transition: all linear 0.1s;
 }
 
-nav > ul > li > a 
+#navbar > li > a
 {
    align-items: center;
    color: #ECF0E9;
@@ -88,7 +88,7 @@ nav > ul > li > a
 }
 
 /* Form */
-form
+#myForm
 {
 	text-indent: -15px;
 	padding-left: 50px;
@@ -96,7 +96,7 @@ form
 	outline: hidden;
 }
 
-fieldset
+#myFieldset
 {
 	display: block;
     margin-left: 2px;
@@ -116,7 +116,7 @@ label
 	width: 100%;
 }
 
-input[type = text], [type = password]
+input, select
 {
 	display: block;
 	margin-left: 50px;
@@ -124,6 +124,12 @@ input[type = text], [type = password]
 	padding-bottom: 5px;
 	border: 1px solid #000000;
 	border-radius: 5px;
+	max-width: 60%;
+}
+
+ul
+{
+	list-style: none;
 }
 
 /* ID styles */
@@ -131,13 +137,13 @@ input[type = text], [type = password]
 {	
 	background-color: #FFFFFF;
 	margin-top: 15px;
-	width: 75%;
+	width: 85%;
 	margin-right: auto;
 	margin-left: auto;
 	box-shadow: 3px 3px 3px #BCBCBC;
 }
 
-#login
+#login, #request
 {
-	width: 35%;
+	width: 25%;
 }

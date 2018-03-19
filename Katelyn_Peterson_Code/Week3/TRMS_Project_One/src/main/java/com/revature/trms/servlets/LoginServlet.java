@@ -20,20 +20,20 @@ import com.revature.trms.service.EmployeeService;
 public class LoginServlet extends HttpServlet
 {
 	
-	static EmployeeService service = new EmployeeService();
+	static EmployeeService eService = new EmployeeService();
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException
 	{
 		
-		System.out.println("in login servlet");
+		//System.out.println("in login servlet");
 		
 		//1. get request body from request object
 		BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
 		String json = br.readLine();
 		
-		System.out.println(json);
+		//System.out.println(json);
 
 		//2. instantiate jackson mapper 
 		ObjectMapper mapper = new ObjectMapper();
@@ -44,17 +44,17 @@ public class LoginServlet extends HttpServlet
 		String email = empInfo[0];
 		String password = empInfo[1];
 		
-		Employee emp = service.login(email, password);
+		Employee emp = eService.login(email, password);
 		PrintWriter out = resp.getWriter();
 		resp.setContentType("application/json");
 		
 		if(emp != null)
 		{
 			String userJSON = mapper.writeValueAsString(emp);
-			
+			//System.out.println(userJSON);
 			HttpSession session = req.getSession();
 			session.setAttribute("employee", emp);
-			System.out.println(emp);
+			//System.out.println(emp);
 			out.write(userJSON);
 		}
 		else

@@ -5,6 +5,7 @@ public class Form
 	// Private Variables
 	private Integer formId;
 	private Integer employId;
+	private String startDate;
 	private String address;
 	private String city;
 	private String state;
@@ -12,7 +13,7 @@ public class Form
 	private Double cost;
 	private String event;
 	private String gradeFormat;
-	// Query server for time, also see if submit time can be truncated on default
+	private String submitDate;
 	private boolean dsApproval;
 	private boolean dhApproval;
 	private boolean benCoApproval;
@@ -23,15 +24,23 @@ public class Form
 	public Form()
 	{
 		super();
+		this.formId = 0;
+		this.submitDate = "";
+		this.dsApproval = false;
+		this.dhApproval = false;
+		this.benCoApproval = false;
+		this.grade = "";
+		this.award = 0.00;
 	}
 
-	public Form(Integer formId, Integer employId, String address, String city, String state, Integer postal,
-			Double cost, String event, String gradeFormat, boolean dsApproval, boolean dhApproval, boolean benCoApproval,
-			String grade, Double award)
+	public Form(Integer formId, Integer employId, String startDate, String address, String city, String state,
+			Integer postal, Double cost, String event, String gradeFormat, String submitDate, boolean dsApproval,
+			boolean dhApproval, boolean benCoApproval, String grade, Double award)
 	{
 		super();
 		this.formId = formId;
 		this.employId = employId;
+		this.startDate = startDate;
 		this.address = address;
 		this.city = city;
 		this.state = state;
@@ -39,6 +48,7 @@ public class Form
 		this.cost = cost;
 		this.event = event;
 		this.gradeFormat = gradeFormat;
+		this.submitDate = submitDate;
 		this.dsApproval = dsApproval;
 		this.dhApproval = dhApproval;
 		this.benCoApproval = benCoApproval;
@@ -55,6 +65,11 @@ public class Form
 	public Integer getEmployId()
 	{
 		return employId;
+	}
+
+	public String getStartDate()
+	{
+		return startDate;
 	}
 
 	public String getAddress()
@@ -92,17 +107,22 @@ public class Form
 		return gradeFormat;
 	}
 
-	public boolean isDsApproval()
+	public String getSubmitDate()
+	{
+		return submitDate;
+	}
+
+	public boolean getDsApproval()
 	{
 		return dsApproval;
 	}
 
-	public boolean isDhApproval()
+	public boolean getDhApproval()
 	{
 		return dhApproval;
 	}
 
-	public boolean isBenCoApproval()
+	public boolean getBenCoApproval()
 	{
 		return benCoApproval;
 	}
@@ -126,6 +146,11 @@ public class Form
 	public void setEmployId(Integer employId)
 	{
 		this.employId = employId;
+	}
+
+	public void setStartDate(String startDate)
+	{
+		this.startDate = startDate;
 	}
 
 	public void setAddress(String address)
@@ -161,6 +186,11 @@ public class Form
 	public void setGradeFormat(String gradeFormat)
 	{
 		this.gradeFormat = gradeFormat;
+	}
+
+	public void setSubmitDate(String submitDate)
+	{
+		this.submitDate = submitDate;
 	}
 
 	public void setDsApproval(boolean dsApproval)
@@ -209,7 +239,9 @@ public class Form
 		result = prime * result + ((grade == null) ? 0 : grade.hashCode());
 		result = prime * result + ((gradeFormat == null) ? 0 : gradeFormat.hashCode());
 		result = prime * result + ((postal == null) ? 0 : postal.hashCode());
+		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
 		result = prime * result + ((state == null) ? 0 : state.hashCode());
+		result = prime * result + ((submitDate == null) ? 0 : submitDate.hashCode());
 		return result;
 	}
 
@@ -299,6 +331,13 @@ public class Form
 		}
 		else if (!postal.equals(other.postal))
 			return false;
+		if (startDate == null)
+		{
+			if (other.startDate != null)
+				return false;
+		}
+		else if (!startDate.equals(other.startDate))
+			return false;
 		if (state == null)
 		{
 			if (other.state != null)
@@ -306,15 +345,24 @@ public class Form
 		}
 		else if (!state.equals(other.state))
 			return false;
+		if (submitDate == null)
+		{
+			if (other.submitDate != null)
+				return false;
+		}
+		else if (!submitDate.equals(other.submitDate))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString()
 	{
-		return "Form [formId=" + formId + ", employId=" + employId + ", address=" + address + ", city=" + city
-				+ ", state=" + state + ", postal=" + postal + ", cost=" + cost + ", event=" + event + ", gradeFormat="
-				+ gradeFormat + ", dsApproval=" + dsApproval + ", dhApproval=" + dhApproval + ", benCoApproval="
-				+ benCoApproval + ", grade=" + grade + ", award=" + award + "]";
+		return "Form [formId=" + formId + ", employId=" + employId + ", startDate=" + startDate + ", address=" + address
+				+ ", city=" + city + ", state=" + state + ", postal=" + postal + ", cost=" + cost + ", event=" + event
+				+ ", gradeFormat=" + gradeFormat + ", submitDate=" + submitDate + ", dsApproval=" + dsApproval
+				+ ", dhApproval=" + dhApproval + ", benCoApproval=" + benCoApproval + ", grade=" + grade + ", award="
+				+ award + "]";
 	}
+	
 }

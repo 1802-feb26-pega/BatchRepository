@@ -5,88 +5,95 @@
 <!-- Date Created: 03-09-2018 -->
 <!-- Date(s) Modified: N/A -->
 <!-- Developer Note for Palemoon: ISO formats for date(yyyy-mm-dd), time(hh:mm:ss) required.  Validation is present in Palemoon, however it is all internal. -->
-<html xmlns = "http://www.w3.org/1999/xhtml" lang = "en" xml:lang = "en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<title>Geneovision Reimbursement Program</title>
+<meta charset="UTF-8" />
+
+<!-- Viewport -->
+<!-- <meta name = "viewport" content = "width =  device-width, initial-scale =  1.0" /> -->
+
+<!-- Linked Style -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+	integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+	crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
 	
-	<head>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+	
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+	integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+	integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+	crossorigin="anonymous"></script>
 
-		<title>Geneovision Reimbursement Program</title>
-		<meta charset = "UTF-8" />
-		
-		<!-- Viewport -->
-		<!-- <meta name = "viewport" content = "width =  device-width, initial-scale =  1.0" /> -->
-		
-		<!-- Linked Style -->
-		<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
-		integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
-		crossorigin="anonymous">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
 
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
-		<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-		integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-		crossorigin="anonymous"></script>
-		<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-		integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-		crossorigin="anonymous"></script>
-		<link rel = "stylesheet" type = "text/css" href = "decoration.css" />
-		
-		<!-- Favicon -->
-		<link rel = "icon" type = "image/x-icon" href = "images/favicon.ico" />
-		<link rel = "shortcut icon" type = "image/x-icon" href = "images/favicon.ico" />
-		
-		<!-- Reverse Compatibility -->
-		<!-- [if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="decoration.css" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+
+<!-- Reverse Compatibility -->
+<!-- [if lt IE 9]>
 			<script src = "http://html5shim.googlecode.com/svn/trunk/html5.js">
 			</script>
 		<! [endif] -->
 
-	</head>	
-	
-	<body>
-	
-		<div id = "wrapper">
-	
-			<!-- Company Name -->
-			<nav>
+</head>
 
-				<ul>
-		
-					<li><img src = "images/logo.jpg" alt = "Geneovision, Inc" width = "250" height = "141" /></li>
-						
-					<span id="navbar"></span>
+<body>
 
-				</ul>
-		
-			</nav>
-			
-			<!-- See Week Two, logIn HTML for Nav and Log In stuff when I get there -->
-			
-			<!-- Main Information -->
-			<main>
-				
-				<!--<div id = "navbar"></div>-->
-    
-				<div id = "view"></div>
-			
-				<script src = "js/content.js"></script>
-				
-			</main>
-		
-			<!-- Legal and Contact Information -->
-			<footer>		
-				
-				<div>				
-					Copyright &#xA9; 2018 Geneovision<br />
-				</div>
-		
-			</footer>
-		
-		</div>
-		
-	</body>
-	
+	<div id="wrapper">
+
+		<!-- Company Name -->
+		<nav>
+
+			<ul>
+
+				<li><img src="images/logo.jpg" alt="Geneovision, Inc"
+					width="250" height="141" /></li>
+
+				<span id="navbar"></span>
+
+			</ul>
+
+		</nav>
+
+		<!-- See Week Two, logIn HTML for Nav and Log In stuff when I get there -->
+
+		<!-- Main Information -->
+		<main> <!--<div id = "navbar"></div>-->
+
+		<div id="view"></div>
+
+
+
+		</main>
+
+		<!-- Legal and Contact Information -->
+		<footer>
+
+			<div>
+				Copyright &#xA9; 2018 Geneovision<br />
+			</div>
+
+		</footer>
+
+	</div>
+
+	<script src="js/content.js"></script>
+
+</body>
+
 </html>

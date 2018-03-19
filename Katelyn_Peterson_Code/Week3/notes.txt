@@ -1,3 +1,12 @@
 JavaScript Resources
 https://www.destroyallsoftware.com/talks/wat
 https://javascript.info/bubbling-and-capturing
+https://stackify.com/what-is-sdlc/
+https://www.cprime.com/resources/what-is-agile-what-is-scrum/
+https://www.visualstudio.com/learn/what-is-agile/
+http://www.theserverside.com/tip/ServletConfig-vs-the-ServletContext-Understanding-the-Difference
+https://www.tutorialspoint.com/sdlc/sdlc_overview.htm
+https://www.ntu.edu.sg/home/ehchua/programming/java/JavaServlets.html
+
+Google Drive collab doc
+https://drive.google.com/drive/folders/1II2EiPL52Ji9Pfr2fXfCVu7gdPBl9uv5?usp=sharing

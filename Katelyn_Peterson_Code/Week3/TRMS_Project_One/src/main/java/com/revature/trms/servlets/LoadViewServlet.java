@@ -15,7 +15,7 @@ public class LoadViewServlet extends HttpServlet
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException
 	{
-		//System.out.println(process(req, resp));
+		System.out.println(process(req, resp));
 		
 		String page = process(req, resp);
 		req.getRequestDispatcher(page).forward(req, resp);
@@ -31,6 +31,8 @@ public class LoadViewServlet extends HttpServlet
 			return "partials/navbar.html";
 		case("/TRMS_Project_One/loadHome.view"):
 			return "partials/home.html";
+		case("/TRMS_Project_One/loadNew.view"):
+			return "partials/newRequest.html";
 		}
 		
 		return req.getRequestURI();

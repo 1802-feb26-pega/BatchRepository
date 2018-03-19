@@ -1,11 +1,15 @@
 package com.revature.trms.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import com.revature.trms.pojos.Employee;
+import com.revature.trms.pojos.Form;
 import com.revature.trms.util.ConnectionFactory;
 
 public class EmployeeDAOImpl implements EmployeeDAO
@@ -14,12 +18,13 @@ public class EmployeeDAOImpl implements EmployeeDAO
 	private String sql;
 	private ResultSet rs;
 	private PreparedStatement pstmt;
+	private CallableStatement cstmt;
 	
 	@Override
 	public Employee getUserByEmail(String email)
 	{
-		
-		Employee emp = new Employee();
+		Collection<Employee> oneEmp = new ArrayList<>();
+		Employee selected = new Employee();
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection())
 		{
@@ -28,15 +33,141 @@ public class EmployeeDAOImpl implements EmployeeDAO
 			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
 			
+			oneEmp = populateEmployee(rs);
+			
+			ArrayList<Employee> transfer = (ArrayList<Employee>) oneEmp;
+			selected = transfer.get(0);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		if(selected.getEmployeeId() == 0) return null;
+		
+		return selected;
+	}
+
+	@Override
+	public Employee getEmployeeSupervisor(Integer empId)
+	{
+		Collection<Employee> oneEmp = new ArrayList<>();
+		Employee selected = new Employee();
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection())
+		{
+			sql = "{CALL find_supervisor(?)}";
+			cstmt = conn.prepareCall(sql);
+			cstmt.setInt(1, empId);
+			rs = pstmt.executeQuery();
+			
+			oneEmp = populateEmployee(rs);
+			
+			ArrayList<Employee> transfer = (ArrayList<Employee>) oneEmp;
+			selected = transfer.get(0);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		if(selected.getEmployeeId() == 0) return null;
+		
+		return selected;
+	}
+
+	@Override
+	public Employee getEmployeeByEmployeeId(Integer empId)
+	{
+		Collection<Employee> oneEmp = new ArrayList<>();
+		Employee selected = new Employee();
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection())
+		{
+			sql = "SELECT * FROM employee WHERE employeid = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, empId);
+			rs = pstmt.executeQuery();
+			
+			oneEmp = populateEmployee(rs);
+			
+			ArrayList<Employee> transfer = (ArrayList<Employee>) oneEmp;
+			selected = transfer.get(0);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		if(selected.getEmployeeId() == 0) return null;
+		
+		return selected;
+	}
+
+	@Override
+	public Collection<Employee> getDSEmployees(Integer empId)
+	{
+		Collection<Employee> employees = new ArrayList<>();
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection())
+		{
+			sql = "SELECT * FROM employee WHERE reportsto = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, empId);
+			rs = pstmt.executeQuery();
+			
+			employees = populateEmployee(rs);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		if(employees.isEmpty()) return null;
+		
+		return employees;
+	}
+
+	@Override
+	public Collection<Employee> getDHEmployees(Integer empId)
+	{
+		Collection<Employee> employees = new ArrayList<>();
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection())
+		{
+			sql = "SELECT * FROM employee WHERE departmentid = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, empId);
+			rs = pstmt.executeQuery();
+			
+			employees = populateEmployee(rs);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		if(employees.isEmpty()) return null;
+		
+		return employees;
+	}
+	
+	private Collection<Employee> populateEmployee(ResultSet rs)
+	{
+		Collection<Employee> output = new ArrayList<Employee>();
+		
+		try
+		{
 			while(rs.next())
 			{
-				emp.setEmployeeId(rs.getInt(1));
-				emp.setFirstName(rs.getString(2));
-				emp.setLastName(rs.getString(3));
-				emp.setEmail(rs.getString(4));
-				emp.setPassword(rs.getString(5));
+				Employee retrieved = new Employee();
 				
-				// Phone transfer -- maybe move?
+				retrieved.setEmployeeId(rs.getInt(1));
+				retrieved.setFirstName(rs.getString(2));
+				retrieved.setLastName(rs.getString(3));
+				retrieved.setEmail(rs.getString(4));
+				retrieved.setPassword(rs.getString(5));
+				
 				Long dataTransfer = rs.getLong(6);
 				char[] transfer = dataTransfer.toString().toCharArray();
 				String temp = "+";
@@ -61,24 +192,22 @@ public class EmployeeDAOImpl implements EmployeeDAO
 					temp = temp + transfer[x];
 				}
 				
-				emp.setPhone(temp);
+				retrieved.setPhone(temp);
 				// Moving on
-				emp.setReimburse(rs.getDouble(7));
-				emp.setReportsto(rs.getInt(8));
-				emp.setDepartId(rs.getInt(9));
-				emp.setEmpTitle(rs.getString(10));
+				retrieved.setReimburse(rs.getDouble(7));
+				retrieved.setReportsto(rs.getInt(8));
+				retrieved.setDepartId(rs.getInt(9));
+				retrieved.setEmpTitle(rs.getString(10));
 				
+				output.add(retrieved);
 			}
-			
 		}
 		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
 		
-		if(emp.getEmployeeId() == 0) return null;
-		
-		return emp;
+		return output;
 	}
 	
 }

@@ -6,7 +6,7 @@ import com.revature.trms.pojos.Employee;
 
 public class EmployeeService
 {
-	static EmployeeDAO empDao = new EmployeeDAOImpl();
+	private static EmployeeDAO empDao = new EmployeeDAOImpl();
 	
 	public Employee login(String email, String password)
 	{
