@@ -171,7 +171,7 @@ function register(){
 	}
 }
 
-function loadNav(){
+function loadNav(user){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "loadnav.view" , true);
 	xhr.send();
@@ -179,9 +179,21 @@ function loadNav(){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#navbar').html(xhr.responseText);
-			//$('#home').on('click',);
+			$('#home').on('click',reloadHome);
 			$('#logout').click(logout);
 
+		}
+	}
+}
+
+function reloadHome() {
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "user", true);
+	xhr.send();
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState == 4 && xhr.status == 200) {
+			var user = JSON.parse(xhr.responseText);
+			loadHome(user);
 		}
 	}
 }
@@ -198,6 +210,9 @@ function loadHome(user) {
 					((user.type == 0) ? "Employee": "Supervisor") : 
 						((user.type == 2) ? "Department Head" : "Benefits Coodinator"));
 			$("#employee_type").html(emp_type);
+			$("#sub_rr_button").on("click", loadSubmitReimbursementForm);
+			$("#paid_reimbursements").html(user.paidReimbursments);
+			$("#remaining_reimbursements").html(1000-user.paidReimbursments);
 			if (user.type != 0) {
 				$("#approve_rr").show();
 				$("#approve_rr").addClass("col-lg-2");
@@ -206,9 +221,46 @@ function loadHome(user) {
 					loadManageRequests(user);
 				})
 			}
+			//TODO: Populate table
 		}
 	}
 }
+
+function loadSubmitReimbursementForm() {
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadForm.view", true);
+	xhr.send();
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			$("#view").html(xhr.responseText);
+			//TODO: form submission triggers.
+			var xhr2 = new XMLHttpRequest();
+			xhr2.open("GET", "user", true);
+			xhr2.send();
+			xhr2.onreadystatechange = function() {
+				if (xhr2.readyState == 4 && xhr2.status == 200) {
+					var user = JSON.parse(xhr2.responseText);
+					$("#name").html(user.wholeName);
+					$("#form_submit").on("click", function () {
+						submitReimbursementForm(user)
+					});
+					$("#cancel").on("click", function() {
+						console.log("Canceled");
+						loadHome(user);
+					})
+				}
+			}
+		}
+	}
+}
+
+function submitReimbursementForm(user) {
+	//TODO: submit the form
+	console.log("Submitted");
+	loadHome(user);
+	
+}
+
 
 
 function loadManageRequests(user) {
@@ -219,7 +271,7 @@ function loadManageRequests(user) {
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200) {
 			var xhr2 = new XMLHttpRequest();
-			var t = user.type;
+			var t = user.roll;
 			var requestAddr = "pending_approval?type="+t+"&id=";
 			requestAddr += (t==1) ? user.dsId : ((t==2) ? user.myDepHeadId : user.myBenCoId);
 			console.log(requestAddr);

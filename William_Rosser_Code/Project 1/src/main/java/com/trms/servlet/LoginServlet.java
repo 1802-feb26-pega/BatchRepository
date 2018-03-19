@@ -39,18 +39,9 @@ public class LoginServlet extends HttpServlet {
 		resp.setContentType("application/json");
 
 		if(user != null) {
-			int type = 0;
-			System.out.println(user.getClass());
-			if (user instanceof DirectSupervisor) type = 1;
-			else if (user instanceof DepartmentHead) type = 2;
-			else if (user instanceof BenCo) type = 3;		
-			String userJSON = mapper.writeValueAsString(user);
-			userJSON = userJSON.substring(0,userJSON.length()-1) + ",\"type\":" + type +"}";
-			System.out.println(userJSON);
 			HttpSession session = req.getSession();
 			session.setAttribute("user", user);
-			System.out.println("Session value: " + session.getAttribute("user"));
-			out.write(userJSON);
+			out.write(Service.userToJSON(user));
 		} else {
 			out.write("null");
 		}

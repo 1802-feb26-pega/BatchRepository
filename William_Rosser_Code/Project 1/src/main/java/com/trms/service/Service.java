@@ -1,5 +1,8 @@
 package com.trms.service;
 
+import java.io.IOException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trms.dao.EmployeeDao;
 import com.trms.dao.EmployeeDaoImpl;
 import com.trms.pojos.*;
@@ -32,5 +35,10 @@ public class Service {
 		System.out.println(username);
 		System.out.println(u);
 		return u == null;
+	}
+	
+	public static String userToJSON(User u) throws IOException {
+		ObjectMapper mapper = new ObjectMapper();	
+		return mapper.writeValueAsString(u);
 	}
 }

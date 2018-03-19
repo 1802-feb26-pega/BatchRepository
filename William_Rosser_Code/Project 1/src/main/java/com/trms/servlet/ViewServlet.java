@@ -34,6 +34,8 @@ public class ViewServlet extends HttpServlet {
 			return "partials/register.html";
 		case("/TRMS/loadManageRequests.view"):
 			return "partials/manage_requests.html";
+		case("/TRMS/loadForm.view"):
+			return "partials/RequestForm.html";
 		//TODO: Other views
 		}
 		return req.getRequestURI();

@@ -1,0 +1,23 @@
+<div class="container jumbotron">
+	<h2>Submit A Reimbursement Request</h2><br>
+	<div id="request_form">
+		Name: <span id="name"></span><br>
+		Event Type:<br><select id="Event type">
+			<option value=1>University Courses (80%)</option>
+			<option value=2>Seminars (60%)</option>
+			<option value=3>Certification Prep Classes(75%)</option>
+			<option value=4>Certification (100%)</option>
+			<option value=5>Technical Training (90%)</option>
+			<option value=6>Other (30%)</option>
+		</select><br>
+<br>
+		Event Date:<br><input type="date" id="date"><br><br>
+		Event Time:<br><input type="time" id="time"><br><br>
+		Reason:<br><textarea rows="4" cols="50" id="reason" placeholder="Justification"></textarea><br><br>
+		Location:<br><textarea rows="4" cols="50" id="loc" placeholder="Address"></textarea><br><br>
+		Missed Work Time (Hours):<br><input type="number" id="missed" placeholder="0"><br><br>
+		Cost of Event:<br>$<input type="number" id="cost" placeholder="0.00"><br><br>
+		<button id="form_submit" class="btn btn-success">Submit</button>
+		<button id="cancel" class="btn btn-warning">Cancel</button>
+	</div>
+</div>

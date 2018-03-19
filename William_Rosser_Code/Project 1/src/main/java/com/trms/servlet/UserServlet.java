@@ -8,14 +8,30 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet("/pending_approval")
-public class PendingApprovalServlet extends HttpServlet {
+import com.trms.pojos.User;
+import com.trms.service.Service;
+
+@WebServlet("/user")
+public class UserServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO URGENT: Get requests pending approval and send back as JSON
+		
 		resp.setContentType("application/json");
 		PrintWriter out = resp.getWriter();
-		out.write("none");
+		HttpSession s = req.getSession(false);
+		if (s==null) {
+			out.write("null");
+			return;
+		}
+		User u = (User) s.getAttribute("user");
+		if (u==null) {
+			out.write("null");
+			return;
+		}
+		out.write(Service.userToJSON(u));
 	}
+	
+	
 }
