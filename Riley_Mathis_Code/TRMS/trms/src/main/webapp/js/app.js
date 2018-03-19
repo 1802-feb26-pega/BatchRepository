@@ -96,7 +96,7 @@ function loadNav(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#navbar').html(xhr.responseText);
 			//$('#home').on('click', loadHome);
-			$('#logout').click(logout);
+			$('#logout').on('click',logout);
 
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
 		}
@@ -113,11 +113,31 @@ function loadHome(employee){
 			$('#view').html(xhr.responseText);
 			//document.getElementById('view').innerHTML(xhr.responseText);
 			$('#name').html(employee.firstname);
+			$('#submitReimbursement').on('click', submit(employee))
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
 //			getUserAccounts();
 //			$('#accTable').hide();
 		}
 	}
+}
+
+function submit(employee){
+	console.log("submit");
+//	var fn = $('#fn').val();
+//	var ln = $('#ln').val();
+//	var uname = $('#username').val();
+//	var pass = $('#pass').val();
+//
+//	var form = {
+//			firstname: fn, 
+//			lastname: ln, 
+//			email: uname, 
+//			password: pass
+//	};
+//
+//	var xhr = new XMLHttpRequest();
+//	xhr.open("POST", "submit", true);
+//	xhr.send(JSON.stringify(form));
 }
 
 //function getUserAccounts(){
