@@ -1,0 +1,10 @@
+package com.proj.services;
+
+public class EventService {
+
+	public Events getEvents() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

@@ -1,0 +1,9 @@
+<h1> Welcome to your homescreen</h1>
+Here are your list of options
+<table>
+	<tr>
+		<th> Account No. </th>
+		<th> Bal </th>
+	</tr>
+
+</table>

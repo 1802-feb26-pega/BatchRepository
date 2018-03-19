@@ -1,0 +1,36 @@
+<table id="t01">
+  <tr>
+    <th></th>
+    <th>Detailed Info</th> 
+  </tr>
+  <tr>
+    <td>First name: </td>
+  </tr>
+  <tr>
+    <td>Lastname:</td>
+  </tr>
+  <tr>
+    <td>Date:</td>
+  </tr>
+    <tr>
+    <td>Location:</td>
+  </tr>
+    <tr>
+    <td>Description: </td>
+  </tr>
+    <tr>
+    <td>Cost:</td>
+  </tr>
+    <tr>
+    <td>Grading Format:</td>
+  </tr>
+    <tr>
+    <td>Event:</td>
+  </tr>
+    <tr>
+    <td>Reason:</td>
+  </tr>
+</table>
+<br>
+<br>
+<button id="home_page">Return to home page</button>

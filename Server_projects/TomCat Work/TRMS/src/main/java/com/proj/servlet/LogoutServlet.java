@@ -27,7 +27,6 @@ public class LogoutServlet extends HttpServlet{
 		if(session != null){
 			session.removeAttribute("employee");
 			session.invalidate();
-			System.out.println("Session invalidated");
 		}
 		 resp.sendRedirect("index.html");
 		

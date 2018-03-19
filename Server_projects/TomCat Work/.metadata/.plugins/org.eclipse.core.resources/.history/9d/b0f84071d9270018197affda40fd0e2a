@@ -1,7 +1,0 @@
-package com.proj.services;
-
-public class EmployeeServices implements EmployeeInterfaces {
-	public Employee validateEmployee(String user, String pass){
-		
-	}
-}

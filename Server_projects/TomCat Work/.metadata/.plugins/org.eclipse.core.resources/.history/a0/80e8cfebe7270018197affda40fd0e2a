@@ -1,5 +1,0 @@
-package com.proj.services;
-
-public class DatabaseDao implements DatabaseDaoImpl{
-
-}

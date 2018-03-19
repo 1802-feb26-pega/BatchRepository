@@ -1,0 +1,8 @@
+<h1 id="homeheader"></h1>
+<button id="form_start_button">New Form</button>
+<br>
+<br>
+<button id="check_form">Check Request</button>
+<br>
+<br>
+<button id="home_page">Return to home page</button>

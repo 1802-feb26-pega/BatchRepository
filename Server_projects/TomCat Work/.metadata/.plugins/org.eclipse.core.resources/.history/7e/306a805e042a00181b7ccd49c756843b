@@ -1,0 +1,15 @@
+package com.proj.services;
+
+import com.proj.pojos.Claim;
+
+public class ClaimServices {
+
+	public Claim addClaim(Claim claim) {
+		// TODO Auto-generated method stub
+		return dao.addUser(u.getFirstname(), u.getLastname(), claim.getStatus(),
+							claim.getCreated(), claim.getEventStart(), claim.getAmount_given(),
+							claim.getLoc(), claim.getEvent_type(), claim.getCost(), claim.getReason(),
+							claim.getStarttime(), claim.getNote_id());
+	}
+
+}

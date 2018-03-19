@@ -1,0 +1,38 @@
+<h1 id=header></h1>
+<label>EventStateDate</label>
+<br>
+<input type="text" id="eventStartDate" placeholder="eventStartDate: *ie MMddyyyy"  style="width: 20%;"/>
+<label>Location</label>
+<input type="text" id="location" placeholder="Location" style="width: 20%;"/>
+<br>
+<label>Description</label>
+<input type="text" id="description" placeholder="Description" style="width: 20%;"/>
+<label>Price</label>
+<br>
+<input type="text" id="cost" placeholder="Price" style="width: 20%;"/>
+<br>
+<label>Grading Format</label>
+<input type="text" id="gradingFormat" placeholder="Grade needed?" style="width: 20%;"/>
+<label>Type of event</label>
+<select id = event></select>
+<!--  <input type="text" id="event" placeholder="Type of event" style="width: 20%;"/> -->
+<br>
+<label>Business Reason</label>
+<input type="text" id="reason" placeholder="Reason" style="width: 20%;"/>
+<label>Days of work missed</label>
+<input type="text" id="timedmissed" placeholder="Days of work missed" style="width: 20%;"/>
+<br>
+<label>Event Start Time</label>
+<input type="text" id="eventStartTime" placeholder="eventStartTime" style="width: 20%;"/>
+<label>Your grade</label>
+<input type="text" id="currentGrade" placeholder="Grade" style="width: 20%;"/>
+<br>
+<br>
+<br>
+<label>Comments</label>
+<textarea id="comments" rows="2" placeholder="Enter Comments here" cols="48"></textarea>
+<br>
+<input type="Submit" id="formcomplete" value="submit">
+
+
+

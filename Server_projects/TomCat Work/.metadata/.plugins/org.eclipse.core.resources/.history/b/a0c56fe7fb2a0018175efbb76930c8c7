@@ -1,0 +1,304 @@
+window.onload = function(){
+	loadLanding();
+}
+
+var $  = require( 'jquery' );
+var dt = require( 'datatables.net' )();
+
+var firstname;
+
+//Creates the basic templete for Dynamic one page site
+function loadLanding(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadlanding.view" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			$('#login').on('click', login);
+			$('#pass').keydown(function(event){
+				var keypressed = event.keyCode || event.which;
+				if(keypressed == 13)  login();
+			});
+			// after text is loaded, add event listeners/functionality to view
+		}
+	}
+}
+
+//Loads the Nav bar
+function loadNav(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadnav.view" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#navbar').html(xhr.responseText);
+			$('#home_page').on('click',loadHome);
+			$('#logout').on('click',logout);
+			// after text is loaded, add event listeners/functionality to view
+		}
+	}
+}
+
+//Loads home screen after log in
+function loadHome(firstname){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadhome.view" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			$('#homeheader').html("Welcome " + firstname);
+			$('body').on('click','#form_start_button',loadForm);
+			$('body').on('click', '#check_form',checkForms);
+
+			// after text is loaded, add event listeners/functionality to view
+		}
+	}
+}
+
+
+//loads check form view
+function checkForms(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadcheckForm.view" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			loadClaims();
+			// after text is loaded, add event listeners/functionality to view
+		}
+	}
+}
+
+//Loads the request form
+function loadForm(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadForm.view" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			$('#header').html("Set up information here");
+			$('#formcomplete').on('click',formComplete)
+			getEvents();
+			// after text is loaded, add event listeners/functionality to view
+		}
+	}
+}
+
+
+//---------------------------------------------FUNCTIONS THAT POST----------------------------------------------------
+
+
+
+
+
+//login method to handle user information
+function login(){
+	//$('#username').on('click', $('#message').hide());
+	var email = $('#email').val();
+	var password = $('#pass').val();
+
+	var toSend = [email, password];
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "login", true);
+	xhr.send(JSON.stringify(toSend));
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var employee = JSON.parse(xhr.responseText);
+			firstname = employee.firstname;
+			if(employee==null) {
+				$('#message').show();
+				$('#message').attr("style", "display:inline");
+				message = "You have entered the wrong username and/or password. Please try again";
+				$('#message').html(message);
+			}
+			else{
+				//alert(employee.firstname + employee.lastname);				
+				loadNav();
+				loadHome(firstname);
+			}
+		}
+	}
+}
+
+//Sumbits the form to database
+function formComplete(){
+//	var evdt = $('#eventStartDate').val();
+//	var loc = $('#location').val();
+	var event = $('#event').val();
+//	var cost = $('#cost').val();
+//	var reason = $('#reason').val();
+//	var evst = $('#eventStartTime').val();
+//	var passing = $('#currentGrade').val();
+//	var gF = $('#gradingFormat').val();
+//	var desc = $('#description').val();
+//	var workedmissed = $('#timedmissed').val();
+//	var notes = $('#comments').val();
+
+	var evdt = "2018/03/20";
+	var loc = "ATL";
+	var cost = 500;
+	var reason = "JS Training rampup for new role";
+	var evst = "9:30";
+	var passing = 80
+	var gF = 50
+	var desc = "JS Training"
+	var workedmissed = 5;
+	var notes = "Please pay me my money";
+
+	var claim = {
+			eventStartdate: evdt,
+			loc: loc,
+			event_type:event,
+			cost: cost,			
+			reason: reason,
+			eventStarttime: evst,
+			passing: passing,
+			gradingFormat: gF,
+			daysmissed: workedmissed,
+			description: desc,
+			comments: notes//{comments: notes}
+	};
+
+
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "form", true);
+	xhr.send(JSON.stringify(claim));
+
+	xhr.onreadystatechange = function(){
+		var check = JSON.parse(xhr.responseText);
+
+		if(xhr.readyState == 4 && xhr.status == 200){
+			if(check != "0"){
+				alert("Error has occured please try again");
+				loadNav();
+				loadHome(firstname);
+			}
+			else{
+				alert("Form has been sumbitted");
+				loadNav();
+				loadHome(firstname);
+			}
+		}
+
+	}
+}
+
+//Log out code
+function logout(){
+
+	//Here, we need o invalidate session and go back to login page
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "logout" , true);
+	xhr.send();
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			window.location.replace("index.html");
+		}
+
+	}
+}
+
+//Grabs lists of events from event table dyanamically
+function getEvents()
+{
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "getEvents", true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		var events = JSON.parse(xhr.responseText);
+		var item = [];
+		if(xhr.readyState == 4 && xhr.status == 200){
+			for (i = 1; i < events.length; i++) {
+				item[i] = '<option> ' + events[i] + '</option>';
+			} 
+			$('#event').html(item);
+		}
+		
+	}
+}
+
+function loadClaims(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "checkforms" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var claims = JSON.parse(xhr.responseText);
+			var data = claims_data(claims);
+			console.log(claims);
+			console.log(data);
+			$(document).ready( function () {
+			    $('#table_id').dataTable({
+			    	data : data,
+			    	 columns: [			    	           
+			    	           { data : 'Status', "defaultContent": ""  },
+			    	           { data: 'Creation Date', "defaultContent": ""  },
+			    	           { data: 'Event date', "defaultContent": ""  },
+			    	           { data: 'Amount given', "defaultContent": "0" },
+			    	           { data: 'Location', "defaultContent": ""  },
+			    	           { data: 'Event', "defaultContent": ""  },
+			    	           { data: 'Cost', "defaultContent": ""  },
+			    	           { data: 'Reason', "defaultContent": ""  },
+			    	           { data: 'Attachment', "defaultContent": "None Attached"  },
+			    	           { data: 'Event Start Time', "defaultContent": ""  },
+			    	           { data: 'Grade', "defaultContent": ""  },
+			    	           { data: 'Needed to pass', "defaultContent": ""  },
+			    	           { data: 'Work Days missed', "defaultContent": ""  },
+			    	           { data: 'Description of Class', "defaultContent": ""  },
+			    	           { data: 'Comments', "defaultContent": ""  },
+			    	       ]
+
+			    });
+			} );
+			// after text is loaded, add event listeners/functionality to view
+		}
+	}
+}
+function claims_data(claims){
+	
+	var data = [];
+	 for(let x = 0; x < claims.length; x++){
+		 let t = new Object();
+
+	        t["Status"] = claims[x].status;
+	        t["Creation Date"] = claims[x].created;
+	        console.log(claims[x].eventStartdate)
+	        t["Event Date"] = claims[x].eventStartdate;
+	        console.log(t["Event Date"]);
+	        t["Location"] = claims[x].loc   	
+	        t["Event"] = claims[x].event_type;
+	        t["Cost"] = claims[x].cost;
+	        t["Reason"] = claims[x].reason;
+	        t["Attachment"] = claims[x].attachment;
+	        t["Event Start Time"] = claims[x].eventStarttime;
+	        t["Grade"] = claims[x].passing;
+	        t["Needed to pass"] = claims[x].gradingFormat;       
+	        t["Work Days missed"] = claims[x].daysmissed;
+	        console.log(claims[x].description);
+	        t["Description"] = claims[x].description;
+	        console.log(t["Description"]);
+	        t["Comments"] = claims[x].comments;
+	        
+	        console.log(t);
+	     data.push(t);
+	 }
+		 	
+	return data;
+	
+}
+
+

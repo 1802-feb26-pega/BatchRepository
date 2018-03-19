@@ -1,0 +1,33 @@
+package com.proj.servlet;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("*.view")
+public class LoadViewServlet extends HttpServlet{
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		System.out.println(process(req,resp));
+		
+		String page = process(req,resp);
+		req.getRequestDispatcher(page).forward(req, resp);
+	}
+
+	static String process(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException {
+		System.out.println(req.getRequestURI());
+		switch(req.getRequestURI()){
+		case "/TRMS/loadlanding.view": 
+			return "partials/Login.html";
+		default: return "partials/Login.html"; 
+		}
+		return req.getRequestURI();
+	}
+}

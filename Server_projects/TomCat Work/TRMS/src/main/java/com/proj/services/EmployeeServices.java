@@ -9,14 +9,8 @@ import com.proj.pojos.Employee;
  * of the employess transactions
  */
 public class EmployeeServices implements EmployeeInterfaces {
-	public static DatabaseDao dao = new DatabaseDao();
+	public static EmployeeDao dao = new EmployeeDao();
 	public Employee employee;
-	
-	public static ArrayList<Employee> employees = new ArrayList<Employee>();
-	static{
-		employees.add(new Employee("Philip","Harris"));
-	}
-	
 //-------------------------------------------------------------------------------
 	
 	//RETURNS an EMPLOYEE if and only if they are in the database
@@ -36,6 +30,11 @@ public class EmployeeServices implements EmployeeInterfaces {
 	public ArrayList<Employee> getEmployees() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public String getSuper(Employee emp) {
+		// TODO Auto-generated method stub
+		return dao.getSuper(emp);
 	}
 
 }

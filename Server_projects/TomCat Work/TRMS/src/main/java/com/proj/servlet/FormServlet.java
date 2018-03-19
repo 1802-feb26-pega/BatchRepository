@@ -12,22 +12,25 @@ import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.proj.pojos.Claim;
+import com.proj.pojos.Employee;
 import com.proj.services.ClaimServices;
 
 @WebServlet("/form")
 public class FormServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("RECIVED A REQUEST!");
+		// TODO Auto-generated method stub		
 		work(req,resp);
 
 
 	}
 
-	private void work(HttpServletRequest req, HttpServletResponse resp)  throws IOException{
+	private void work(HttpServletRequest req, HttpServletResponse resp)  throws IOException,ServletException{
 		ClaimServices claimservice = new ClaimServices();
-
+		
+		HttpSession  session = req.getSession(false);
+		Employee employee = (Employee) session.getAttribute("Employee");
+		
 		ObjectMapper mapper = new ObjectMapper();
 		Claim claim = mapper.readValue(req.getInputStream(), Claim.class);
 		
@@ -35,15 +38,12 @@ public class FormServlet extends HttpServlet{
 		resp.setContentType("application/json");
 
 		String s;
-		if(claimservice.addClaim(claim)) s = "0";
+		if(claimservice.addClaim(claim,employee)) s = "0";
 		else s = "1";
 		
 						
 		String empJSON = mapper.writeValueAsString(s);
-		HttpSession session = req.getSession();
-		session.setAttribute("check",s);
 		out.write(empJSON);	
-		System.out.println("SENT JSON");
 		
 	}
 }

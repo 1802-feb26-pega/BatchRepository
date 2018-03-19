@@ -1,5 +1,7 @@
 package com.proj.pojos;
 
+import java.sql.Blob;
+
 public class Claim {
 	private int claim_id;
 	private String status;
@@ -11,17 +13,26 @@ public class Claim {
 	private String event_type;
 	private double cost;
 	private String reason;
-	//private String attachment;
+	private Blob attachment;
 	private String eventStarttime;//time
 	private int note_id;
 	private int passing;
 	private int gradingFormat;
 	private int daysmissed;
 	private String description;
-	
-	
-	
-	
+	private String comments;
+
+
+	public String getComments() {
+		return comments;
+	}
+
+
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
 	public int getDaysmissed() {
 		return daysmissed;
 	}
@@ -64,7 +75,7 @@ public class Claim {
 	public void setCreated(String created) {
 		this.created = created;
 	}
-		
+
 	public String getEventStartdate() {
 		return eventStartdate;
 	}
@@ -119,8 +130,22 @@ public class Claim {
 	public void setNote_id(int note_id) {
 		this.note_id = note_id;
 	}
-	
 
-	
-	
+
+
+	public Blob getAttachment() {
+		return attachment;
+	}
+
+
+
+	public void setAttachment(Blob blob) {
+		this.attachment = blob;
+	}
+
+
+
+
+
+
 }

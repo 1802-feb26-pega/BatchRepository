@@ -1,0 +1,6 @@
+package com.proj.pojos;
+
+public class Events {
+	private int id;
+	private String name;
+}

@@ -1,0 +1,79 @@
+package com.proj.servlet;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+import com.proj.pojos.Employee;
+import com.proj.services.EmployeeServices;
+
+/*A servlet used for the login page
+ * accepts user name and password
+ * then attempts to log into TRMS
+ */
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet{
+
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) 
+		throws IOException,ServletException{		
+		
+		
+		EmployeeServices employService = new EmployeeServices();
+		
+		
+		
+		//Employee employee = employService.validateEmployee(name, password);
+		
+		//work(employee);
+		
+		
+		//Need to use AJAX here!
+		//If employee credentials is correct log in
+//		if(employee != null){
+//			HttpSession session = req.getSession();
+//			session.setAttribute("Employee", employee);	
+//			req.getRequestDispatcher("partials/Login.html").forward(req, resp);
+//		}
+//		else{
+//			//code here if incorrect
+//			//returns user to the Login screen
+//			resp.sendRedirect("index.html");
+//		}
+		
+	}
+	
+	@Override
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+		throws IOException,ServletException{
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
+		String json = br.readLine();
+		 System.out.println(json);
+		 
+		 //2. instantiate jackson Mapper
+		 //ObjectMapper mapper = new ObjectMapper();
+		 
+		 Gson gson = new Gson();
+	        String JSON = gson.toJson(json);
+		
+		 //3.Conver recieved JSON Stron into appropriate object
+		 //String[]userInfo = mapper.readValue(json, String[].class);
+		 //String username = userInfo[0];
+		 //String password = userInfo[1];
+	}
+	public void work(Employee e){
+
+        //1. Convert object to JSON string
+        Gson gson = new Gson();
+        String json = gson.toJson(e);
+        System.out.println(json);
+
+	}
+}

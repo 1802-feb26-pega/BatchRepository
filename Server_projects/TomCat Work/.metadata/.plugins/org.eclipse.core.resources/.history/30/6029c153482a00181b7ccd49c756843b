@@ -1,0 +1,13 @@
+package com.proj.services;
+
+import com.proj.pojos.Events;
+
+public class EventService {
+
+	public Events getEvents() {
+		// TODO Auto-generated method stub
+		EventDao dao = new EventDao();
+		return dao.getEvents();
+	}
+
+}

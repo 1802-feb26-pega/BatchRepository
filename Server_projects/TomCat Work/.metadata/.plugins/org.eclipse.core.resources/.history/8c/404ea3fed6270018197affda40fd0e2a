@@ -1,9 +1,0 @@
-package com.proj.servlet;
-
-public class LoginServlet extends HttpServlet{
-
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) 
-		throws IOExecption,ServletExcpetion{
-		
-	}
-}

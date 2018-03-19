@@ -6,3 +6,14 @@
 1521070225622	Delete element
 1521073692471	Rename type 'databaseDaoImpl'
 1521073703682	Rename type 'databaseDao'
+1521120180948	Rename type 'DatabaseDaoImpl'
+1521129504801	Move 'Login.html' to 'partials'
+1521145111384	Delete element
+1521145485316	Move 'navbar.html' to 'partials'
+1521145487442	Move 'Home.html' to 'partials'
+1521145492113	Move 'index.html' to 'partials'
+1521145507949	Move 'Home.html' to 'webapp'
+1521145646135	Move 'Home.html' to 'partials'
+1521145649479	Move 'index.html' to 'webapp'
+1521209492494	Rename type 'LoadCheckingForms'
+1521318460341	Rename type 'DatabaseDao'

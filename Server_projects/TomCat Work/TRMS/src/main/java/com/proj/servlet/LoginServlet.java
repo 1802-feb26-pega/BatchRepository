@@ -58,7 +58,7 @@ public class LoginServlet extends HttpServlet{
 
 		if(employee != null){
 			String empJSON = mapper.writeValueAsString(employee);
-			HttpSession session = req.getSession();
+			HttpSession session = req.getSession(true);
 			session.setAttribute("Employee",employee);
 			out.write(empJSON);
 		}else{

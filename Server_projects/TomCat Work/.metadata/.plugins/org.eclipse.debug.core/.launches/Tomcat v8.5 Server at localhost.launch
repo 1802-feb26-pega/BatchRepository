@@ -8,6 +8,6 @@
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_161"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="start"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dcatalina.base=&quot;C:\Users\phili\my_git_repos\TomCat Work\.metadata\.plugins\org.eclipse.wst.server.core\tmp0&quot; -Dcatalina.home=&quot;C:\apache-tomcat-8.5.29&quot; -Dwtp.deploy=&quot;C:\Users\phili\my_git_repos\TomCat Work\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps&quot; -Djava.endorsed.dirs=&quot;C:\apache-tomcat-8.5.29\endorsed&quot;"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dcatalina.base=&quot;C:\Users\phili\my_git_repos\BatchRepository\Server_projects\TomCat Work\.metadata\.plugins\org.eclipse.wst.server.core\tmp0&quot; -Dcatalina.home=&quot;C:\apache-tomcat-8.5.29&quot; -Dwtp.deploy=&quot;C:\Users\phili\my_git_repos\BatchRepository\Server_projects\TomCat Work\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps&quot; -Djava.endorsed.dirs=&quot;C:\apache-tomcat-8.5.29\endorsed&quot;"/>
 <stringAttribute key="server-id" value="Tomcat v8.5 Server at localhost"/>
 </launchConfiguration>

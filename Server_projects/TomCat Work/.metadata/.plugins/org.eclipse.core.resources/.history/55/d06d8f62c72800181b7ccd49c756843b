@@ -1,0 +1,6 @@
+<h1 id = "homeheader"> </h1>
+ <div class="btn-group">
+ <button id = "form_start_button">New Form</button>
+ <br>
+  <button>Check Request </button>
+ </div> 

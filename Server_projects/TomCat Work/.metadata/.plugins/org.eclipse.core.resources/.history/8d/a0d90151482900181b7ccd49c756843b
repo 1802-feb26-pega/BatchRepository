@@ -1,0 +1,6 @@
+<div class="jumbotron container">
+	<input type="text" id="email" placeholder ="Enter username or email"><br>
+	<input type="password" id="pass" placeholder="Enter Password"><br>
+	<button id="login">Log in</buttonbutton id="register">Register</button>
+	<p class="danger" id="message"></p>
+</div>

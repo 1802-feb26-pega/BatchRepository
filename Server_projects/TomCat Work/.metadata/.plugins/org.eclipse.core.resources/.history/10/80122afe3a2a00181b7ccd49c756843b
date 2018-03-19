@@ -1,0 +1,5 @@
+<h1 id="homeheader"></h1>
+<button id="form_start_button" style="width: 30%;">New Form</button>
+<br>
+<br>
+<button id="check_form" style="width: 30%;">Check Request</button>

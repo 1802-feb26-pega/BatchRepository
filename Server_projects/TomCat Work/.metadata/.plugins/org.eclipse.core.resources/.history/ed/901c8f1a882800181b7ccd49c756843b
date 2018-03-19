@@ -1,0 +1,5 @@
+package com.proj.servlet;
+
+public class LoadViewServlet {
+
+}

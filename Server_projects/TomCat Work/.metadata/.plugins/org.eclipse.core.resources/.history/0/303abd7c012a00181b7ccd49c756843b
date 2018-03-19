@@ -1,0 +1,21 @@
+package com.proj.pojos;
+
+public class Claim {
+	private int claim_id;
+	private String status;
+	private String created;
+	private String eventStart;
+	private double amount_given;
+	private int emp_id;
+	private String loc;
+	private String event_type;
+	private double cost;
+	private String reason;
+	//private String attachment;
+	private String starttime;
+	private int note_id;
+	
+
+	
+	
+}

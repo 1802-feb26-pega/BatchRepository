@@ -1,0 +1,20 @@
+<h1 id=header></h1>
+<input type="date" id="eventStartDate" placeholder="eventStartDate">
+<input type="text" id="location" placeholder="Location">
+<br>
+<input type="text" id="description" placeholder="Description">
+<input type="number" id="cost" placeholder="Price">
+<br>
+<input type="text" id="gradingFormat" placeholder="Grade needed?">
+<input type="text" id="event" placeholder="Type of event">
+<br>
+<input type="text" id="reason" placeholder="Reason">
+<input type="text" id="timedmissed" placeholder="Days of work missed">
+<br>
+<input type="text" id="eventStartTime" placeholder="eventStartTime">
+<input type="text" id="currentGrade" placeholder="Grade">
+<br>
+<input type="Submit" id="formcomplete" value="submit">
+
+
+

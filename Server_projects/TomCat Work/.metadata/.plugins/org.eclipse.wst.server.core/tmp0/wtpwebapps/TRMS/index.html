@@ -1,8 +1,32 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-<style>
+<meta charset="ISO-8859-1">
+<title>Full Stack!</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+	integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+	crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+	integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+	integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+	crossorigin="anonymous"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"54482",secure:"54487"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<body data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-0" data-genuitec-path="/TRMS/src/main/webapp/index.html">
+	<style data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-0" data-genuitec-path="/TRMS/src/main/webapp/index.html">
 body {
 	background-color: purple;
 }
@@ -12,53 +36,35 @@ h1 {
 	text-align: center;
 }
 
-p {
-	font-family: verdana;
-	font-size: 20px;
+table#t01 {
+	width: 100%;
+	background-color: yellow;
 }
-
-form {
+label{
+	font-weight: bold;
 	color: black;
-}
 
-Input[type=text] {
-	background-color: white;
-	color: black;
-}
-
-a:link {
-	color: black;
-}
-
-a:hover {
-	color: yellow;
-}
-
-a:visited {
-	color: blue;
 }
 </style>
-<title>TRM System</title>
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"54482",secure:"54487"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-0" data-genuitec-path="/TRMS/src/main/webapp/index.html">
 
-	<h1 data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-0" data-genuitec-path="/TRMS/src/main/webapp/index.html">Welcome to Wakanda!</h1>
-	<p>Please log in:</p>
-	<img
-		src="https://cnet3.cbsistatic.com/img/hRLR52cs7Vkty5_5LaiZIt76EAs=/670x503/2018/02/24/ba28837c-f067-48b2-93cc-c53faa4c9ad5/blackpantherthrone.jpg"
-		alt="Wakanda" style="width: 250px; height: 200px;">
-	<br>
-	<form
-		method="POST" action="loggedin">
-		<input type="text" name="username" placeholder="Username"> <br>
-		<br> <input type="password" name="password" placeholder="Password">
-		<br>
-		<br> <input type="submit" value="Submit">
-	</form>
-	<br>
-	<br>
-	<h3 id="LoginError"> </h3> 
+	<h1>Welcome to Wakanda TRMS!</h1>
 
+	<div id=navbar></div>
+
+
+
+	<br>
+
+
+	<!--	<img	src="https://cnet3.cbsistatic.com/img/hRLR52cs7Vkty5_5LaiZIt76EAs=/670x503/2018/02/24/ba28837c-f067-48b2-93cc-c53faa4c9ad5/blackpantherthrone.jpg"
+		alt="Wakanda" style="width: 250px; height: 200px; class: Center">
+-->
+	<br>
+
+	<div id="view">
+		<!-- could start with login view, and replace as the app path continues  -->
+	</div>
+	<script src="js/login.js"></script>
 
 </body>
 </html>

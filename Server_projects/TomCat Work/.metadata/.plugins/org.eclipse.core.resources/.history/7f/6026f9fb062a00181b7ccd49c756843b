@@ -1,0 +1,23 @@
+package com.proj.services;
+
+import com.proj.pojos.Claim;
+import com.proj.pojos.Employee;
+import com.proj.pojos.Note;
+
+public class ClaimServices {
+
+	ClaimDao claim_dao = new ClaimDao();
+	Employee employee = new Employee();
+	Note note = new Note();
+
+	public Claim addClaim(Claim claim) {
+
+			claim_dao.addClaim(claim);
+			return null;
+		// TODO Auto-generated method stub
+		//		return claim_dao.addClaimtoDB(claim.getStatus(),claim.getCreated(), claim.getEventStart(),
+		//							claim.getAmount_given(),claim.getLoc(), claim.getEvent_type(), 
+		//							claim.getCost(), claim.getReason(),	claim.getStarttime());
+	}
+
+}

@@ -1,0 +1,35 @@
+package com.proj.services;
+
+import java.util.ArrayList;
+import com.proj.pojos.Employee;
+
+public class EmployeeServices implements EmployeeInterfaces {
+	public static DatabaseDao dao = new DatabaseDao();
+	public static Employee employee;
+	
+	public static ArrayList<Employee> employees = new ArrayList<Employee>();
+	static{
+		employees.add(new Employee("Philip","Harris"));
+	}
+	
+//-------------------------------------------------------------------------------
+	
+	public Employee validateEmployee(String usrname, String password) {
+		// TODO Auto-generated method stub
+			
+		employee = dao.getEmployeeLogin(usrname, password);
+		if(employee == null){
+			return null;
+		}
+			if(employee.getUsername().equals(employee) & employee.getPassword().equals(password)){
+				return employee;
+			}
+		
+		return null;
+	}
+
+	public ArrayList<Employee> getEmployees() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

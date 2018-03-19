@@ -1,0 +1,15 @@
+package com.proj.services;
+
+import com.proj.pojos.Claim;
+
+public class ClaimServices {
+
+	public Claim addUser(Claim claim) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
+public Claim addUser(Claim u) {
+	return dao.addUser(u.getFirstname(), u.getLastname(), u.getEmail(), u.getPassword());
+}
