@@ -168,8 +168,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public boolean isValidPassword(String email, String password) {
 		Employee test = getEmployeeByEmail(email);
 		
-		if (BCrypt.checkpw(password, test.getPass())) {
-			return true;
+		try {
+			if (BCrypt.checkpw(password, test.getPass())) {
+				return true;
+			}
+		} catch (NullPointerException npe) {
+			return false;
 		}
 		
 //		if (BCrypt.checkpw(candidate, hashed))
