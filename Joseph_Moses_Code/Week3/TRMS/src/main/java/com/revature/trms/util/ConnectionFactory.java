@@ -31,9 +31,7 @@ public class ConnectionFactory {
 		Properties prop = new Properties();
 		try {
 			
-			prop.load(new FileReader("C:\\Users\\josep_000\\my_git_repos\\"
-					+ "BatchRepository\\Joseph_Moses_Code\\Week2\\BankAppItr2\\"
-					+ "src\\main\\java\\com.revature.bankapp.resources\\application.properties"));
+			prop.load(new FileReader("C:\\Users\\josep_000\\my_git_repos\\BatchRepository\\Joseph_Moses_Code\\Week3\\TRMS\\src\\main\\resources\\application.properties"));
 		
 			Class.forName(prop.getProperty("driver"));
 			

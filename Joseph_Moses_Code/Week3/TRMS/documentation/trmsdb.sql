@@ -9,19 +9,16 @@ CREATE TABLE employee(
     superId NUMBER,
     deptId NUMBER,
     empLevel NUMBER,
-    empReimbursmentId NUMBER,
-    CONSTRAINT PK_emp PRIMARY KEY (empId),
-    CONSTRAINT FK_superId FOREIGN KEY (superId) REFERENCES Employee(empId)
-);
-
-CREATE TABLE employeeReimbursment(
-    erId NUMBER NOT NULL,
     amountAvailable NUMBER,
     maxAvailable NUMBER,
     pending NUMBER,
     awarded NUMBER,
-    CONSTRAINT PK_erId PRIMARY KEY (erId)
+    CONSTRAINT PK_emp PRIMARY KEY (empId),
+    
+    CONSTRAINT FK_superId FOREIGN KEY (superId) REFERENCES Employee(empId)
 );
+
+
 
 CREATE TABLE departments(
     departmentId NUMBER NOT NULL,
@@ -36,6 +33,8 @@ CREATE TABLE empLevelLookUp(
     CONSTRAINT PK_empLevelId PRIMARY KEY (empLevelId)
 );
 
+
+
 CREATE TABLE reimbursmentRequest(
     rrId NUMBER NOT NULL,
     empId NUMBER NOT NULL,
@@ -46,7 +45,7 @@ CREATE TABLE reimbursmentRequest(
     typeOfEventId NUMBER,
     cost NUMBER,
     gradingFormatId NUMBER,
-    passingGrade VARCHAR2(1),
+    passingGrade NUMBER,
     justification VARCHAR2(255),
     workTimeMissed NUMBER,
     expectedReimbursment NUMBER,
@@ -58,6 +57,7 @@ CREATE TABLE reimbursmentRequest(
 CREATE TABLE gradingFormatLookUp(
     formatId NUMBER NOT NULL,
     format VARCHAR2(255),
+    defaultPassing NUMBER,
     CONSTRAINT PK_formatId PRIMARY KEY (formatId)
 );
 
@@ -109,7 +109,9 @@ CREATE TABLE requestUpdate(
 --employee
 ALTER TABLE employee ADD CONSTRAINT fk_deptId FOREIGN KEY (deptID) REFERENCES departments(departmentId);
 ALTER TABLE employee ADD CONSTRAINT fk_empLevel FOREIGN KEY (empLevel) REFERENCES empLevelLookUp(empLevelId);
-ALTER TABLE employee ADD CONSTRAINT fk_empReimbursment FOREIGN KEY (empReimbursmentId) REFERENCES employeeReimbursment(erId);
+
+--department
+ALTER TABLE departments ADD CONSTRAINT fk_deptHeadId FOREIGN KEY (departmentHead) REFERENCES employee(empId);
 
 --reimbursmentRequest
 ALTER TABLE reimbursmentRequest ADD CONSTRAINT fk_empId FOREIGN KEY (empID) REFERENCES employee(empId);
@@ -334,7 +336,64 @@ END;
 /
 
 --populate data
+INSERT INTO ApprovalLookUp (approvalType) VALUES ('Direct Supervisor');
+INSERT INTO ApprovalLookUp (approvalType) VALUES ('Department Head');
+INSERT INTO ApprovalLookUp (approvalType) VALUES ('Benefits Coordinator');
+INSERT INTO ApprovalLookUp (approvalType) VALUES ('Denied');
+INSERT INTO ApprovalLookUp (approvalType) VALUES ('Excess Approved');
+
+INSERT INTO empLevelLookUp (empLevel) VALUES ('Standard');
+INSERT INTO empLevelLookUp (empLevel) VALUES ('Supervisor');
+INSERT INTO empLevelLookUp (empLevel) VALUES ('Department Head');
+INSERT INTO empLevelLookUp (empLevel) VALUES ('Benefits Coordinator');
+
+INSERT INTO eventTypeLookUp (type, coverage) VALUES ('University Course', 80);
+INSERT INTO eventTypeLookUp (type, coverage) VALUES ('Seminar', 60);
+INSERT INTO eventTypeLookUp (type, coverage) VALUES ('Certification Prep Class', 75);
+INSERT INTO eventTypeLookUp (type, coverage) VALUES ('Certification', 100);
+INSERT INTO eventTypeLookUp (type, coverage) VALUES ('Technical Training', 90);
+INSERT INTO eventTypeLookUp (type, coverage) VALUES ('Other', 30);
+
+INSERT INTO gradingFormatLookUp (format, defaultPassing) VALUES ('Standard', 70);
+INSERT INTO gradingFormatLookUp (format, defaultPassing) VALUES ('Prsentation', 70);
+
+INSERT INTO PriorityLookUp (priority) VALUES ('urgent');
+INSERT INTO PriorityLookUp (priority) VALUES ('standard');
+
+INSERT INTO StatusLookUp (status) VALUES ('Pending Direct Super');
+INSERT INTO StatusLookUp (status) VALUES ('Pending Department Head');
+INSERT INTO StatusLookUp (status) VALUES ('Pending Benefits Co');
+INSERT INTO StatusLookUp (status) VALUES ('Approved');
+INSERT INTO StatusLookUp (status) VALUES ('Denied');
+
+ALTER TABLE Employee ADD CHECK (amountAvailable <= 1000);
+
 INSERT INTO Employee (fName, lName, phone, email, password) VALUES ('Joseph', 'Moses', '(218)-205-8559', 'joseph.k.moses6@gmail.com', 'password');
+INSERT INTO Employee (fName, lName, phone, email, password) VALUES ('Brittney', 'Riebel', '(777)-205-8777', 'brittney.r@gmail.com', 'password');
 
-INSERT INTO Departments (departmentHead, departmentName) VALUES (1, 'R&D');
+INSERT INTO Departments (departmentHead, departmentName) VALUES (1, 'IT');
+INSERT INTO Departments (departmentHead, departmentName) VALUES (2, 'R and D');
 
+UPDATE Employee SET deptId = 1, empLevel = 3, amountAvailable = 1000, maxAvailable = 1000, pending = 0, awarded = 0 WHERE empId = 11; 
+UPDATE Employee SET deptId = 2, empLevel = 3, amountAvailable = 1000, maxAvailable = 1000, pending = 0, awarded = 0 WHERE empId = 12; 
+
+
+INSERT INTO Employee (fName, lName, phone, email, password, superId, deptId, empLevel, amountAvailable, maxAvailable, pending, awarded) VALUES ('Andrew', 'Hanson', '(218)-205-6123', 'andrew.h@gmail.com', 'password', 11, 1, 4, 1000, 1000, 0, 0);
+INSERT INTO Employee (fName, lName, phone, email, password, superId, deptId, empLevel, amountAvailable, maxAvailable, pending, awarded) VALUES ('Anthony', 'Hanson', '(218)-205-7864', 'anthony.h@gmail.com', 'password', 11, 1, 2, 1000, 1000, 0, 0);
+INSERT INTO Employee (fName, lName, phone, email, password, superId, deptId, empLevel, amountAvailable, maxAvailable, pending, awarded) VALUES ('Mark', 'Brandao', '(218)-205-4891', 'mark.b@gmail.com', 'password', 12, 2, 4, 1000, 1000, 0, 0);
+INSERT INTO Employee (fName, lName, phone, email, password, superId, deptId, empLevel, amountAvailable, maxAvailable, pending, awarded) VALUES ('Sean', 'Beseler', '(218)-205-5555', 'sean.b@gmail.com', 'password', 12, 2, 2, 1000, 1000, 0, 0);
+INSERT INTO Employee (fName, lName, phone, email, password, superId, deptId, empLevel, amountAvailable, maxAvailable, pending, awarded) VALUES ('Peter', 'Chase', '(218)-205-4444', 'peter.c@gmail.com', 'password', 26, 1, 1, 1000, 1000, 0, 0);
+INSERT INTO Employee (fName, lName, phone, email, password, superId, deptId, empLevel, amountAvailable, maxAvailable, pending, awarded) VALUES ('Tom', 'Hemming', '(218)-205-5555', 'tom.h@gmail.com', 'password', 28, 2, 1, 1000, 1000, 0, 0);
+
+CREATE OR REPLACE PROCEDURE get_all_pending_requests(i_empId IN NUMBER, cursorParam OUT SYS_REFCURSOR)
+IS
+BEGIN
+    OPEN cursorParam FOR
+    SELECT *
+    FROM ReimbursementRequest
+    WHERE empId = i_empId AND statusId < 4
+    ORDER BY statusId;
+END;
+/ 
+
+commit;

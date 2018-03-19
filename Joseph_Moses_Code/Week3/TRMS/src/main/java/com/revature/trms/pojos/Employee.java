@@ -1,4 +1,4 @@
-package com.revature.pojos;
+package com.revature.trms.pojos;
 
 public class Employee {
 
@@ -11,14 +11,16 @@ public class Employee {
 	private int superId;
 	private int deptId;
 	private int empLevel;
-	private int employeeReimbursmentId;
+	private double amountAvailable;
+	private double maxAvailable;
+	private double pending;
+	private double awarded;
 	
 	public Employee() {}
 
-	public Employee(int empId, String fName, String lName, String phone, String email, String password, int superId,
-			int deptId, int empLevel, int employeeReimbursment) {
+	public Employee(String fName, String lName, String phone, String email, String password, int superId, int deptId,
+			int empLevel, double amountAvailable, double maxAvailable, double pending, double awarded) {
 		super();
-		this.empId = empId;
 		this.fName = fName;
 		this.lName = lName;
 		this.phone = phone;
@@ -27,9 +29,11 @@ public class Employee {
 		this.superId = superId;
 		this.deptId = deptId;
 		this.empLevel = empLevel;
-		this.employeeReimbursmentId = employeeReimbursment;
+		this.amountAvailable = amountAvailable;
+		this.maxAvailable = maxAvailable;
+		this.pending = pending;
+		this.awarded = awarded;
 	}
-
 
 
 	public int getEmpId() {
@@ -104,23 +108,35 @@ public class Employee {
 		this.empLevel = empLevel;
 	}
 
-	public int getEmployeeReimbursment() {
-		return employeeReimbursmentId;
+	public double getAmountAvailable() {
+		return amountAvailable;
 	}
 
-	public void setEmployeeReimbursment(int employeeReimbursment) {
-		this.employeeReimbursmentId = employeeReimbursment;
+	public void setAmountAvailable(double amountAvailable) {
+		this.amountAvailable = amountAvailable;
 	}
 
-	@Override
-	public String toString() {
-		return "Employee [empId=" + empId + ", fName=" + fName + ", lName=" + lName + ", phone=" + phone + ", email="
-				+ email + ", superId=" + superId + ", deptId=" + deptId + ", empLevel=" + empLevel
-				+ ", employeeReimbursment=" + employeeReimbursmentId + "]";
+	public double getMaxAvailable() {
+		return maxAvailable;
 	}
 
-	
-	
-	
-	
+	public void setMaxAvailable(double maxAvailable) {
+		this.maxAvailable = maxAvailable;
+	}
+
+	public double getPending() {
+		return pending;
+	}
+
+	public void setPending(double pending) {
+		this.pending = pending;
+	}
+
+	public double getAwarded() {
+		return awarded;
+	}
+
+	public void setAwarded(double awarded) {
+		this.awarded = awarded;
+	}
 }

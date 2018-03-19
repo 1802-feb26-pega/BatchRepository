@@ -1,0 +1,60 @@
+<Div class="home">
+	<form>
+		<h1>
+			Welcome <span id="name"></span>!
+		</h1>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="container" style="border-right: 1px solid #ccc">
+						<table id="empReimbursementInfo" class="reimbursementInfoTable">
+							<th><h4>Reimbursement Information</h4></th>
+							<tr>
+								<td>Amount Available: $</td>
+								<td id="amountAvailable"></td>
+							<tr>
+								<td>Max Available: $</td>
+								<td id="maxAvailable"></td>
+							</tr>
+							<tr>
+								<td>Amount Pending: $</td>
+								<td id="amountPending"></td>
+							</tr>
+							<tr>
+								<td>Amount Awarded: $</td>
+								<td id="amountAwarded"></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="col-sm-9">
+					<div class="container">
+						<div class="row">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4>Pending Requests</h4>
+								</div>
+								<table id="pendingRequests" class="table table-fixed">
+									<thead>
+										<tr>
+											<th class="col-xs">Request Id</th>
+											<th class="col-xs">Description</th>
+											<th class="col-xs">Start Date</th>
+											<th class="col-xs">Cost</th>
+											<th class="col-xs">Expected Reimbursement</th>
+											<th class="col-xs">Status</th>
+										</tr>
+									</thead>
+									<tbody id="pendingRequestsTBody">
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button id="submitRequest">Submit Request</button>
+	</form>
+</Div>

@@ -1,0 +1,88 @@
+<div class="register-form">
+
+	<div class="container">
+		<h2 class="text-center">Register</h2>
+		<div class="row">
+			<div class="form-group col-sm">
+				<input type="text" id="fName" class="form-control"
+					required="required" placeholder="Frist Name">
+				<div class="row">
+					<div class="alert alert-danger col-sm" id="fNameMessage"></div>
+				</div>
+			</div>
+
+			<div class="form-group col-sm">
+				<input type="text" id="sfName" class="form-control"
+					required="required" placeholder="Supervisor First Name">
+				<div class="row">
+					<div class="alert alert-danger col-sm" id="sfNameMessage"></div>
+				</div>
+			</div>
+
+		</div>
+		<div class="row">
+			<div class="form-group col-sm">
+				<input type="text" id="lName" class="form-control"
+					required="required" placeholder="Last Name">
+				<div class="row">
+					<div class="alert alert-danger col-sm" id="lNameMessage"></div>
+				</div>
+			</div>
+			<div class="form-group col-sm">
+				<input type="text" id="slName" class="form-control"
+					required="required" placeholder="Supervisor Last Name">
+				<div class="row">
+					<div class="alert alert-danger col-sm" id="slNameMessage"></div>
+					<div class="alert alert-danger col-sm" id="sExistMessage"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="form-group col-sm">
+				<input type="text" id="phone" class="form-control"
+					required="required" placeholder="(123) 456-7890">
+				<div class="row">
+					<div class="alert alert-danger col-sm" id="phoneMessage"></div>
+				</div>
+			</div>
+			<div class="form-group col-sm">
+				<select id="departmentSelector" class="form-control">
+					<option value="1">IT</option>
+					<option value="2">R&amp;D</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="form-group col-sm">
+				<input type="email" id="email" class="form-control"
+					required="required" placeholder="Email">
+				<div class="row">
+					<div class="alert alert-danger col-sm" id="emailMessage"></div>
+				</div>
+			</div>
+			<div class="form-group col-sm">
+				<select id="empLevelSelector" class="form-control">
+					<option value="1">Standard</option>
+					<option value="2">Supervisor</option>
+					<option value="3">Department Head</option>
+					<option value="4">Benefits Coordinator</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="form-group col-sm">
+				<input type="password" id="password" class="form-control"
+					required="required" placeholder="Password">
+				<div class="row">
+					<div class="alert alert-danger col-sm" id="passwordMessage"></div>
+				</div>
+			</div>
+			<div class="form-group col-sm">
+				<button id="submit" class="btn btn-primary btn-block">Submit</button>
+			</div>
+		</div>
+	</div>
+</div>

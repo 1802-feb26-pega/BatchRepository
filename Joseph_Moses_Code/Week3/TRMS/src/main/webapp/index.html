@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>TRMS - Tuition Reimbursement Management System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+	integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+	crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+	integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+	integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+	crossorigin="anonymous"></script>
+</head>
+
+<style>
+.login-form {
+	width: 340px;
+	margin: 50px auto;
+}
+
+.login-form form {
+	margin-bottom: 15px;
+	background: #ffffff;
+	box-shadow: 0px 2px 2px rbga(0, 0, 0.3);
+}
+
+.login-form h2 {
+	margin: 0 0 15px;
+}
+
+.home {
+	width: 1080px;
+	margin: 50px auto;
+}
+
+.home form {
+	margin-bottom: 15px;
+	background: #ffffff;
+	box-shadow: 0px 2px 2px rbga(0, 0, 0.3);
+}
+
+.home h1 {
+	margin: 0 0 15px;
+}
+
+.login-form p a {
+	color: black;
+}
+
+.register-form {
+	width: 600px;
+	margin: 50px auto;
+}
+
+.register-form form {
+	margin-bottom: 15px;
+	background: #ffffff;
+	box-shadow: 0px 2px 2px rbga(0, 0, 0.3);
+}
+
+.register-form h2 {
+	margin: 0 0 15px;
+}
+
+.register-form p a {
+	color: black;
+}
+
+.form-control, .btn {
+	min-height: 38px;
+	border-radius: 5px;
+	border-width: 2px;
+}
+
+.btn {
+	font-size: 15px;
+	font-weight: bold;
+	background: rgb(0, 92, 128);
+}
+
+div form {
+	padding: 15px;
+	border-radius: 5px;
+}
+
+.page-header {
+	width: 500px;
+	margin: auto;
+	background: rgb(0, 92, 128);
+	border-radius: 5px;
+}
+
+.page-header h1 {
+	font-size: 5rem;
+	color: rgb(255, 255, 255);
+}
+
+.page-header p {
+	font-size: 1.5rem;
+	color: rgb(255, 255, 255);
+}
+
+body {
+	background: linear-gradient(to right, white, black);
+}
+
+.navbar {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-ms-flex-align: center;
+	align-items: center;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	padding: 5px;
+}
+
+.reimbursementInfoTable{
+	width: 200px;
+	
+}
+
+.reimbursementInfoTable thead,tbody,tr,th{
+    display:block;
+  }
+.table-fixed{
+  width: 100%;
+  }
+  tbody{
+    height: 200px;
+    overflow-y:auto;
+    width: 100%;
+    }
+  thead,tbody,tr,th{
+    display:block;
+  }
+  thead tr th{
+        float:left;
+      }
+  
+</style>
+
+<body>
+	<div class=page-header>
+		<h1 class="text-center">TRMS</h1>
+		<p class="text-center">Tuition Reimbursement Management System</p>
+	</div>
+	<div id="navbar"></div>
+	<div id="view"></div>
+	<script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>
