@@ -16,27 +16,27 @@ public class Employee {
 	
 	public Employee(){}
 
-	public int getEmp_id() {
+	public int getEmpId() {
 		return emp_id;
 	}
 
-	public void setEmp_id(int emp_id) {
+	public void setEmpId(int emp_id) {
 		this.emp_id = emp_id;
 	}
 
-	public String getFirst_name() {
+	public String getFirstName() {
 		return first_name;
 	}
 
-	public void setFirst_name(String first_name) {
+	public void setFirstName(String first_name) {
 		this.first_name = first_name;
 	}
 
-	public String getLast_name() {
+	public String getLastName() {
 		return last_name;
 	}
 
-	public void setLast_name(String last_name) {
+	public void setLastName(String last_name) {
 		this.last_name = last_name;
 	}
 
@@ -48,19 +48,19 @@ public class Employee {
 		this.password = password;
 	}
 
-	public double getReimburse_remain() {
+	public double getReimburseRemaining() {
 		return reimburse_remain;
 	}
 
-	public void setReimburse_remain(double reimburse_remain) {
+	public void setReimburseRemain(double reimburse_remain) {
 		this.reimburse_remain = reimburse_remain;
 	}
 	
-	public double getReimburse_pend() {
+	public double getReimbursePending() {
 		return reimburse_pend;
 	}
 	
-	public void setReimburse_pend(double reimburse_pend) {
+	public void setReimbursePending(double reimburse_pend) {
 		this.reimburse_pend = reimburse_pend;
 	}
 
@@ -72,19 +72,19 @@ public class Employee {
 		this.email = email;
 	}
 
-	public Date getDate_of_birth() {
+	public Date getDOB() {
 		return date_of_birth;
 	}
 
-	public void setDate_of_birth(Date date_of_birth) {
+	public void setDOB(Date date_of_birth) {
 		this.date_of_birth = date_of_birth;
 	}
 
-	public int getJob_level() {
+	public int getJobLevel() {
 		return job_level;
 	}
 
-	public void setJob_level(int job_level) {
+	public void setJobLevel(int job_level) {
 		this.job_level = job_level;
 	}
 

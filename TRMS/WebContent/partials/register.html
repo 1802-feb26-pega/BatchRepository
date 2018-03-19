@@ -1,52 +1,73 @@
-<!-- REGISTRATION FORM -->
 <div class="text-center" style="padding:50px 0">
-	<div class="logo">register</div>
-	<!-- Main Form -->
-	<div class="login-form-1">
-		<form id="register-form" class="text-left">
-			<div class="login-form-main-message"></div>
-			<div class="main-login-form">
-				<div class="login-group">
-					<div class="form-group">
-						<label for="reg_username" class="sr-only">Email address</label>
-						<input type="text" class="form-control" id="reg_username" name="reg_username" placeholder="username">
-					</div>
-					<div class="form-group">
-						<label for="reg_password" class="sr-only">Password</label>
-						<input type="password" class="form-control" id="reg_password" name="reg_password" placeholder="password">
-					</div>
-					<div class="form-group">
-						<label for="reg_password_confirm" class="sr-only">Password Confirm</label>
-						<input type="password" class="form-control" id="reg_password_confirm" name="reg_password_confirm" placeholder="confirm password">
-					</div>
-					
-					<div class="form-group">
-						<label for="reg_email" class="sr-only">Email</label>
-						<input type="text" class="form-control" id="reg_email" name="reg_email" placeholder="email">
-					</div>
-					<div class="form-group">
-						<label for="reg_fullname" class="sr-only">Full Name</label>
-						<input type="text" class="form-control" id="reg_fullname" name="reg_fullname" placeholder="full name">
-					</div>
-					
-					<div class="form-group login-group-checkbox">
-						<input type="radio" class="" name="reg_gender" id="male" placeholder="username">
-						<label for="male">male</label>
-						
-						<input type="radio" class="" name="reg_gender" id="female" placeholder="username">
-						<label for="female">female</label>
-					</div>
-					
-					<div class="form-group login-group-checkbox">
-						<input type="checkbox" class="" id="reg_agree" name="reg_agree">
-						<label for="reg_agree">i agree with <a href="#">terms</a></label>
-					</div>
-				</div>
-				<button type="submit" class="login-button"><i class="fa fa-chevron-right"></i></button>
-			</div>
-			<div class="etc-login-form">
-				<p>already have an account? <a href="#">login here</a></p>
-			</div>
-		</form>
+	<div class="logo">Create a new account</div>
+	
+	<input type="text" id="fn" placeholder="First Name"> <br>
+	<input type="text" id="ln" placeholder="Last Name"> <br>
+	<input type="text" id="username" placeholder="Username"> <br>
+		<div class="alert alert-danger" id="message" ></div>
+	<input type="email" id="email" placeholder="Email Address"> <br>
+	<input type="date" id="dob" placeholder="Date of Birth"> <br>
+	<input type="text" id="address" placeholder="Address"> <br>
+	<input type="text" id="city" placeholder="City"> <br>
+	<div class="dropdown">
+	  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+	  <span class="caret"></span></button>
+	  <ul class="dropdown-menu">
+	    <li>Alabama</li>
+		<li>Alaska</li>
+		<li>Arizona</li>
+		<li>Arkansas</li>
+		<li>California</li>
+		<li>Colorado</li>
+		<li>Connecticut</li>
+		<li>Delaware</li>
+		<li>Florida</li>
+		<li>Georgia</li>
+		<li>Hawaii</li>
+		<li>Idaho</li>
+		<li>Illinois</li>
+		<li>Indiana</li>
+		<li>Iowa</li>
+		<li>Kansas</li>
+		<li>Kentucky</li>
+		<li>Louisiana</li>
+		<li>Maine</li>
+		<li>Maryland</li>
+		<li>Massachusetts</li>
+		<li>Michigan</li>
+		<li>Minnesota</li>
+		<li>Mississippi</li>
+		<li>Missouri</li>
+		<li>Montana</li>
+		<li>Nebraska</li>
+		<li>Nevada</li>
+		<li>New Hampshire</li>
+		<li>New Jersey</li>
+		<li>New Mexico</li>
+		<li>New York</li>
+		<li>North Carolina</li>
+		<li>North Dakota</li>
+		<li>Ohio</li>
+		<li>Oklahoma</li>
+		<li>Oregon</li>
+		<li>Pennsylvania</li>
+		<li>Rhode Island</li>
+		<li>South Carolina</li>
+		<li>South Dakota</li>
+		<li>Tennessee</li>
+		<li>Texas</li>
+		<li>Utah</li>
+		<li>Vermont</li>
+		<li>Virginia</li>
+		<li>Washington</li>
+		<li>West Virginia</li>
+		<li>Wisconsin</li>
+		<li>Wyoming</li>
+	  </ul>
 	</div>
+	<input type="password" id="pass" placeholder="Password"> <br>
+	<input type="password" id="passConfirm" placeholder="Confirm Password"><br>
+	<br>
+	<button id="register">Register</button>
+	<br>
 </div>

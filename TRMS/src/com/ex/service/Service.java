@@ -2,30 +2,34 @@ package com.ex.service;
 
 import com.reimb.dao.DAO;
 import com.reimb.dao.DAOImpl;
+import com.reimb.pojos.Employee;
+import com.reimb.pojos.Reimbursement;
 
 public class Service {
 	
 	static DAO dao = new DAOImpl();
+	//static MessageDAO mdao = new MDAOImp();
 	
-	public static User login(String username, String password) {
-		User user = dao.getUser(username);
-		if(user == null) return null;
-		else if (user.getPassword().equals(password)) {
-			return user;
+	public static Employee login(String username, String password) {
+		Employee emp = dao.getEmployee(username);
+		if(emp == null) return null;
+		else if (emp.getPassword().equals(password)) {
+			return emp;
 		}
 		else return null;
 	}
 	
-	public User addUser(User u) {
-		return dao.addUser(u.getFirstname(), u.getLastname(), u.getEmail(), u.getPassword());
+	public Employee addEmployee(Employee e) {
+		return dao.addEmployee(e.getFirstName(), e.getLastName(), e.getEmail(), e.getPassword());
 	}
 	
-	public Account createAccount(User u) {
-		return dao.createAccount(u, 0);
+	public Reimbursement createReimbursement(Employee e) {
+		//TODO: change this to right args
+		return dao.addReimbursement();
 	}
 	
 	public Boolean emailExists(String email) {
-		User u = dao.getUser(email);
+		Employee u = dao.getEmployee(email);
 		if(u == null) return false;
 		else return true;
 	}
