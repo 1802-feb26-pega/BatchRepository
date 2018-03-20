@@ -1,0 +1,36 @@
+<div class="form-group row">
+    <label for="claimnum" class="col-2 col-form-label">Claim #</label> 
+    <div class="col-10">
+      <input id="claimnum" name="claimnum" class="form-control here" type="number">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="decision" class="col-2 col-form-label">Decision</label> 
+    <div class="col-10">
+      <select id="decision" name="decision" class="custom-select" required="required">
+        <option value="yes">Approve</option>
+        <option value="no">Deny</option>
+      </select>
+    </div>
+  </div> 
+  <div class="form-group row">
+    <div class="offset-2 col-10">
+      <button id="submitdecision" name="submitdecision" type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</div>
+<table id="approvablerequests" class="table table-striped table-bordered">
+	<thead>
+        <tr>
+            <th>Claim Number</th>
+            <th>Date Submitted</th>
+            <th>Status</th>
+            <th>Event</th>
+            <th>Event Type</th>
+            <th>Projected Reimbursement Amount</th>
+            <th>Justification for Request</th>
+            <th>Grading Format</th>
+            <th>Minimum Passing Grade (%)</th>
+            <th>Miscellaneous Comments</th>
+        </tr>
+    </thead>
+</table>

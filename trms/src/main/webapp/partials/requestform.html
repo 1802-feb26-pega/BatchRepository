@@ -1,0 +1,83 @@
+<div class="form-group row">
+    <label for="evdate" class="col-3 col-form-label">Date of Event</label> 
+    <div class="col-9">
+      <input id="evdate" name="evdate" required="required" class="form-control here" type="date">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="evtime" class="col-3 col-form-label">Time of Event</label> 
+    <div class="col-9">
+      <input id="evtime" name="evtime" class="form-control here" type="time">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="evloc" class="col-3 col-form-label">Event Location</label> 
+    <div class="col-9">
+      <input id="evloc" name="evloc" class="form-control here" required="required" type="text">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="evcost" class="col-3 col-form-label">Event Cost</label> 
+    <div class="col-9">
+      <div class="input-group">
+        <div class="input-group-addon">$</div> 
+        <input id="evcost" name="evcost" required="required" class="form-control here" type="text">
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="evtype" class="col-3 col-form-label">Kind of Event</label> 
+    <div class="col-9">
+      <select id="evtype" name="evtype" required="required" class="custom-select">
+        <option value="1">University Course</option>
+        <option value="2">Seminar</option>
+        <option value="3">Certification Preparation Course</option>
+        <option value="4">Certification Exam</option>
+        <option value="5">Technical Training</option>
+        <option value="6">Other (Please specify in Event Description)</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="evdesc" class="col-3 col-form-label">Event Description</label> 
+    <div class="col-9">
+      <textarea id="evdesc" name="evdesc" cols="40" rows="5" required="required" class="form-control"></textarea>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="gf" class="col-3 col-form-label">Grading Format</label> 
+    <div class="col-9">
+      <select id="gf" name="gf" required="required" class="custom-select">
+        <option value="1">Minimum Grade</option>
+        <option value="2">Pass/Fail</option>
+        <option value="3">Presentation</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="mpg" class="col-3 col-form-label">Minimum Passing Grade</label> 
+    <div class="col-9">
+      <div class="input-group">
+        <input id="mpg" name="mpg" class="form-control here" aria-describedby="mpgHelpBlock" required="required" type="text"> 
+        <div class="input-group-addon append">%</div>
+      </div> 
+      <span id="mpgHelpBlock" class="form-text text-muted">Grade is based off of a 100% scale</span>
+    </div>
+  </div> 
+  <div class="form-group row">
+    <label for="reqreason" class="col-3 col-form-label">Reason for reimbursement request</label> 
+    <div class="col-9">
+      <textarea id="reqreason" name="reqreason" cols="40" rows="5" required="required" class="form-control"></textarea>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="comments" class="col-3 col-form-label">Additional Comments</label> 
+    <div class="col-9">
+      <textarea id="comments" name="comments" cols="40" rows="5" class="form-control"></textarea>
+    </div>
+  </div> 
+  <div class="form-group row">
+    <div class="offset-3 col-9">
+      <button id="submit" name="submit" type="submit" class="btn btn-primary">Submit Reimbursement Request</button>
+    </div>
+  </div>
