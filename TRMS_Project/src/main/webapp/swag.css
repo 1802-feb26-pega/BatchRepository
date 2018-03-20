@@ -3,9 +3,14 @@ body{
 }
 
 table, th, td {
-   border: 2px solid #3CBC8D;
+   /*border: 2px solid #3CBC8D;*/
+   border: 2px solid #DAA520;
 }
 
 input {
 	position:relative;
+}
+
+h1 {
+	color: #DAA520;
 }

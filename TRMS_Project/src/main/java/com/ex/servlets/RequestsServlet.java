@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import com.ex.service.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.trms.dao.DAO;
+import com.trms.dao.DAOImpl;
 import com.trms.pojos.Request;
 import com.trms.pojos.User;
 
@@ -20,6 +22,7 @@ import com.trms.pojos.User;
 public class RequestsServlet  extends HttpServlet{
 	
 	static Service service = new Service();
+	static DAO dao = new DAOImpl();//dont do this
 
 	//get accounts per user
 	@Override
@@ -27,11 +30,14 @@ public class RequestsServlet  extends HttpServlet{
 	{
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("user"); // get logged user from session
+		System.out.println(user.getUsername());
+		User u = dao.getUserByUsername(user.getUsername());
 		
 		//System.out.println(user.toString());
 		//System.out.println(user.getUsername());
 		
-		List<Request> requests = service.getRequests(user);
+		//List<Request> requests = service.getRequests(user); //work around
+		List<Request> requests = service.getRequests(u);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String requestString = mapper.writeValueAsString(requests);

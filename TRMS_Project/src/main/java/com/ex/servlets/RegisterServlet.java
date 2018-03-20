@@ -27,7 +27,7 @@ public class RegisterServlet extends HttpServlet{
 		User u = mapper.readValue(req.getInputStream(),User.class);
 		
 
-		//System.out.println("register servlet 3\n" + u.toString());
+		System.out.println("register servlet 3\n" + u.toString());
 		value = service.addUser(u);
 		
 		PrintWriter out = res.getWriter();

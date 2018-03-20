@@ -304,7 +304,7 @@ public class DAOImpl implements DAO
 			c.setDouble(10,pen);	//pending funds
 			value = c.executeUpdate();
 
-
+			System.out.println(value + " adduser dao");
 
 		} catch (SQLException e) {
 			e.printStackTrace();

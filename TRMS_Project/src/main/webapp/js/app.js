@@ -135,10 +135,13 @@ function register(){
 	var addr = $('#addr').val();
 	var zip = $('#zip').val();
 	var title = $('#title').val();
-	var departmentId = $('#dept').val();
+	var deptt = $('#dept').val();
+	//console.log(departmentId);
 	var app = $('#app').val();
 	var pen = $('#pen').val();
 
+	//console.log(departmentId);
+	
 	if(fn=="" || ln=="" || uname=="" || pass==""){
 		alert('one or more fields empty');
 	}else{
@@ -151,11 +154,11 @@ function register(){
 				"address": addr,
 				"zipcode": zip,
 				"title": title,
-				"departmentId":dept,
+				"departmentId": deptt,
 				"approvedFunds": app,
 				"pendingFunds": pen
 		};
-
+		console.log(user);
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", "register", true);
 		xhr.send(JSON.stringify(user));
