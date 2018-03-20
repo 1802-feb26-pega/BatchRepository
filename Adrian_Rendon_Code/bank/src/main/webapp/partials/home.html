@@ -1,0 +1,31 @@
+<h1>Welcome back!</h1>
+Here are your tuition reimbursement forms:
+<table id="eventTable">
+	<thead>
+		<tr>
+			<th>Forms</th>
+			<th>Event type</th>
+			<th>Grading format</th>
+			<th>Cost</th>
+			<th>Grade</th>
+			<th>Approved?</th>
+		</tr>
+	</thead>
+</table>
+
+<br>
+<div id="gradeblock">
+	<input id="search" placeholder="Enter claim ID" type="text" style="width: 150px;"> 
+	<input id="grading"placeholder="Enter pass or fail" type="text" style="width: 150px;">
+	<button class="btn btn-submit" id="subgrade">Submit Grade</button>
+</div>
+<br>
+<div id="approveblock">
+	<p class="danger" id="message"></p> 
+	<br>
+	<input id="searchall" placeholder="Enter claim ID" type="text" style="width: 150px;"> 
+	<input id="approve"placeholder="Enter yes or no" type="text" style="width: 150px;">
+	<button class="btn btn-submit" id="subapprove">Submit Approval</button>
+</div>
+<br>
+<button class="btn btn-submit" id="event">Create new event</button>
