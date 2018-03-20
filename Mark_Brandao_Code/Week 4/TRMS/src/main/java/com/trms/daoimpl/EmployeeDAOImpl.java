@@ -183,4 +183,43 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return false;
 	}
 
+	@Override
+	public Employee getEmployeeByName(String firstname, String lastname) {
+		Employee employee = new Employee();
+		
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			String sql = "SELECT * FROM employee WHERE firstname = ? AND lastname = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, firstname);
+			pstmt.setString(2,  lastname);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				employee.setEmployeeId(rs.getInt(1));
+				employee.setFirstname(rs.getString(2));
+				employee.setLastname(rs.getString(3));
+				employee.setEmail(rs.getString(4));
+				employee.setPass(rs.getString(5));
+				employee.setSupervisorId(rs.getInt(6));
+				employee.setDepartmentId(rs.getInt(7));
+				employee.setLevelId(rs.getInt(8));
+				employee.setAvailableReimbursement(rs.getDouble(9));
+				employee.setPendingReimbursement(rs.getDouble(10));
+				employee.setAwardedReimbursement(rs.getDouble(11));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return employee;
+	}
+
+	@Override
+	public boolean employeeExists(String firstname, String lastname) {
+		Employee test = getEmployeeByName(firstname, lastname);
+		if(test.getEmployeeId() > 0) {
+			return true;
+		}
+		return false;
+	}
+
 }

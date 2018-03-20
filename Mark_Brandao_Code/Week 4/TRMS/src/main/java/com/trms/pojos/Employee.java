@@ -16,7 +16,7 @@ public class Employee {
 	public Employee() { }
 	
 	public Employee(int employeeId, String firstname, String lastname, String email, String pass, int supervisorId,
-			int departmentId, double availableReimbursement, double pendingReimbursement, double awardedReimbursement) {
+			int departmentId, int levelId, double availableReimbursement, double pendingReimbursement, double awardedReimbursement) {
 		super();
 		this.employeeId = employeeId;
 		this.firstname = firstname;
@@ -25,6 +25,7 @@ public class Employee {
 		this.pass = pass;
 		this.supervisorId = supervisorId;
 		this.departmentId = departmentId;
+		this.levelId = levelId;
 		this.availableReimbursement = availableReimbursement;
 		this.pendingReimbursement = pendingReimbursement;
 		this.awardedReimbursement = awardedReimbursement;
@@ -95,12 +96,12 @@ public class Employee {
 	public void setAwardedReimbursement(double awardedReimbursement) {
 		this.awardedReimbursement = awardedReimbursement;
 	}
-	
 	@Override
 	public String toString() {
 		return "Employee [employeeId=" + employeeId + ", firstname=" + firstname + ", lastname=" + lastname + ", email="
 				+ email + ", pass=" + pass + ", supervisorId=" + supervisorId + ", departmentId=" + departmentId
-				+ ", availableReimbursement=" + availableReimbursement + ", pendingReimbursement="
-				+ pendingReimbursement + ", awardedReimbursement=" + awardedReimbursement + "]";
+				+ ", levelId=" + levelId + ", availableReimbursement=" + availableReimbursement
+				+ ", pendingReimbursement=" + pendingReimbursement + ", awardedReimbursement=" + awardedReimbursement
+				+ "]";
 	}
 }

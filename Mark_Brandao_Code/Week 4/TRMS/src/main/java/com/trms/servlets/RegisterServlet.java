@@ -22,8 +22,9 @@ public class RegisterServlet extends HttpServlet {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		Employee e = mapper.readValue(req.getInputStream(), Employee.class);
+		System.out.println(e);
 		e = service.addEmployee(e);
-		
+		System.out.println(e);
 		PrintWriter out = resp.getWriter();
 		resp.setContentType("application/json");
 		

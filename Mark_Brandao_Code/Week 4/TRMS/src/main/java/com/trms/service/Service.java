@@ -1,8 +1,13 @@
 package com.trms.service;
 
+import java.util.List;
+
 import com.trms.dao.EmployeeDAO;
+import com.trms.dao.ReimbursementFormDAO;
 import com.trms.daoimpl.EmployeeDAOImpl;
+import com.trms.daoimpl.ReimbursementFormDAOImpl;
 import com.trms.pojos.Employee;
+import com.trms.pojos.ReimbursementForm;
 
 public class Service {
 	
@@ -30,6 +35,18 @@ public class Service {
 			return null;
 		}
 	}
-	
 
+
+	public List<ReimbursementForm> getForms(Employee employee) {
+		ReimbursementFormDAO rfDao = new ReimbursementFormDAOImpl();
+		List<ReimbursementForm> reims = rfDao.getReimsByEmployeeId(employee.getEmployeeId());
+		return reims;
+	}
+
+
+	public boolean nameExists(String firstname, String lastname) {
+		EmployeeDAO employeeDao = new EmployeeDAOImpl();
+		boolean exists = employeeDao.employeeExists(firstname, lastname);
+		return exists;
+	}
 }
