@@ -24,7 +24,7 @@ public class EventDAOImpl implements EventDAO {
 					+ "(date_scheduled, event_location, event_cost, event_type_id, employee_id) "
 					+ "values(?, ?, ?, ?, ? )";
 			String [] key = new String[1];
-			key[0] = "u_id";
+			key[0] = "event_id";
 			PreparedStatement ps = conn.prepareStatement(sql, key);
 			ps.setTimestamp(1, dateScheduled);
 			ps.setString(2, eventLocation);

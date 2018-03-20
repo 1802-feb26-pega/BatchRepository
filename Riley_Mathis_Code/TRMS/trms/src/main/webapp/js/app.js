@@ -346,7 +346,7 @@ function loadHome(employee){
 					case "6" : coverage = 0.3;
 				}
 				console.log(coverage);
-				$('#requested-amount').val('$'+(parseInt($('#cost').val())*coverage).toFixed(2));
+				$('#requested-amount').val((parseInt($('#cost').val())*coverage).toFixed(2));
 			});
 			$('#event-type').on('change',function(){
 				console.log("keyup");
@@ -359,7 +359,7 @@ function loadHome(employee){
 					case "6" : coverage = 0.3;
 				}
 				console.log(coverage);
-				$('#requested-amount').val('$'+(parseInt($('#cost').val())*coverage).toFixed(2));
+				$('#requested-amount').val((parseInt($('#cost').val())*coverage).toFixed(2));
 			});
 			//$('#view').hide();
 			$('#submitReimbursement').click(function(){submitReimbursement(employee)});
@@ -414,13 +414,14 @@ function submitReimbursement(employee){
 			var json = JSON.parse(xhr.responseText);
 			console.log(json);
 			var eventId = json.eventId;
+			console.log(employee.employeeId);
 			var reForm = {
 					employeeId: employee.employeeId,
 					eventId: eventId,
 					justification: justification,
 					superApp: superApp,
 					depHeadApp: depHeadApp,
-					requestAmount: requestedAmount
+					requestedAmount: parseInt(requestedAmount)
 			};
 			var rxhr = new XMLHttpRequest();
 			rxhr.open("POST", "submitRe", true);

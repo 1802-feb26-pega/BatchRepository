@@ -21,7 +21,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 					+ "(employee_id, event_id, justification, super_app, dephead_appr, benco_appr, requested_amount) "
 					+ "values(?, ?, ?, ?, ?, ?, ? )";
 			String [] key = new String[1];
-			key[0] = "u_id";
+			key[0] = "re_id";
 			PreparedStatement ps = conn.prepareStatement(sql, key);
 			ps.setInt(1, employeeId);
 			ps.setInt(2, eventId);
