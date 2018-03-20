@@ -140,7 +140,7 @@ public class ClaimDao {
 
 			conn.setAutoCommit(false);
 			String sub = "SELECT EMP_ID FROM EMPLOYEE WHERE SUPER = 'NO' "
-					+ "AND DEPARTMENT = " + emp.getDept();
+					+ "AND DEPARTMENT = '" + emp.getDept() + "'";
 			String sql = "SELECT * FROM CLAIMS WHERE EMP_ID  = ( " + sub + ")";
 
 
@@ -150,7 +150,9 @@ public class ClaimDao {
 
 			while(result_of_query.next()){
 				Claim c = new Claim();
-
+				
+				System.out.println(c.getClaim_id());
+				
 				c.setClaim_id(result_of_query.getInt(1));
 				c.setStatus(result_of_query.getString(2));
 				c.setCreated(result_of_query.getString(3));
@@ -224,5 +226,54 @@ public class ClaimDao {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+
+	public ArrayList<Claim> grab_all_claims(Employee emp) {
+		// TODO Auto-generated method stub
+		ArrayList<Claim> list = new ArrayList<>();
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+
+
+			conn.setAutoCommit(false);
+			
+			String sql = "SELECT * FROM CLAIMS WHERE EMP_ID  <> " + emp.getKey();
+
+
+			Statement statement = conn.createStatement();
+
+			ResultSet result_of_query = statement.executeQuery(sql);
+
+			while(result_of_query.next()){
+				Claim c = new Claim();
+
+				c.setClaim_id(result_of_query.getInt(1));
+				c.setStatus(result_of_query.getString(2));
+				c.setCreated(result_of_query.getString(3));
+				c.setEventStartdate(result_of_query.getString(4));
+				c.setAmount_given(result_of_query.getInt(5));
+				c.setEmp_id(result_of_query.getInt(6));
+				c.setLoc(result_of_query.getString(7));
+				c.setEvent_type(result_of_query.getString(8));
+				c.setCost(result_of_query.getDouble(9));
+				c.setReason(result_of_query.getString(10));
+				c.setAttachment(result_of_query.getBlob(11));
+				c.setEventStarttime(result_of_query.getString(12));
+				c.setNote_id(result_of_query.getInt(13));
+				c.setPassing(result_of_query.getInt(14));
+				c.setGradingFormat(result_of_query.getInt(15));
+				c.setDaysmissed(result_of_query.getInt(16));
+				c.setDescription(result_of_query.getString(17));
+				c.setComments(result_of_query.getString(18));
+
+				list.add(c);
+			}
+		} catch (SQLException sqle) {
+			// TODO Auto-generated catch block
+			sqle.printStackTrace();
+		}catch (NullPointerException npe) {
+			npe.printStackTrace();
+		}
+		return list;
 	}
 }		

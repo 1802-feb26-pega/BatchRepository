@@ -32,4 +32,9 @@ public class ClaimServices {
 		return claim_dao.update(id,type);
 	}
 
+	public ArrayList<Claim> all_claims(Employee employee2) {
+		// TODO Auto-generated method stub
+		return claim_dao.grab_all_claims(employee2);
+	}
+
 }

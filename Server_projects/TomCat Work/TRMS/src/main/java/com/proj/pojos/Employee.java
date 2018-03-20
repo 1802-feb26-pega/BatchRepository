@@ -13,7 +13,7 @@ public class Employee {
 		private String Sup;
 		private double total;
 		private double awarded;
-		private int dept;
+		private String dept;
 		
 		
 		//Getters and Setters
@@ -83,10 +83,10 @@ public class Employee {
 		public void setAwarded(double awarded) {
 			this.awarded = awarded;
 		}
-		public int getDept() {
+		public String getDept() {
 			return dept;
 		}
-		public void setDept(int dept) {
+		public void setDept(String dept) {
 			this.dept = dept;
 		}
 		

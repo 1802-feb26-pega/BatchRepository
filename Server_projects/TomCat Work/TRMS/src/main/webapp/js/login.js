@@ -50,10 +50,15 @@ function loadHome(employee){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
 			$('#homeheader').html("Welcome " + employee.firstname);
+			$('#Department').html("Current Department: " + employee.dept);
 			$('#form_start_button').click(function(){	loadForm(employee);	});
 			$('#check_form').click( function(){	checkForms(employee);	});
 			$('#approve_forms').click( function() {checkotherforms(employee)});
-			if(employee.sup == "YES"){
+			if(employee.dept == "BenCo" & employee.sup == "NO"){
+				$('#all_approve').show();
+				$('#all_approve').click( function() {checkallforms(employee)});
+			} if(employee.sup == "YES"){
+				
 				$('#approve_forms').show()
 			}
 
@@ -107,6 +112,19 @@ function checkotherforms(employee){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
 			otherforms(employee);
+			// after text is loaded, add event listeners/functionality to view
+		}
+	}
+}
+function checkallforms(employee){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadcheckForm.view" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			check_all(employee);
 			// after text is loaded, add event listeners/functionality to view
 		}
 	}
@@ -246,6 +264,7 @@ function getEvents()
 	}
 }
 
+//THIS CONTAINS THE  EMP DATATABLES
 function loadClaims(){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "checkforms" , true);
@@ -312,6 +331,7 @@ function claims_data(claims){
 
 }
 
+//THIS CONTAINS DEPT HEAD DATATABLES
 function otherforms(employee){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "checkothers", true);
@@ -396,3 +416,89 @@ function deny(d,employee){
 		}
 	}
 }
+
+//CONTAINS THE BENCO DATATABLES
+function check_all(employee){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "checkall", true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){		
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var claims = JSON.parse(xhr.responseText);
+			var data = claims_data(claims);
+			var d;
+			$('#approve').click(function() {approve_all(d,employee);});
+			$('#deny').click(function() {deny_all(d,employee);});
+			$(document).ready( function () {
+				
+				var table = $('#table_id').DataTable({
+					destroy: true,
+					data : data,
+					columns: [			    	
+					          { data: 'Request ID', "defaultContent": ""  },
+					          { data :'Status', "defaultContent": ""  },
+					          { data: 'Creation Date', "defaultContent": ""  },
+					          { data: 'Event Date', "defaultContent": ""  },
+					          { data: 'Amount given', "defaultContent": "0" },
+					          { data: 'Location', "defaultContent": ""  },
+					          { data: 'Event', "defaultContent": ""  },
+					          { data: 'Cost', "defaultContent": ""  },
+					          { data: 'Reason', "defaultContent": ""  },
+					          { data: 'Event Start Time', "defaultContent": ""  },
+					          { data: 'Grade', "defaultContent": ""  },
+					          { data: 'Needed to pass', "defaultContent": ""  },
+					          { data: 'Work Days missed', "defaultContent": ""  },
+					          { data: 'Description of Class', "defaultContent": ""  },
+					          { data: 'Comments', "defaultContent": ""  },
+					          ]
+				});
+				$('#table_id tbody').on('click','tr', function(){
+					d = table.row(this).data();
+					console.log("Data is " + d["Request ID"]);
+					$('#approve').show();
+					$('#deny').show();
+				});
+			} );
+		}
+	}
+}
+//Approves all  the claims
+function approve_all(d,employee){
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "approve", true);
+	xhr.send(d["Request ID"]);
+
+	xhr.onreadystatechange = function(){		
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var check = xhr.responseText;
+			if(check != "0"){
+				alert("CLAIM: " + d["Request ID"] + " has been updated");
+			}else{
+				alert("Error has occured please try again");
+			}
+			checkallforms(employee);
+		}
+	}
+}
+
+
+//Denies all the claims
+function deny_all(d,employee){
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "denied", true);
+	xhr.send(d["Request ID"]);
+
+	xhr.onreadystatechange = function(){		
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var check = xhr.responseText;
+			if(check != "0"){
+				alert("CLAIM: " + d["Request ID"] + " has been updated");
+			}else{
+				alert("Error has occured please try again");
+			}
+			checkallforms(employee);
+		}
+	}
+}
+

@@ -38,7 +38,7 @@ public class EmployeeDao implements DatabaseDaoInterfaces{
 				employee.setSup(crs.getString(6));
 				employee.setTotal(crs.getDouble(7));
 				employee.setAwarded(crs.getDouble(8));
-				employee.setDept(crs.getInt(9));
+				employee.setDept(crs.getString(9));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -101,7 +101,6 @@ public class EmployeeDao implements DatabaseDaoInterfaces{
 		}catch (NullPointerException npe) {
 			npe.printStackTrace();
 		}
-		System.out.println("Sending super info");
 		return result;
 	}
 }
