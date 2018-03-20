@@ -64,7 +64,6 @@ function loadNav(){
 			//$('#home').on('click',);
 			$('#logout').click(logout);
 			$('#created').click(loadNewRequest);
-
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
 		}
 	}

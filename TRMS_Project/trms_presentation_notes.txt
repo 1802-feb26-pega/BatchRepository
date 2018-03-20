@@ -7,8 +7,10 @@ date picker (instead of manually entering start/end date)
 
 approval status shown as 0 (new request), 1 (supervisor approval), 2 (department head approval), 3 (benco approval)
 
+type password twice, make sure they match (psw confirmation)
 
 
+stop propagation on the "return home" button on the new request page (line 86 of app.js - inside loadNewRequest())
 
 
 

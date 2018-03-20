@@ -37,5 +37,7 @@ public class MainMain {
 		//dao.updateApproval(dao.getUserByUsername("js").getId(),"approved",6);
 		//dao.updateApproval(dao.getUserByUsername("fm").getId(),"approved",6);
 		//dao.updateApproval(dao.getUserByUsername("kr").getId(),"approved",6);
+		User u = dao.getUserByUsername("ck");
+		System.out.println(u.getPassword());
 	}
 }
