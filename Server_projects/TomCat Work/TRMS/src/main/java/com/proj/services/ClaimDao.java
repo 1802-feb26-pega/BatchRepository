@@ -1,9 +1,11 @@
 package com.proj.services;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -91,32 +93,32 @@ public class ClaimDao {
 
 
 			ResultSet result_of_query = p_statement.executeQuery();
-			
+
 			while(result_of_query.next()){
 				Claim c = new Claim();
-				
-					c.setClaim_id(result_of_query.getInt(1));
-				    c.setStatus(result_of_query.getString(2));
-					c.setCreated(result_of_query.getString(3));
-					c.setEventStartdate(result_of_query.getString(4));
-					c.setAmount_given(result_of_query.getInt(5));
-					c.setEmp_id(result_of_query.getInt(6));
-					c.setLoc(result_of_query.getString(7));
-					c.setEvent_type(result_of_query.getString(8));
-					c.setCost(result_of_query.getDouble(9));
-					c.setReason(result_of_query.getString(10));
-					c.setAttachment(result_of_query.getBlob(11));
-					c.setEventStarttime(result_of_query.getString(12));
-					c.setNote_id(result_of_query.getInt(13));
-					c.setPassing(result_of_query.getInt(14));
-					c.setGradingFormat(result_of_query.getInt(15));
-					c.setDaysmissed(result_of_query.getInt(16));
-					c.setDescription(result_of_query.getString(17));
-					c.setComments(result_of_query.getString(18));
-					
+
+				c.setClaim_id(result_of_query.getInt(1));
+				c.setStatus(result_of_query.getString(2));
+				c.setCreated(result_of_query.getString(3));
+				c.setEventStartdate(result_of_query.getString(4));
+				c.setAmount_given(result_of_query.getInt(5));
+				c.setEmp_id(result_of_query.getInt(6));
+				c.setLoc(result_of_query.getString(7));
+				c.setEvent_type(result_of_query.getString(8));
+				c.setCost(result_of_query.getDouble(9));
+				c.setReason(result_of_query.getString(10));
+				c.setAttachment(result_of_query.getBlob(11));
+				c.setEventStarttime(result_of_query.getString(12));
+				c.setNote_id(result_of_query.getInt(13));
+				c.setPassing(result_of_query.getInt(14));
+				c.setGradingFormat(result_of_query.getInt(15));
+				c.setDaysmissed(result_of_query.getInt(16));
+				c.setDescription(result_of_query.getString(17));
+				c.setComments(result_of_query.getString(18));
+
 				list.add(c);
-					
-					
+
+
 			}
 
 
@@ -127,5 +129,100 @@ public class ClaimDao {
 			npe.printStackTrace();
 		}
 		return list;
-	}		
-}
+	}
+
+
+	public ArrayList<Claim> grab_direct_report(Employee emp) {
+		// TODO Auto-generated method stub
+		ArrayList<Claim> list = new ArrayList<>();
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+
+
+			conn.setAutoCommit(false);
+			String sub = "SELECT EMP_ID FROM EMPLOYEE WHERE SUPER = 'NO' "
+					+ "AND DEPARTMENT = " + emp.getDept();
+			String sql = "SELECT * FROM CLAIMS WHERE EMP_ID  = ( " + sub + ")";
+
+
+			Statement statement = conn.createStatement();
+
+			ResultSet result_of_query = statement.executeQuery(sql);
+
+			while(result_of_query.next()){
+				Claim c = new Claim();
+
+				c.setClaim_id(result_of_query.getInt(1));
+				c.setStatus(result_of_query.getString(2));
+				c.setCreated(result_of_query.getString(3));
+				c.setEventStartdate(result_of_query.getString(4));
+				c.setAmount_given(result_of_query.getInt(5));
+				c.setEmp_id(result_of_query.getInt(6));
+				c.setLoc(result_of_query.getString(7));
+				c.setEvent_type(result_of_query.getString(8));
+				c.setCost(result_of_query.getDouble(9));
+				c.setReason(result_of_query.getString(10));
+				c.setAttachment(result_of_query.getBlob(11));
+				c.setEventStarttime(result_of_query.getString(12));
+				c.setNote_id(result_of_query.getInt(13));
+				c.setPassing(result_of_query.getInt(14));
+				c.setGradingFormat(result_of_query.getInt(15));
+				c.setDaysmissed(result_of_query.getInt(16));
+				c.setDescription(result_of_query.getString(17));
+				c.setComments(result_of_query.getString(18));
+
+				list.add(c);
+
+
+			}
+
+
+		} catch (SQLException sqle) {
+			// TODO Auto-generated catch block
+			sqle.printStackTrace();
+		}catch (NullPointerException npe) {
+			npe.printStackTrace();
+		}
+		return list;
+	}
+
+
+	public boolean update(int id,String type) {
+		// TODO Auto-generated method stub
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+
+			conn.setAutoCommit(false);
+
+			String sql = "{CALL UPDATE_ACC(?,?)}";
+
+			CallableStatement c_statement = conn.prepareCall(sql);
+
+			c_statement.setString(1, type);
+			c_statement.setInt(2,id);
+
+			int result = c_statement.executeUpdate();	
+			int amt_given_update;
+	
+			
+		if(type.equals("APPROVED")){
+			sql = "{CALL UPDATE_AMTGIVEN(?)}";
+			c_statement = conn.prepareCall(sql);
+			c_statement.setInt(1,id);		
+		}
+		
+		amt_given_update = c_statement.executeUpdate();
+			
+		if(result == 1 & amt_given_update == 1){
+			conn.commit();
+			return true;
+		}else {
+			conn.rollback();
+			return false;
+		}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+}		

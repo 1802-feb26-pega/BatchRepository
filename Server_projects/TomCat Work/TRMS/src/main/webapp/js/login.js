@@ -2,8 +2,8 @@ window.onload = function(){
 	loadLanding();
 }
 
-var $  = require( 'jquery' );
-var dt = require( 'datatables.net' )();
+var $  = require('jquery');
+var dt = require('datatables.net')();
 
 //Creates the basic templete for Dynamic one page site
 function loadLanding(){
@@ -25,7 +25,7 @@ function loadLanding(){
 }
 
 //Loads the Nav bar
-function loadNav(){
+function loadNav(employee){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "loadnav.view" , true);
 	xhr.send();
@@ -33,7 +33,7 @@ function loadNav(){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#navbar').html(xhr.responseText);
-			$('#home_page').on('click',loadHome);
+			$('#home_page').click(function() {loadHome(employee);});
 			$('#logout').on('click',logout);
 			// after text is loaded, add event listeners/functionality to view
 		}
@@ -50,14 +50,11 @@ function loadHome(employee){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
 			$('#homeheader').html("Welcome " + employee.firstname);
-			$('body').on('click','#form_start_button',loadForm(employee));
-			$('body').on('click', '#check_form',checkForms(employee));
-			console.log("Calling SUPER");
-			var supervisor = isSuper();
-			console.log("I have super"+ supervisor);
-			if(supervisor == "YES"){
-				$('approve_forms').show()
-				console.log("Should be showing");
+			$('#form_start_button').click(function(){	loadForm(employee);	});
+			$('#check_form').click( function(){	checkForms(employee);	});
+			$('#approve_forms').click( function() {checkotherforms(employee)});
+			if(employee.sup == "YES"){
+				$('#approve_forms').show()
 			}
 
 
@@ -92,14 +89,28 @@ function loadForm(employee){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
 			$('#header').html("Set up information here");
-			$('#formcomplete').on('click',formComplete(employee))
+			$('#formcomplete').click( function(){
+				formComplete(employee);
+			});
 			getEvents();
 			// after text is loaded, add event listeners/functionality to view
 		}
 	}
 }
 
+function checkotherforms(employee){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadcheckForm.view" , true);
+	xhr.send();
 
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			otherforms(employee);
+			// after text is loaded, add event listeners/functionality to view
+		}
+	}
+}
 //---------------------------------------------FUNCTIONS THAT POST----------------------------------------------------
 
 
@@ -129,7 +140,7 @@ function login(){
 			}
 			else{
 				//alert(employee.firstname + employee.lastname);				
-				loadNav();
+				loadNav(employee);
 				loadHome(employee);
 			}
 		}
@@ -137,29 +148,29 @@ function login(){
 }
 
 //Sumbits the form to database
-function formComplete(){
-//	var evdt = $('#eventStartDate').val();
-//	var loc = $('#location').val();
+function formComplete(employee){
+	var evdt = $('#eventStartDate').val();
+	var loc = $('#location').val();
 	var event = $('#event').val();
-//	var cost = $('#cost').val();
-//	var reason = $('#reason').val();
-//	var evst = $('#eventStartTime').val();
-//	var passing = $('#currentGrade').val();
-//	var gF = $('#gradingFormat').val();
-//	var desc = $('#description').val();
-//	var workedmissed = $('#timedmissed').val();
-//	var notes = $('#comments').val();
+	var cost = $('#cost').val();
+	var reason = $('#reason').val();
+	var evst = $('#eventStartTime').val();
+	var passing = $('#currentGrade').val();
+	var gF = $('#gradingFormat').val();
+	var desc = $('#description').val();
+	var workedmissed = $('#timedmissed').val();
+	var notes = $('#comments').val();
 
-	var evdt = "2018/03/20";
-	var loc = "ATL";
-	var cost = 500;
-	var reason = "JS Training rampup for new role";
-	var evst = "9:30";
-	var passing = 80
-	var gF = 50
-	var desc = "JS Training"
-		var workedmissed = 5;
-	var notes = "Please pay me my money";
+//	var evdt = "2018/03/20";
+//	var loc = "ATL";
+//	var cost = 500;
+//	var reason = "JS Training rampup for new role";
+//	var evst = "9:30";
+//	var passing = 80
+//	var gF = 50
+//	var desc = "JS Training"
+//		var workedmissed = 5;
+//	var notes = "Please pay me my money";
 
 	var claim = {
 			eventStartdate: evdt,
@@ -187,13 +198,13 @@ function formComplete(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			if(check != "0"){
 				alert("Error has occured please try again");
-				loadNav();
+				loadNav(employee);
 				loadHome(employee);
 			}
 			else{
 				alert("Form has been sumbitted");
-				loadNav();
-				loadHome(employee);
+				loadNav(employee);
+				loadHome(employee)
 			}
 		}
 
@@ -278,26 +289,22 @@ function claims_data(claims){
 	for(let x = 0; x < claims.length; x++){
 		let t = new Object();
 
+		t["Request ID"] = claims[x].claim_id;
 		t["Status"] = claims[x].status;
 		t["Creation Date"] = claims[x].created;
-		console.log(claims[x].eventStartdate)
 		t["Event Date"] = claims[x].eventStartdate;
-		console.log(t["Event Date"]);
+		t["Amount given"] = claims[x].amount_given;
 		t["Location"] = claims[x].loc   	
 		t["Event"] = claims[x].event_type;
 		t["Cost"] = claims[x].cost;
 		t["Reason"] = claims[x].reason;
-		t["Attachment"] = claims[x].attachment;
 		t["Event Start Time"] = claims[x].eventStarttime;
 		t["Grade"] = claims[x].passing;
 		t["Needed to pass"] = claims[x].gradingFormat;       
 		t["Work Days missed"] = claims[x].daysmissed;
-		console.log(claims[x].description);
 		t["Description of Class"] = claims[x].description;
-		console.log(t["Description"]);
 		t["Comments"] = claims[x].comments;
 
-		console.log(t);
 		data.push(t);
 	}
 
@@ -305,15 +312,87 @@ function claims_data(claims){
 
 }
 
-function isSuper(){
+function otherforms(employee){
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "super", true);
+	xhr.open("GET", "checkothers", true);
 	xhr.send();
 
 	xhr.onreadystatechange = function(){		
 		if(xhr.readyState == 4 && xhr.status == 200){
-			return JSON.parse(xhr.responseText);
+			var claims = JSON.parse(xhr.responseText);
+			var data = claims_data(claims);
+			var d;
+			$('#approve').click(function() {approve(d,employee);});
+			$('#deny').click(function() {deny(d,employee);});
+			$(document).ready( function () {
+				
+				var table = $('#table_id').DataTable({
+					destroy: true,
+					data : data,
+					columns: [			    	
+					          { data: 'Request ID', "defaultContent": ""  },
+					          { data :'Status', "defaultContent": ""  },
+					          { data: 'Creation Date', "defaultContent": ""  },
+					          { data: 'Event Date', "defaultContent": ""  },
+					          { data: 'Amount given', "defaultContent": "0" },
+					          { data: 'Location', "defaultContent": ""  },
+					          { data: 'Event', "defaultContent": ""  },
+					          { data: 'Cost', "defaultContent": ""  },
+					          { data: 'Reason', "defaultContent": ""  },
+					          { data: 'Event Start Time', "defaultContent": ""  },
+					          { data: 'Grade', "defaultContent": ""  },
+					          { data: 'Needed to pass', "defaultContent": ""  },
+					          { data: 'Work Days missed', "defaultContent": ""  },
+					          { data: 'Description of Class', "defaultContent": ""  },
+					          { data: 'Comments', "defaultContent": ""  },
+					          ]
+				});
+				$('#table_id tbody').on('click','tr', function(){
+					d = table.row(this).data();
+					console.log("Data is " + d["Request ID"]);
+					$('#approve').show();
+					$('#deny').show();
+				});
+			} );
 		}
 	}
 }
 
+//Approves the claims
+function approve(d,employee){
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "approve", true);
+	xhr.send(d["Request ID"]);
+
+	xhr.onreadystatechange = function(){		
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var check = xhr.responseText;
+			if(check != "0"){
+				alert("CLAIM: " + d["Request ID"] + " has been updated");
+			}else{
+				alert("Error has occured please try again");
+			}
+			checkotherforms(employee);
+		}
+	}
+}
+
+
+//Denies the claims
+function deny(d,employee){
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "denied", true);
+	xhr.send(d["Request ID"]);
+
+	xhr.onreadystatechange = function(){		
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var check = xhr.responseText;
+			if(check != "0"){
+				alert("CLAIM: " + d["Request ID"] + " has been updated");
+			}else{
+				alert("Error has occured please try again");
+			}
+			checkotherforms(employee);
+		}
+	}
+}

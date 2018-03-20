@@ -17,6 +17,7 @@ public class LoadViewServlet extends HttpServlet{
 		
 		String page = process(req,resp);
 		req.getRequestDispatcher(page).forward(req, resp);
+	
 	}
 
 	static String process(HttpServletRequest req, HttpServletResponse resp) 

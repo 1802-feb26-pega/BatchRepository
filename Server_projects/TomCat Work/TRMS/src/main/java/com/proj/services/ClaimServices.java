@@ -20,5 +20,16 @@ public class ClaimServices {
 		// TODO Auto-generated method stub
 		return claim_dao.getClaims(emp);
 	}
+	
+	public ArrayList<Claim> direct_report(Employee e){
+		
+		return claim_dao.grab_direct_report(e);		
+		
+	}
+
+	public boolean update_claim(int id,String type) {
+		// TODO Auto-generated method stub
+		return claim_dao.update(id,type);
+	}
 
 }

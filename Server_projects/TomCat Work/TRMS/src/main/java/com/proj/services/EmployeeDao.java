@@ -35,7 +35,7 @@ public class EmployeeDao implements DatabaseDaoInterfaces{
 				employee.setLastname(crs.getString(3));
 				employee.setUsername(crs.getString(4));
 				employee.setPassword(crs.getString(5));
-				employee.setReportsto(crs.getInt(6));
+				employee.setSup(crs.getString(6));
 				employee.setTotal(crs.getDouble(7));
 				employee.setAwarded(crs.getDouble(8));
 				employee.setDept(crs.getInt(9));

@@ -10,7 +10,7 @@ public class Employee {
 		private String lastname;
 		private String username;
 		private String password;
-		private int reportsto;
+		private String Sup;
 		private double total;
 		private double awarded;
 		private int dept;
@@ -65,14 +65,11 @@ public class Employee {
 			// TODO Auto-generated constructor stub
 		}
 		
-		
-		
-		
-		public int getReportsto() {
-			return reportsto;
+		public String getSup() {
+			return Sup;
 		}
-		public void setReportsto(int reportsto) {
-			this.reportsto = reportsto;
+		public void setSup(String sup) {
+			Sup = sup;
 		}
 		public double getTotal() {
 			return total;
@@ -96,7 +93,7 @@ public class Employee {
 		@Override
 		public String toString() {
 			return "Employee [key=" + key + ", firstname=" + firstname + ", lastname=" + lastname + ", username="
-					+ username + ", password=" + password + ", reportsto=" + reportsto + ", total=" + total
+					+ username + ", password=" + password + ", reportsto=" + Sup + ", total=" + total
 					+ ", awarded=" + awarded + ", dept=" + dept + "]";
 		}
 }
