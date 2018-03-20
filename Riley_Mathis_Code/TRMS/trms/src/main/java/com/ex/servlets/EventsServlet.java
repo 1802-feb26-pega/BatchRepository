@@ -21,7 +21,7 @@ public class EventsServlet extends HttpServlet{
 	
 	static Service service = new Service();
 
-	//get accounts per user
+	//get events per employee
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("IN Events -- GET");

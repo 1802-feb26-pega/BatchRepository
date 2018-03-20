@@ -1,4 +1,4 @@
-<h2 style="text-align:center">
+<h2 id="welcome-header" style="text-align:center">
 	Welcome, <span id="name"></span>!
 </h2>
 <!-- Here are your accounts:
@@ -16,8 +16,7 @@
 	<form>
 		<h1>Reimbursement Request Form</h1>
 		<div class="form-group">
-			<input type="text" class="form-control" id="firstname" placeholder="Enter your first name">
-			<input type="text" class="form-control" id="lastname" placeholder="Enter your last name">
+			<input type="text" class="form-control" id="id" placeholder="Enter your first name">
 		</div>
 		<div class="form-group">
 			<h3>Event Information</h3>
@@ -26,11 +25,7 @@
 			<input type="text" class="form-control" id="location" placeholder="Enter a location">
 			<input type="text" class="form-control" id="description" placeholder="Enter a description">
 			<input type="number" class="form-control" id="cost" placeholder="Enter projected cost">
-			<select class="custom-select">
-				<option value="1" selected>Grade</option>
-				<option value="2">Presentation</option>
-			</select>
-			<select class="custom-select">
+			<select id="event-type" class="custom-select">
 				<option value="1" selected>University Course</option>
 				<option value="2">Seminar</option>
 				<option value="3">Certification Preparation Class</option>
@@ -53,7 +48,7 @@
 			<label class="custom-control-label" for="check2">Department Head Approval</label>
 		</div>
 		<br>
-		<input type="text" class="form-control" placeholder="Projected Reimbursement" readonly>
+		<input type="text" id="requested-amount" class="form-control" placeholder="Projected Reimbursement" readonly>
 		<br>
 		<button class="btn btn-primary" id="submitReimbursement">Submit</button>
 	</form>
