@@ -30,8 +30,12 @@ public class MainMain {
 //		User u = dao.getUserByUsername("js");
 //		System.out.println(u.toString());
 		
-		dao.addUser("fred", "meyer", "fm", "iamfred", "unknown", "unknown", "department head", 1, 0, 0);
-		dao.addUser("keith", "richards", "kr", "iamkeith", "unknown", "unknown", "benefits coordinator", 1, 0, 0);
+		//dao.addUser("fred", "meyer", "fm", "iamfred", "unknown", "unknown", "department head", 1, 0, 0);
+		//dao.addUser("keith", "richards", "kr", "iamkeith", "unknown", "unknown", "benefits coordinator", 1, 0, 0);
 		
+		//dao.addApproval(6);
+		//dao.updateApproval(dao.getUserByUsername("js").getId(),"approved",6);
+		//dao.updateApproval(dao.getUserByUsername("fm").getId(),"approved",6);
+		//dao.updateApproval(dao.getUserByUsername("kr").getId(),"approved",6);
 	}
 }

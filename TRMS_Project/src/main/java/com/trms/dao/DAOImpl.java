@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -410,6 +411,83 @@ public class DAOImpl implements DAO
 		
 		return requests;
 	}//getrequestsbyuser
+	
+	public int addApproval(int requestId)
+	{
+		int value = -1;
+		
+		try(Connection conn  = ConnectionFactory.getInstance().getConnection();)
+		{
+			String sql = "{call new_approval(?,?,?,?,?,?,?,?)}";
+			CallableStatement c = conn.prepareCall(sql);
+			c.setInt(1, requestId);
+			c.setNull(2,java.sql.Types.INTEGER);
+			c.setNull(3,java.sql.Types.INTEGER);
+			c.setNull(4,java.sql.Types.INTEGER);
+			c.setString(5,"");
+			c.setString(6,"");
+			c.setString(7,"");
+			c.setDouble(8, 0);
+			value = c.executeUpdate();
+			
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+			
+		return value;
+	}//addapproval
+	
+	public int updateApproval(int employeeId, String status,int requestId)
+	{
+		int value=-1;
+		String sql;
+		
+		try(Connection conn  = ConnectionFactory.getInstance().getConnection();)
+		{
+			if(employeeId>=1000 && employeeId<2000)
+			{
+				//supervisor
+				sql = "UPDATE approval SET direct_sup_id=?,direct_sup_status=? WHERE request_id=?";
+				PreparedStatement p = conn.prepareStatement(sql);
+				p.setInt(1, employeeId);
+				p.setString(2, status);
+				p.setInt(3, requestId);
+				value = p.executeUpdate();
+				
+			}else if(employeeId>=2000 && employeeId<3000)
+			{
+				//department head
+				sql = "UPDATE approval SET dept_head_id=?,dept_head_status=? WHERE request_id=?";
+				PreparedStatement p = conn.prepareStatement(sql);
+				p.setInt(1, employeeId);
+				p.setString(2, status);
+				p.setInt(3, requestId);
+				value = p.executeUpdate();
+			}else if(employeeId>=3000 && employeeId<4000)
+			{
+				//benco
+				sql = "UPDATE approval SET benco_id=?,benco_status=? WHERE request_id=?";
+				PreparedStatement p = conn.prepareStatement(sql);
+				p.setInt(1, employeeId);
+				p.setString(2, status);
+				p.setInt(3, requestId);
+				value = p.executeUpdate();
+			}
+			
+			sql = "COMMIT";
+			Statement s = conn.createStatement();
+			s.executeQuery(sql);
+			
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		
+		return value;
+	}
+	
 }//daoimpl
 
 

@@ -23,4 +23,6 @@ public interface DAO {
 			double cost,int gStyleId,int grade,Date rDate,Timestamp t,int flaggedId,
 			int appId,int uId);
 	public List<Request> getRequestsByUser(User u);
+	public int addApproval(int requestId);
+	public int updateApproval(int employeeID,String status,int requestId);
 }
