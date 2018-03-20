@@ -282,7 +282,7 @@ function register(){
 	
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
-			alert("Registration Successful!")
+			alert("Registration Successful!");
 			window.location.replace("index.html");
 		}
 	}
@@ -374,7 +374,7 @@ function getAllRequestsForReview(){
 			var requests = JSON.parse(xhr.responseText);
 			console.log(requests);
 			if(requests.length == 0){
-				console.log("you have no requests");
+				$('#approvalDenialTable').hide();
 			}
 			else{
 				console.log("testing----");
@@ -413,6 +413,7 @@ function getAllRequestsForReview(){
 					
 					xhr.onreadystatechange = function(){
 						if(xhr.readyState == 4 && xhr.status == 200){
+							alert("Approval Successful!");
 							approvalDenialTable.row( $(this).parents('tr') ).remove();
 						}
 					}
@@ -433,7 +434,8 @@ function approveRequest(){
 	
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
-			
+			alert("Approval Successful!");
+			approvalDenialTable.row( $(this).parents('tr') ).remove();
 		}
 	}
 	
