@@ -28,13 +28,14 @@ public class RequestServlet extends HttpServlet{
 		
 		HttpSession session = req.getSession();
 		Employee emp = (Employee) session.getAttribute("employee");
+		System.out.print("employee" + emp);
 		
 		ArrayList<Reimbursement> requests = service.getRequests(emp);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
 		String reqString = mapper.writeValueAsString(requests);
-		System.out.println(reqString);
+		System.out.println("reqString" + reqString);
 		
 		PrintWriter out = resp.getWriter();
 		resp.setContentType("application/json");

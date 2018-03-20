@@ -170,16 +170,18 @@ function request(){
 	var city = $('#event_city');
 	var state = $('#event_state');
 	var cost = $('#cost');
-	var event_type = $('event_type');
-	var format = $('format');
+	var event_type = $('#event_type');
+	var format = $('#format');
+	var desc = $('#desc');
 	
 	var req = {
-			event_date: event_date, 
+			eventDate: event_date, 
 			city: city, 
 			state: state, 
 			cost: cost,
-			event_type: event_type,
+			eventType: event_type,
 			format: format,
+			description: desc
 	};
 	
 	var xhr = new XMLHttpRequest();
@@ -196,12 +198,12 @@ function request(){
 
 function getEmployeeRequests() {
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "emprequests", true);
+	xhr.open("GET", "request", true);
 	xhr.send();
 	
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
-			var requtests = JSON.parse(xhr.responseText);
+			var requests = JSON.parse(xhr.responseText);
 			if(requests.length == 0){
 				console.log("You have no pending requests.");
 			}
