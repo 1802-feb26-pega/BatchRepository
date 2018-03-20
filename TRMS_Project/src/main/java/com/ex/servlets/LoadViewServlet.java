@@ -30,11 +30,11 @@ public class LoadViewServlet extends HttpServlet{
 			//System.out.println("register");
 			return"/partials/register.html";		
 		case("/rev/loadnav.view"):
-			System.out.println("navbar");
+			//System.out.println("navbar");
 			return "/partials/navbar.html";
 			
 		case("/rev/loadhome.view"):
-			System.out.println("home");
+			//System.out.println("home");
 			return"/partials/home.html";
 			
 		case("/rev/loadnewrequest.view"):
