@@ -354,7 +354,7 @@ public class DAOImpl implements DAO
 	{
 		List<Request> requests = new ArrayList<Request>();
 		List<Integer> requestIds = new ArrayList<Integer>();
-		Request temp = new Request();
+		//Request temp = new Request();
 		int id = u.getId();
 
 
@@ -382,7 +382,8 @@ public class DAOImpl implements DAO
 				rs = p.executeQuery();
 
 				while(rs.next())
-				{
+				{	
+					Request temp = new Request();
 					temp.setRequestId(rs.getInt(1));
 					temp.setEventType(rs.getString(2));
 					temp.setStartDate(rs.getDate(3));
@@ -397,7 +398,7 @@ public class DAOImpl implements DAO
 					temp.setFlaggedId(rs.getInt(12));
 					temp.setApprovalId(rs.getInt(13));
 					requests.add(temp);
-					System.out.println(temp.toString());
+					//System.out.println(temp.toString());
 				}//while - rs
 				//requestIds.remove(0);
 			}//while - request Ids
@@ -406,11 +407,6 @@ public class DAOImpl implements DAO
 		{
 			e.printStackTrace();
 		}//try catch
-
-		for(Request i : requests)
-		{
-			System.out.println("** "+i.toString());
-		}
 		
 		return requests;
 	}//getrequestsbyuser

@@ -57,7 +57,7 @@ function loadNav(){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "loadnav.view" , true);
 	xhr.send();
-	
+
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#navbar').html(xhr.responseText);
@@ -215,14 +215,15 @@ function getUserRequests(){
 						{data : "location" },
 						{data : "description" },
 						{data : "cost" },
-						{data : "gradingStyleId" },
+						//{data : "gradingStyleId" },
 						{data : "grade" },
 						{data : "requestDate" },
 						{data : "requestTime" },
-						{data : "flaggedId" },
+						//{data : "flaggedId" },
 						{data : "approvalId" }
 						]
 				});
+
 				//console.log("this should have worked");
 				$('#reqTable').show();
 			}
@@ -236,7 +237,7 @@ function formatTable(requests){
 	for(let i = 0; i < requests.length; i++){
 		let temp = new Object();
 		//console.log(requests[i]);
-		temp.requestId = requests[i].requestId;
+		/*		temp.requestId = requests[i].requestId;
 		temp.eventType = requests[i].eventType;
 //		temp.startDate = requests[i].startDate;
 		var a = new Date(requests[i].startDate);
@@ -256,9 +257,24 @@ function formatTable(requests){
 		var d = new Date(requests[i].requestTime);
 		temp.requestTime = d.customFormat("#h#:#mm# #ampm#");
 		temp.flaggedId = requests[i].flaggedId;
+		temp.approvalId = requests[i].approvalId;*/
+		temp.requestId = requests[i].requestId;
+		temp.eventType = requests[i].eventType;
+		var a = new Date(requests[i].startDate);
+		temp.startDate = a.customFormat("#DD#-#MMM#-#YYYY#");
+		var b = new Date(requests[i].endDate);
+		temp.endDate = b.customFormat("#DD#-#MMM#-#YYYY#");
+		temp.location = requests[i].location;
+		temp.description = requests[i].description;
+		temp.cost = requests[i].cost;
+		temp.grade = requests[i].grade;
+		var c = new Date(requests[i].requestDate);
+		temp.requestDate = c.customFormat("#DD#-#MMM#-#YYYY#");
+		var d = new Date(requests[i].requestTime);
+		temp.requestTime = d.customFormat("#h#:#mm# #ampm#");
 		temp.approvalId = requests[i].approvalId;
 
-		console.log(temp);
+		//console.log(temp);
 		data.push(temp);
 	}
 	//console.log(data);
@@ -296,7 +312,7 @@ function create(){
 
 	var email = user.email;
 
-	//console.log((fn=="" || ln=="" || uname=="" || pass==""));
+
 	var t = new Date(Date.now());
 	var s = new Date(Date.now());
 	tt = t.customFormat("#YYYY#-#MM#-#DD#");
@@ -316,12 +332,12 @@ function create(){
 			"approvalId":0,
 			"u":user.id
 	};
-	console.log('1');
+	//console.log('1');
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "newrequest", true);
 	//console.log(JSON.stringify(user));
 	xhr.send(JSON.stringify(newData));
-	console.log(JSON.stringify(newData));
+	//console.log(JSON.stringify(newData));
 
 	loadNav();
 	loadHome(user);
