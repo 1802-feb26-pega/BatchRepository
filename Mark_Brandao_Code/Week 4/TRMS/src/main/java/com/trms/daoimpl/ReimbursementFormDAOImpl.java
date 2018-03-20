@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.trms.dao.ReimbursementFormDAO;
+import com.trms.pojos.JoinedQuery;
 import com.trms.pojos.ReimbursementForm;
 import com.trms.util.ConnectionFactory;
 
@@ -34,14 +35,14 @@ public class ReimbursementFormDAOImpl implements ReimbursementFormDAO {
 				temp.setTimeMissed(rs.getInt(9));
 				temp.setTotalCost(rs.getDouble(10));
 				temp.setProjectedReimbursement(rs.getDouble(11));
-				int urgent = rs.getInt(13);
+				int urgent = rs.getInt(12);
 				if(urgent == 0) {
 					temp.setUrgent(false);
 				}
 				if(urgent == 1) {
 					temp.setUrgent(true);
 				}
-				int exceedsValue = rs.getInt(14);
+				int exceedsValue = rs.getInt(13);
 				if(exceedsValue == 0) {
 					temp.setExceedsValue(false);
 				}
@@ -74,6 +75,46 @@ public class ReimbursementFormDAOImpl implements ReimbursementFormDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	public List<JoinedQuery> getRequestsForApproval(int supervisorId){
+		List<JoinedQuery> requests = new ArrayList<>();
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+		String sql = "SELECT rf.reimbursement_id, rf.date_submitted, rf.justification, rf.status_id, rf.time_missed, rf.total_cost, rf.projected_reimbursement, rf.urgent, e.firstname, e.lastname, e.email, ee.event_description, ee.event_location, ee.event_date " + 
+				"FROM reimbursement_form rf " + 
+				"JOIN employee e " + 
+				"ON rf.employee_id = e.employee_id " + 
+				"JOIN event ee " + 
+				"ON ee.event_id = rf.event_id " + 
+				"WHERE e.supervisor_id = ?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, supervisorId);
+		ResultSet rs = pstmt.executeQuery();
+		while(rs.next()) {
+			JoinedQuery temp = new JoinedQuery();
+			temp.setReimbursementId(rs.getInt(1));
+			temp.setDateSubmitted(rs.getDate(2));
+			temp.setJustification(rs.getString(3));
+			temp.setStatusId(rs.getInt(4));
+			temp.setTimeMissed(rs.getInt(5));
+			temp.setTotalCost(rs.getDouble(6));
+			temp.setProjectedReimbursement(rs.getDouble(7));
+			temp.setUrgent(rs.getInt(8));
+			temp.setFirstname(rs.getString(9));
+			temp.setLastname(rs.getString(10));
+			temp.setEmail(rs.getString(11));
+			temp.setEventDescription(rs.getString(12));
+			temp.setEventLocation(rs.getString(13));
+			temp.setEventDate(rs.getDate(14));
+			requests.add(temp);
+		}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return requests;
+	}
 
 	@Override
 	public ReimbursementForm addReim(ReimbursementForm rf) {
@@ -100,9 +141,9 @@ public class ReimbursementFormDAOImpl implements ReimbursementFormDAO {
 			pstmt.setInt(12, exceedsvalue);
 
 			int rowsAffected = pstmt.executeUpdate();
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				if(rowsAffected > 0) {
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if(rowsAffected > 0) {
+				while(rs.next()) {
 					rf.setReimbursementId(rs.getInt(1));
 				}
 				conn.commit();

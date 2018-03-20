@@ -3,10 +3,13 @@ package com.trms.service;
 import java.util.List;
 
 import com.trms.dao.EmployeeDAO;
+import com.trms.dao.EventDAO;
 import com.trms.dao.ReimbursementFormDAO;
 import com.trms.daoimpl.EmployeeDAOImpl;
+import com.trms.daoimpl.EventDAOImpl;
 import com.trms.daoimpl.ReimbursementFormDAOImpl;
 import com.trms.pojos.Employee;
+import com.trms.pojos.Event;
 import com.trms.pojos.ReimbursementForm;
 
 public class Service {
@@ -51,7 +54,12 @@ public class Service {
 	}
 	
 	
-	
+	public Event getEvent(ReimbursementForm rf) {
+		Event e = new Event();
+		EventDAO eDao = new EventDAOImpl();
+		e = eDao.getEventById(rf.getEventId());
+		return e;
+	}
 	
 	
 }

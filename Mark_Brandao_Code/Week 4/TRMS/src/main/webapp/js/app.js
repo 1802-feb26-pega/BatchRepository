@@ -153,7 +153,6 @@ function validateEmail(){
 }
 
 function register(){
-	console.log("registering");
 	var fn = $("#firstname").val();
 	var ln = $("#lastname").val();
 	var em = $("#email").val();
@@ -164,7 +163,6 @@ function register(){
 	if($("#supervisor").prop("checked")){
 		level = 2;
 	} 
-	console.log(dept);
 
 
 	var employee = {
@@ -186,6 +184,7 @@ function register(){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$("#success").show();
+			window.location.replace("index.html");
 		}
 	}
 }
@@ -265,27 +264,21 @@ function calcExpected(){
 	switch(type){
 		case "1":
 			multiplier = .8;
-			console.log(multiplier);
 			break;
 		case "2":
 			multiplier = .6;
-			console.log(multiplier);
 			break;
 		case "3":
 			multiplier = .75;
-			console.log(multiplier);
 			break;
 		case "4":
 			multiplier = 1;
-			console.log(multiplier);
 			break;
 		case "5":
 			multiplier = .9;
-			console.log(multiplier);
 			break;
 		case "6":
 			multiplier = .3;
-			console.log(multiplier);
 			break;
 	}
 	$("#expectedReimbursement").val(cost*multiplier);
@@ -304,7 +297,6 @@ function submitRequestForm(){
 
 	var info = [location, description, type, cost, wmissed, expected, date, grade, just];
 
-	console.log(info);
 
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "requestform", true);
@@ -319,7 +311,19 @@ function submitRequestForm(){
 }
 
 function loadReqApprovals(employee){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadapprovals.view", true);
+	xhr.send();
 
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$("#view").html(xhr.responseText);
+			$("#name").html(employee.firstname);
+			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
+			getRequestsForReview();
+			$("#reimTable").hide();
+		}
+	}
 }
 
 function loadHome(employee){
@@ -339,13 +343,11 @@ function loadHome(employee){
 }
 
 function logout(){
-	console.log("logging out");
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "logout", true);
 	xhr.send();
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
-			console.log("Attempting to redirect");
 			window.location.replace("index.html");
 		}
 	}
@@ -358,21 +360,20 @@ function getEmployeeRequests(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			var reims = JSON.parse(xhr.responseText);
 			if(reims.length == 0){
-				console.log("You have no accounts");
 			} else {
-				console.log("testing---");
 				// reims = JSON.stringify("data") + ":" + accounts;
-				console.log(reims);
-				var data = formatTable(reims);
+				var data = formatPendingTable(reims);
 
 				$("#reimTable").DataTable({
 					data : data,
 					columns: [
-						{data : "Id" },
-						{data : "Status"}
+						{data : "reimbursementId" },
+						{data : "dateSubmitted"},
+						{data : "statusId"},
+						{data : "totalCost"},
+						{data : "projectedReimbursement"}
 					]
 				});
-				console.log("This should have worked");
 				$("#reimTable").show();
 			}
 		}
@@ -381,15 +382,72 @@ function getEmployeeRequests(){
 	xhr.send();
 }
 
-function formatTable(reims){
-	console.log("formatting table");
+function formatPendingTable(reims){
 	var data = [];
 	for(let i = 0; i < reims.length; i++){
 		let temp = new Object();
-		console.log(reims[i]);
-		temp.Id = reims[i].reimbursementId;
-		temp.Status = reims[i].statusId;
-		console.log(temp);
+		temp["reimbursementId"] = reims[i].reimbursementId;
+		temp["dateSubmitted"] = reims[i].dateSubmitted;
+		temp["statusId"] = reims[i].statusId;
+		temp["totalCost"] = reims[i].totalCost;
+		temp["projectedReimbursement"] = reims[i].projectedReimbursement;
+		data.push(temp);
+	}
+	console.log(data);
+	return data;
+}
+
+function getRequestsForReview(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "review", true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var requests = JSON.parse(xhr.responseText);
+			if(requests.length != 0){
+				var data = formatReviewTable(requests);
+
+				$("#approvalDenialTable").DataTable({
+					"scrollX": true,
+					retrieve: true,
+					data : data,
+					columns: [
+						{data : "reimbursementId"},
+						{data : "firstname"},
+						{data : "lastname"},
+						{data : "eventDate"},
+						{data : "statusId"},
+						{data : "totalCost"},
+						{data : "projectedReimbursement"},
+						{data : "justification"},
+						{data : "timeMissed"},
+						{defaultContent: '<button class="btn btn-primary btn-block approveButton">Approve</button>'},
+						{defaultContent: '<button class="btn btn-primary btn-block denyButton">Deny</button>'}
+					]
+
+				});
+				$("#approvalDenialTable").show();
+			}
+		}
+	}
+}
+
+
+
+function formatReviewTable(requests){
+	var data = [];
+	for(let i = 0; i < requests.length; i++){
+		let temp = new Object();
+		temp["reimbursementId"] = requests[i].reimbursementId;
+		temp["firstname"] = requests[i].firstname;
+		temp["lastname"] = requests[i].lastname;
+		temp["eventDate"] = requests[i].eventDate;
+		temp["statusId"] = requests[i].statusId;
+		temp["totalCost"] = requests[i].totalCost;
+		temp["projectedReimbursement"] = requests[i].projectedReimbursement;
+		temp["justification"] = requests[i].justification;
+		temp["timeMissed"] = requests[i].timeMissed;
 		data.push(temp);
 	}
 	console.log(data);
