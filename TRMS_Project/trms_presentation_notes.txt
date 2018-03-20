@@ -1,0 +1,28 @@
+trms presentation notes
+20 march 2018
+
+
+future implementation ideas/notes:
+date picker (instead of manually entering start/end date)
+
+approval status shown as 0 (new request), 1 (supervisor approval), 2 (department head approval), 3 (benco approval)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
