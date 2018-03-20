@@ -10,7 +10,7 @@ public interface EmployeeDAO {
 	public Employee getEmployeeByEmail(String email);
 	public Employee getEmployeeByName(String firstname, String lastname);
 	public Employee addEmployee(Employee newEmployee);
-	public int updateEmployee(Employee updatedEmployee);
+	public Employee updateEmployee(Employee updatedEmployee);
 	public Employee getEmployeeSupervisor(int employeeId);
 	public boolean employeeExists(String email);
 	public boolean employeeExists(String firstname, String lastname);

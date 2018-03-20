@@ -144,9 +144,45 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 
 	@Override
-	public int updateEmployee(Employee updatedEmployee) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Employee updateEmployee(Employee updatedEmp) {
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+
+			
+
+			conn.setAutoCommit(false);
+
+			String sql = "UPDATE employee SET firstname = ?, lastname = ?, email = ?, pass = ?, supervisor_id = ?, "
+					+ "department_id = ?, level_id = ?, available_reimbursement = ?,"
+					+ " pending_reimbursement = ?, awarded_reimbursement = ? WHERE employee_id = ?"; 
+
+	
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, updatedEmp.getFirstname());
+			pstmt.setString(2, updatedEmp.getLastname());
+			pstmt.setString(3, updatedEmp.getEmail());
+			pstmt.setString(4, updatedEmp.getPass());
+			pstmt.setInt(5, updatedEmp.getSupervisorId());
+			pstmt.setInt(6, updatedEmp.getDepartmentId());
+			pstmt.setInt(7, updatedEmp.getLevelId());
+			pstmt.setDouble(8, updatedEmp.getAvailableReimbursement());
+			pstmt.setDouble(9, updatedEmp.getPendingReimbursement());
+			pstmt.setDouble(10, updatedEmp.getAwardedReimbursement());
+			pstmt.setInt(11, updatedEmp.getEmployeeId());
+
+			int rowsAffected = pstmt.executeUpdate();
+		
+			if(rowsAffected > 0) {
+				conn.commit();
+			}
+			else {
+				updatedEmp = null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return updatedEmp;
 	}
 
 	@Override

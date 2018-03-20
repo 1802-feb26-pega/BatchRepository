@@ -251,8 +251,69 @@ function loadReqForm(employee){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$("#view").html(xhr.responseText);
-			var depts = getDepartments();
-			console.log(depts);
+			$("#submitRequestForm").on("click",submitRequestForm);
+			$("#submitmessage").hide();
+			$("#cost").keyup(calcExpected)
+		}
+	}
+}
+
+function calcExpected(){
+	var cost = $("#cost").val();
+	var type = $("#eventTypeSelector").val();
+	var multiplier = 0;
+	switch(type){
+		case "1":
+			multiplier = .8;
+			console.log(multiplier);
+			break;
+		case "2":
+			multiplier = .6;
+			console.log(multiplier);
+			break;
+		case "3":
+			multiplier = .75;
+			console.log(multiplier);
+			break;
+		case "4":
+			multiplier = 1;
+			console.log(multiplier);
+			break;
+		case "5":
+			multiplier = .9;
+			console.log(multiplier);
+			break;
+		case "6":
+			multiplier = .3;
+			console.log(multiplier);
+			break;
+	}
+	$("#expectedReimbursement").val(cost*multiplier);
+}
+
+function submitRequestForm(){
+	var location = $("#location").val();
+	var description = $("#description").val();
+	var type = $("#eventTypeSelector").val();
+	var cost = $("#cost").val();
+	var wmissed = $("#workTimeMissed").val();
+	var expected = $("#expectedReimbursement").val();
+	var date = $("#startDate").val();
+	var grade = $("#gradingFormatSelector").val();
+	var just = $("#justification").val();
+
+	var info = [location, description, type, cost, wmissed, expected, date, grade, just];
+
+	console.log(info);
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "requestform", true);
+	xhr.send(JSON.stringify(info));
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var employee = JSON.parse(xhr.responseText);
+			alert("Submission successful!")
+			loadHome(employee);
 		}
 	}
 }

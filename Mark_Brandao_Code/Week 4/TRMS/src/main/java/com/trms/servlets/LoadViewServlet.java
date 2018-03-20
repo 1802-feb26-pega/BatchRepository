@@ -30,7 +30,7 @@ public class LoadViewServlet extends HttpServlet {
 		case("/trms/loadhome.view"):
 			return "partials/home.html";
 		case("/trms/loadreqform.view"):
-			return "partials/reqform.html";
+			return "partials/reqform2.html";
 		}
 		
 		return req.getRequestURI();
