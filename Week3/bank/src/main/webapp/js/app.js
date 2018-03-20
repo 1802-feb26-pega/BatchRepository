@@ -6,10 +6,12 @@ function loadLanding(){ //1
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "loadlanding.view" , true);
 	xhr.send();
+	
 
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
+			
 			$('#login').on('click', login); 
 			$('#pass').keydown(function(event){
 				var keypressed = event.keyCode || event.which;
@@ -63,7 +65,7 @@ function validate(){
 }
 
 
-function register(){ 
+function register(){
 	console.log("register");
 	var fn = $('#fn').val();
 	var ln = $('#ln').val();

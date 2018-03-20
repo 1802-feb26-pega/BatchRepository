@@ -5,6 +5,7 @@
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
   
+  
   <servlet>
   	<servlet-name>NiceMeme</servlet-name>
   	<servlet-class>com.ex.servlets.HelloServlet</servlet-class>

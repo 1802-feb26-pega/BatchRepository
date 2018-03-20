@@ -1,6 +1,7 @@
 ---------------
 -- DROPPING --
 ---------------
+
 drop table employee;
 drop table department;
 drop table trms_location;
@@ -45,7 +46,7 @@ CREATE OR REPLACE TRIGGER loc_id_trigger
 
 CREATE TABLE department(
     dep_id NUMBER(10) PRIMARY KEY,
-    dep_name VARCHAR(64)
+    dep_name VARCHAR(64) NOT NULL
 );
 DROP SEQUENCE dep_id_seq;
 CREATE SEQUENCE dep_iq_seq
@@ -64,7 +65,6 @@ CREATE OR REPLACE TRIGGER dep_id_trigger
         FROM dual;
     END;
 /
-
 
 CREATE TABLE employee(
     emp_id NUMBER(10) PRIMARY KEY,
@@ -341,16 +341,31 @@ INSERT INTO trms_location (loc_country, loc_city, loc_province, loc_postal_code,
     '',
     '4136525514'
 );
-commit;
 
 
-INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id,
-                      emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt)
-VALUES (
-    null, null, 1, 1, 1, 'theBoss@mail.com', 'password123', 1000.00
+INSERT INTO trms_location (loc_country, loc_city, loc_province, loc_postal_code, loc_address_1, loc_address_2, loc_phone) VALUES (
+    'United States',
+    'Manchester',
+    'VT',
+    '05255',
+    '230 Kent Hill rd',
+    '',
+    '8029382743'
 );
 
-INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id, emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt) VALUES (null, null, 2, 1, 1, 'theOtherBoss@mail.com', 'password123', 1000.00);
+
+
+
+INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id, emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt)
+VALUES (NULL, NULL, 61, 1, 1, 'theBoss@mail.com', 'password123', 100.00);
+
+
+INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id, emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt)
+VALUES (NULL, NULL, 62, 2, 1, 'theOtherBoss@mail.com', 'password123', 100.00);
+
+INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id, emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt)
+VALUES (1, 1, 62, 2, 0, 'theSlave@mail.com', 'password123', 100.00);
+
 
 
 ALTER TABLE rbmt_type MODIFY rtype_coverage NUMBER(5, 2);
@@ -359,7 +374,6 @@ ALTER TABLE approval RENAME COLUMN apvl_approved TO apvl_approved_id;
 ALTER TABLE approval MODIFY apvl_reason VARCHAR2(128) NULL;
 
 commit;
-
 ---------------
 -- SELECTION --
 ---------------
