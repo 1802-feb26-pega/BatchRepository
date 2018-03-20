@@ -152,6 +152,7 @@ function loadHome(employee)
 // Getting Form data from database
 function getEmployeeForms()
 {
+	$('#homeMessage').hide();
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "forms" , true);
 	xhr.send();
@@ -164,7 +165,10 @@ function getEmployeeForms()
 
 			if(forms.length == 0)
 			{
-				console.log("you have no reimbursement requests");
+				//console.log("you have no reimbursement requests");
+				var message = "You have no reimbursement requests";
+				$('#homeMessage').html(message);
+				$('#homeMessage').show();
 			}
 			else
 			{
@@ -182,6 +186,10 @@ function getEmployeeForms()
 				//console.log("subEmps after being loaded: " + subEmps);
 
 				//var data = formatTable(forms, subEmps);
+				var message = "Here are your reimbursement requests";
+				$('#homeMessage').html(message);
+				$('#homeMessage').show();
+
 				var data = formatTable(forms);
 
 				$('#formTable').DataTable
