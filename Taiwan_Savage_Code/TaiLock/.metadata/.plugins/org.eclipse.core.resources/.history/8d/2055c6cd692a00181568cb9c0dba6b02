@@ -1,0 +1,171 @@
+window.onload = function(){
+	loadLanding();
+}
+
+function loadLanding(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadlanding.view" , true);
+	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			$('#login').on('click', login);
+			$('#register').on('click', loadRegister);
+			$('#pass').keydown(function(event) {
+				var keypressed = event.keycode || event.which;
+				if(keypressed==13) login();
+			});
+			// after text is loaded, add event listeners/functionality to view
+		}
+	}
+}
+
+
+function loadNav(user){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadnav.view" , true);
+	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#navbar').html(xhr.responseText);
+			$('#home').on('click', loadHome(user));
+			$('#requests').on('click', function () {
+				window.location.replace("partials/indexTwo.html");
+				loadRequests(user);
+			});
+			$('#documentation').on('click', loadDocs(user));
+			$('#logout').on('click', logout);
+			
+			// after loaded add listeners
+			
+		}
+	}
+}
+
+//where the user will be able to add and approve requests
+function loadRequests(user) {
+	loadNav(user);
+	
+}
+
+//Was going to put documentation here but...
+function loadDocs(user) {
+}
+
+function logout() {
+	console.log('Logging out');
+	//here we invalidate the session and go back to the login page
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "logout" , true);
+	xhr.send();
+	
+	xhr.onreadstatechange = function() {
+		console.log("logged out");
+		if(xhr.readyState == 4 && xhr.status == 200) {
+			window.location.replace("index.html");
+		}
+	}
+}
+
+function loadHome(user){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadhome.view" , true);
+	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			$('#name').html(user.firstName);
+			$(document).ready(function() {
+				$('#requesttable').DataTable()
+			});
+			// after loaded add listeners
+		}
+	}
+}
+
+function loadRegister(user){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadregister.view" , true);
+	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			$('#message').hide();
+			$('#username').blur(validate);
+			$('#register').on('click', register);
+		}
+	}
+}
+
+function register(){
+	console.log('register');
+	var fn = $('#fn').val();
+	var ln = $('#ln').val();
+	var email = $('#email').val();
+	var pass = $('#pass').val();
+	var pass2 = $('#pass2').val();
+	
+	if (pass != pass2) {
+		$("#message").show();
+		$("#message").attr("style", "display:inline");
+		message = "Your passwords do not match";
+		$("#message").html(message);
+	}
+	
+	else {
+		
+		var toSend = [fn, ln, email, pass];
+		
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "register", true);
+		xhr.send(JSON.stringify(toSend));
+		
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState == 4 && xhr.status == 200) {
+				var user = JSON.parse(xhr.responseText);
+				console.log("Registered");
+				loadNav(user);
+				loadHome(user);
+			}
+		}
+	}
+	
+}
+
+function validate() {
+	console.log("blurred username");
+}
+
+function login(){
+	console.log('here too early');
+	$('#username').on('click', $('#message').hide());
+	var email = $('#email').val();
+	var password = $('#pass').val();
+	
+	var toSend = [email, password];
+	
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "login", true);
+	xhr.send(JSON.stringify(toSend));
+	
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState == 4 && xhr.status == 200) {
+			var user = JSON.parse(xhr.responseText);
+			var message = "";
+			if (user == null) {
+				$("#message").show();
+				$("#message").attr("style", "display:inline");
+				message = "You have entered the wrong username or password";
+				$("#message").html(message);
+			} else {
+				console.log("We made it");
+				loadNav(user);
+				loadHome(user);
+			}
+		}
+	}
+}

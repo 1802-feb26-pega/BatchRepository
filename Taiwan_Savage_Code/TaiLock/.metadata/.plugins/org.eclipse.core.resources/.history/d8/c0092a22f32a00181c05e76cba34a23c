@@ -1,0 +1,9 @@
+package com.tailock.dao;
+
+public class RequestDao {
+	
+	/**
+	 * need to be able to do CRUD ops on requests and update the request info table
+	 */
+
+}

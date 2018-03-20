@@ -1,0 +1,21 @@
+package com.tailock.service;
+
+import com.tailock.dao.EmployeeDAO;
+import com.tailock.dao.EmployeeDAOImpl;
+import com.tailock.pojos.User;
+
+public class Service {
+
+	static EmployeeDAO dao = new EmployeeDAOImpl();
+	
+	public User login(String username, String password) {
+		User user = dao.getUser(username);
+		if (user == null) return null;
+		else if (user.getPassword().equals(password)) {
+			return user;
+		}
+		else return null;
+	}
+	
+}
+

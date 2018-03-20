@@ -1,0 +1,9 @@
+
+   <div class="row justify-content-md-center">
+      <div class="col-8" style="display:inline-block; background-color:white; box-shadow:3px 3px 5px #888888; border-radius: 8px">
+      	      	<button type="submit" class="btn btn-primary" id="home" style=" box-shadow: 2px 2px 3px #888888; border-color:#FFB74D; border-radius: 8px; background-color: #FFB74D">Home</button>
+      	      	<button type="submit" class="btn btn-primary" id="requests" style=" box-shadow: 2px 2px 3px #888888; border-color:#FFB74D; border-radius: 8px; background-color: #FFB74D">Requests</button>
+      			<button type="submit" class="btn btn-primary" id="documentation" style=" box-shadow: 2px 2px 3px #888888; border-color:#FFB74D; border-radius: 8px; background-color: #FFB74D">Docs</button>
+      			<button type="submit" class="btn btn-primary" id="logout" style=" box-shadow: 2px 2px 3px #888888; border-color:#FFB74D; border-radius: 8px; background-color: #FFB74D">Logout</button>
+      	</div>
+      </div>

@@ -1,0 +1,38 @@
+package com.tailock.dao;
+
+import java.util.List;
+
+import com.tailock.pojos.Employee;
+import com.tailock.pojos.Request;
+
+public class RequestDao {
+	
+	/**
+	 * need to be able to do CRUD operationss on requests and update the request info table
+	 */
+	
+	public void createRequest() {
+		
+	}
+	
+	public List<Request> getAllRequests() {
+		
+	}
+	
+	public List<Request> getAllUserRequests(Employee emp) {
+		
+	}
+	
+	public Request getRequest(int request_id) {
+		
+	}
+	
+	public Request updateRequest() {
+		
+	}
+	
+	public void deleteRequest() {
+		
+	}
+
+}

@@ -1,0 +1,91 @@
+package com.tailock.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+import java.util.List;
+
+import com.tailock.pojos.Employee;
+import com.tailock.pojos.Request;
+import com.tailock.util.ConnectionFactory;
+
+public class RequestDao {
+	
+	/**
+	 * need to be able to do CRUD operationss on requests and update the request info table
+	 */
+	
+	public int getMaxReqId() {
+		Request req = new Request();
+		int maxId = 0;
+		try(Connection conn = ConnectionFactory
+				.getInstance().getConnection();){
+			String sql = "select request_id from reimbursement_request";
+			Statement stmt = conn.createStatement();
+			ResultSet info = stmt.executeQuery(sql);
+			
+			while(info.next()){
+				if (info.getInt(1) > maxId) {
+					maxId = info.getInt(1);
+				}
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return maxId;
+	}
+	
+	public void createRequest(int employee_id, Date eventStartDate, int timeOfEvent, String location, String description,
+			int costOfEvent, int gradeFormat, int requestType, int eventType) {
+		try (Connection conn = ConnectionFactory
+				.getInstance().getConnection();){
+			String sql = "insert into employee (employee_id, username, first_name, last_name, email, password)"
+					+ "values (?, ?, ?, ?, ?, ?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, employee_id);
+			ps.setDate(2, java.sql.Date(eventStartDate.getTime()));
+			ps.setInt(3, timeOfEvent);
+			ps.setString(4, location);
+			ps.setString(5, description);
+			ps.setInt(6, costOfEvent);
+			
+			int updated = ps.executeUpdate();
+			if(updated > 0) {
+				System.out.println("Added " + updated + " new employee");
+				return emp;
+			}
+			else {
+				System.out.println("Wasn't added for some reason");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public List<Request> getAllRequests() {
+		
+	}
+	
+	public List<Request> getAllUserRequests(Employee emp) {
+		
+	}
+	
+	public Request getRequest(int request_id) {
+		
+	}
+	
+	public Request updateRequest() {
+		
+	}
+	
+	public void deleteRequest() {
+		
+	}
+
+}

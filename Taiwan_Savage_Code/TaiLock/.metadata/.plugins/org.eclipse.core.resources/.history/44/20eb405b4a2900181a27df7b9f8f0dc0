@@ -1,0 +1,4 @@
+driver=oracle.jdbc.driver.OracleDriver
+url=jdbc:oracle:thin:@revature-sql-training.clo7eaadn9rw.us-east-2.rds.amazonaws.com:1521/ORCL
+usr=tsavage94
+pwd=Ts04281994

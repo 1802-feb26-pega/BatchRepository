@@ -1,0 +1,26 @@
+package com.ex.servlets;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.bank.pojos.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@WebServlet("/register")
+public class RegisterServlet extends HttpServlet{
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		User u = mapper.readValue(req.getInputStream(), User.class);
+		System.out.println(u.toString());
+	}
+	
+}

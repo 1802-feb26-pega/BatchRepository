@@ -1,0 +1,24 @@
+package com.tailock.service;
+
+import com.tailock.dao.EmployeeDAO;
+import com.tailock.dao.EmployeeDAOImpl;
+import com.tailock.pojos.Employee;
+
+public class Service {
+
+	static EmployeeDAO dao = new EmployeeDAOImpl();
+	
+	public Employee login(String email, String password) {
+		Employee employee = dao.getEmployee(email);
+		if (employee == null) {
+			System.out.println("Null for some reason");
+			return null;
+		}
+		else if (employee.getPassword().equals(password)) {
+			return employee;
+		}
+		else return null;
+	}
+	
+}
+

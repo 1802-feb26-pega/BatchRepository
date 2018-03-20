@@ -1,0 +1,28 @@
+	
+<!-- Register Form Group -->
+<div class="row justify-content-md-center vertical-center" style="position:relative; bottom:100px min-height: 100%; min-height: 100vh; display: flex; align-items: center;">
+<div class="col-12" style="text-align:center"> 
+   <h1 style="color:white; text-shadow:2px 2px #888888">TAILOCK</h1>
+</div>
+<div class="col-3" style="box-shadow: 5px 5px 8px #888888; background-color:white; text-align:center; padding-bottom: 25px; padding-top: 25px; border-radius: 8px">
+  <div class="form-group">
+      <input type="text" class="form-control" id="fn" placeholder="First Name" style="box-shadow: 2px 2px 3px #888888">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" id="ln" placeholder="Last Name" style="box-shadow: 2px 2px 3px #888888">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" id="email" placeholder="Enter Email" style="box-shadow: 2px 2px 3px #888888">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" id="pass" placeholder="Create Password" style="box-shadow: 2px 2px 3px #888888">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" id="pass2" placeholder="Verify Password" style="box-shadow: 2px 2px 3px #888888">
+    </div>
+    <div>
+    <button type="submit" class="btn btn-primary" id="register" style="box-shadow: 2px 2px 3px #888888; border-color:#FFB74D; border-radius: 8px; background-color: #FFB74D">Register</button>
+      </div>
+      <small id="emailHelp" class="form-text text-muted">You can trust us to keep your information secure.</small>
+  </div>
+</div>

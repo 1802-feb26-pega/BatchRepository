@@ -1,0 +1,20 @@
+<h1>
+	Welcome to your bank <span id="name"></span>!
+</h1>
+<div class="row justify-content-md-center vertical-center" style="position:relative; bottom:100px min-height: 100%; min-height: 100vh; display: flex; align-items: center;">
+<div class="col-7" style="box-shadow: 5px 5px 8px #888888; background-color:white; text-align:center; padding-bottom: 25px; padding-top: 25px; border-radius: 8px">
+<h3>Here are your accounts:</h3>
+<table id="requesttable" class="display">
+<thead>
+	<tr>
+		<th>Account No.</th>
+		<th>Balance</th>
+	</tr>
+</thead>
+
+<tbody>
+
+</tbody>
+</table>
+</div>
+</div>

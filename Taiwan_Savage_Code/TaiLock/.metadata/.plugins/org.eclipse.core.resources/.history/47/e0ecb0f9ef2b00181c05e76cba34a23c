@@ -1,0 +1,26 @@
+<div class="row justify-content-md-center">
+	<div class="col-12" style="text-align:center"> 
+		<h1 style="color:white; text-shadow:2px 2px #888888">
+			Welcome to TaiLock TRMS <span id="name"></span>!
+		</h1>
+	</div>
+</div>
+<div class="row justify-content-md-center vertical-center" style="width: 75%; position: fixed; left: 50%; margin-left: -37.5%; align-items: center;">
+<div class="col-7" style="box-shadow: 5px 5px 8px #888888; background-color:white; text-align:center; padding-bottom: 25px; padding-top: 25px; border-radius: 8px">
+<h3>Here are your requests:</h3>
+<table id="requesttable" class="display">
+<thead>
+	<tr>
+ 		<!-- <th>Request No.</th>
+		<th>Request Date</th>
+		<th>Reim. Amount</th>
+		<th>Status</th> -->
+	</tr>
+</thead>
+
+<tbody>
+
+</tbody>
+</table>
+</div>
+</div>

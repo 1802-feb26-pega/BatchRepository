@@ -1,0 +1,36 @@
+package com.tailock.service;
+
+import com.tailock.dao.EmployeeDAO;
+import com.tailock.dao.EmployeeDAOImpl;
+import com.tailock.pojos.Employee;
+
+public class Service {
+
+	static EmployeeDAO empdao = new EmployeeDAOImpl();
+	
+	public Employee login(String email, String password) {
+		Employee employee = empdao.getEmployee(email);
+		if (employee == null) {
+			System.out.println("No user");
+			return null;
+		}
+		else if (employee.getPassword().equals(password)) {
+			return employee;
+		}
+		else return null;
+	}
+	
+	public int getMaxEmployeeId() {
+		int max = empdao
+	}
+	
+	public Employee register(String fn, String ln, String email, String pw) {
+		Employee emp = new Employee(fn, ln, email, pw);
+		
+		emp.setEmployeeId();
+		
+		return emp;
+	}
+	
+}
+

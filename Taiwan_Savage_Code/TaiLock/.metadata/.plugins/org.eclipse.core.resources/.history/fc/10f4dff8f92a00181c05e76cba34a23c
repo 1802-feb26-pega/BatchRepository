@@ -1,0 +1,65 @@
+package com.tailock.dao;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+
+import com.tailock.pojos.Employee;
+import com.tailock.pojos.Request;
+import com.tailock.util.ConnectionFactory;
+
+public class RequestDao {
+	
+	/**
+	 * need to be able to do CRUD operationss on requests and update the request info table
+	 */
+	
+	public int getMaxReqId() {
+		Request req = new Request();
+		int maxId = 0;
+		try(Connection conn = ConnectionFactory
+				.getInstance().getConnection();){
+			String sql = "select request_id from reimbursement_request";
+			Statement stmt = conn.createStatement();
+			ResultSet info = stmt.executeQuery(sql);
+			
+			while(info.next()){
+				if (info.getInt(1) > maxId) {
+					maxId = info.getInt(1);
+				}
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return maxId;
+	}
+	
+	public void createRequest() {
+		
+	}
+	
+	public List<Request> getAllRequests() {
+		
+	}
+	
+	public List<Request> getAllUserRequests(Employee emp) {
+		
+	}
+	
+	public Request getRequest(int request_id) {
+		
+	}
+	
+	public Request updateRequest() {
+		
+	}
+	
+	public void deleteRequest() {
+		
+	}
+
+}

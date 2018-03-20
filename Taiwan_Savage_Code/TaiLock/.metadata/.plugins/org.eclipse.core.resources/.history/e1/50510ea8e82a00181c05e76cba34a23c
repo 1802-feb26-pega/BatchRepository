@@ -1,0 +1,5 @@
+package com.tailock.dao;
+
+public class RequestDao {
+
+}

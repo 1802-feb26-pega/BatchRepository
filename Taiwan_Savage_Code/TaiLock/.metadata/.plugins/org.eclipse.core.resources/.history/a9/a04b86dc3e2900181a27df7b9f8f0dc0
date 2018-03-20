@@ -1,0 +1,21 @@
+package com.tailock.service;
+
+import com.tailock.dao.DAO;
+import com.tailock.dao.DAOImpl;
+import com.tailock.pojos.User;
+
+public class Service {
+
+	static DAO dao = new DAOImpl();
+	
+	public User login(String username, String password) {
+		User user = dao.getUser(username);
+		if (user == null) return null;
+		else if (user.getPassword().equals(password)) {
+			return user;
+		}
+		else return null;
+	}
+	
+}
+

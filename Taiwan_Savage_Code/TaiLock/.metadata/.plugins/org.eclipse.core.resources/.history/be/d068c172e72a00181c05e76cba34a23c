@@ -1,0 +1,148 @@
+package com.tailock.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import com.tailock.pojos.Employee;
+import com.tailock.util.ConnectionFactory;
+
+public class EmployeeDAOImpl implements EmployeeDAO {
+
+	@Override
+	public Employee getEmployee(String email) {
+		Employee emp = new Employee();
+		try(Connection conn = ConnectionFactory
+				.getInstance().getConnection();){
+			email = email.toLowerCase();
+			String sql = "select * from employee where email = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, email);
+			ResultSet info = ps.executeQuery();
+			
+			while(info.next()){
+				emp.setEmployeeId(info.getInt(1));
+				emp.setUsername(info.getString(2));
+				emp.setFirstName(info.getString(3));
+				emp.setLastName(info.getString(4));
+				emp.setEmail(info.getString(5));
+				emp.setPassword(info.getString(10));
+				return emp;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public int getMaxEmpId() {
+		Employee emp = new Employee();
+		int maxId = 0;
+		try(Connection conn = ConnectionFactory
+				.getInstance().getConnection();){
+			String sql = "select employee_id from employee";
+			Statement stmt = conn.createStatement();
+			ResultSet info = stmt.executeQuery(sql);
+			
+			while(info.next()){
+				if (info.getInt(1) > maxId) {
+					maxId = info.getInt(1);
+				}
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return maxId;
+	}
+	
+	public Employee insertEmployee(Employee emp) {
+		try (Connection conn = ConnectionFactory
+				.getInstance().getConnection();){
+			String sql = "insert into employee (employee_id, username, first_name, last_name, email, password)"
+					+ "values (?, ?, ?, ?, ?, ?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, emp.getEmployeeId());
+			ps.setString(2, emp.getUsername());
+			ps.setString(3, emp.getFirstName());
+			ps.setString(4, emp.getLastName());
+			ps.setString(5, emp.getEmail());
+			ps.setString(6, emp.getPassword());
+			
+			int updated = ps.executeUpdate();
+			if(updated > 0) {
+				System.out.println("Added " + updated + " new employee");
+				return emp;
+			}
+			else {
+				System.out.println("Wasn't added for some reason");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String getEmployeeTitle(Employee emp) {
+		try (Connection conn = ConnectionFactory
+				.getInstance().getConnection();){
+			String email = emp.getUsername();
+			String sql = "select title from employee where email = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, email);
+			ResultSet info = ps.executeQuery();
+			
+			while(info.next()){
+				return info.getString(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public int getEmployeeSupervisorId(Employee emp) {
+		try (Connection conn = ConnectionFactory
+				.getInstance().getConnection();){
+			String email = emp.getUsername();
+			String sql = "select supervisor_id from employee where email = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, email);
+			ResultSet info = ps.executeQuery();
+			
+			while(info.next()){
+				return info.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public int getEmployeeDepartmentId(Employee emp) {
+		try (Connection conn = ConnectionFactory
+				.getInstance().getConnection();){
+			String email = emp.getUsername();
+			String sql = "select department_id from employee where email = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, email);
+			ResultSet info = ps.executeQuery();
+			
+			while(info.next()){
+				return info.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+}

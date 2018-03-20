@@ -1,0 +1,23 @@
+INDEX VERSION 1.130+/Users/taikwando/Documents/TaiLock/.metadata/.plugins/org.eclipse.jdt.core
+2345560674.index
+1180484879.index
+105848611.index
+206535591.index
+469310801.index
+3126888922.index
+1271342938.index
+910009618.index
+2789758058.index
+145268399.index
+3175304630.index
+88183214.index
+3619427458.index
+3277980169.index
+2842472240.index
+1097848872.index
+3806451716.index
+2362891960.index
+1699738662.index
+4186132824.index
+853707784.index
+1690311816.index
