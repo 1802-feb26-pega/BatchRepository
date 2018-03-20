@@ -49,7 +49,7 @@ function login(){
 			}
 			else{
 				//alert("success");
-				loadNav();
+				loadNav(employee);
 				loadHome(employee);
 			}
 		}
@@ -70,6 +70,8 @@ function logout(){
 	}
 
 }
+
+
 
 //function loadRegister(){
 //	var xhr = new XMLHttpRequest();
@@ -133,23 +135,184 @@ function logout(){
 //}
 
 
-function loadNav(){
+function loadNav(employee){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "loadnav.view" , true);
 	xhr.send();
 
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
+			//$('#approvals').hide();
 			$('#navbar').html(xhr.responseText);
 			$('#mybrand').on('click', loadHome);
 			$('#home').on('click', loadHome);
 			$('#logout').on('click',logout);
 			$('#events').on('click', loadEmployeeEvents);
+			$('#reimbursements').on('click', loadEmployeeReimbursements);
+			console.log(employee.position);
+			if(employee.position>1){
+				$('#approvals').show();
+				$('#approvals').on('click', loadApprovals);
+			}
+			else{
+				$('#approvals').hide();
+			}
 			
 
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
 		}
 	}
+}
+
+function loadEmployeeReimbursements(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadEmployeeReimbursements.view", true);
+	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			//document.getElementById('view').innerHTML(xhr.responseText);
+			//$('#name').html(employee.firstname);
+			//$('#submitReimbursement').on('click', function(){submit(employee)})
+			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
+			getEmployeeReimbursements();
+			//$('#eventTable').hide();
+		}
+	}
+}
+
+function getEmployeeReimbursements(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "reimbursements" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var reimbursements = JSON.parse(xhr.responseText);
+			if(reimbursements.length == 0){
+				console.log("you have no reimbursements");
+				$('#view').html("You have no reimbursements")
+			}
+			else{
+				console.log("testing----");
+				//	accounts = JSON.stringify("data") + ":" + accounts;
+				console.log(reimbursements);
+				var data = formatEmpReTable(reimbursements);
+
+				$('#reimbursementTable').DataTable({
+					data : data,
+					columns: [
+						{data : "reimbursementId" },
+						{data : "employeeId" },
+						{data : "eventId"},
+						{data : "justification" },
+						{data : "requestedAmount" },
+						{data : "alternateAmount"},
+						{data : "reStatus"}
+						]
+				});
+				console.log("this should have worked");
+				$('#reimbursementTable').show();
+			}
+		}
+	}
+}
+
+
+function formatEmpReTable(reimbursements){
+	console.log("formatting table");
+	var data = [];
+	for(let i = 0; i < reimbursements.length; i++){
+		let temp = new Object();
+		console.log(reimbursements[i]);
+		console.log(reimbursements[i]);
+		temp.reimbursementId = `000${reimbursements[i].reimbursementId}`;
+		temp.employeeId = reimbursements[i].employeeId;
+		temp.eventId = reimbursements[i].eventId;;
+		temp.justification = reimbursements[i].justification;
+		temp.requestedAmount = `$${reimbursements[i].requestedAmount}`;
+		temp.alternateAmount = `$${reimbursements[i].alternateAmount}`;
+		temp.reStatus = reimbursements[i].reStatus;
+
+		console.log(temp);
+		data.push(temp);
+	}
+	console.log(data);
+	return data;
+}
+
+function loadApprovals(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadApprovals.view", true);
+	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			//document.getElementById('view').innerHTML(xhr.responseText);
+			//$('#name').html(employee.firstname);
+			//$('#submitReimbursement').on('click', function(){submit(employee)})
+			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
+			getPendingReimbursements();
+			//$('#eventTable').hide();
+		}
+	}
+}
+
+function getPendingReimbursements(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "apprReimbursements" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var reimbursements = JSON.parse(xhr.responseText);
+			if(reimbursements.length == 0){
+				console.log("you have no events");
+				$('#view').html("No reimbursements awaiting approval");
+			}
+			else{
+				console.log("testing----");
+				//	accounts = JSON.stringify("data") + ":" + accounts;
+				console.log(reimbursements);
+				var data = formatReTable(reimbursements);
+
+				$('#reimbursementAppTable').DataTable({
+					data : data,
+					columns: [
+						{data : "reimbursementId" },
+						{data : "employeeId" },
+						{data : "eventId"},
+						{data : "justification" },
+						{data : "requestedAmount" }
+						]
+				});
+				console.log("this should have worked");
+				$('#reimbursementAppTable').show();
+			}
+		}
+	}
+}
+
+
+function formatReTable(reimbursements){
+	console.log("formatting table");
+	var data = [];
+	for(let i = 0; i < reimbursements.length; i++){
+		let temp = new Object();
+		console.log(reimbursements[i]);
+		temp.reimbursementId = `000${reimbursements[i].reimbursementId}`;
+		temp.employeeId = reimbursements[i].employeeId;
+		temp.eventId = reimbursements[i].eventId;;
+		temp.justification = reimbursements[i].justification;
+		temp.requestedAmount = `$${reimbursements[i].requestedAmount}`;
+
+		console.log(temp);
+		data.push(temp);
+	}
+	console.log(data);
+	return data;
 }
 
 
@@ -164,7 +327,9 @@ function loadHome(employee){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
 			//document.getElementById('view').innerHTML(xhr.responseText);
-			$('#name').html(employee.firstname);
+			$('#firstname').val(employee.firstname);
+			$('#lastname').val(employee.lastname);
+			
 			$('#cost').keypress(function(e){
 				if(e.which != 8 && e.which !=0 && (e.which < 48 || e.which > 57)){
 					return false;
@@ -197,8 +362,8 @@ function loadHome(employee){
 				$('#requested-amount').val('$'+(parseInt($('#cost').val())*coverage).toFixed(2));
 			});
 			//$('#view').hide();
-			$('#submitReimbursement').click(submit);
-			$('#submitReimbursement').html("Hello");
+			$('#submitReimbursement').click(function(){submitReimbursement(employee)});
+			//$('#submitReimbursement').html("Hello");
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
 //			getEmployeeEvents();
 //			$('#eventTable').hide();
@@ -206,14 +371,17 @@ function loadHome(employee){
 	}
 }
 
-function submit(){
+function toTimeStamp(strDate){
+	var datum = Date.parse(strDate);
+	return datum/1000;
+}
+
+function submitReimbursement(employee){
 	console.log("submit");
 	var superApp = 0;
 	var depHeadApp = 0;
-	var coverage;
 	
-	var id = $('#id').val();
-	var date = ($('#date').val()).add($('#time').val());
+	var date = toTimeStamp(($('#date').val()+' '+$('#time').val()));
 	var location= $('#location').val();
 	var description = $('#description').val();
 	var cost = $('#cost').val();
@@ -225,29 +393,46 @@ function submit(){
 	if($('#check2').is(":checked")){
 		depHeadApp = 1;
 	}
-	$('#cost').keyup(function(){
-		switch($('#eventTypeId').val()){
-			case 1 : coverage = .8;break;
-			case 2 : coverage = .6;break;
-			case 3 : coverage = .75;break;
-			case 4 : coverage = 1;break;
-			case 5 : coverage = .9;break;
-			case 6 : coverage = .3;
-		}
-		$('#requested-amount').val($('#cost').val()*coverage);
-	});
 	var requestedAmount = $('#requested-amount').val();
-//
-//	var form = {
-//			firstname: fn, 
-//			lastname: ln, 
-//			email: uname, 
-//			password: pass
-//	};
-//
-//	var xhr = new XMLHttpRequest();
-//	xhr.open("POST", "submit", true);
-//	xhr.send(JSON.stringify(form));
+
+	var eventForm = {
+			dateScheduled: date, 
+			eventLocation: location, 
+			//eventDescription: description, 
+			eventCost: cost,
+			eventTypeId: eventTypeId,
+			employeeId: employee.employeeId
+	};
+	
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "submitEvent", true);
+	xhr.send(JSON.stringify(eventForm));
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			console.log(xhr.responseText);
+			var json = JSON.parse(xhr.responseText);
+			console.log(json);
+			var eventId = json.eventId;
+			var reForm = {
+					employeeId: employee.employeeId,
+					eventId: eventId,
+					justification: justification,
+					superApp: superApp,
+					depHeadApp: depHeadApp,
+					requestAmount: requestedAmount
+			};
+			var rxhr = new XMLHttpRequest();
+			rxhr.open("POST", "submitRe", true);
+			rxhr.send(JSON.stringify(reForm));
+			
+			rxhr.onreadystatechange = function(){
+				if(rxhr.readyState == 4 && rxhr.status == 200){
+					loadEmployeeEvents();
+				}
+			}
+		}
+	}
 }
 
 function loadEmployeeEvents(){

@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.trms.pojos.Employee;
 import com.trms.pojos.Event;
+import com.trms.pojos.Reimbursement;
 import com.trms.util.ConnectionFactory;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
@@ -78,8 +80,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				Event temp = new Event();
 				temp.setEventId(info.getInt(1));
 				System.out.println("Account " + temp.getEventId());
-				temp.setDateCreated(info.getDate(2));
-				temp.setDateScheduled(info.getDate(3));
+				temp.setDateCreated(info.getTimestamp(2));
+				temp.setDateScheduled(info.getTimestamp(3));
 				temp.setEventLocation(info.getString(4));
 				temp.setEventCost(info.getInt(5));
 				temp.setEventTypeId(info.getInt(6));
@@ -93,6 +95,74 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 
 		return events;
+	}
+	
+	@Override
+	public ArrayList<Reimbursement> getReimbursementsByPending() {
+		ArrayList<Reimbursement> reimbursements = new ArrayList<Reimbursement>();
+		
+		try(Connection conn = ConnectionFactory
+				.getInstance().getConnection();){
+			String sql = "select * from reimbursement where re_status = 'pending'";
+			Statement s = conn.createStatement();
+			
+			ResultSet info = s.executeQuery(sql);
+
+			while(info.next()){
+				Reimbursement temp = new Reimbursement();
+				temp.setReId(info.getInt(1));
+				//System.out.println("Account " + temp.getEventId());
+				temp.setEmployeeId(info.getInt(2));
+				temp.setEventId(info.getInt(3));
+				temp.setJustification(info.getString(4));
+				temp.setSuperApp(info.getInt(5));
+				temp.setDepHeadApp(info.getInt(6));
+				temp.setBenCoApp(info.getInt(7));
+				temp.setRequestedAmount(info.getInt(8));
+				temp.setAlternateAmount(info.getInt(9));
+				temp.setReStatus(info.getString(10));
+				reimbursements.add(temp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+
+		return reimbursements;
+	}
+
+	@Override
+	public ArrayList<Reimbursement> getReimbursementsByEmployee(Employee employee) {
+		ArrayList<Reimbursement> reimbursements = new ArrayList<Reimbursement>();
+		
+		try(Connection conn = ConnectionFactory
+				.getInstance().getConnection();){
+			String sql = "select * from reimbursement where employee_id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, employee.getEmployeeId());
+			ResultSet info = ps.executeQuery();
+
+			while(info.next()){
+				Reimbursement temp = new Reimbursement();
+				temp.setReId(info.getInt(1));
+				//System.out.println("Account " + temp.getEventId());
+				temp.setEmployeeId(info.getInt(2));
+				temp.setEventId(info.getInt(3));
+				temp.setJustification(info.getString(4));
+				temp.setSuperApp(info.getInt(5));
+				temp.setDepHeadApp(info.getInt(6));
+				temp.setBenCoApp(info.getInt(7));
+				temp.setRequestedAmount(info.getInt(8));
+				temp.setAlternateAmount(info.getInt(9));
+				temp.setReStatus(info.getString(10));
+				reimbursements.add(temp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+
+		return reimbursements;
 	}
 	 
 }

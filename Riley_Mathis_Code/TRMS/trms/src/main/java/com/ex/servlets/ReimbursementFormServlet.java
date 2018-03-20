@@ -16,8 +16,8 @@ import com.trms.pojos.Reimbursement;
 import com.ex.service.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebServlet("/submitEvent")
-public class FormServlet extends HttpServlet{
+@WebServlet("/submitRe")
+public class ReimbursementFormServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,23 +26,22 @@ public class FormServlet extends HttpServlet{
 		//Employee employee = new Employee();
 		
 		ObjectMapper mapper = new ObjectMapper();
-		Event e = mapper.readValue(req.getInputStream(), Event.class);
-		//Reimbursement r = mapper.readValue(req.getInputStream(), Reimbursement.class);
+		//Event e = mapper.readValue(req.getInputStream(), Event.class);
+		Reimbursement r = mapper.readValue(req.getInputStream(), Reimbursement.class);
 		
-		System.out.println(e.toString());
-		Event event = service.addEvent(e);
-		System.out.println(event);
+		System.out.println(r.toString());
+		Reimbursement reimbursement = service.addReimbursement(r);
+		System.out.println(reimbursement);
 		
 		//HttpSession session = req.getSession(false);
 		
 		//Employee employee = (Employee) session.getAttribute("employee");
 		
-		String eventJSON = mapper.writeValueAsString(event);
+		String reimbursementJSON = mapper.writeValueAsString(reimbursement);
 		
 		resp.setContentType("application/json");
 		PrintWriter out = resp.getWriter();
-		out.write(eventJSON);
-		
+		out.write(reimbursementJSON);
 		
 	}
 

@@ -27,10 +27,13 @@ public class LoadViewServlet extends HttpServlet{
 			return "partials/navbar.html";
 		case("/trms/loadhome.view") :
 			return "partials/home.html";
-//		case("/trms/loadregister.view") :
-//			return "partials/register.html";
+		case("/trms/loadApprovals.view") :
+			return "partials/approve.html";
 		case("/trms/loadEmployeeEvents.view") :
 			return "partials/events.html";
+		case("/trms/loadEmployeeReimbursements.view") :
+			return "partials/reimbursements.html";
+
 			
 		
 		}

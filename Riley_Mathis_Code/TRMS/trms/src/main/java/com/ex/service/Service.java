@@ -45,4 +45,11 @@ public class Service {
 	public ArrayList<Event> getEvents (Employee e){
 		return empDao.getEventsByEmployee(e);
 	}
+	
+	public ArrayList<Reimbursement> getReimbursementsByPending(){
+		return empDao.getReimbursementsByPending();
+	}
+	public ArrayList<Reimbursement> getReimbursementsByEmployee(Employee e){
+		return empDao.getReimbursementsByEmployee(e);
+	}
 }

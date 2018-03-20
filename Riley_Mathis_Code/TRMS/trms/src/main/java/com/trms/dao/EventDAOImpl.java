@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import com.trms.pojos.Event;
@@ -14,7 +15,7 @@ import com.trms.util.ConnectionFactory;
 public class EventDAOImpl implements EventDAO {
 
 	@Override
-	public Event addEvent(Date dateScheduled, String eventLocation, int eventCost, int eventTypeId, int employeeId) {
+	public Event addEvent(Timestamp dateScheduled, String eventLocation, int eventCost, int eventTypeId, int employeeId) {
 		try(Connection conn  = ConnectionFactory
 				.getInstance().getConnection();){
 			conn.setAutoCommit(false);
@@ -25,7 +26,7 @@ public class EventDAOImpl implements EventDAO {
 			String [] key = new String[1];
 			key[0] = "u_id";
 			PreparedStatement ps = conn.prepareStatement(sql, key);
-			ps.setDate(1, dateScheduled);
+			ps.setTimestamp(1, dateScheduled);
 			ps.setString(2, eventLocation);
 			ps.setInt(3, eventCost);
 			ps.setInt(4, eventTypeId);
