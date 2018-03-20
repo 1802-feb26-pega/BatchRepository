@@ -278,7 +278,8 @@ function loadClaims(){
 				$('#table_id').dataTable({
 					destroy: true,
 					data : data,
-					columns: [			    	           
+					columns: [
+					          { data: 'Request ID', "defaultContent": ""  },
 					          { data : 'Status', "defaultContent": ""  },
 					          { data: 'Creation Date', "defaultContent": ""  },
 					          { data: 'Event Date', "defaultContent": ""  },
@@ -286,8 +287,7 @@ function loadClaims(){
 					          { data: 'Location', "defaultContent": ""  },
 					          { data: 'Event', "defaultContent": ""  },
 					          { data: 'Cost', "defaultContent": ""  },
-					          { data: 'Reason', "defaultContent": ""  },
-					          { data: 'Attachment', "defaultContent": "None Attached"  },
+					          { data: 'Reason', "defaultContent": ""  },					        
 					          { data: 'Event Start Time', "defaultContent": ""  },
 					          { data: 'Grade', "defaultContent": ""  },
 					          { data: 'Needed to pass', "defaultContent": ""  },
