@@ -423,11 +423,13 @@ function submitReimbursement(employee){
 					depHeadApp: depHeadApp,
 					requestedAmount: parseInt(requestedAmount)
 			};
+			//console.log("!!!!!!!!!");
 			var rxhr = new XMLHttpRequest();
 			rxhr.open("POST", "submitRe", true);
 			rxhr.send(JSON.stringify(reForm));
 			
 			rxhr.onreadystatechange = function(){
+				//console.log(rxhr.readyState)
 				if(rxhr.readyState == 4 && rxhr.status == 200){
 					loadEmployeeEvents();
 				}

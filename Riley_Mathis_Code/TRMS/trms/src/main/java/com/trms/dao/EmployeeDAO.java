@@ -12,4 +12,5 @@ public interface EmployeeDAO {
 	public ArrayList<Event> getEventsByEmployee(Employee employee);
 	public ArrayList<Reimbursement> getReimbursementsByPending();
 	public ArrayList<Reimbursement> getReimbursementsByEmployee(Employee employee);
+	public int showPosition(Employee employee);
 }

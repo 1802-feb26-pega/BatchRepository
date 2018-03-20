@@ -1,5 +1,6 @@
 package com.trms.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -165,4 +166,24 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return reimbursements;
 	}
 	 
+	@Override
+	public int showPosition(Employee employee) {
+		int position = 0;
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			String sql = "{CALL showPosition(?)}";
+			CallableStatement cstmt = conn.prepareCall(sql);
+			cstmt.setInt(1, employee.getEmployeeId());
+			int value = cstmt.executeUpdate();
+
+			position = cstmt.getInt(2);
+			if(value < 1) {
+				System.out.println("Couldn't get position for that employee!");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return position;
+	}
 }

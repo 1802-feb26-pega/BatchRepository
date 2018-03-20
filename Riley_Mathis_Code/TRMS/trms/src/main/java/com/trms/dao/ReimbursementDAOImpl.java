@@ -29,7 +29,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			ps.setInt(4, superApp);
 			ps.setInt(5, depHeadApp);
 			ps.setInt(6, benCoApp);
-			ps.setInt(6, requestedAmount);
+			ps.setInt(7, requestedAmount);
 
 			ps.executeUpdate();
 			int id = 0;
