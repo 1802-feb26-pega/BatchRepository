@@ -1,0 +1,81 @@
+JDBC API
+	Java Database Connectivity (Application Programming Interface)
+	- Allows our Java App to interact with an RDBMS
+		- class & interfaces provided
+	- independent of any specific db
+	
+	Types of JDBC
+		- JDBC - ODBC Driver (ODBC - open database connectivity)
+			- converts JDBC calls to ODBC calls  
+			- slowest because there are 2 layers between java app and database
+		- Native API Driver
+			- a small amount better than JDBC - ODBC because it gets rid of one layer
+		- Network Protocol Driver
+			- uses middleware to translate JDBC calls into SQL for our database
+			- somewhat similar to Native API, but it doesn't talk to Vendor DB Library
+			- also a small bit better than JDBC - ODBC
+		- Thin Driver
+			- only one layer
+			- converts JDBC calls directly into SQL statements
+			- fastest
+			
+JDBC Class/Interfaces -> everything implements AutoClosable
+	- Driver Manager (Class)
+		- manages Driver Object
+		- gets us a connection
+	- Connection (Interface)
+		- interface that represents a connection (AKA session) to the DB
+	- Statement
+		- used to execute SQL statements
+	- PreparedStatement
+		- used to execute SQL statements
+		- faster and more secure than Statement
+	- CallableStatement
+		- used to call stored procedures and functions that exist in our DB
+	- ResultSet
+		- represents a result set provided by the DB when SELECTs are executed
+		- .next() returns boolean
+		
+		
+		
+JDBC Methods
+	- every method can throw SQL Exception
+	Return Type                      Method Name
+	Connection                       .getConnection(String)          Driver Manager
+	
+	Statement						 .createStatement()
+	PreparedStatement				 .prepareStatement(String)       Connection
+	CallableStatement				 .prepareCall(String)
+	
+	ResultSet						 .executeQuery(String)           Statement
+	
+	ResultSet						 .executeQuery()                 PreparedStatement / CallableStatement (CallableStatement extends PreparedStatement)
+	int								 .executeUpdate()
+	
+	
+Steps to Connect our Java App to our DB
+	1) load and register our driver
+		- Class.forName("oracle.jdbc.driver.OracleDriver");
+	
+	2) Create our Connection
+		- Connection conn = DriverManager.getConnection("...");
+	
+	3) Create a statement
+		- Statement stmt = conn.createStatement();
+		- PreparedStatement pstmt = conn.prepareStatement();
+		- CallableStatement cstmt = conn.prepareCall();
+		
+	4) Execute our Query
+		- ResultSet rs = stmt.executeQuery("...");
+		- ResultSet rs = pstmt.executeQuery();
+		- ResultSet rs = cstmt.executeQuery();
+		- int rs = cstmt.executeUpdate();
+	
+	5) Close Connection
+		- conn.close();
+		
+
+	
+	
+	
+			

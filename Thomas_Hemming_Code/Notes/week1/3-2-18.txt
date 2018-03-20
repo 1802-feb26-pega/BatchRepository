@@ -1,0 +1,53 @@
+Thread states:
+
+Start
+
+Blocked
+
+Runnable
+
+Running
+
+Blocked
+
+
+.start()
+
+.run() - from runnable to running)
+
+.yield() -  takes from running to runnable)
+
+
+.wait()     - From running to blocked
+.sleep()    - From running to blocked
+.suspend()  - From running to blocked
+	
+.stop() - to stop thread
+
+.notify() - from blocked to runnable
+
+
+Assignment:
+
+Users have:
+	account
+		- username (unique)
+		- password
+		- first name
+		- last name
+		- ssn (unique)
+		- balance
+
+ADD MINIMUM BALANCE
+		
+//do not have to do accounts
+Accounts have (joint accounts are not a requirement):
+	>= 1 user
+	- account number (unique id)
+	- balance
+	- type
+	- List<Users>
+
+
+
+

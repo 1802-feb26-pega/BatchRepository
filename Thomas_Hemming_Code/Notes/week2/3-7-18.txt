@@ -1,0 +1,105 @@
+Multiplicity
+	- a concept that tells us the MIN and MAX # of times that
+		two tables in a DB can be related to each other
+	- Zero-to-One (0..1)
+	- Zero-to-Many (0..*)
+	- One-to-One (1..1)
+	- One-to-Many (1..*)
+	- Many-to-Many (*..*)
+	
+	Minimums (Participation)
+		- Mandatory relationship - = 1
+		- Optional relationship - >= 0
+		
+	Maximums (Cardinality)
+		- Forbidden - 0
+		- One and only one - 1
+		- Many - *
+	
+	Cardinality is Max # of relationships
+	
+	Participation is Min # of relationships
+		
+	Multiplicity is Participation + Cardinality
+	
+Normalization
+	- the process of reducing redundancies and ensuring that data dependencies are logically stored
+	
+	Normal Forms (NF)
+		- 1NF 
+			- values are atomic
+				- e.g. address split up into street, city, state, postal code, etc.
+			- no duplicate columns
+			- primary key
+		- 2NF
+			- complies with 1NF
+			- all columns must depend on primary key
+		- 3NF
+			- complies with 1NF and 2NF
+			- no transitive dependencies to PK
+		
+	Why NF?
+		- minimizes and avoids data modification issues
+		- remove duplicate data
+		- easier to read
+		- faster queries
+		
+	The Key (1NF), The Whole Key (2NF), Nothing But The Key (3NF)
+	
+	Intersection Table / Junction Table
+		- only made of foreign keys
+		
+	
+Composite Key 
+	 - two primary keys in a single row, both used to uniquely identify 
+		
+
+SQL Logical Operators
+	OR
+	AND
+	BETWEEN
+	IN
+	EXISTS
+	ALL
+	ANY
+	LIKE
+	IS
+	NOT
+	SOME
+
+View is container, ResultSet is stuff inside of it
+Cursor points to where you are in the ResultSet
+Cursor is a pointer to some place in a database
+
+Scalar query returns one result
+
+GROUP BY 
+	groups by value (i.e. same value together)
+	often times used with aggregate functions
+
+
+ORDER BY
+	ASCENDING (default)
+	DESCENDING 
+
+	
+CAN USE BOTH ORDER BY AND GROUP BY
+
+HAVING
+	filters aggregate function (WHERE clause of aggregates)
+
+Aggregate function:
+	many things in one thing out
+	usually done on a column
+	MIN()
+	MAX()
+	COUNT()
+	AVG()
+	
+Scalar function:
+	UCASE()
+	LCASE()
+	LEN()
+	ROUND()
+	NOW()
+	etc.

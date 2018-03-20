@@ -1,0 +1,27 @@
+instantiate
+
+declare - int x;
+
+initialize - int x = 5;
+
+
+
+
+access modifiers:
+	- public 
+	- private
+	- protected
+	- default
+
+
+basic operators
+	- 
+
+
+
+concrete class - can create instance
+
+abstract class - extends
+
+interface - (associated with the word contract)
+

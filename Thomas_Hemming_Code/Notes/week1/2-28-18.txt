@@ -1,0 +1,35 @@
+user {
+	id
+	username
+	pw
+	balance
+}
+
+loosely coupled code - code with separate functionality to not be coupled together
+
+still want code to be cohesive
+
+design pattern = solution to common problem
+		problem in coding/design
+		
+Data
+Access
+Object
+
+
+
+
+persistence layer
+	- currently a text file, will be a database)
+
+service layer (aka business logic)
+	- should not be able to withdraw into negative amounts
+	- does username exist
+	- is password correct
+	
+
+clientfacing
+	- currently console
+	
+	
+RunBank()

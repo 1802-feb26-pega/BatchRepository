@@ -1,0 +1,70 @@
+collection (lowercase)
+
+Collection (uppercase)
+
+Collections (uppercase, plural)
+
+
+
+int[] values = new int[10]
+			or                                         static // fixed size
+int[] values2 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+
+Collection values3 = new ArrayList();
+
+values3.add(0);
+values3.add(1);
+values3.add(2);
+values3.add(3);
+
+sysout(values3.size()); //4
+
+remove(Object o) <------- Collection I
+
+remove(int index); <-------- List I
+
+removeAll(Collection<?> c); <------ Collection I
+
+removeRange(int fromIndex, int toIndex) <----- List I
+              inclusive     exclusive
+			  
+removeIf(Predicate<? extends e> filter)
+          
+
+Collection (interfaces, there are other collections (lowercase):
+	- List 
+		- ordered aggregate 
+		- has indices
+	- Set
+		- can only have unique elements
+		
+	- Queue
+		- FIFO - first in first out
+	
+	- Deque	
+		- not restricted to FIFO
+		- can take out first or last element
+		- ordered, but cannot normally index them
+		
+		
+Arraylist      			vs   			  Vector
+non-thread-safe   						thread-safe
+less memory		  						more memory
+50% more mem. every new item		100% more mem. every new item
+
+
+
+Map interface
+	- key, value pairs
+	- keys must be unique
+	- values can be duplicated
+	- hashmap, hashtable
+	
+What are generics used for in java? <e> is a generic
+typesafety
+
+
+		
+
+

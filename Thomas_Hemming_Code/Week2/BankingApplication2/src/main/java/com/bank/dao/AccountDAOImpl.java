@@ -121,7 +121,7 @@ public class AccountDAOImpl implements AccountDAO {
 
 	@Override
 	public double getAccountsTotal(int userId) {
-		double output = 0.0;
+		double value = 0.0;
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			
@@ -133,12 +133,12 @@ public class AccountDAOImpl implements AccountDAO {
 			
 			cstmt.executeQuery();
 			
-			output = cstmt.getDouble(2);
+			value = cstmt.getDouble(2);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return output;
+		return value;
 	}
 }

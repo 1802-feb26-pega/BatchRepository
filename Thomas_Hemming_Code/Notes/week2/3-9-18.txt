@@ -1,0 +1,3 @@
+CASCADE ON DELETE  \
+(DELETE CASCADE)   |---> keeps referential integrity in a database
+DELETE SET NULL    /

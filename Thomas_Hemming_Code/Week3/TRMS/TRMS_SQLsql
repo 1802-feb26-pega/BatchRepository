@@ -1,0 +1,103 @@
+/* drop table 	EMPLOYEE	    cascade constraints;
+drop table 	EVENT	        cascade constraints;
+drop table  REIMBURSEMENT	cascade constraints; */
+
+CREATE TABLE EMPLOYEE (
+    employee_id         NUMBER NOT NULL,
+    first_name          VARCHAR2(30) NOT NULL,
+    last_name           VARCHAR2(30) NOT NULL,
+    position            NUMBER,
+    username            VARCHAR2(30) UNIQUE,
+    password            VARCHAR2(30),
+    CONSTRAINT PK_EMPLOYEE PRIMARY KEY (employee_id)
+);
+
+INSERT INTO employee (employee_id, first_name, last_name, position, username, password)
+VALUES (1, 'Thomas', 'Hemming', 1, 'tom1994', 'password');
+
+--DROP TABLE EVENT;
+
+CREATE TABLE EVENT (
+    event_id            NUMBER NOT NULL,
+    date_created        DATE,
+    date_scheduled      DATE,
+    event_location      VARCHAR2(30),
+    event_cost          NUMBER,
+    event_type_id       NUMBER,
+    employee_id         NUMBER,
+    grade               NUMBER,
+    CONSTRAINT PK_EVENT PRIMARY KEY (event_id),
+    CONSTRAINT FK_EMP_ID FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
+);
+
+INSERT INTO event (event_id, date_created, date_scheduled, event_location, event_cost, event_type_id, employee_id, grade)
+VALUES (1, DATE'2008-11-11', DATE'2008-11-12', 'VA', '235', '2', '1', 75);
+
+CREATE TABLE REIMBURSEMENT (
+    employee_id         NUMBER,
+    event_id            NUMBER,
+    justification       VARCHAR2(100),
+    super_app           NUMBER,
+    dephead_appr        NUMBER,
+    benco_appr          NUMBER,
+    requested_amount    NUMBER,
+    CONSTRAINT FK_EMP_ID_2 FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
+    CONSTRAINT FK_EVENT_ID FOREIGN KEY (event_id) REFERENCES event(event_id)
+);
+
+INSERT INTO reimbursement (employee_id, event_id, justification, super_app, dephead_appr, benco_appr, requested_amount)
+VALUES (1, 1,'justification', 0, 0, 0, 235);
+
+CREATE SEQUENCE emp_id_seq
+MINVALUE 1
+NOMAXVALUE
+INCREMENT BY 1
+START WITH 1;
+/
+
+CREATE OR REPLACE TRIGGER emp_id_gen
+BEFORE INSERT ON employee
+FOR EACH ROW
+BEGIN
+    SELECT emp_id_seq.NEXTVAL
+    INTO :new.employee_id
+    FROM dual;
+END;
+/
+
+CREATE SEQUENCE event_id_seq
+MINVALUE 1
+NOMAXVALUE
+INCREMENT BY 1
+START WITH 1;
+/
+
+--DROP TRIGGER event_id_gen;
+
+CREATE OR REPLACE TRIGGER event_id_gen
+BEFORE INSERT ON event
+FOR EACH ROW
+BEGIN
+    SELECT event_id_seq.NEXTVAL
+    INTO :new.event_id
+    FROM dual;
+END;
+/
+
+commit;
+
+SELECT SUM(requested_amount) 
+FROM reimbursement
+WHERE employee_id = 1;
+
+CREATE OR REPLACE PROCEDURE get_reimbursements_total(
+	   l_employee_id IN NUMBER,
+	   l_reimbursements_total OUT NUMBER)
+IS
+BEGIN
+    SELECT SUM(requested_amount) 
+    INTO l_reimbursements_total
+    FROM reimbursement a
+    WHERE a.employee_id = l_employee_id;
+END;
+/

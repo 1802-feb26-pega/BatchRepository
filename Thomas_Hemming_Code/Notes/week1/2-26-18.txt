@@ -1,0 +1,39 @@
+Java - Oracle (used to be Sun)
+
+- OOP: 
+	- Encapsulation - getters/setters
+	
+	- Abstraction - ohm's law (v=ir) abstraction of something that actually occurs (idea rather than an event)
+				  - simplification
+				  
+	- Polymorphism - object can be itself or parent class/interface (object also has a reference)
+				   - Car c = new Car();
+				   - Car c = new SportsCar(); - can't do SportsCar c = new Car();
+				   
+	- Inheritance - Parent <--> Child and Super <--> Sub (making things from other things)
+
+	
+- JVM: Java Virtual Machine
+	- different tool depending on the OS, but reads the same file and gives the same output
+	- thus portable 
+	- in charge of handling runtime environment for .class files
+	- java gives java machine code (not normal machine code / assembly language)
+	
+- Stack
+	- Virtualized workspace for the function of your program 
+	- static
+	- functions (local variables, calls etc.), variables 
+	- unique to each thread 
+	- local 
+
+- Heap
+	- generalized memory that can be quickly accessed 
+	- dynamic
+	- where your objects actually are
+    - global 	
+
+- Compiled (Just-In-Time compiler)
+
+- Write once, Run anywhere
+
+

@@ -20,6 +20,10 @@ public class Driver {
 		myBank.startBank();
 		
 		while(true) {
+			System.out.println();
+			System.out.println();
+			System.out.println();
+			System.out.println();
 			System.out.println("The Bank of Tom");
 			System.out.println("Please select from the following options:");
 			System.out.println("Login");
@@ -31,6 +35,8 @@ public class Driver {
 			if(selection.equals("login")){
 				String email = null;
 				String password;
+				System.out.println();
+				System.out.println();
 				System.out.println("Email:");
 				
 				email = validateInput(3);
@@ -44,7 +50,11 @@ public class Driver {
 				}
 				
 				while(myBank.isLoggedIn()) {
-					System.out.println("Hello " + myBank.getCurrentUser().getFirstName());
+					String temp = myBank.getCurrentUser().getFirstName().substring(0,1).toUpperCase() + myBank.getCurrentUser().getFirstName().substring(1).toLowerCase();
+					System.out.println();
+					System.out.println();
+					System.out.println();
+					System.out.println("Thank you for logging in, " + temp + ".");
 					System.out.println("You have access to the following accounts: ");
 					boolean hasAccount = false;
 					for(Account acc : myBank.getCurrentUserAccounts()) {
@@ -62,6 +72,7 @@ public class Driver {
 					System.out.println("Transfer");
 					System.out.println("Balance");
 					System.out.println("Logout");
+					System.out.println();
 					
 					String selection2 = validateInput(2);
 					selection2 = selection2.toLowerCase();
@@ -70,7 +81,7 @@ public class Driver {
 					switch(selection2) {
 						case "newaccount":
 							System.out.println("Your new account has been created.");
-							System.out.println(myBank.createAccount());
+							myBank.createAccount();
 							break;
 						case "deposit": 
 							System.out.println("Account ID you wish to deposit into:");
@@ -78,7 +89,7 @@ public class Driver {
 							System.out.println("Amount to Deposit:");
 							String depositAmount = validateInput(4);
 							if(!myBank.deposit(Integer.parseInt(accountId), Double.valueOf(depositAmount))) {
-								System.out.println("You have entered an account number you don't have access to.");
+								System.out.println("This account does not belong to you.");
 							} else {
 								System.out.println("Deposit completed.");
 							}
@@ -90,7 +101,7 @@ public class Driver {
 							String withdrawAmount = validateInput(4);
 							int x = myBank.withdraw(Integer.parseInt(accountId), Double.valueOf(withdrawAmount));
 							if (x == 1) {
-								System.out.println("You have entered an account number you don't have access to.");
+								System.out.println("This account does not belong to you.");
 							} else if (x == 2) {
 								System.out.println("Insufficient funds.");
 							} else if (x == 3) {
@@ -106,12 +117,13 @@ public class Driver {
 							String transferAmount = validateInput(4);
 							int y = myBank.transfer(Integer.parseInt(accountId), Integer.parseInt(accountId2), Double.valueOf(transferAmount));
 							if (y == 1) {
-								System.out.println("You cannot access that account.");
+								System.out.println("One or more of these accounts do not belong to you.");
 							} else if (y == 2) {
 								System.out.println("Insufficient funds.");
-							}
-							else if (y == 3) {
+							} else if (y == 3) {
 								System.out.println("Transfer completed.");
+							} else if (y == 4) {
+								System.out.println("You cannot transfer funds from/to the same account.");
 							}
 							break;
 						case "balance": 	
@@ -120,6 +132,10 @@ public class Driver {
 						case "logout": 	
 							myBank.logout();
 							System.out.println("Logged out.");
+							System.out.println();
+							System.out.println();
+							System.out.println();
+							System.out.println();
 							break;
 					}
 				}
@@ -141,12 +157,15 @@ public class Driver {
 				pw = scan.next();
 				
 				if(!myBank.register(fn, ln, email, pw)) {
+					System.out.println();
 					System.out.println("That e-mail has already been registered.");
 				} else {
+					System.out.println();
 					System.out.println("Thank you for registering at The Bank of Tom.");
 				}
 					
 			} else if(selection.equals("exit")) {
+				System.out.println();
 				System.out.println("Exiting.");
 				myBank.stopBank();
 				break;

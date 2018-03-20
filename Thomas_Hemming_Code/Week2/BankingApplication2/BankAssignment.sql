@@ -1,6 +1,7 @@
 DROP TABLE accounts;
 DROP TABLE users;
 
+-- create user table (must be created before account table since account table depends on user table)
 CREATE TABLE users (
     userid NUMBER,
     firstname VARCHAR2(100),
@@ -10,6 +11,7 @@ CREATE TABLE users (
     CONSTRAINT user_pk PRIMARY KEY(userid)
 );
 
+-- create accounts table
 CREATE TABLE accounts (
     accountid NUMBER,
     userid NUMBER,
@@ -22,7 +24,7 @@ CREATE TABLE accounts (
 
 DROP SEQUENCE userid_seq;
 
-/* SEQUENCE */
+-- userid sequence
 CREATE SEQUENCE userid_seq
  START WITH     1
  INCREMENT BY   1
@@ -30,7 +32,7 @@ CREATE SEQUENCE userid_seq
  NOCYCLE;
 
 
-/* TRIGGER */
+-- fires on user table insertion
 CREATE OR REPLACE TRIGGER userid_trigger
 BEFORE INSERT ON users
 FOR EACH ROW
@@ -44,7 +46,7 @@ END;
 
 DROP SEQUENCE accountid_seq;
 
-/* SEQUENCE */
+--accountid sequence
 CREATE SEQUENCE accountid_seq
  START WITH     1
  INCREMENT BY   1
@@ -52,7 +54,7 @@ CREATE SEQUENCE accountid_seq
  NOCYCLE;
 
 
-/* TRIGGER */
+--fires on account table insertion
 CREATE OR REPLACE TRIGGER accountid_trigger
 BEFORE INSERT ON accounts
 FOR EACH ROW
@@ -64,7 +66,7 @@ BEGIN
 END;
 /
 
-/* Total balance of accounts */
+--get total balance of accounts (is used in stored procedure called in order to meet requirements)
 SELECT SUM(balance)
 FROM accounts
 WHERE userid = 1;

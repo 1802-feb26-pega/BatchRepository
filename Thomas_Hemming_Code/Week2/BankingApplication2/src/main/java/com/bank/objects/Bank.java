@@ -27,12 +27,10 @@ public class Bank{
 	}
 	
 	public boolean startBank() {
-		return true;
-		
+		return true;		
 	}
 	
-	public boolean stopBank() {
-		
+	public boolean stopBank() {	
 		return false;
 	}
 
@@ -89,17 +87,16 @@ public class Bank{
 		Account account = accDAO.getAccountByIds(accountId, currentUser.getUserId());
 		
 		if(account.getAccId() == 0){
-			return 1;
+			return 1; //don't have access to this account
 		}
 		else if(account.getBalance() < amount) {
-			return 2;
-		}
-		else {
+			return 2; //insufficient funds
+		} else {
 			//System.out.println("Before: " + account.getBalance());
 			account.setBalance(account.getBalance() - amount);
 			//System.out.println("After: " + account.getBalance());
 			accDAO.updateAccount(account);
-			return 3;
+			return 3; //success
 		}	
 	}
 	
@@ -113,12 +110,12 @@ public class Bank{
 		Account account = accDAO.getAccountByIds(accountId, currentUser.getUserId());
 		
 		if(account.getAccId() == 0) {
-			return false;
+			return false; //don't have access to this account
 		}
 		
 		account.setBalance(account.getBalance() + amount);
 		accDAO.updateAccount(account);
-		return true;
+		return true; //success
 	}
 	
 	public int transfer(int accountIdFrom, int accountIdTo, double amount) {
@@ -131,10 +128,11 @@ public class Bank{
 		Account accountTo = accDAO.getAccountByIds(accountIdTo, currentUser.getUserId());
 		
 		if(accountFrom.getAccId() == 0 || accountTo.getAccId() == 0){
-			return 1;
-		}
-		else if(accountFrom.getBalance() < amount) {
-			return 2;
+			return 1; //don't have access to this account
+		} else if (accountFrom.getAccId() == accountTo.getAccId()) {
+			return 4; //can't transfer to same account
+		} else if(accountFrom.getBalance() < amount) {
+			return 2; //insufficient funds
 		}
 		
 		accountFrom.setBalance(accountFrom.getBalance() - amount);
@@ -143,7 +141,7 @@ public class Bank{
 		accDAO.updateAccount(accountFrom);
 		accDAO.updateAccount(accountTo);
 
-		return 3;
+		return 3; //successful
 		
 	}
 	

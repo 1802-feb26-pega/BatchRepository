@@ -1,0 +1,88 @@
+Schema 
+	- a group of related tables belonging to a user or group of users
+
+Databases:
+	- organized collection of some data
+	- stored on a disc or the cloud
+	- shared resource amongst several users
+	- generally separated into schemas
+	
+DBMSs
+	- accessing data
+	- updating data
+	- insert data
+	- deleting data
+	- secure data 
+	- backup & recover
+	- maximize data availability
+		- (query optimization)
+		- optimize performance
+	- behave as interface for external applications
+	
+	
+Referential integrity
+	- ensures that the relationship between 2 tables remains synchronized during updates and deletes
+
+-ANSI standard (American national standards institute)
+
+SQL - Structured Query Language
+	- not a procedural language
+
+PL/SQL (procedural language extension of SQL)
+
+SQL sub languages
+	DDL - data definition language 
+		- (CREATE ALTER DROP TRUNCATE) - implicit commits inside every command
+	DQL - data query language 
+	    - (SELECT) - in non-Oracle DBMSs select is not in DML since no manipulation
+	DCL - data control language	
+		- (GRANT REVOKE)
+	TCL - transaction control language 
+		- (COMMIT ROLLBACK SAVEPOINT)
+	DML - data manipulation language 
+	    - (INSERT SELECT UPDATE DELETE)
+		
+SQL datatypes
+	- varchar2(size) - variable argument characters (strings)          	-nvarchar2(size) - only unicode characters				- varchar(size)	- varchar may at some point get updated to do something else, use varchar2
+	- number(size, optional_dec_size)
+	- long
+	- date - yyyy-mm-dd hh:mm:ss
+	- lobs - large object datatypes
+		- blob - binary large object
+		- clobs - character large object
+		- nclobs - unicode character large object
+		
+SQL constraints
+	- NOT NULL
+		- ensures that a column cannot contain null values
+	- UNIQUE
+		- ensures that all values within a column are distinct
+	- PRIMARY KEY
+		- combination of NOT NULL and UNIQUE, multiple columns of primary keys to form 'composite key'
+		- two types
+			- natural key
+			- surrogate key
+	- FOREIGN KEY
+		- the PRIMARY KEY from another table, used to establish a relationship between two tables.
+	- CHECK
+		- ensures that all values in a column meet some specified condition
+	- DEFAULT
+		- provides a default value if one is not specified during inserts
+	- INDEX
+		- increases the efficiency through which we can retrieve data fro our database
+		
+conn sys as sysdba
+
+
+CASCADE ON DELETE
+
+
+		
+
+	
+	
+		
+	
+	
+	
+	

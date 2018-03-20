@@ -1,0 +1,5 @@
+DOM - Data Object Model
+
+Event Propagation
+	Bubbling vs Capturing Javascript
+	https://javascript.info/bubbling-and-capturing

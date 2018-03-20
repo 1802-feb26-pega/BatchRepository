@@ -1,0 +1,353 @@
+What We've covered:
+
+	HTML
+		- Hypertext Markup Language
+		- Defines the DOM (Document Object Model)
+		- elements can be uniquely defined with names and ids
+		- elements can also have classes, which are typically used to group elements
+			with common functionality for manipulation with JS or styling with CSS
+			
+	
+	CSS
+		- cascading style sheet
+		- defines how the DOM looks
+		- can define font, size, spacing, color, border, etc.
+	
+	Bootstrap
+		- created by twitter
+		- a pre-defined css stylesheet
+	
+	JS
+		What is Javascript?
+			dynamic, weakly typed, prototype-based, multi-paradigm
+			alongside html and css it's one of the core technologies of web content
+			(used to manipulate the DOM)
+		
+		Datatypes
+			Boolean
+			Null
+			Undefined
+			Number
+			String
+			Symbol
+			Object
+		
+		ECMAScript
+			javascript is a scripting language that conforms to the ECMAScript specification
+			European Computer Manufacturer's Association.
+		
+		functions
+			special type of object
+			
+		loose typing
+			can declare variables without binding to a specific datatype
+				var x = 5 - function scope (or global scope)
+				let y = "hello" - block scope
+				const MAX-NUM = 100000; - block scope
+				default (no declaration) - hoisted to global scope regardless of where it is
+				
+		callback functions
+			function passed into another function as an argument and called inside that function for a specific task
+		
+		truthy/falsy
+			falsy
+				false, 0, null, "" (empty string), NaN, undefined
+			truthy
+				everything else
+				
+		variable scopes
+			global and function 
+			can create "scope" with closures
+			
+		var
+			defines globally
+			
+		let
+			can declare variables that are limited in scope to block, statement, or expression it was used in
+			
+		const
+			block scoped, cannot be changed through re-assignment and cannot be redeclared
+			
+		semicolon injection
+			automatically puts semicolon if you forget
+			return (semicolon injection could happen here)
+			{
+				javascript: "fantastic"
+			}
+			
+		JSON, JSON v. JS Object
+			- Javascript Object Notation
+			- JSON is a lightweight data-interchange format, easy for humans to read and write
+				easy for machines to parse and generate
+			- collection of name, value pairs and an ordered list of values
+			
+		DOM/DOM Manipulation
+			- Document Object Model
+			- we use HTML to manipulate the DOM
+			- <head>, <body>, <title>
+			
+		anonymous functions
+			- functions that are dynamically declared at runtime
+			- created by function operator (var flyToTheMoon = function() {})
+			- function does not have a name, but can be given one
+			
+		closures
+			- inner function that has access to outer function's variables
+			- creates scope
+			
+		IIFE
+			- Immediately Invoked Function Expression
+			- can be used to avoid variable hoisting
+			- (function(a, b) { /* ... */ })("hello", "world");
+			
+		template literals
+			- literals used to embed expressions
+			- used with ` (backtick)
+			
+		client vs browser
+			- browser is chrome, firefox, opera, ie, etc.
+			- client-side is rendering things in said browser
+			
+		JSON.parse
+			- constructs js object from json file
+			
+		JSON.stringify
+			- converts js value into a json string
+			
+		event handling/propogation 
+			- trickle down, bubble up
+			- bubbling
+				- When an event happens on an element, it first runs the handlers on it, 
+					then on its parent, then all the way up on other ancestors.
+				- captured and handled by innermost element, then propogated to outer elements
+				- in to out
+			- capturing (trickling)
+				- rarely used in real code
+				- the event is first captured by the outermost element and propogated to the inner
+					elements
+				- out to in
+	Servlets
+		What are they?
+			- small server-side program that runs automatically in response to user input
+			
+		servlet hierarchy 
+			- servlet interface, generic servlet, http servlet
+			
+		lifecycle 
+			- initialize, service, destroy
+			
+		server (web vs application)
+			- web server only http, app server not limited to http
+			- web server mostly for static content (there are plugins to support scripting languages)
+			- most application servers have a web server, so app servers can do anything web servers can
+			- Tomcat can be both (http server is specifically web)
+			- JBoss is application server
+			
+		servlet/web container
+			- web server that interacts with java servlets
+			- Tomcat is a web container
+			
+		deployment descriptor/web.xml
+			configuration file for an artifact that is deployed to some container/engine
+			
+		web.xml
+			deployment descriptor
+			
+		redirect vs forward
+			forward
+				- performed initially by the servlet
+				- url remains the same (page will be different)
+				- reload will repeat same request
+			redirect
+				- two step process
+				- web application instructs browser to get second url
+				- browser reload of second url will fetch second url, not repeat original request
+				- objects placed in original request scope are not available to second request
+				
+			forward is faster than redirect
+			
+		do xxx method signatures
+			get
+				- generally for retrieving information 
+				- appends parameters to url as key:value pairs
+				- no request body
+				- query string (appended to url) limited in length
+				- can bookmark
+			
+			put
+			
+			post
+				- can send parameters (including uploading files) to server
+				- cannot be bookmarked
+				- more secure
+				- includes info in request body
+				- good for sending large amounts of info
+			
+			delete
+			
+			head
+			
+			options
+			
+			trace
+			
+			connect
+			
+		printwriter
+			- handles the user's request to generate html for the report and writes 
+				html to the response object
+			
+		jackson
+			- high performance json processor for java
+			- fast, correct, lightweight
+			- good for smaller files
+			
+		object mapper
+			- writes json
+			
+		get vs post
+		
+		get req parameters in a servlet
+			HttpServletRequest.getParameterValues(paramName)
+			
+		context root
+			determines which urls your server will use for your application
+			i.e. if it is 'mytest' then http://localhost:8080/mytest
+		
+		@webServlet
+			annotation allows you to not put in web.xml
+			@webServlet("/notifications/*")
+			@webServlet(name="", displayName="", urlPatterns={""}, loadOnStartup=1)
+			
+		servletmapping
+			- specifies the web container of which java servlet should be invoked for
+				a url given by the client. It maps url patterns to servlets
+				
+		url pattern
+			- what the url your servlet will be responsible for
+		
+		session management
+			- conversational state between client and server and it can consist
+				of multiple request and response between client and server.
+			- Session Management API regulates sessions
+		
+		http session
+		
+		login/logout functionality
+		
+		front controller
+			- is a controller that handles all requests for a website
+			- mvc
+		
+		Servlet Config
+			- provides configuration for all servlets in the container
+		Servlet Context
+			- provides configuration for 1 (one) servlet
+		
+		Web.xml (more notes on phone)
+			<web-app>
+				<context-param>
+					<param-name></param-name>
+					<param-value><param-value>
+				</context-param>
+				<servlet>
+					<servlet-name>Hello!</servlet>
+					<servlet-class>com.ex.HelloServlet</servlet-class>
+					<init-param>	
+						<param-name>message<param-name>
+						<param-value>hello!</param-value>
+					</init-param>
+					<load-on-startup>1</load-on-startup>
+				</servlet>
+			</web-app>
+			
+Software Development Life Cycle (SDLC)
+	- a process used by the software industry to design, develop, and test software.
+		The process aims to produce high-quality software that meets or exceeds customer
+		expectations in a both cost and time effective fashion. There are very many 
+		models of the SDLC, we follow _________.
+		
+	AGILE "It's a way of life" - martin fowler
+		- modular, adaptable, trackable in the process, learn from earlier steps and make changes
+		- break biz requirements into user stories and assign to team members
+			- stories are:
+				- relatifvely small units of works
+				- assigned points (usually fibonacci or 2^x) based on time/effort required
+				- "as a ___ I can ___ in order to ___"
+		- track progress in burndown chart
+		- daily standup meeting - brief in person meeting
+			- what did I accomplish yesterday
+			- what do I plan to accomplish today
+			- what are my blockers?
+			
+	Flavors of AGILE:
+		SCRUM
+			- break project into >= 3 "sprints" which are typically 2 weeks long
+				sprints begin with planning hte deliverable along with testing, code review, etc.
+		Kanban
+			- project requirements broken into "epics"
+			- swimlanes - way to organize stories moving at different paces or that have varying urgency
+			- longer iterations
+		
+	Other models include:
+		Waterfall 
+			- building a bridge from start -> finish
+			- well defined areas which do not change
+			- good for large projects and large teams with minimal overhead required
+			- think gov't, large engineering projects
+	
+		Big Bang
+			- everything all at once
+			- no formal dev structure
+			- okay for small projects with small teams, few requirements and heavy management/overhead
+		
+		Spiral 
+			- "building a tower"
+			- successive requirements depend on each other 
+			- Pro: rigor, continuity, backwards compatibility
+			- Con: testing new features is difficult
+			
+XML
+	- NOT a programming language
+	- designed to transport and store data in a way that is both human and machine readable
+	- language agnostic - like JSON
+	- well-formed: follows basic rules: 
+		- begins w/ xml declaration
+		- unique root elements
+		- open and end tags must match
+		- elements are case-sensitive and must be closed
+		- elements must be properly nested
+
+Valid XML
+	- XML which follows a certain pre-defined structure either a DTD(document type definition or an XSD (xml schema definition)
+	DTD 
+		- defines the structure and legal elements and attributes of an xml document
+		- can define element names and relationship, ranges of values, and more
+	XSD
+		- defines structure of xml document
+	
+	Parsing XML
+		JAXP - Java API for XML Processing 2 approaches
+			DOM - Document Object model
+				- loads full xm file into memory and vs creates a tree representation of it
+				- expensive (memory use)
+				- easier for a small/medium sized docs b/c of memory retrieval
+				
+			SAX
+				- simple API for xml parsing
+				- event based
+				- "streams" ml data without loading all of it into memory
+				- read only (unlike dom)
+				
+Unmarshalling/marshalling (look it up)
+	In few words, "marshalling" refers to the process of converting the data or the objects into a byte-stream, 
+	and "unmarshalling" is the reverse process of converting the byte-stream back to their original data or object. 
+
+
+		
+		
+		
+				
+		
+		
+		
