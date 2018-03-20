@@ -9,4 +9,7 @@ public interface ReimbursementRequestDAO {
 
 	public ReimbursementRequest addReimbursementRequest(ReimbursementRequest request);
 	public List<ReimbursementRequest> getAllPendingRequests(Employee emp);
+	public List<ReimbursementRequest> getAllRequestsForReviewBySuper(Employee emp);
+	public ReimbursementRequest getReimbursementRequestById(int id);
+	public ReimbursementRequest updateReimbursementRequest(ReimbursementRequest updatedRequest);
 }

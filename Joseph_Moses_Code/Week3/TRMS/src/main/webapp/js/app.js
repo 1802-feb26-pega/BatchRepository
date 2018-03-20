@@ -3,6 +3,7 @@ window.onload = function(){
 	console.log("window on load");
 }
 
+
 function loadLanding(){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "loadlanding.view" , true);
@@ -319,6 +320,10 @@ function loadHome(emp){
 			$('#amountAwarded').html(emp.awarded);
 			$('#submitRequest').click(loadRequestForm);
 			getAllPendingRequests();
+			if(emp.empLevel < 2){
+				$('#approvalDenialTable').hide();
+			}
+			getAllRequestsForReview();
 			// ADD LISTENERS TO HOME PAGE STUFF
 		}
 	}
@@ -331,12 +336,151 @@ function getAllPendingRequests(){
 	
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
-			console.log(xhr.responseText);
+			var requests = JSON.parse(xhr.responseText);
+			console.log(requests);
+			if(requests.length == 0){
+				console.log("you have no requests");
+			}
+			else{
+				console.log("testing----");
+				//	accounts = JSON.stringify("data") + ":" + accounts;
+				var data = formatPendingTable(requests);
+
+				$('#pendingRequests').DataTable({
+					data : data,
+					columns: [
+						{data : "requestId" },
+						{data : "description" },
+						{data : "startDate" },
+						{data : "cost" },
+						{data : "expectedReimbursement" },
+						{data : "status" }
+						]
+				});
+				console.log("this should have worked");
+			}
+			
 		}
 	}
 }
 
-function addRequestToPendingTable(request){
+function getAllRequestsForReview(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "getAllRequestsForReview", true);
+	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var requests = JSON.parse(xhr.responseText);
+			console.log(requests);
+			if(requests.length == 0){
+				console.log("you have no requests");
+			}
+			else{
+				console.log("testing----");
+				//	accounts = JSON.stringify("data") + ":" + accounts;
+				var data = formatReviewTable(requests);
+
+				var approvalDenialTable = $('#approvalDenialTable').DataTable({
+					"scrollX": true,
+					retreive: true,
+					data : data,
+					columns: [
+						{data : "rrId" },
+						{data : "fName" },
+						{data : "lName" },
+						{data : "description" },
+						{data : "startDate" },
+						{data : "location" },
+						{data : "typeOfEvent" },
+						{data : "cost" },
+						{data : "expectedReimbursement" },
+						{data : "justification" },
+						{data : "workTimeMissed" },
+						{data : "priority" },
+						{data : "status" },
+						{defaultContent: '<button class="btn btn-primary btn-block approveButton">Approve</button>'},
+						{defaultContent: '<button class="btn btn-primary btn-block denyButton">Deny</button>'}
+						]
+				});
+				
+				$('#approvalDenialTable tbody').on('click', '.approveButton', function(){
+					var data = approvalDenialTable.row( $(this).parents('tr') ).data();
+					console.log(data.rrId);
+					var xhr = new XMLHttpRequest();
+					xhr.open("POST", "approveRequest", true);
+					xhr.send(JSON.stringify(data.rrId));
+					
+					xhr.onreadystatechange = function(){
+						if(xhr.readyState == 4 && xhr.status == 200){
+							approvalDenialTable.row( $(this).parents('tr') ).remove();
+						}
+					}
+				});
+				
+				
+			}
+			
+		}
+	}
+}
+
+function approveRequest(){
+	var data = approvalDenialTable.row( $(this).parents('tr') ).data();
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "approveRequest", true);
+	xhr.send(JSON.stringify(data));
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			
+		}
+	}
+	
+}
+
+function formatPendingTable(requests){
+	var data = [];
+	for(let i = 0; i < requests.length; i++){
+		let temp = new Object();
+		console.log(requests[i]);
+		temp.requestId = requests[i].rrId;
+		temp.description = requests[i].description;
+		temp.startDate = requests[i].startDate;
+		temp.cost = requests[i].cost;
+		temp.expectedReimbursement = requests[i].expectedReimbursement;
+		temp.status = requests[i].status.status;
+		console.log(temp);
+		data.push(temp);
+	}
+	console.log(data);
+	return data;
+}
+
+
+function formatReviewTable(requests){
+	var data = [];
+	for(let i = 0; i < requests.length; i++){
+		let temp = new Object();
+		console.log(requests[i]);
+		temp.rrId = requests[i].rrId;
+		temp.fName = requests[i].emp.fName;
+		temp.lName = requests[i].emp.lName;
+		temp.description = requests[i].description;
+		temp.startDate = requests[i].startDate;
+		temp.location = requests[i].location;
+		temp.typeOfEvent = requests[i].typeOfEvent.typeOfEvent;
+		temp.cost = requests[i].cost;
+		temp.expectedReimbursement = requests[i].expectedReimbursement;
+		temp.justification = requests[i].justification;
+		temp.workTimeMissed = requests[i].workTimeMissed;
+		temp.priority = requests[i].priority.priority;
+		temp.status = requests[i].status.status;
+		console.log(temp);
+		data.push(temp);
+	}
+	console.log(data);
+	return data;
 }
 
 function loadRequestForm(){

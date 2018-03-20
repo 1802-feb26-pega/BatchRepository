@@ -139,4 +139,14 @@ public class Employee {
 	public void setAwarded(double awarded) {
 		this.awarded = awarded;
 	}
+
+	@Override
+	public String toString() {
+		return "Employee [empId=" + empId + ", fName=" + fName + ", lName=" + lName + ", phone=" + phone + ", email="
+				+ email + ", password=" + password + ", superId=" + superId + ", deptId=" + deptId + ", empLevel="
+				+ empLevel + ", amountAvailable=" + amountAvailable + ", maxAvailable=" + maxAvailable + ", pending="
+				+ pending + ", awarded=" + awarded + "]";
+	}
+	
+	
 }

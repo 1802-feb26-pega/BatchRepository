@@ -202,7 +202,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			
 			conn.setAutoCommit(false);
 			
-			String sql = "UPDATE Employee SET fName = ?, lName = ?, phone = ?, email = ?, passwrod = ?, superId = ?, "
+			String sql = "UPDATE Employee SET fName = ?, lName = ?, phone = ?, email = ?, password = ?, superId = ?, "
 					+ "deptId = ?, empLevel = ?, amountAvailable = ?,"
 					+ " maxAvailable = ?, pending = ?, awarded = ? WHERE empId = ?"; 
 			
@@ -220,6 +220,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			pstmt.setDouble(10, updatedEmp.getMaxAvailable());
 			pstmt.setDouble(11, updatedEmp.getPending());
 			pstmt.setDouble(12, updatedEmp.getAwarded());
+			pstmt.setInt(13, updatedEmp.getEmpId());
 			
 			int rowsAffected = pstmt.executeUpdate();
 			

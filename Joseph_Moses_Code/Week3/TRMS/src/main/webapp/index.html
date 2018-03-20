@@ -9,6 +9,10 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
 	integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
 	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -21,6 +25,10 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
 	integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
 	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script
+	src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
 </head>
 
 <style>
@@ -29,25 +37,22 @@
 	margin: 50px auto;
 }
 
-.login-form form {
-	margin-bottom: 15px;
-	background: #ffffff;
-	box-shadow: 0px 2px 2px rbga(0, 0, 0.3);
-}
-
 .login-form h2 {
 	margin: 0 0 15px;
 }
 
-.home {
+.request-form {
 	width: 1080px;
 	margin: 50px auto;
 }
 
-.home form {
-	margin-bottom: 15px;
-	background: #ffffff;
-	box-shadow: 0px 2px 2px rbga(0, 0, 0.3);
+.request-form h2 {
+	margin: 0 0 15px;
+}
+
+.home {
+	width: 1500px;
+	margin: 50px auto;
 }
 
 .home h1 {
@@ -61,12 +66,6 @@
 .register-form {
 	width: 600px;
 	margin: 50px auto;
-}
-
-.register-form form {
-	margin-bottom: 15px;
-	background: #ffffff;
-	box-shadow: 0px 2px 2px rbga(0, 0, 0.3);
 }
 
 .register-form h2 {
@@ -89,9 +88,11 @@
 	background: rgb(0, 92, 128);
 }
 
-div form {
+.backdrop {
 	padding: 15px;
 	border-radius: 5px;
+	background: #ffffff;
+	box-shadow: 0px 2px 2px rbga(0, 0, 0.3);
 }
 
 .page-header {
@@ -127,29 +128,35 @@ body {
 	padding: 5px;
 }
 
-.reimbursementInfoTable{
-	width: 200px;
-	
-}
+/* .reimbursementInfoTable { */
+/* 	width: 250px; */
+/* } */
 
-.reimbursementInfoTable thead,tbody,tr,th{
-    display:block;
-  }
-.table-fixed{
-  width: 100%;
-  }
-  tbody{
-    height: 200px;
-    overflow-y:auto;
-    width: 100%;
-    }
-  thead,tbody,tr,th{
-    display:block;
-  }
-  thead tr th{
-        float:left;
-      }
-  
+/* .reimbursementInfoTable { */
+/* 	display: block; */
+/* } */
+
+/* .table-fixed { */
+/* 	width: 100%; */
+/* } */
+
+/* .table-fixed tbody { */
+/* 	height: 200px; */
+/* 	overflow-y: auto; */
+/* 	width: 100%; */
+/* } */
+
+/* .table-fixed thead, tbody, tr, th, td { */
+/* 	display: table-header-group; */
+/* } */
+
+/* .table-fixed thead tr th { */
+/* 	float: left; */
+/* } */
+
+/* .requestRow>td { */
+/* 	float: left; */
+/* } */
 </style>
 
 <body>

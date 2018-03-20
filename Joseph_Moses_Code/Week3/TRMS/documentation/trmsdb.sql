@@ -246,7 +246,7 @@ END;
 /
 
 CREATE OR REPLACE TRIGGER reimbursmentRequest_trigger
-BEFORE INSERT ON reimbursmentRequest
+BEFORE INSERT ON reimbursementRequest
 FOR EACH ROW
 BEGIN
     SELECT rrId_seq.NEXTVAL

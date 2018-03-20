@@ -15,7 +15,11 @@ import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.trms.pojos.Employee;
+import com.revature.trms.pojos.GradingFormat;
+import com.revature.trms.pojos.Priority;
 import com.revature.trms.pojos.ReimbursementRequest;
+import com.revature.trms.pojos.Status;
+import com.revature.trms.pojos.TypeOfEvent;
 import com.revature.trms.service.Service;
 
 @WebServlet("/requestSubmission")
@@ -27,12 +31,15 @@ public class RequestSubmissionServlet extends HttpServlet {
 		
 		String[] requestInfo = mapper.readValue(req.getInputStream(), String[].class);
 		
+		Service service = new Service();
+		
 		String location = requestInfo[0];
 		String description = requestInfo[1];
 		int typeOfEventId = Integer.parseInt(requestInfo[2]);
 		double cost = Double.parseDouble(requestInfo[3]);
 		int workTimeMissed = Integer.parseInt(requestInfo[4]);
 		double expectedReimbursment = Double.parseDouble(requestInfo[5]);
+		System.out.println(expectedReimbursment);
 		Date requestDate = Date.valueOf(requestInfo[6]);
 		Date startDate = Date.valueOf(requestInfo[7]);
 		int gradingFormatId = Integer.parseInt(requestInfo[8]);
@@ -41,10 +48,9 @@ public class RequestSubmissionServlet extends HttpServlet {
 		
 		HttpSession session = req.getSession();
 		Employee emp = (Employee) session.getAttribute("emp");
-		
+		System.out.println(emp.getAmountAvailable());
 		emp.setAmountAvailable(emp.getAmountAvailable() - expectedReimbursment);
 		emp.setPending(expectedReimbursment);
-		
 		
 		int priorityId;
 		if(ChronoUnit.DAYS.between(LocalDate.parse(requestInfo[7]), LocalDate.parse(requestInfo[6])) < 7) {
@@ -56,11 +62,14 @@ public class RequestSubmissionServlet extends HttpServlet {
 		
 		int statusId = 1;
 		
-		ReimbursementRequest rr = new ReimbursementRequest(emp.getEmpId(), requestDate, startDate, location, description,
-				typeOfEventId, cost, gradingFormatId, passingGrade, justification, workTimeMissed, expectedReimbursment, priorityId, statusId);
+		TypeOfEvent typeOfEvent = service.getTypeOfEventById(typeOfEventId);
+		GradingFormat gradingFormat = service.getGradingFormatById(gradingFormatId);
+		Priority priority = service.getPriorityById(priorityId);
+		Status status = service.getStatusById(statusId);
 		
-		Service service = new Service();
 		
+		ReimbursementRequest rr = new ReimbursementRequest(emp, requestDate, startDate, location, description,
+				typeOfEvent, cost, gradingFormat, passingGrade, justification, workTimeMissed, expectedReimbursment, priority, status);
 		
 		rr = service.addReimbursmentRequest(rr);
 		emp = service.updateEmployee(emp);

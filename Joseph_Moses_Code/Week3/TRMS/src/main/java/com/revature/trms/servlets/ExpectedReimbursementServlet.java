@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.trms.dao.EventTypeLookUpDAOImpl;
 
-@WebServlet("/expectedReimbursment")
+@WebServlet("/expectedReimbursement")
 public class ExpectedReimbursementServlet extends HttpServlet {
 
 	EventTypeLookUpDAOImpl dao = new EventTypeLookUpDAOImpl();

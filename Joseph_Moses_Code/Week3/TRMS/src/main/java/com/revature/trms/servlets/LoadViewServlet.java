@@ -15,7 +15,6 @@ public class LoadViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("in load view servlet");
 		System.out.println(process(req, resp));
-		
 		String page = process(req, resp);
 		req.getRequestDispatcher(page).forward(req, resp);
 	}

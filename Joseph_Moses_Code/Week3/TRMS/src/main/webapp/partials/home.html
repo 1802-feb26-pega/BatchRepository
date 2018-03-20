@@ -1,5 +1,5 @@
-<Div class="home">
-	<form>
+<div class="home">
+	<div class="backdrop">
 		<h1>
 			Welcome <span id="name"></span>!
 		</h1>
@@ -8,21 +8,19 @@
 				<div class="col-sm-3">
 					<div class="container" style="border-right: 1px solid #ccc">
 						<table id="empReimbursementInfo" class="reimbursementInfoTable">
-							<th><h4>Reimbursement Information</h4></th>
+							<thead>
+								<th><h4>Reimbursement Information</h4></th>
+							</thead>
 							<tr>
-								<td>Amount Available: $</td>
-								<td id="amountAvailable"></td>
+								<td>Amount Available: $<span id="amountAvailable"></span></td>
 							<tr>
-								<td>Max Available: $</td>
-								<td id="maxAvailable"></td>
+								<td>Max Available: $<span id="maxAvailable"></span></td>
 							</tr>
 							<tr>
-								<td>Amount Pending: $</td>
-								<td id="amountPending"></td>
+								<td>Amount Pending: $<span id="amountPending"></span></td>
 							</tr>
 							<tr>
-								<td>Amount Awarded: $</td>
-								<td id="amountAwarded"></td>
+								<td>Amount Awarded: $<span id="amountAwarded"></span></td>
 							</tr>
 						</table>
 					</div>
@@ -37,16 +35,17 @@
 								<table id="pendingRequests" class="table table-fixed">
 									<thead>
 										<tr>
-											<th class="col-xs">Request Id</th>
-											<th class="col-xs">Description</th>
-											<th class="col-xs">Start Date</th>
-											<th class="col-xs">Cost</th>
-											<th class="col-xs">Expected Reimbursement</th>
-											<th class="col-xs">Status</th>
+											<th>Request Id</th>
+											<th>Description</th>
+											<th>Start Date</th>
+											<th>Cost</th>
+											<th>Expected Reimbursement</th>
+											<th>Status</th>
 										</tr>
 									</thead>
 									<tbody id="pendingRequestsTBody">
-
+										<tr class="requestRow">
+										</tr>
 									</tbody>
 								</table>
 							</div>
@@ -54,7 +53,42 @@
 					</div>
 				</div>
 			</div>
+			<hr>
+			<div class="row">
+			<div class="col-sm-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4>Requests Requiring Review</h4>
+					</div>
+					<table id="approvalDenialTable">
+						<thead>
+							<tr>
+								<th>Request Id</th>
+								<th>First Name</th>
+								<th>Last Name</th>
+								<th>Description</th>
+								<th>Start Date</th>
+								<th>Location</th>
+								<th>Type of Event</th>
+								<th>Cost</th>
+								<th>Expected Reimbursement</th>
+								<th>Justification</th>
+								<th>Work Missed (Days)</th>
+								<th>Priority</th>
+								<th>Status</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				</div>
+			</div>
 		</div>
 		<button id="submitRequest">Submit Request</button>
-	</form>
-</Div>
+	</div>
+</div>

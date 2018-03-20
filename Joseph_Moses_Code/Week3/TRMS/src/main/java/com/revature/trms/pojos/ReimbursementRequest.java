@@ -5,41 +5,41 @@ import java.time.LocalDate;
 
 public class ReimbursementRequest {
 	private int rrId;
-	private int empId;
+	private Employee emp;
 	private Date requestDate;
 	private Date startDate;
 	private String location;
 	private String description;
-	private int typeOfEventId;
+	private TypeOfEvent typeOfEvent;
 	private double cost;
-	private int gradingFormatId;
+	private GradingFormat gradingFormat;
 	private int passingGrade;
 	private String justification;
 	private int workTimeMissed;
 	private double expectedReimbursement;
-	private int priorityId;
-	private int statusId;
+	private Priority priority;
+	private Status status;
 	
 	public ReimbursementRequest() {}
 
-	public ReimbursementRequest(int empId, Date requestDate, Date startDate, String location,
-			String description, int typeOfEventId, double cost, int gradingFormatId, int passingGrade,
-			String justification, int workTimeMissed, double expectedReimbursment, int priorityId, int statusId) {
+	public ReimbursementRequest(Employee emp, Date requestDate, Date startDate, String location, String description,
+			TypeOfEvent typeOfEvent, double cost, GradingFormat gradingFormat, int passingGrade, String justification,
+			int workTimeMissed, double expectedReimbursement, Priority priority, Status status) {
 		super();
-		this.empId = empId;
+		this.emp = emp;
 		this.requestDate = requestDate;
 		this.startDate = startDate;
 		this.location = location;
 		this.description = description;
-		this.typeOfEventId = typeOfEventId;
+		this.typeOfEvent = typeOfEvent;
 		this.cost = cost;
-		this.gradingFormatId = gradingFormatId;
+		this.gradingFormat = gradingFormat;
 		this.passingGrade = passingGrade;
 		this.justification = justification;
 		this.workTimeMissed = workTimeMissed;
-		this.expectedReimbursement = expectedReimbursment;
-		this.priorityId = priorityId;
-		this.statusId = statusId;
+		this.expectedReimbursement = expectedReimbursement;
+		this.priority = priority;
+		this.status = status;
 	}
 
 	public int getRrId() {
@@ -50,12 +50,12 @@ public class ReimbursementRequest {
 		this.rrId = rrId;
 	}
 
-	public int getEmpId() {
-		return empId;
+	public Employee getEmp() {
+		return emp;
 	}
 
-	public void setEmpId(int empId) {
-		this.empId = empId;
+	public void setEmp(Employee emp) {
+		this.emp = emp;
 	}
 
 	public Date getRequestDate() {
@@ -90,12 +90,12 @@ public class ReimbursementRequest {
 		this.description = description;
 	}
 
-	public int getTypeOfEventId() {
-		return typeOfEventId;
+	public TypeOfEvent getTypeOfEvent() {
+		return typeOfEvent;
 	}
 
-	public void setTypeOfEventId(int typeOfEventId) {
-		this.typeOfEventId = typeOfEventId;
+	public void setTypeOfEvent(TypeOfEvent typeOfEvent) {
+		this.typeOfEvent = typeOfEvent;
 	}
 
 	public double getCost() {
@@ -106,12 +106,12 @@ public class ReimbursementRequest {
 		this.cost = cost;
 	}
 
-	public int getGradingFormatId() {
-		return gradingFormatId;
+	public GradingFormat getGradingFormat() {
+		return gradingFormat;
 	}
 
-	public void setGradingFormatId(int gradingFormatId) {
-		this.gradingFormatId = gradingFormatId;
+	public void setGradingFormat(GradingFormat gradingFormat) {
+		this.gradingFormat = gradingFormat;
 	}
 
 	public int getPassingGrade() {
@@ -138,40 +138,38 @@ public class ReimbursementRequest {
 		this.workTimeMissed = workTimeMissed;
 	}
 
-	public double getExpectedReimbursment() {
+	public double getExpectedReimbursement() {
 		return expectedReimbursement;
 	}
 
-	public void setExpectedReimbursment(double expectedReimbursment) {
-		this.expectedReimbursement = expectedReimbursment;
+	public void setExpectedReimbursement(double expectedReimbursement) {
+		this.expectedReimbursement = expectedReimbursement;
 	}
 
-	public int getPriorityId() {
-		return priorityId;
+	public Priority getPriority() {
+		return priority;
 	}
 
-	public void setPriorityId(int priorityId) {
-		this.priorityId = priorityId;
+	public void setPriority(Priority priority) {
+		this.priority = priority;
 	}
 
-	public int getStatusId() {
-		return statusId;
+	public Status getStatus() {
+		return status;
 	}
 
-	public void setStatusId(int statusId) {
-		this.statusId = statusId;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	@Override
 	public String toString() {
-		return "ReimbursementRequest [rrId=" + rrId + ", empId=" + empId + ", requestDate=" + requestDate
-				+ ", startDate=" + startDate + ", location=" + location + ", description=" + description
-				+ ", typeOfEventId=" + typeOfEventId + ", cost=" + cost + ", gradingFormatId=" + gradingFormatId
-				+ ", passingGrade=" + passingGrade + ", justification=" + justification + ", workTimeMissed="
-				+ workTimeMissed + ", expectedReimbursement=" + expectedReimbursement + ", priorityId=" + priorityId
-				+ ", statusId=" + statusId + "]";
+		return "ReimbursementRequest [rrId=" + rrId + ", emp=" + emp + ", requestDate=" + requestDate + ", startDate="
+				+ startDate + ", location=" + location + ", description=" + description + ", typeOfEvent=" + typeOfEvent
+				+ ", cost=" + cost + ", gradingFormat=" + gradingFormat + ", passingGrade=" + passingGrade
+				+ ", justification=" + justification + ", workTimeMissed=" + workTimeMissed + ", expectedReimbursement="
+				+ expectedReimbursement + ", priority=" + priority + ", status=" + status + "]";
 	}
-	
-	
+
 	
 }
