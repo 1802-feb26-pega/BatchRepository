@@ -42,8 +42,8 @@ public class Service {
 	
 	public static boolean validateUsername(String username) {
 		User u = eDao.getEmployee(username);
-		System.out.println(username);
-		System.out.println(u);
+		System.out.println("eDao for validateUsername returned " + u);
+		System.out.println("returning " + (u==null));
 		return u == null;
 	}
 	

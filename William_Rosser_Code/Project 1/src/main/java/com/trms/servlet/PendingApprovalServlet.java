@@ -18,7 +18,6 @@ import com.trms.service.Service;
 public class PendingApprovalServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO URGENT: Get requests pending approval and send back as JSON
 		User u = (User) req.getSession().getAttribute("user");
 		int type = 0;
 		if (u instanceof DirectSupervisor) type=1;

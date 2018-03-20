@@ -31,8 +31,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
 			ResultSet info = ps.executeQuery();
-			
+			System.out.println("Getting employee with username " + username);
 			if (info.next()) {
+				System.out.println("Username " + username + " exists");
 				int roll = info.getInt(12);
 				int empId = info.getInt(1);
 				switch(roll) {
@@ -221,6 +222,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			ps.setString(7, ds.getJobTitle());
 			ps.setString(8, ds.getUsername());
 			ps.setString(9, ds.getPassword());
+			System.out.println("Adding Supervisor");
 			int val = ps.executeUpdate();
 			if (val > 0) {
 				System.out.println("inserted employee");

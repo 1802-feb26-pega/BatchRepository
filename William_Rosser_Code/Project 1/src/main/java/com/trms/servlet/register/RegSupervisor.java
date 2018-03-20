@@ -19,6 +19,7 @@ public class RegSupervisor extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		DirectSupervisor e = mapper.readValue(req.getInputStream(), DirectSupervisor.class);
+		System.out.println("Registering " + e);
 		e = (DirectSupervisor) Service.addUser(e, 1);
 		PrintWriter out = resp.getWriter();
 		resp.setContentType("application/json");

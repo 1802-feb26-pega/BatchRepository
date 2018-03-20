@@ -16,8 +16,11 @@ public class VaidateUsernameServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String un = req.getParameter("username");
+		System.out.println("Parameter = " + un);
 		PrintWriter out = resp.getWriter();
 		resp.setContentType("text/html");
-		out.print(Service.validateUsername(un)? "true": "");
+		String respString = Service.validateUsername(un)? "true": "";
+		System.out.println("respString = " + respString);
+		out.print(respString);
 	}
 }

@@ -116,19 +116,30 @@ public class ReimbursementDao {
 			//TODO: Filter by status
 			//TODO: trigger auto-passing callable statement
 			switch(roll) {
-			case 1: sql += "WHERE employee_id IN (SELECT employee_id FROM EMPLOYEE WHERE SUPERVISOR_ID = ?)"; break;
-			case 2: sql += "WHERE employee_id IN (SELECT employee_id FROM EMPLOYEE WHERE DEP_HEAD_ID = ?)"; break;
-			case 3: sql += "WHERE employee_id IN (SELECT employee_id FROM EMPLOYEE WHERE BENCO_ID = ?)"; break;
+			case 1: sql += "WHERE employee_id IN (SELECT employee_id FROM employee WHERE SUPERVISOR_ID = ?)"; break;
+			case 2: sql += "WHERE employee_id IN (SELECT employee_id FROM employee WHERE DEP_HEAD_ID = ?)"; break;
+			case 3: sql += "WHERE employee_id IN (SELECT employee_id FROM employee WHERE BENCO_ID = ?)"; break;
 			default: sql += "WHERE employee_id = ?";
 			}
 			System.out.println(sql);
 			PreparedStatement ps = conn.prepareStatement(sql);
 
 			switch (roll) {
-			case 1: ps.setInt(1, ((DirectSupervisor) u).getDsId()); break;
-			case 2: ps.setInt(1, ((DepartmentHead) u).getMyDepHeadId()); break;
-			case 3: ps.setInt(1, ((BenCo) u).getMyBenCoId()); break;
-			default: ps.setInt(1, u.getId());
+			case 1: {
+				ps.setInt(1, ((DirectSupervisor) u).getDsId()); 
+				break;
+			}
+			case 2: {
+				ps.setInt(1, ((DepartmentHead) u).getMyDepHeadId()); 
+				break;
+			}
+			case 3: {
+				ps.setInt(1, ((BenCo) u).getMyBenCoId()); 
+				break;
+			}
+			default: {
+				ps.setInt(1, u.getId());
+			}
 			}
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -147,6 +158,12 @@ public class ReimbursementDao {
 				temp.setCost(rs.getDouble(6));
 				temp.setMissedWorkTime(rs.getDouble(8));
 				sql = "SELECT * FROM reimbursement WHERE re_id = ?";
+				switch(roll) {
+				case 1: sql += " AND status = 'New Request'"; break;
+				case 2: sql += " AND (status = 'New Request' OR status = 'Stage 1')"; break;
+				case 3: sql += " AND status = 'Stage 2'"; break;
+				default: break;
+				}
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1, rs.getInt(9));
 				ResultSet rs2 = ps.executeQuery();

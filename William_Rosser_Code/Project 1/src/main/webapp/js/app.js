@@ -72,26 +72,35 @@ function loadRegister(){
 		}
 	}
 }
+var validUsername;
 
 function validate(username){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "validate_username?username="+username, true);
 	xhr.send();
 	xhr.onreadystatechange = function() {
+		//console.log(xhr.readyState, xhr.status);
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			var resp =xhr.responseText;
+			console.log(resp=="true");
 			if(resp=="true") {
 				$("#un-danger-taken").hide();
+				//console.log(resp, "Took the true option.");
+				validUsername = true;
 				return true;
-				//console.log("Took the true option.");
+				
 			} else {
 				$("#un-danger-taken").show();
+				//console.log(resp, "Took the false option.");
+				validUsername = false;
 				return false;
-				//console.log("Took the false option.");
+				
 			}
 		}
 	}
 }
+
+
 
 function register(){
 	$('.hide').hide();
@@ -114,8 +123,11 @@ function register(){
 	var pass = $('#pass').val();
 	var pass2 = $('#passVerify').val();
 	var acctype = $('#account_type').val();
-	var valid = validate(un)
-	var good = (fn&&ln&&un&&pass&&pass2&&(pass==pass2)&&valid) ? true : false;
+	var valid = validate(un);
+	console.log("Validate Username = ", validUsername);
+	console.log(fn,ln,un,pass,pass2,validUsername);
+	var good = (fn&&ln&&un&&pass&&pass2&&(pass==pass2)&&validUsername) ? true : false;
+	console.log("good",good);
 	var dest = "";
 	if (acctype==0) {
 		dest = "reg_employee";
@@ -126,6 +138,7 @@ function register(){
 	} else if (acctype==3) {
 		dest = "reg_benco";
 	}
+	console.log(good)
 	if (good) {
 		var user = {
 				firstName: fn,
@@ -139,6 +152,7 @@ function register(){
 				password:pass
 		}
 		var xhr = new XMLHttpRequest();
+		console.log(dest);
 		xhr.open("POST", dest, true);
 		xhr.send(JSON.stringify(user));
 		xhr.onreadystatechange = function() {
@@ -221,7 +235,6 @@ function loadHome(user) {
 					loadManageRequests(user);
 				})
 			}
-			//TODO: Populate table
 			var xhr2 = new XMLHttpRequest();
 			xhr2.open("GET", "get_user_requests",true);
 			//TODO: Get request name / rate.
@@ -236,7 +249,6 @@ function loadHome(user) {
 						var re_id = $("<td></td>").html(item.reimbursement.reId);
 						var s_date = $("<td></td>").html(item.reimbursement.requestDate);
 						var e_date = $("<td></td>").html(item.date);
-						
 						var e_type = $("<td></td>").html(item.eventType);
 						var t_cost = $("<td></td>").html("$"+item.cost);
 						var status = $("<td></td>").html(item.reimbursement.status);
@@ -352,7 +364,7 @@ function loadManageRequests(user) {
 						var status = $("<td></td>").html(item.reimbursement.status);
 						var action = $("<td></td>");
 						
-						var actionList = $("<select></select>").attr("id", "action_"+index);
+						var actionList = $("<select></select>").attr("id", "action_"+index).addClass("action");
 						var noAct = $("<option></option").attr("value", 0).html("No Action");
 						var approve = $("<option></option").attr("value", 1).html("Approve");
 						var reject = $("<option></option").attr("value", 2).html("Reject");
@@ -360,13 +372,31 @@ function loadManageRequests(user) {
 						action.append(actionList);
 						row.append(rid,sname,sdate,edate,etype,ecost,era,status,action);
 						$("#r_t_body").append(row);
-						
 					});
-					//TODO: Fill with response values
+					$("#submit").on("click", function () {
+						saveManageRequests(user, json);
+					});
 				}
 			}
 		}
 	}
+}
+
+function saveManageRequests(user, data) {
+	var approve = [];
+	var reject = [];
+	$(".action").each(function(index, item) {
+		var action = $(item).val()
+		if (action == 1) {
+			approve.append(data[index]);
+		} else if (action == 2) {
+			reject.append(data[index]);
+		}
+	});
+	console.log(aprove, reject);
+	var jsonApprove = JSON.stringify(approve);
+	var jsonReject = JSON.stringify(reject);
+	//TODO: AJAX to save.
 }
 
 
