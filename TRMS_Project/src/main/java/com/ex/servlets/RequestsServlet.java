@@ -25,12 +25,11 @@ public class RequestsServlet  extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
-		System.out.println("IN REQUESTS -- GET");
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("user"); // get logged user from session
 		
 		//System.out.println(user.toString());
-		System.out.println(user.getUsername());
+		//System.out.println(user.getUsername());
 		
 		List<Request> requests = service.getRequests(user);
 		
@@ -39,6 +38,7 @@ public class RequestsServlet  extends HttpServlet{
 		
 		PrintWriter out = res.getWriter();
 		res.setContentType("application/json");
+		//System.out.println(requestString);
 		out.write(requestString);
 	}
 	

@@ -17,6 +17,7 @@ public class Request {
 	private Timestamp requestTime;
 	private int flaggedId;
 	private int approvalId;
+	private int u;
 	
 	public Request() {}
 	
@@ -141,6 +142,9 @@ public class Request {
 
 	public void setApprovalId(int approvalId) {
 		this.approvalId = approvalId;
+	}
+	public int getU() {
+		return u;
 	}
 
 	@Override

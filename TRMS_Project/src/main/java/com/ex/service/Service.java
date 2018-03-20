@@ -72,8 +72,7 @@ public class Service {
 	
 	public int addUser(User u)
 	{
-		return dao.addUser(u.getFirstname(),u.getLastname(),u.getUsername(),u.getPassword(),u.getAddress(),u.getZipcode(),u.getTitle(),u.getSupervisorId(),
-				u.getDeptHeadId(),u.getBenCoId(),u.getApprovedFunds(),u.getPendingFunds());
+		return dao.addUser(u.getFirstname(),u.getLastname(),u.getUsername(),u.getPassword(),u.getAddress(),u.getZipcode(),u.getTitle(),u.getDepartmentId(),u.getApprovedFunds(),u.getPendingFunds());
 	}//addUser
 
 	//===================================================
@@ -83,5 +82,11 @@ public class Service {
 		return dao.getRequestsByUser(u);
 	}//getAccounts
 
+	//==============================================
 	
+	public int addRequest(Request r,int uId)
+	{
+		return dao.addRequest(r.getEventType(), r.getStartDate(), r.getEndDate(), r.getLocation(), r.getDescription(), r.getCost(), r.getGradingStyleId(), r.getGrade(), 
+				r.getRequestDate(), r.getRequestTime(), r.getFlaggedId(), r.getApprovalId(), uId);
+	}
 }

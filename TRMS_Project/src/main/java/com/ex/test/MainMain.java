@@ -9,9 +9,9 @@ import com.trms.pojos.Request;
 import com.trms.pojos.User;
 
 public class MainMain {
+	static DAO dao = new DAOImpl();
 	public static void main(String[] args)
 	{
-		DAO dao = new DAOImpl();
 //		User u = dao.getUserByUsername("ck");
 //		System.out.println(u.toString());
 		
@@ -24,6 +24,14 @@ public class MainMain {
 //				r.getDescription(),r.getCost(),r.getGradingStyleId(), 
 //				r.getGrade(), r.getRequestDate(),r.getRequestTime(), 
 //				r.getFlaggedId(), r.getApprovalId(), uId);
+		
+		
+//		dao.addUser("john", "smith", "js", "iamjohn", "unknown", "unknown", "supervisor", 1, 0, 0);
+//		User u = dao.getUserByUsername("js");
+//		System.out.println(u.toString());
+		
+		dao.addUser("fred", "meyer", "fm", "iamfred", "unknown", "unknown", "department head", 1, 0, 0);
+		dao.addUser("keith", "richards", "kr", "iamkeith", "unknown", "unknown", "benefits coordinator", 1, 0, 0);
 		
 	}
 }

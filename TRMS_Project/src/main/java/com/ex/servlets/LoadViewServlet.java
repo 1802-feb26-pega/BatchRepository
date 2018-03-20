@@ -37,6 +37,9 @@ public class LoadViewServlet extends HttpServlet{
 			System.out.println("home");
 			return"/partials/home.html";
 			
+		case("/rev/loadnewrequest.view"):
+			return("/partials/newrequest.html");
+			
 		
 /*
 		case("/bank/loadupload.view"):

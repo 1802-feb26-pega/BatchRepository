@@ -18,7 +18,7 @@ public interface DAO {
 //	public double getBalance(int id);
 //	public void updateBalance(int id, double amt);
 	public User getUserByUsername(String username);
-	public int addUser(String fn,String ln,String un,String pass,String addr,String zip,String title,int sup,int head,int ben,double app,double pen);
+	public int addUser(String fn,String ln,String un,String pass,String addr,String zip,String title,int dept,double app,double pen);
 	public int addRequest(String eType,Date sDate,Date eDate,String loc,String desc,
 			double cost,int gStyleId,int grade,Date rDate,Timestamp t,int flaggedId,
 			int appId,int uId);

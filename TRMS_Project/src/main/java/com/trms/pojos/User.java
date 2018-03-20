@@ -13,9 +13,7 @@ public class User {
 	private String address;
 	private String zipcode;
 	private String title;
-	private int supervisorId;
-	private int deptHeadId;
-	private int benCoId;
+	private int departmentId;
 	private double approvedFunds;
 	private double pendingFunds;
 	
@@ -23,8 +21,7 @@ public class User {
 	public User(){}
 	
 	public User(String firstname, String lastname, String email, String password,
-			String birthdate,String address,String zipcode,String title,int supId,int headId,
-			int benId,double approved, double pending) {
+			String birthdate,String address,String zipcode,String title,int dept,double approved, double pending) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -34,9 +31,7 @@ public class User {
 		this.address=address;
 		this.zipcode=zipcode;
 		this.title=title;
-		this.supervisorId=supId;
-		this.deptHeadId=headId;
-		this.benCoId=benId;
+		this.departmentId=dept;
 		this.approvedFunds=approved;
 		this.pendingFunds=pending;
 	}
@@ -113,28 +108,12 @@ public class User {
 		this.title = title;
 	}
 
-	public int getSupervisorId() {
-		return supervisorId;
+	public int getDepartmentId() {
+		return departmentId;
 	}
 
-	public void setSupervisorId(int supervisorId) {
-		this.supervisorId = supervisorId;
-	}
-
-	public int getDeptHeadId() {
-		return deptHeadId;
-	}
-
-	public void setDeptHeadId(int deptHeadId) {
-		this.deptHeadId = deptHeadId;
-	}
-
-	public int getBenCoId() {
-		return benCoId;
-	}
-
-	public void setBenCoId(int benCoId) {
-		this.benCoId = benCoId;
+	public void setDepartmentId(int dept) {
+		this.departmentId = dept;
 	}
 
 	public double getApprovedFunds() {
@@ -152,22 +131,13 @@ public class User {
 	public void setPendingFunds(double pendingFunds) {
 		this.pendingFunds = pendingFunds;
 	}
-/*
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
-				+ ", password=" + password + ", birthdate=" + birthdate + ", address=" + address + ", zipcode="
-				+ zipcode + ", title=" + title + ", supervisorId=" + supervisorId + ", deptHeadId=" + deptHeadId
-				+ ", benCoId=" + benCoId + ", approvedFunds=" + approvedFunds + ", pendingFunds=" + pendingFunds + "]";
-	}
-*/
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
 				+ ", password=" + password + ", address=" + address + ", zipcode=" + zipcode + ", title=" + title
-				+ ", supervisorId=" + supervisorId + ", deptHeadId=" + deptHeadId + ", benCoId=" + benCoId
-				+ ", approvedFunds=" + approvedFunds + ", pendingFunds=" + pendingFunds + "]";
+				+ ", departmentId=" + departmentId + ", approvedFunds=" + approvedFunds + ", pendingFunds="
+				+ pendingFunds + "]";
 	}
 	
 	

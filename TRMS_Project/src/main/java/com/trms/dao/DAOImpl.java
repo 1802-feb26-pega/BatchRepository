@@ -239,11 +239,9 @@ public class DAOImpl implements DAO
 				u.setAddress(temp.getString(7));
 				u.setZipcode(temp.getString(8));
 				u.setTitle(temp.getString(9));
-				u.setSupervisorId(temp.getInt(10));
-				u.setDeptHeadId(temp.getInt(11));
-				u.setBenCoId(temp.getInt(12));
-				u.setApprovedFunds(temp.getDouble(13));
-				u.setPendingFunds(temp.getDouble(14));
+				u.setDepartmentId(temp.getInt(10));
+				u.setApprovedFunds(temp.getDouble(11));
+				u.setPendingFunds(temp.getDouble(12));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -261,7 +259,7 @@ public class DAOImpl implements DAO
 	//========================================================================
 
 	@Override
-	public int addUser(String fn,String ln,String un,String pass,String addr,String zip,String title,int sup,int head,int ben,double app,double pen)
+	public int addUser(String fn,String ln,String un,String pass,String addr,String zip,String title,int dept,double app,double pen)
 	{
 		String passHash = null;
 		MessageDigest digest;
@@ -289,35 +287,8 @@ public class DAOImpl implements DAO
 		//second, call the stored procedure stored in db that creates a new user/employee
 		try(Connection conn  = ConnectionFactory.getInstance().getConnection();)
 		{
-			//			conn.setAutoCommit(false);
-			//
-			//			//				String sql = "insert into users "
-			//			//						+ "(firstname, lastname, email, password) "
-			//			//						+ "values(?, ?, ?, ? )";
-			//
-			//			String sql = "INSERT INTO USERS (firstname,lastname,email,password) VALUES(?,?,?,?)";
-			//			String [] key = new String[1];
-			//			key[0] = "u_id";
-			//			PreparedStatement ps = conn.prepareStatement(sql, key);
-			//			ps.setString(1, fn);
-			//			ps.setString(2, ln);
-			//			ps.setString(3, email);
-			//			ps.setString(4, passHash);
-			//
-			//			ps.executeUpdate();
-			//			int id = 0;
-			//			ResultSet pk = ps.getGeneratedKeys();
-			//			while(pk.next()){
-			//				id = pk.getInt(1);
-			//			}
-			//
-			//			conn.commit();
-			//			User u = new User(fn, ln, email, pass);
-			//			u.setId(id);
 
-			//			public User addUser(String fn,String ln,String un,String pass,String bday,String addr,String zip,String title,int sup,int head,int ben,double app,double pen)
-
-			String sql = "{CALL new_emp(?,?,?,?,?,?,?,?,?,?,?,?)}";
+			String sql = "{CALL new_emp(?,?,?,?,?,?,?,?,?,?)}";
 			CallableStatement c = conn.prepareCall(sql);
 			c.setString(1,fn);
 			c.setString(2,ln);
@@ -327,11 +298,9 @@ public class DAOImpl implements DAO
 			c.setString(5,addr);
 			c.setString(6,zip);
 			c.setString(7,title);
-			c.setInt(8,sup);		//supervisor id
-			c.setInt(9,head);		//department head id
-			c.setInt(10,ben);		//benco id
-			c.setDouble(11,app);	//approved funds
-			c.setDouble(12,pen);	//pending funds
+			c.setInt(8,dept);
+			c.setDouble(9,app);	//approved funds
+			c.setDouble(10,pen);	//pending funds
 			value = c.executeUpdate();
 
 
@@ -403,12 +372,13 @@ public class DAOImpl implements DAO
 			}
 
 			//now get all requests from request table from corresponding request ids from the previous query
-			while(!requestIds.isEmpty())
+			//while(!requestIds.isEmpty())
+			for(Integer i : requestIds)
 			{
-				Integer current = requestIds.get(0);
+				//Integer current = requestIds.get(0);
 				sql = "SELECT * FROM request WHERE request_id=?";
 				p = conn.prepareStatement(sql);
-				p.setInt(1, current);
+				p.setInt(1, i);
 				rs = p.executeQuery();
 
 				while(rs.next())
@@ -427,8 +397,9 @@ public class DAOImpl implements DAO
 					temp.setFlaggedId(rs.getInt(12));
 					temp.setApprovalId(rs.getInt(13));
 					requests.add(temp);
+					System.out.println(temp.toString());
 				}//while - rs
-				requestIds.remove(current);
+				//requestIds.remove(0);
 			}//while - request Ids
 
 		} catch(SQLException e)
@@ -436,6 +407,11 @@ public class DAOImpl implements DAO
 			e.printStackTrace();
 		}//try catch
 
+		for(Request i : requests)
+		{
+			System.out.println("** "+i.toString());
+		}
+		
 		return requests;
 	}//getrequestsbyuser
 }//daoimpl
