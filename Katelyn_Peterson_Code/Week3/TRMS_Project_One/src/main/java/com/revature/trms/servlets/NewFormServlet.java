@@ -28,10 +28,12 @@ public class NewFormServlet extends HttpServlet
 	{
 		ObjectMapper mapper = new ObjectMapper();
 		Form newForm = mapper.readValue(req.getInputStream(), Form.class);
+		
 		boolean success = false;
 		
-		System.out.println(newForm.toString());
-		//success = fService.addNewForm(newForm.getEmployId(), newForm);
+		//System.out.println(test);
+		//System.out.println(newForm.toString());
+		success = fService.addNewForm(newForm.getEmployId(), newForm);
 		
 		if(success)
 		{

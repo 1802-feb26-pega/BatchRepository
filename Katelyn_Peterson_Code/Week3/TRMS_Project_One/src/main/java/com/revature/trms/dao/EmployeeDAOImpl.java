@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.revature.trms.pojos.Employee;
-import com.revature.trms.pojos.Form;
 import com.revature.trms.util.ConnectionFactory;
 
 public class EmployeeDAOImpl implements EmployeeDAO
@@ -84,7 +83,7 @@ public class EmployeeDAOImpl implements EmployeeDAO
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection())
 		{
-			sql = "SELECT * FROM employee WHERE employeid = ?";
+			sql = "SELECT * FROM employee WHERE employeeid = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, empId);
 			rs = pstmt.executeQuery();
@@ -123,13 +122,13 @@ public class EmployeeDAOImpl implements EmployeeDAO
 			e.printStackTrace();
 		}
 		
-		if(employees.isEmpty()) return null;
+		//if(employees.isEmpty()) return null;
 		
 		return employees;
 	}
 
 	@Override
-	public Collection<Employee> getDHEmployees(Integer empId)
+	public Collection<Employee> getDHEmployees(Integer departID)
 	{
 		Collection<Employee> employees = new ArrayList<>();
 		
@@ -137,7 +136,7 @@ public class EmployeeDAOImpl implements EmployeeDAO
 		{
 			sql = "SELECT * FROM employee WHERE departmentid = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, empId);
+			pstmt.setInt(1, departID);
 			rs = pstmt.executeQuery();
 			
 			employees = populateEmployee(rs);
@@ -147,7 +146,7 @@ public class EmployeeDAOImpl implements EmployeeDAO
 			e.printStackTrace();
 		}
 		
-		if(employees.isEmpty()) return null;
+		//if(employees.isEmpty()) return null;
 		
 		return employees;
 	}

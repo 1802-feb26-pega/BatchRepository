@@ -26,4 +26,11 @@ public class EmployeeService
 			return null;
 		}
 	}
+	
+	public Employee getEmployeeById(Integer empId)
+	{
+		Employee selected = empDao.getEmployeeByEmployeeId(empId);
+		
+		return selected;
+	}
 }

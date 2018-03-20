@@ -18,7 +18,7 @@ public interface EmployeeDAO
 	// Get Direct Supervisor's Employees
 	public Collection<Employee> getDSEmployees(Integer empId);
 	
-	// Get Department Head's Employees
-	public Collection<Employee> getDHEmployees(Integer empId);
+	// Get Department Employees
+	public Collection<Employee> getDHEmployees(Integer departID);
 
 }

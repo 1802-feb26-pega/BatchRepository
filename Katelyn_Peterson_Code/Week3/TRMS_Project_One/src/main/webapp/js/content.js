@@ -174,6 +174,14 @@ function getEmployeeForms()
 
 				// If time, change table to show employee last name...this is so superiors and BenCo can distiguish between requests
 				// If so, may need to expand wrapper again
+				// What we have: Employee IDs attached to each form
+				// What we need: The last name of the employees attached to that Employee ID
+				// So...call for Employees?
+
+				//var subEmps = getSubEmps(forms);
+				//console.log("subEmps after being loaded: " + subEmps);
+
+				//var data = formatTable(forms, subEmps);
 				var data = formatTable(forms);
 
 				$('#formTable').DataTable
@@ -181,7 +189,9 @@ function getEmployeeForms()
 					destroy: true,
 					data : data,
 					columns: [
-						{data : "Form ID" },
+						//{data : "Form ID" },
+						{data: "Employee ID"},
+						//{data : "Submitter"},
 						{data : "Date Submitted" },
 						{data : "Start Date" },
 						{data : "Location" },
@@ -202,6 +212,7 @@ function getEmployeeForms()
 }
 
 // Formatting table for viewing
+//function formatTable(forms, subEmps)
 function formatTable(forms)
 {
 	//console.log("formatting table");
@@ -209,8 +220,10 @@ function formatTable(forms)
 	for(let x = 0; x < forms.length; x++)
 	{
 		let temp = new Object();
-		//console.log("Incoming Data: " + forms[x]);
-		temp["Form ID"] = forms[x].formId;
+		//console.log("Incoming Data: " + subEmps[x]);
+		//temp["Form ID"] = forms[x].formId;
+		temp["Employee ID"] = forms[x].employId;
+		//temp.Submitter = subEmps.lastName;
 		temp["Date Submitted"] = forms[x].submitDate;
 		temp["Start Date"] = forms[x].startDate;
 		temp.Location = forms[x].address + "<br />" + forms[x].city + ", " + 
@@ -225,8 +238,48 @@ function formatTable(forms)
 		//console.log("Outgoing Data" + temp);
 		data.push(temp);
 	}
-	console.log(data);
+	//console.log(data);
 	return data;
+}
+
+// My attempt to populate the forms table with the last names of whoever submitted the requests
+// The loops will run and console output will appear Java side.  Temp will even populate with the correct information
+// But subEmps only gets 'undefined' and the console.log in the loop only prints once - with the name of the last employee
+// in the supplied forms
+function getSubEmps(forms)
+{
+	var subEmps = [];
+
+	// Send request, build employee data
+	for(let x = 0; x < forms.length; x++)
+	{
+		/*var toSend = {
+			employeeId: forms[x].employId
+		};*/
+		var toSend = forms[x].employId;
+		console.log("tosend data aaaaaaaah " + toSend);
+
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "otherEmps", true);
+		xhr.send(JSON.stringify(toSend));
+	
+		xhr.onreadystatechange = function()
+		{
+			if(xhr.readyState == 4 && xhr.status == 200)
+			{
+				let temp = JSON.parse(xhr.responseText);
+				console.log("Temp by itself: " + temp);
+				console.log("Temp Data: " + temp.lastName);
+
+				subEmps.push(temp.lastName);
+				//console.log(subEmps[x].lastName);
+			}
+		}
+	}
+
+	console.log("subEmps: " + subEmps);
+
+	return subEmps;
 }
 
 // Logging out
@@ -283,7 +336,11 @@ function loadNew(employee)
 			getGrades();
 
 			// Set up validation
-			//$('#username').blur(validate);
+			//$('#e_date').blur(validate);
+			//$('#e_address').blur(validate);
+			//$('#e_city').blur(validate);
+			//$('#e_zip').blur(validate);
+			//$('#e_cost').blur(validate);
 
 			// Hide all the messages
 			$('#eDateMessage').hide();
@@ -313,22 +370,35 @@ function nRequest(employee)
 	var state = $('#e_state').val();
 	var postal = $('#e_zip').val();
 	var cost = $('#e_cost').val();
-	var event = $('#e_type').val();
+	var type = $('#e_type').val();
 	var grade = $('#grade_type').val();
 
 	// End of values retrieved from Form...database uses defaults for the other values
+	var newForm = {
+		employId: employee.employeeId, 
+		startDate: startDate, 
+		address: address, 
+		city: city,
+		state: state,
+		postal: postal,
+		cost: cost,
+		event: type,
+		gradeFormat: grade
+	};
 
-	var toSend = [employee.employeeId, startDate, address, city,];
+	//var toSend = [employee.employeeId, startDate, address, city, state, postal, cost, type, grade];
+	//console.log(newForm);
 
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "newRequest", true);
-	xhr.send(JSON.stringify(toSend));
+	xhr.send(JSON.stringify(newForm));
 
 	// Once Request is Submitted
 	loadHome(employee);
 }
 
-// Change to validate Reimbursement Request Form
+// Validation currently not working...needs more testing, troubleshooting
+// May need separate validation functions for each field
 function validate()
 {
 	//console.log($('#username').val());
@@ -340,7 +410,7 @@ function validate()
 	var e_zip = $('#e_zip').val();
 	var e_cost = $('#e_cost').val();
 
-	if(!e_date.value)
+	if(e_date.value == "mm/dd/yyyy")
 	{
 		$('#eDateMessage').html('Please fill in an event date');
 		$('#eDateMessage').show();
@@ -362,6 +432,12 @@ function validate()
 	else if (!e_zip.value)
 	{
 		$('#eZipMessage').html('Please fill in an event zip code');
+		$('#eZipMessage').show();
+		$('#request').attr('disabled', true);
+	}
+	else if (e_zip.value < 9999 | e_zip.value > 99999)
+	{
+		$('#eZipMessage').html('Please fill in a 5 digit zip code');
 		$('#eZipMessage').show();
 		$('#request').attr('disabled', true);
 	}
@@ -401,8 +477,11 @@ function getEvents()
 
 				for(let x = 0; x < events.length; x++)
 				{
-					items = items + "<option value = " + events[x] + ">" + events[x] + "</option>";
+					items = items + "<option value = \"" + events[x] + "\">" + events[x] + "</option>";
+					console.log(events[x]);
 				}
+
+				console.log(items);
 
 				//$.each(events, function() 
 				//{

@@ -116,11 +116,19 @@ public class FormDAOImpl implements FormDAO
 			
 			conn.setAutoCommit(false);
 			
-			sql = "{CALL add_form(?)}";
+			sql = "{CALL add_form(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 			
 			cstmt = conn.prepareCall(sql);
 			
 			cstmt.setInt(1, empId);
+			cstmt.setString(2, newForm.getStartDate());
+			cstmt.setString(3, newForm.getAddress());
+			cstmt.setString(4, newForm.getCity());
+			cstmt.setString(5, newForm.getState());
+			cstmt.setInt(6, newForm.getPostal());
+			cstmt.setDouble(7, newForm.getCost());
+			cstmt.setString(8, newForm.getEvent());
+			cstmt.setString(9, newForm.getGradeFormat());
 			
 			int changeRows = cstmt.executeUpdate();
 			

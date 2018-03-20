@@ -3,6 +3,7 @@ package com.revature.trms.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,6 +28,7 @@ public class FormsLoadServlet extends HttpServlet
 			throws ServletException, IOException
 	{
 		ArrayList<Form> empForms = new ArrayList<>();
+		//HashSet<Form> empForms = new HashSet<>();
 		
 		//System.out.println("IN Forms -- GET");
 		HttpSession session = req.getSession();
@@ -37,11 +39,50 @@ public class FormsLoadServlet extends HttpServlet
 		// Add in 'else if's for Supervisor and Department Head
 		if (user.getEmpTitle().matches("BenCo"))
 		{
-			empForms = fService.getAllForms();
+			empForms = (ArrayList<Form>) fService.getAllForms();
 		}
 		else
 		{
-			empForms = fService.getEmpForms(user.getEmployeeId());
+			empForms = (ArrayList<Form>) fService.getEmpForms(user.getEmployeeId());
+			
+			// Check for subordinate forms
+			ArrayList<Form> subForms = (ArrayList<Form>) fService.getSubordinateForms(user.getEmployeeId());
+			
+			if(!subForms.isEmpty())
+			{
+				for (int x = 0; x < subForms.size(); x++)
+				{
+					if(empForms.contains(subForms.get(x)))
+					{
+						continue;
+					}
+					else
+					{
+						empForms.add(subForms.get(x));
+					}
+				}
+				
+				// Check for Department forms
+				ArrayList<Form> departForms = (ArrayList<Form>) fService.getDepartmentForms(user.getEmployeeId(), user.getDepartId());
+				
+				if(!departForms.isEmpty())
+				{
+					for (int x = 0; x < departForms.size(); x++)
+					{
+						if(empForms.contains(departForms.get(x)))
+						{
+							continue;
+						}
+						else
+						{
+							empForms.add(departForms.get(x));
+						}
+					}
+				}
+				
+				//empForms.addAll(temp);
+				//System.out.println("More Forms Added!");
+			}
 		}
 		
 		ObjectMapper mapper = new ObjectMapper();
