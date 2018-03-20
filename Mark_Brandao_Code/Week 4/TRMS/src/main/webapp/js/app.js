@@ -3,6 +3,7 @@ window.onload = function(){ //1
 }
 
 function loadLanding(){ //2 
+	console.log("loading login");
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "loadlanding.view" , true);
 	xhr.send();
@@ -61,12 +62,14 @@ function loadRegister(){
 			$("#view").html(xhr.responseText);
 			getDepartments();
 
-			$("#landing").click(loadLanding);
+
 			$("#deptmessage").hide();
 			$("#supmessage").hide();
 			$("#emailmessage").hide();
 			$("#passmessage").hide();
 			$("#success").hide();
+			// $("#landing").on("click", loadLanding);
+			jQuery(document).on("click", "#landing", loadLanding);
 
 			$("#dept").blur(validateDept);
 			$("#suplastname").blur(validateSup);
