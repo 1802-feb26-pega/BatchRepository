@@ -57,7 +57,7 @@ function loadNav(){
 	}
 }
 
-function loadHome(user){
+function loadHome(emp){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "loadhome.view", true)
 	xhr.send();
@@ -65,19 +65,19 @@ function loadHome(user){
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
-			$('#name').html(user.firstname);
+			$('#name').html(emp.firstname);
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
 		}
 	}
 }
 
 function validate(){
-	console.log($('#username').val());
-	var username = $('#username').val();
+	console.log($('#email').val());
+	var employee = $('#email').val();
 	
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "validate", true);
-	xhr.send(JSON.stringify(username));
+	xhr.send(JSON.stringify(employee));
 	
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
@@ -99,10 +99,17 @@ function register(){
 	console.log("register");
 	var fn = $('#fn').val();
 	var ln = $('#ln').val();
-	var uname = $('#username').val();
-	var pass = $('#pass').val();
+	var email = $('#email').val();
+	var date = $('#dob').val(); 
+	var dept = $('#dept').val();
+	var address = $('#address').val();
+	var city = $('#city').val();
+	var state = $('#state').val();
+	var password = $('#pass').val();
+	var passConfirm = $('#passConfirm').val();
+
 	
-	var user = {
+	var emp = {
 			firstname: fn, 
 			lastname: ln, 
 			email: uname, 
@@ -111,12 +118,12 @@ function register(){
 	
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "register", true);
-	xhr.send(JSON.stringify(user));
+	xhr.send(JSON.stringify(emp));
 	
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			loadNav();
-			loadHome(user);
+			loadHome(emp);
 		}
 	}
 }

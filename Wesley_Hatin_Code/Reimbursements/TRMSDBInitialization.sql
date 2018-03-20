@@ -46,7 +46,7 @@ CREATE TABLE reimbursements(
     REFERENCES approval(approval_id)
 );
 
-CREATE TABLE grading_format(
+CREATE TABLE grading(
     format varchar(50) NOT NULL,
     presentation number NULL,
     grade number NULL,

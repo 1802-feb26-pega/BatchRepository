@@ -1,6 +1,6 @@
 package com.reimb.pojos;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Employee {
 	private int emp_id;
@@ -10,7 +10,7 @@ public class Employee {
 	private String password;
 	private double reimburse_remain;
 	private double reimburse_pend;
-	private Date date_of_birth;
+	private LocalDate date_of_birth;
 	private int job_level;
 	private int department;
 	private String address;
@@ -19,17 +19,19 @@ public class Employee {
 	
 	public Employee(){}
 
-	public Employee(String first_name, String last_name, String email, String password, double reimburse_remain,
-			double reimburse_pend, Date date_of_birth, int job_level, String address, String city, String state) {
+	public Employee(int id, String first_name, String last_name, String email, String password, double reimburse_remain,
+			double reimburse_pend, LocalDate DOB, int job_level, int department, String address, String city, String state) {
 		super();
+		this.emp_id = id;
 		this.first_name = first_name;
 		this.last_name = last_name;
 		this.email = email;
 		this.password = password;
 		this.reimburse_remain = reimburse_remain;
 		this.reimburse_pend = reimburse_pend;
-		this.date_of_birth = date_of_birth;
+		this.date_of_birth = DOB;
 		this.job_level = job_level;
+		this.department = department;
 		this.address = address;
 		this.city = city;
 		this.state = state;
@@ -123,11 +125,11 @@ public class Employee {
 		this.email = email;
 	}
 
-	public Date getDOB() {
+	public LocalDate getDOB() {
 		return date_of_birth;
 	}
 
-	public void setDOB(Date date_of_birth) {
+	public void setDOB(LocalDate date_of_birth) {
 		this.date_of_birth = date_of_birth;
 	}
 
