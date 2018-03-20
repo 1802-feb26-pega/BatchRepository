@@ -1,6 +1,6 @@
 package com.reimb.dao;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import com.reimb.pojos.Employee;
@@ -11,7 +11,7 @@ public interface DAO {
 	public Employee getEmployee(String username);
 	public Employee getEmployeeById(int id);
 	public Employee addEmployee(String fn, String ln, String email, String pass, int dept, 
-			LocalDate DOB, String address, String city, String state);
+			Date DOB, String address, String city, String state);
 	public Reimbursement addReimbursement(int id);
 	public ArrayList<Reimbursement> getReimbursementsById(int id);
 	public void updateReimbursement(int id, double amt);

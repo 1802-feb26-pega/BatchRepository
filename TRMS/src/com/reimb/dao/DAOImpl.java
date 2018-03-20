@@ -1,11 +1,10 @@
 package com.reimb.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import com.reimb.pojos.Employee;
@@ -32,7 +31,7 @@ public class DAOImpl implements DAO {
 				emp.setPassword(info.getString(5));
 				emp.setReimburseRemain(info.getDouble(6));
 				emp.setReimbursePending(info.getDouble(7));
-				emp.setDOB(info.getDate(8).toLocalDate());
+				emp.setDOB(info.getDate(8));
 				emp.setJobLevel(info.getInt(9));
 				emp.setDepartment(info.getInt(10));
 				emp.setAddress(info.getString(11));
@@ -64,7 +63,7 @@ public class DAOImpl implements DAO {
 				emp.setPassword(info.getString(5));
 				emp.setReimburseRemain(info.getDouble(6));
 				emp.setReimbursePending(info.getDouble(7));
-				emp.setDOB(info.getDate(8).toLocalDate());
+				emp.setDOB(info.getDate(8));
 				emp.setJobLevel(info.getInt(9));
 				emp.setDepartment(info.getInt(10));
 				emp.setAddress(info.getString(11));
@@ -80,14 +79,14 @@ public class DAOImpl implements DAO {
 
 	@Override
 	public Employee addEmployee(String fn, String ln, String email, String pass, int dept,
-			LocalDate DOB, String address, String city, String state) {
+			Date DOB, String address, String city, String state) {
 		try(Connection conn  = ConnectionFactory
 				.getInstance().getConnection();){
 			conn.setAutoCommit(false);
 
 			String sql = "insert into employees "
 					+ "(first_name, last_name, email, password, reimburse_remain, " + 
-					"		reimburse_pend, date_of_birth, job_level, dept, address, " + 
+					"		reimburse_pending, dob, job_level, department, address, " + 
 					"		city, state) "
 					+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			String [] key = new String[1];
@@ -100,7 +99,7 @@ public class DAOImpl implements DAO {
 			ps.setString(4, pass);
 			ps.setDouble(5, 1000);
 			ps.setDouble(6, 0);
-			ps.setDate(7, java.sql.Date.valueOf(DOB));
+			ps.setDate(7, DOB);
 			ps.setInt(8, 0);
 			ps.setInt(9, dept);
 			ps.setString(10, address);

@@ -65,7 +65,7 @@ function loadHome(emp){
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
-			$('#name').html(emp.firstname);
+			$('#name').html(emp.firstName);
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
 		}
 	}
@@ -110,16 +110,20 @@ function register(){
 
 	
 	var emp = {
-			firstname: fn, 
-			lastname: ln, 
-			email: uname, 
-			password: pass
+			firstName: fn, 
+			lastName: ln, 
+			email: email, 
+			dob: date,
+			department: dept,
+			address: address,
+			city: city,
+			state: state,
+			password: password
 	};
 	
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "register", true);
 	xhr.send(JSON.stringify(emp));
-	
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			loadNav();
