@@ -38,6 +38,9 @@ public class LoadViewServlet extends HttpServlet{
 		case("/TRMS/loadrequest.view"):
 			System.out.println("loading request view");
 			return "partials/request.html";
+		case("/TRMS/loadmessages.view"):
+			System.out.println("loading message view");
+			return "partials/messages.html";
 		}
 		System.out.println("Skipped all of the cases somehow");
 		return null;

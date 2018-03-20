@@ -12,16 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import com.ex.service.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebServlet("/validation")
+@WebServlet("/validate")
 public class ValidationServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 		throws ServletException, IOException {
+		System.out.println("in validate");
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String email = mapper.readValue(req.getInputStream(), String.class);
-		
-		System.out.println("Validate prints out:" + email);
 		
 		Service service = new Service();
 		boolean exists = service.emailExists(email);
@@ -29,7 +28,7 @@ public class ValidationServlet extends HttpServlet{
 		PrintWriter out = resp.getWriter();
 		resp.setContentType("application/json");
 		
-		System.out.print("mapper version is: " + mapper.writeValueAsString(exists));
+		System.out.println("mapper version is: " + mapper.writeValueAsString(exists));
 		out.write(mapper.writeValueAsString(exists));
 	}
 }

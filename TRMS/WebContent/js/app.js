@@ -48,8 +48,8 @@ function loadNav(){
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#navbar').html(xhr.responseText);
-			//$('#home').on('click',)
-			$('#request').click(loadRequest);
+			$('#home').click(loadHome);
+			$('#submit').click(loadRequest);
 			$('#logout').click(logout);
 			
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
@@ -67,7 +67,9 @@ function loadHome(emp){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
 			$('#name').html(emp.firstName);
-			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
+
+			getEmployeeRequests();
+			$('#reqTable').hide();
 		}
 	}
 }
@@ -86,6 +88,19 @@ function loadRequest(){
 	}
 }
 
+function loadMessages(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadmessages.view", true)
+	xhr.send();
+	
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			$('#message').hide();
+		}
+	}
+}
+
 function validate(){
 	console.log($('#email').val());
 	var employee = $('#email').val();
@@ -97,6 +112,7 @@ function validate(){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			var exists = JSON.parse(xhr.responseText);
+			console.log(exists);
 			if(exists){
 				$('#message').html('Sorry, that username exists, please try again');
 				$('#message').show();
@@ -149,37 +165,70 @@ function register(){
 
 function request(){
 	console.log("request");
-	var fn = $('#fn').val();
-	var ln = $('#ln').val();
-	var email = $('#email').val();
-	var date = $('#dob').val(); 
-	var dept = $('#dept').val();
-	var address = $('#address').val();
-	var city = $('#city').val();
-	var state = $('#state').val();
-	var password = $('#pass').val();
-	var passConfirm = $('#passConfirm').val();
-
 	
-	var emp = {
-			firstName: fn, 
-			lastName: ln, 
-			email: email, 
-			dob: date,
-			department: dept,
-			address: address,
-			city: city,
-			state: state,
-			password: password
+	var event_date = $('#date');
+	var city = $('#event_city');
+	var state = $('#event_state');
+	var cost = $('#cost');
+	var event_type = $('event_type');
+	var format = $('format');
+	
+	var req = {
+			event_date: event_date, 
+			city: city, 
+			state: state, 
+			cost: cost,
+			event_type: event_type,
+			format: format,
 	};
 	
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "register", true);
-	xhr.send(JSON.stringify(emp));
+	xhr.open("POST", "request", true);
+	xhr.send(JSON.stringify(req));
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
+			console.log("request happened correctly");
 			loadNav();
-			loadHome(emp);
+			loadHome();
+		}
+	}
+}
+
+function getEmployeeRequests() {
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "emprequests", true);
+	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var requtests = JSON.parse(xhr.responseText);
+			if(requests.length == 0){
+				console.log("You have no pending requests.");
+			}
+			else{
+				console.log("testing----");
+								//	accounts = JSON.stringify("data") + ":" + accounts;
+								var data = formatTable(requests);
+				
+								$('#reqTable').DataTable({
+									data : data,
+									columns: [
+										
+										{data : "Reimbursement ID"},
+										{data : "First Name"},
+										{data : "Last Name"},
+							    		{data : "Date of Event"},
+							    		{data : "City"},
+							    		{data : "State"},
+							    		{data : "Cost"},
+							    		{data : "Projected Reimbursement"},
+							    		{data : "Format"},
+										{data : "Approval"}
+										]
+								});
+								
+								$('#reqTable').show();
+			}
 		}
 	}
 }
@@ -198,6 +247,7 @@ function formatTable(accounts){
 	console.log(data);
 	return data;
 }
+
 
 function login() {
 	console.log("logging in");

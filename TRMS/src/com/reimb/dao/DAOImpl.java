@@ -12,6 +12,9 @@ import com.reimb.pojos.Reimbursement;
 import com.reimb.util.ConnectionFactory;
 
 public class DAOImpl implements DAO {
+	public static Double getEventMod(int id){
+		return null;
+	}
 
 	@Override
 	public Employee getEmployee(String email) {
@@ -126,8 +129,57 @@ public class DAOImpl implements DAO {
 	}
 
 	@Override
-	public Reimbursement addReimbursement(int id) {
-		// TODO Auto-generated method stub
+	public Reimbursement addReimbursement(int emp_id, Date event_date, String city, 
+			String state, Double cost, String description, int event_type, 
+			int hours_missed, int approve_id, int format_id, int attach_id) {
+		
+		try(Connection conn  = ConnectionFactory
+				.getInstance().getConnection();){
+			conn.setAutoCommit(false);
+			
+			double projected_reimb = cost * getEventMod(event_type);
+
+			String sql = "insert into reimbursements "
+					+ "(employee_id, event_date, city, state, cost, " 
+					+ "projected_reimb, description, event_type, hours_missed, "
+					+ "approve_id, format_id, attach_id) "
+					+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String [] key = new String[1];
+			key[0] = "reimb_id";
+			
+			PreparedStatement ps = conn.prepareStatement(sql, key);
+			ps.setInt(1, emp_id);
+			ps.setDate(2, event_date);
+			ps.setString(3, city);
+			ps.setString(4, state);
+			ps.setDouble(5, cost);
+			ps.setDouble(6, projected_reimb);
+			ps.setString(7, description);
+			ps.setInt(8, event_type);
+			ps.setInt(9, hours_missed);
+			ps.setInt(10, approve_id);
+			ps.setInt(11, format_id);
+			ps.setInt(12, attach_id);
+
+			ps.executeUpdate();
+			int id = 0;
+			ResultSet pk = ps.getGeneratedKeys();
+			while(pk.next()){
+				id = pk.getInt(1);
+			}
+
+			conn.commit();
+			Reimbursement reimb = new Reimbursement(0, emp_id, event_date, city, 
+			state, cost, projected_reimb, description, event_type,  
+			hours_missed, approve_id, format_id, attach_id);
+			reimb.setReimbId(id);
+			
+			return reimb;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
