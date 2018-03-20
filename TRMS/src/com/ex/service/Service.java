@@ -20,12 +20,12 @@ public class Service {
 	}
 	
 	public Employee addEmployee(Employee e) {
-		return dao.addEmployee(e.getFirstName(), e.getLastName(), e.getEmail(), e.getPassword());
+		return dao.addEmployee(e.getFirstName(), e.getLastName(), e.getEmail(), e.getPassword(),
+				e.getDepartment(), e.getDOB(), e.getAddress(), e.getCity(), e.getState());
 	}
 	
 	public Reimbursement createReimbursement(Employee e) {
-		//TODO: change this to right args
-		return dao.addReimbursement();
+		return dao.addReimbursement(e.getEmpId());
 	}
 	
 	public Boolean emailExists(String email) {
