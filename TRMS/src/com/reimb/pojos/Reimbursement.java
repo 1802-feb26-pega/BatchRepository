@@ -1,11 +1,11 @@
 package com.reimb.pojos;
 
-import java.time.LocalDateTime;
+import java.sql.*;
 
 public class Reimbursement {
 	private int reimb_id;
 	private int emp_id;
-    private LocalDateTime event_date_time;
+    private Date event_date;
     private String city;
     private String state;
     private double cost;
@@ -29,11 +29,11 @@ public class Reimbursement {
 	public void setEmpId(int empId) {
 		this.emp_id = empId;
 	}
-	public LocalDateTime getEventDateTime() {
-		return event_date_time;
+	public Date getEventDateTime() {
+		return event_date;
 	}
-	public void setEventDateTime(LocalDateTime event_date_time) {
-		this.event_date_time = event_date_time;
+	public void setEventDateTime(Date event_date) {
+		this.event_date = event_date;
 	}
 	public String getCity() {
 		return city;

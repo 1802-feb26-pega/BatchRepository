@@ -34,7 +34,7 @@ function loadRegister(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
 			$('#message').hide();
-			$('#username').blur(validate);
+			$('#email').blur(validate);
 			$('#register').click(register);
 		}
 	}
@@ -49,6 +49,7 @@ function loadNav(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#navbar').html(xhr.responseText);
 			//$('#home').on('click',)
+			$('#request').click(loadRequest);
 			$('#logout').click(logout);
 			
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
@@ -67,6 +68,20 @@ function loadHome(emp){
 			$('#view').html(xhr.responseText);
 			$('#name').html(emp.firstName);
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
+		}
+	}
+}
+
+function loadRequest(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadrequest.view", true)
+	xhr.send();
+	
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			$('#message').hide();
+			$('#submit').click(request);
 		}
 	}
 }
@@ -97,6 +112,43 @@ function validate(){
 
 function register(){
 	console.log("register");
+	var fn = $('#fn').val();
+	var ln = $('#ln').val();
+	var email = $('#email').val();
+	var date = $('#dob').val(); 
+	var dept = $('#dept').val();
+	var address = $('#address').val();
+	var city = $('#city').val();
+	var state = $('#state').val();
+	var password = $('#pass').val();
+	var passConfirm = $('#passConfirm').val();
+
+	
+	var emp = {
+			firstName: fn, 
+			lastName: ln, 
+			email: email, 
+			dob: date,
+			department: dept,
+			address: address,
+			city: city,
+			state: state,
+			password: password
+	};
+	
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "register", true);
+	xhr.send(JSON.stringify(emp));
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			loadNav();
+			loadHome(emp);
+		}
+	}
+}
+
+function request(){
+	console.log("request");
 	var fn = $('#fn').val();
 	var ln = $('#ln').val();
 	var email = $('#email').val();
