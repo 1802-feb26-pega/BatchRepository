@@ -2,6 +2,8 @@ package com.revature.servlets;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +25,9 @@ public class LogoutServlet extends HttpServlet {
 			session.invalidate();
 			System.out.println("Session invalidated!");
 		}
-		resp.sendRedirect("index.html");
+		ServletContext context= getServletContext();
+		RequestDispatcher rd= context.getRequestDispatcher("/index.html");
+		rd.include(req, resp);
 		
 	
 	}

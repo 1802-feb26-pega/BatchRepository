@@ -22,6 +22,38 @@ function loadLanding(){ //1
 	}
 }
 
+function loadReimb(){
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			document.getElementById('appview').innerHTML = xhr.responseText;
+			$('#submit').on('click', processReimb);
+		}
+	};	
+	xhr.open("GET", "reimb.view" , true);
+	xhr.send();
+}
+
+function processReimb(){
+	console.log("Processing Reimbursement");
+	var amount = $('#amount').val();
+	var type = $('#type').val();
+	var description = $('#description').val();
+	// add password validation and second input confirmation?
+
+	var toSend = [amount, type, description];
+	console.log(toSend);
+	var reimbJSON = JSON.stringify(toSend);
+	
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status==200){
+			console.log("added user");
+		}
+	}};
+
+
+
 function loadRegister(){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "loadregister.view" , true);
@@ -83,14 +115,13 @@ function loadHome(user){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "loadhome.view" , true);
 	xhr.send();
-
+	
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
-			$('#name').html(user.firstname);
+			$('#name').html(user.first_name);
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
-			getUserAccounts();
-			$('#accTable').hide();
+		
 		}
 	}
 }
@@ -180,10 +211,14 @@ function logout(){
 	xhr.send();
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
-			console.log("attempting to redirect");
-			window.location.replace("index.html");
-		}
+			$('#view').html(xhr.responseText);
+			$('#logout').on('click', logout);
+			
+				loadLanding();	
+			
+			
+		};
 
 	}
+	}
 
-}
