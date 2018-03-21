@@ -146,7 +146,7 @@ public class ReimbursementDAO {
 			lastName = rs.getString("RESOLVER_LAST_NAME");
 			email = rs.getString("RESOLVER_EMAIL");
 		}
-		return new User(id, username, firstName, lastName, email, null);
+		return new User(id, username, firstName, lastName, email, null, null);
 	}
 	//Method for updating reimbursements
 	public void update(Reimbursement reimb) throws SQLException {

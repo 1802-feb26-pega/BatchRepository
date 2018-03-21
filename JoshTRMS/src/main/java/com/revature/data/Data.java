@@ -86,17 +86,17 @@ public class Data {
 	}
 
 	// Method that checks the status of the reimbursement
-	public void updateStatus(Reimbursement reimb, User user, ReimbStatus status) throws Exception {
-		if (!user.getRole_id().getUser_role().equals("Direct Supervisor")) {
-			throw new Exception();
-		}
-		Timestamp ts = new Timestamp(System.currentTimeMillis());
-		updateStatus(reimb.getId(), user.getUser_id(), status.getStatus_id(), ts);
-		reimb.setStatus_id(new ReimbStatus(status.getStatus_id(), status.getStatus()));
-		reimb.setDate_resolved(ts);
-		reimb.setResolver_id(user);
-
-	}
+//	public void updateStatus(Reimbursement reimb, User user, ReimbStatus status) throws Exception {
+//		if (!user.getRole_id().getUser_role().equals("Direct Supervisor")) {
+//			throw new Exception();
+//		}
+//		Timestamp ts = new Timestamp(System.currentTimeMillis());
+//		updateStatus(reimb.getId(), user.getUser_id(), status.getStatus_id(), ts);
+//		reimb.setStatus_id(new ReimbStatus(status.getStatus_id(), status.getStatus()));
+//		reimb.setDate_resolved(ts);
+//		reimb.setResolver_id(user);
+//
+//	}
 
 	// Method that updates the status of reimbursement request
 	private void updateStatus(int reimb_id, int resolver, int status_id, Timestamp ts) {
@@ -195,7 +195,7 @@ public class Data {
 		try {
 			conn = getConnection();
 			UserDAO dao = new UserDAO(conn);
-			user = dao.getUser(username);
+			user = null;
 			return user;
 		} catch (SQLException e) {
 			e.printStackTrace();

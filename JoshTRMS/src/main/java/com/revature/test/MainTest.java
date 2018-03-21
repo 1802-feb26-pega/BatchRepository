@@ -18,7 +18,7 @@ public class MainTest {
 		
 	
 		userDao.getAll();
-	
+		userDao.getUserLoginInfo("josh20130");
 		conn.close();
 		System.out.println("Finished");
 

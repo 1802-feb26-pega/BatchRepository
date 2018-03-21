@@ -7,8 +7,17 @@ public class User {
 	private String first_name;
 	private String last_name;
 	private String email;
-	private UserRole role_id;
+	private int role_id;
+	private String password;
 	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	/**
 	 * @return user's full name
 	 */
@@ -16,14 +25,17 @@ public class User {
 		return first_name + " " + last_name;
 	}
 	
+	
+	
+
 	@Override
 	public String toString() {
-		return "User [user_id=" + user_id + ", username=" + username + ", first_name="
-				+ first_name + ", last_name=" + last_name + ", email=" + email + ", role_id=" + role_id + "]";
+		return "User [user_id=" + user_id + ", username=" + username + ", first_name=" + first_name + ", last_name="
+				+ last_name + ", email=" + email + ", role_id=" + role_id + ", password=" + password + "]";
 	}
 
-	public User(int user_id, String username, String first_name, String last_name, String email,
-			UserRole role_id) {
+	public User(int user_id, String username, String first_name, String last_name, String email, int role_id,
+			String password) {
 		super();
 		this.user_id = user_id;
 		this.username = username;
@@ -31,6 +43,7 @@ public class User {
 		this.last_name = last_name;
 		this.email = email;
 		this.role_id = role_id;
+		this.password = password;
 	}
 
 	public User() {
@@ -77,11 +90,11 @@ public class User {
 		this.email = email;
 	}
 
-	public UserRole getRole_id() {
+	public int getRole_id() {
 		return role_id;
 	}
 
-	public void setRole_id(UserRole role_id) {
+	public void setRole_id(int role_id) {
 		this.role_id = role_id;
 	}
 	
