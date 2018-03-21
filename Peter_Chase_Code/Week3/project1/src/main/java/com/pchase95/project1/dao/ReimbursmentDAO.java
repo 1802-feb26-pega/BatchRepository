@@ -40,7 +40,7 @@ public class ReimbursmentDAO implements DAO<Reimbursment> {
 			String sql = "SELECT * FROM reimbursment WHERE rbmt_id = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, id);
-			ResultSet rs = pstmt.executeQuery(sql);
+			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				rbmt = retrieveReimbursment(rs);
 			}
@@ -56,7 +56,7 @@ public class ReimbursmentDAO implements DAO<Reimbursment> {
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			conn.setAutoCommit(false);
 			String sql =
-				"INSERT INTO reimbursment (rtype_id, emp_id, evt_id, grad_id, evt_loc_id, rbmt_event_date, rbmt_course_date, rbmt_desc, rbmt_cost, rbmt_award_amount, rbmt_submission_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				"INSERT INTO reimbursment (rtype_id, grad_id, evt_loc_id, rbmt_event_date, rbmt_course_date, rbmt_desc, rbmt_cost, rbmt_award_amount, rbmt_submission_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			String[] keys = { "rbmt_id" };
 			PreparedStatement pstmt = conn.prepareStatement(sql, keys);
 
@@ -85,10 +85,10 @@ public class ReimbursmentDAO implements DAO<Reimbursment> {
 		int rowsAffected = 0;
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			String sql = 
-					"UPDATE reimbursment SET rtype_id = ?, emp_id = ?, evt_id = ?, grad_id = ?, evt_loc_id = ?, rbmt_event_date = ?, rbmt_course_date = ?, rbmt_desc = ?, rbmt_cost = ?, rbmt_award_amount = ?, rbmt_submission_date = ? WHERE rbmt_id = ?";
+					"UPDATE reimbursment SET rtype_id = ?, grad_id = ?, evt_loc_id = ?, rbmt_event_date = ?, rbmt_course_date = ?, rbmt_desc = ?, rbmt_cost = ?, rbmt_award_amount = ?, rbmt_submission_date = ? WHERE rbmt_id = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			prepareReimbursment(updatedReimbursment, pstmt);
-			pstmt.setLong(12, id);
+			pstmt.setLong(10, id);
 			rowsAffected = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -120,24 +120,18 @@ public class ReimbursmentDAO implements DAO<Reimbursment> {
 			long rtype_id = rs.getLong(2);
 			rbmt.setType(new ReimbursmentTypeDAO().getById(rtype_id));
 			
-			long emp_id = rs.getLong(3);
-			rbmt.setApplicant(new EmployeeDAO().getById(emp_id));
-			
-			long evt_id = rs.getLong(4);
-			rbmt.setEventType(new EventTypeDAO().getById(evt_id));
-			
-			long grad_id = rs.getLong(5);
+			long grad_id = rs.getLong(3);
 			rbmt.setGradingFormat(new GradingFormatDAO().getById(grad_id));
 			
-			long loc_id = rs.getLong(6);
+			long loc_id = rs.getLong(4);
 			rbmt.setEventLocation(new LocationDAO().getById(loc_id));
 			
-			rbmt.setEventDate(rs.getDate(7));
-			rbmt.setCourseDate(rs.getDate(8));
-			rbmt.setDescription(rs.getString(9));
-			rbmt.setCost(rs.getDouble(10));
-			rbmt.setRewardAmount(rs.getDouble(11));
-			rbmt.setSubmissionDate(rs.getDate(12));
+			rbmt.setEventDate(rs.getDate(5));
+			rbmt.setCourseDate(rs.getDate(6));
+			rbmt.setDescription(rs.getString(7));
+			rbmt.setCost(rs.getDouble(8));
+			rbmt.setRewardAmount(rs.getDouble(9));
+			rbmt.setSubmissionDate(rs.getDate(10));
 			
 			return rbmt;
 		} catch (SQLException e) {
@@ -150,16 +144,14 @@ public class ReimbursmentDAO implements DAO<Reimbursment> {
 	private void prepareReimbursment(Reimbursment rbmt, PreparedStatement pstmt) {
 		try {
 			pstmt.setLong(1, rbmt.getType().getId());
-			pstmt.setLong(2, rbmt.getApplicant().getId());
-			pstmt.setLong(3, rbmt.getEventType().getId());
-			pstmt.setLong(4, rbmt.getGradingFormat().getId());
-			pstmt.setLong(5, rbmt.getEventLocation().getId());
-			pstmt.setDate(6, rbmt.getEventDate());
-			pstmt.setDate(7, rbmt.getCourseDate());
-			pstmt.setString(8, rbmt.getDescription());
-			pstmt.setDouble(9, rbmt.getCost());
-			pstmt.setDouble(10, rbmt.getRewardAmount());
-			pstmt.setDate(11, rbmt.getSubmissionDate());
+			pstmt.setLong(2, rbmt.getGradingFormat().getId());
+			pstmt.setLong(3, rbmt.getEventLocation().getId());
+			pstmt.setDate(4, rbmt.getEventDate());
+			pstmt.setDate(5, rbmt.getCourseDate());
+			pstmt.setString(6, rbmt.getDescription());
+			pstmt.setDouble(7, rbmt.getCost());
+			pstmt.setDouble(8, rbmt.getRewardAmount());
+			pstmt.setDate(9, rbmt.getSubmissionDate());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

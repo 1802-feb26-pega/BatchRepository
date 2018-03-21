@@ -41,7 +41,7 @@ public class ApprovalDAO implements DAO<Approval> {
 			String sql = "SELECT * FROM approval WHERE apvl_id = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, id);
-			ResultSet rs = pstmt.executeQuery(sql);
+			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				apvl = retrieveApproval(rs);
 			}
@@ -111,6 +111,44 @@ public class ApprovalDAO implements DAO<Approval> {
 		}
 		
 		return rowsAffected > 0;
+	}
+	
+	public List<Long> getIdsByApplicant(long empId) {
+		List<Long> results = new LinkedList<>();
+		
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			String sql = 
+					"SELECT apvl_id FROM approval INNER JOIN employee ON approval.apvl_approved_id = employee.emp_id WHERE apvl_approved_id = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, empId);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				results.add(rs.getLong(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return results;
+	}
+	
+	public List<Long> getIdsByApprover(long empId) {
+		List<Long> results = new LinkedList<>();
+		
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			String sql = 
+					"SELECT apvl_id FROM approval INNER JOIN employee ON approval.apvl_emp_id = employee.emp_id WHERE apvl_emp_id = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, empId);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				results.add(rs.getLong(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return results;
 	}
 
 	private Approval retrieveApproval(ResultSet rs) {

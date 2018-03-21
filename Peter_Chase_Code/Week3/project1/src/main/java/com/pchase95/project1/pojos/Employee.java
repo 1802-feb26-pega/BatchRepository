@@ -2,6 +2,7 @@ package com.pchase95.project1.pojos;
 
 public class Employee implements TrmsObject {
 	public static final double STARTING_BALANCE = 1000.00;
+	public static final String benCoEmail = "benco@trms.com";
 	
 	private long id;
 	private Employee superVisor;
@@ -18,15 +19,19 @@ public class Employee implements TrmsObject {
 		
 	}
 
+	
+	public void setDepartmentHead(boolean isDepartmentHead) {
+		this.isDepartmentHead = isDepartmentHead;
+	}
+
 
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", superVisor=" + superVisor.getId() + ", departmentHead=" + departmentHead.getId()
+		return "Employee [id=" + id + ", superVisor=" + superVisor + ", departmentHead=" + departmentHead
 				+ ", department=" + department + ", location=" + location + ", isDepartmentHead=" + isDepartmentHead
 				+ ", email=" + email + ", password=" + password + ", avaliableReimbursment=" + avaliableReimbursment
 				+ "]";
 	}
-
 
 
 	@Override
@@ -97,7 +102,8 @@ public class Employee implements TrmsObject {
 		return true;
 	}
 
-	
+
+
 	public Employee getDepartmentHead() {
 		return departmentHead;
 	}

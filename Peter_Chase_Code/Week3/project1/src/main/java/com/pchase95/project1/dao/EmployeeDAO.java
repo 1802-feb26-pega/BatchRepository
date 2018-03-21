@@ -74,6 +74,42 @@ public class EmployeeDAO implements DAO<Employee> {
 		
 		return result;
 	}
+	
+	public Employee getByEmail(String email) {
+		Employee result = null;
+		
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			String sql = "SELECT * FROM employee WHERE emp_email = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				result = retrieveEmployee(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public List<Employee> getByDepartmentId(long depId) {
+		List<Employee> results = new LinkedList<>();
+		
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			String sql = "SELECT * FROM employee WHERE dep_id = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, depId);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				results.add(retrieveEmployee(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return results;
+	}
 
 	@Override
 	public boolean add(Employee newEmp) {

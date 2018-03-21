@@ -17,7 +17,7 @@ public class CurrentEmployeeServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("In emp sesssion servlet");
+		System.out.println("In employee sesssion servlet");
 		Employee emp = (Employee) req.getSession().getAttribute("employee");		
 		resp.getWriter().write(new ObjectMapper().writeValueAsString(emp));
 	}

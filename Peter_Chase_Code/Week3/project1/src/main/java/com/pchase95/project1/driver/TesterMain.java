@@ -1,15 +1,19 @@
 package com.pchase95.project1.driver;
 
-import com.pchase95.project1.dao.DAO;
-import com.pchase95.project1.dao.EmployeeDAO;
-import com.pchase95.project1.pojos.Employee;
+import java.util.List;
+
+import com.pchase95.project1.dao.EmployeeRBMTDao;
+import com.pchase95.project1.pojos.Reimbursment;
 
 public class TesterMain {
 	public static void main(String[] args) {
 		
-		DAO<Employee> depDAO = new EmployeeDAO();
+		EmployeeRBMTDao dao = new EmployeeRBMTDao();
 		
-		for (Employee d : depDAO.getAll())
-			System.out.println(d);
+		List<Reimbursment> results = dao.getRBMTByEmployeeId(4);
+		
+		for (Reimbursment e : results) {
+			System.out.println(e);
+		}
 	}
 }

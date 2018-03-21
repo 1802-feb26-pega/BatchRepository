@@ -30,8 +30,9 @@ public class LoginServlet extends HttpServlet {
 		ObjectMapper mapper = new ObjectMapper();
 		if (emp != null) {
 			HttpSession session = req.getSession();
-			String empJSON = mapper.writeValueAsString(emp);
 			session.setAttribute("employee", emp);
+			
+			String empJSON = mapper.writeValueAsString(emp);
 			resp.getWriter().write(empJSON);
 		}
 	}	

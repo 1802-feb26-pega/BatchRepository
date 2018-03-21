@@ -29,6 +29,12 @@ public class LoadViewServlet extends HttpServlet {
 			return "partials/register.html";
 		case "/project1/loadhome.view":
 			return "partials/home.html";
+		case "/project1/event.view":
+			return "partials/event.html";
+		case "/project1/request.view":
+			return "partials/request.html";
+		case "/project1/approval.view":
+			return "partials/approval.html";
 		default: break;
 		}
 		

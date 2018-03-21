@@ -1,6 +1,11 @@
 package com.pchase95.project1.pojos;
 
 public class ApprovalType implements TrmsObject {
+	public static final int PENDING = 1;
+	public static final int DENIED = 2;
+	public static final int ACCEPTED = 3;
+	public static final int EXCEEDING = 4;
+	
 	private long id;
 	private String status;
 	

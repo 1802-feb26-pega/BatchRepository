@@ -125,3 +125,9 @@ input::-webkit-input-placeholder {
     background-color: white;
 }
 
+.btn-apply {
+	width: 100px;
+	position: relative;
+	left: 180%;
+	top: 30px;
+}

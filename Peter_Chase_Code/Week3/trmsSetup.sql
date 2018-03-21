@@ -321,6 +321,17 @@ CREATE OR REPLACE TRIGGER apvl_id_trigger
         FROM dual;
     END;
 /
+
+
+CREATE TABLE employee_rbmt (
+    emp_id NUMBER(10),
+    CONSTRAINT bridge_emp_id FOREIGN KEY(emp_id) REFERENCES employee(emp_id) ON DELETE CASCADE,
+    rbmt_id NUMBER(10),
+    CONSTRAINT bridge_rbmt_id FOREIGN KEY(rbmt_id) REFERENCES reimbursment(rbmt_id) ON DELETE CASCADE,
+    PRIMARY KEY(emp_id, rbmt_id)
+);
+
+
 commit;
 ---------------
 -- INSERTION --
@@ -330,6 +341,27 @@ INSERT INTO department(dep_name) VALUES ('human resources');
 INSERT INTO department(dep_name) VALUES ('sales');
 INSERT INTO department(dep_name) VALUES ('marketing');
 INSERT INTO department(dep_name) VALUES ('maintenance');
+INSERT INTO department(dep_name) VALUES ('benefits');
+
+delete from employee;
+INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id, emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt)
+VALUES (NULL, NULL, 61, 1, 1, 'management@trms.com', 'admin', 1000.00);
+
+INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id, emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt)
+VALUES (NULL, NULL, 62, 1, 1, 'humanResources@trms.com', 'admin', 1000.00);
+
+INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id, emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt)
+VALUES (NULL, NULL, 63, 1, 1, 'salest@trms.com', 'admin', 1000.00);
+
+INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id, emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt)
+VALUES (NULL, NULL, 64, 1, 1, 'marketing@trms.com', 'admin', 1000.00);
+
+INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id, emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt)
+VALUES (NULL, NULL, 65, 1, 1, 'maintenance@trms.com', 'admin', 1000.00);
+
+INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id, emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt)
+VALUES (NULL, NULL, 66, 1, 1, 'benco@trms.com', 'admin', 1000.00);
+commit;
 
 
 INSERT INTO trms_location (loc_country, loc_city, loc_province, loc_postal_code, loc_address_1, loc_address_2, loc_phone) VALUES (
@@ -353,18 +385,97 @@ INSERT INTO trms_location (loc_country, loc_city, loc_province, loc_postal_code,
     '8029382743'
 );
 
+INSERT INTO trms_location (loc_country, loc_city, loc_province, loc_postal_code, loc_address_1, loc_address_2, loc_phone) VALUES (
+    'United States',
+    'Memphis',
+    'TN',
+    '38152',
+    '3720 Alumni Ave',
+    '',
+    '9016782000'
+);
 
+ALTER TABLE rbmt_type MODIFY rtype_coverage NUMBER(3, 2);
+ALTER TABLE reimbursment MODIFY emp_id NUMBER(10) NULL;
+ALTER TABLE reimbursment ADD CONSTRAINT emp_id FOREIGN KEY(emp_id) REFERENCES employee(emp_id) ON DELETE CASCADE;
+ALTER TABLE reimbursment MODIFY rbmt_award_amount NULL;
+
+INSERT INTO rbmt_type (rtype_name, rtype_coverage) VALUES (
+    'University Course', 0.80
+);
+
+INSERT INTO rbmt_type (rtype_name, rtype_coverage) VALUES (
+    'Seminar', 0.60
+);
+
+INSERT INTO rbmt_type (rtype_name, rtype_coverage) VALUES (
+    'Certification Preparation Class', 0.75
+);
+
+INSERT INTO rbmt_type (rtype_name, rtype_coverage) VALUES (
+    'Certification', 1.00
+);
+
+INSERT INTO rbmt_type (rtype_name, rtype_coverage) VALUES (
+    'Technical Training', 0.90
+);
+
+INSERT INTO rbmt_type (rtype_name, rtype_coverage) VALUES (
+    'Other', 0.30
+);
+
+INSERT INTO grading_format(grad_name, grad_cutoff) VALUES (
+    'Letter', 'C'
+);
+
+INSERT INTO grading_format(grad_name, grad_cutoff) VALUES (
+    'Number', '75'
+);
+
+INSERT INTO grading_format(grad_name, grad_cutoff) VALUES (
+    'Pass/Fail', 'P'
+);
+
+DELETE FROM reimbursment;
+INSERT INTO reimbursment (rtype_id, grad_id, evt_loc_id, rbmt_event_date,
+rbmt_course_date, rbmt_desc, rbmt_cost, rbmt_submission_date) VALUES
+(
+    1, 1, 5, DATE '2018-04-03', DATE '2018-08-29', 'University Robotics Course', 800.00, DATE '2018-03-03'
+);
+
+INSERT INTO reimbursment (rtype_id, grad_id, evt_loc_id, rbmt_event_date,
+rbmt_course_date, rbmt_desc, rbmt_cost, rbmt_submission_date) VALUES
+(
+    4, 3, 5, DATE '2018-04-03', DATE '2018-08-29', 'OCA Java Certification', 250.00, DATE '2018-03-03'
+);
+
+INSERT INTO reimbursment (rtype_id, grad_id, evt_loc_id, rbmt_event_date,
+rbmt_course_date, rbmt_desc, rbmt_cost, rbmt_submission_date) VALUES
+(
+    5, 2, 5, DATE '2018-04-03', DATE '2018-08-29', 'Training in Data Science with Hadoop', 100.00, DATE '2018-03-03'
+);
+
+commit;
+
+
+INSERT INTO approval_type (aprv_status) VALUES ('Pending');
+INSERT INTO approval_type (aprv_status) VALUES ('Denied');
+INSERT INTO approval_type (aprv_status) VALUES ('Accepted');
+INSERT INTO approval_type (aprv_status) VALUES ('Exceeded');
+commit;
+
+INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id, emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt)
+VALUES (NULL, NULL, 66, 1, 1, 'benco@trms.com', 'admin', 1000.00);
+
+INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id, emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt)
+VALUES (NULL, NULL, 61, 1, 1, 'theBoss@mail.com', 'password123', 1000.00);
 
 
 INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id, emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt)
-VALUES (NULL, NULL, 61, 1, 1, 'theBoss@mail.com', 'password123', 100.00);
-
-
-INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id, emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt)
-VALUES (NULL, NULL, 62, 2, 1, 'theOtherBoss@mail.com', 'password123', 100.00);
+VALUES (NULL, NULL, 62, 2, 1, 'theOtherBoss@mail.com', 'password123', 1000.00);
 
 INSERT INTO employee (supervisor_emp_id, dep_head_emp_id, dep_id, loc_id, emp_is_dep_head, emp_email, emp_password, emp_avaliable_rbmt)
-VALUES (1, 1, 62, 2, 0, 'theSlave@mail.com', 'password123', 100.00);
+VALUES (1, 1, 62, 2, 0, 'theSlave@mail.com', 'password123', 1000.00);
 
 
 
@@ -372,6 +483,8 @@ ALTER TABLE rbmt_type MODIFY rtype_coverage NUMBER(5, 2);
 ALTER TABLE approval MODIFY apvl_approved NUMBER(10, 0);
 ALTER TABLE approval RENAME COLUMN apvl_approved TO apvl_approved_id;
 ALTER TABLE approval MODIFY apvl_reason VARCHAR2(128) NULL;
+ALTER TABLE reimbursment DROP COLUMN emp_id;
+
 
 commit;
 ---------------
@@ -380,3 +493,16 @@ commit;
 SELECT * FROM department;
 SELECT * FROM trms_location;
 SELECT * FROM employee;
+SELECT * FROM rbmt_type;
+SELECT * FROM reimbursment;
+SELECT * FROM grading_format;
+SELECT * FROM employee_rbmt;
+SELECT * FROM approval;
+SELECT * FROM approval_type;
+
+SELECT apvl_id, apvl_approved_id FROM approval INNER JOIN employee ON approval.apvl_approved_id = employee.emp_id WHERE apvl_approved_id = 4;
+SELECT * FROM reimbursment INNER JOIN approval ON reimbursment.rbmt_id = approval.rbmt_id;
+
+DELETE FROM approval;
+DELETE FROM employee_rbmt;
+commit;

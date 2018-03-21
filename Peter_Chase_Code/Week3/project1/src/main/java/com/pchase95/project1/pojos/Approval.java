@@ -7,20 +7,16 @@ public class Approval implements TrmsObject {
 	private ApprovalType type;
 	private Employee recipient;
 	private String reason;
-	
+
 	public Approval() {
-		
+
 	}
-	
-	
-	
+
 	@Override
 	public String toString() {
 		return "Approval [id=" + id + ", reimbursment=" + reimbursment + ", approver=" + approver + ", type=" + type
 				+ ", recipient=" + recipient + ", reason=" + reason + "]";
 	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -34,8 +30,6 @@ public class Approval implements TrmsObject {
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -75,8 +69,6 @@ public class Approval implements TrmsObject {
 			return false;
 		return true;
 	}
-
-
 
 	public long getId() {
 		return id;
@@ -125,5 +117,5 @@ public class Approval implements TrmsObject {
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
-	
+
 }
