@@ -12,8 +12,25 @@ import com.reimb.pojos.Reimbursement;
 import com.reimb.util.ConnectionFactory;
 
 public class DAOImpl implements DAO {
-	public static Double getEventMod(int id){
+	public static Double getEventMod(int type){
+		try(Connection conn = ConnectionFactory
+				.getInstance().getConnection();){
+			System.out.println("Getting event modifier.");
+			Double modifier = 0.0;
+			String sql = "select percentage from event where event_type =  ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, type);
+			ResultSet info = ps.executeQuery();
+			
+			while(info.next()){
+				modifier = info.getDouble(1);
+			}
+			return modifier;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
+		
 	}
 
 	@Override
@@ -21,6 +38,7 @@ public class DAOImpl implements DAO {
 		Employee emp = new Employee();
 		try(Connection conn = ConnectionFactory
 				.getInstance().getConnection();){
+			System.out.println("Getting employee");
 			String sql = "select * from employees where email =  ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, email);
@@ -86,6 +104,8 @@ public class DAOImpl implements DAO {
 		try(Connection conn  = ConnectionFactory
 				.getInstance().getConnection();){
 			conn.setAutoCommit(false);
+			
+			System.out.println("Adding Employee.");
 
 			String sql = "insert into employees "
 					+ "(first_name, last_name, email, password, reimburse_remain, " + 
@@ -137,7 +157,9 @@ public class DAOImpl implements DAO {
 				.getInstance().getConnection();){
 			conn.setAutoCommit(false);
 			
-			double projected_reimb = cost * getEventMod(event_type);
+			System.out.println("Adding reimbursement.");
+			
+			double projected_reimb = cost;//getEventMod(event_type)
 
 			String sql = "insert into reimbursements "
 					+ "(employee_id, event_date, city, state, cost, " 
@@ -160,6 +182,8 @@ public class DAOImpl implements DAO {
 			ps.setInt(10, approve_id);
 			ps.setInt(11, format_id);
 			ps.setInt(12, attach_id);
+			
+			System.out.println(ps.toString());
 
 			ps.executeUpdate();
 			int id = 0;
@@ -174,8 +198,9 @@ public class DAOImpl implements DAO {
 			hours_missed, approve_id, format_id, attach_id);
 			reimb.setReimbId(id);
 			
+			pk.close();
+			conn.close();
 			return reimb;
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

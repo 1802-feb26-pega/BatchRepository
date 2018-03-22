@@ -50,7 +50,7 @@ public class RequestServlet extends HttpServlet{
 
 		Reimbursement reimb = mapper.readValue(req.getInputStream(), Reimbursement.class);
 		
-		System.out.println(reimb.toString());
+		System.out.println("Request is adding " + reimb.toString());
 		reimb = service.createReimbursement(reimb);
 		
 		PrintWriter print = resp.getWriter();

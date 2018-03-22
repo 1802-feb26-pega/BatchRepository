@@ -28,8 +28,8 @@ public class Service {
 	
 	public Reimbursement createReimbursement(Reimbursement reimb) {
 		return dao.addReimbursement(reimb.getEmpId(), reimb.getEventDate(), reimb.getCity(), reimb.getState(),
-				reimb.getCost(), reimb.getDescription(), reimb.getFormatId(), reimb.getEventType(),
-				reimb.getAttachId(), reimb.getApprovalId(), reimb.getHoursMissed());
+				reimb.getCost(), reimb.getDescription(), reimb.getEventType(), reimb.getHoursMissed(),
+				reimb.getApprovalId(), reimb.getFormatId(), reimb.getAttachId()); 
 	}
 	
 	public Boolean emailExists(String email) {

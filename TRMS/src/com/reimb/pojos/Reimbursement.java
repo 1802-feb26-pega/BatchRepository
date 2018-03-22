@@ -118,4 +118,10 @@ public class Reimbursement {
 		this.hours_missed = hoursMissed;
 	}
 	
+	@Override
+	public String toString() {
+		return "Reimbursement [id=" + reimb_id + ", employee=" + emp_id + 
+				", cost=" + cost + ", and other stuff]";
+	}
+	
 }

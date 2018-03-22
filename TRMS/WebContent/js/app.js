@@ -1,3 +1,5 @@
+var employee = {};
+
 window.onload = function(){
 	console.log("loading landing");
 	loadLanding();
@@ -19,14 +21,12 @@ function loadLanding(){
 				if(keypressed == 13)  login();
 			}); //submit upon pressing enter from password input
 			
-			console.log()
 			$('#register').on('click', loadRegister);
 		}
 	}
 }
 function loadRegister(){
 	var xhr = new XMLHttpRequest();
-	console.log(xhr);
 	xhr.open("GET", "loadregister.view" , true);
 	xhr.send();
 
@@ -49,7 +49,8 @@ function loadNav(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#navbar').html(xhr.responseText);
 			$('#home').click(loadHome);
-			$('#submit').click(loadRequest);
+			$('#request').click(loadRequest);
+			$('#messages').click(loadMessages);
 			$('#logout').click(logout);
 			
 			// ADD LISTENERS TO NAV BAR TO GO TO VARIOUS VIEWS AND LOGOUT
@@ -58,15 +59,15 @@ function loadNav(){
 	}
 }
 
-function loadHome(emp){
+function loadHome(){
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "loadhome.view", true)
+	xhr.open("GET", "loadhome.view", true);
 	xhr.send();
 	
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
-			$('#name').html(emp.firstName);
+			$('#name').html(employee.firstName);
 
 			getEmployeeRequests();
 			$('#reqTable').hide();
@@ -76,21 +77,22 @@ function loadHome(emp){
 
 function loadRequest(){
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "loadrequest.view", true)
+	xhr.open("GET", "loadrequest.view", true);
 	xhr.send();
 	
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200){
+			console.log("loading request");
 			$('#view').html(xhr.responseText);
 			$('#message').hide();
-			$('#submit').click(request);
+			//$('#submit').onclick=request();
 		}
 	}
 }
 
 function loadMessages(){
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "loadmessages.view", true)
+	xhr.open("GET", "loadmessages.view", true);
 	xhr.send();
 	
 	xhr.onreadystatechange = function() {
@@ -128,6 +130,7 @@ function validate(){
 
 function register(){
 	console.log("register");
+	
 	var fn = $('#fn').val();
 	var ln = $('#ln').val();
 	var email = $('#email').val();
@@ -157,8 +160,9 @@ function register(){
 	xhr.send(JSON.stringify(emp));
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
+			employee = emp;
 			loadNav();
-			loadHome(emp);
+			loadHome();
 		}
 	}
 }
@@ -166,13 +170,13 @@ function register(){
 function request(){
 	console.log("request");
 	
-	var event_date = $('#date');
-	var city = $('#event_city');
-	var state = $('#event_state');
-	var cost = $('#cost');
-	var event_type = $('#event_type');
-	var format = $('#format');
-	var desc = $('#desc');
+	var event_date = $('#date').val();
+	var city = $('#event_city').val();
+	var state = $('#event_state').val();
+	var cost = $('#cost').val();
+	var event_type = $('#event_type').val();
+	var format = $('#format').val();
+	var desc = $('#desc').val();
 	
 	var req = {
 			eventDate: event_date, 
@@ -180,13 +184,14 @@ function request(){
 			state: state, 
 			cost: cost,
 			eventType: event_type,
-			format: format,
+			formatId: format,
 			description: desc
 	};
 	
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "request", true);
 	xhr.send(JSON.stringify(req));
+	
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			console.log("request happened correctly");
@@ -209,7 +214,7 @@ function getEmployeeRequests() {
 			}
 			else{
 				console.log("testing----");
-								//	accounts = JSON.stringify("data") + ":" + accounts;
+								//	requestlist = JSON.stringify("data") + ":" + requests;
 								var data = formatTable(requests);
 				
 								$('#reqTable').DataTable({
@@ -235,14 +240,24 @@ function getEmployeeRequests() {
 	}
 }
 
-function formatTable(accounts){
+function formatTable(requests){
 	console.log("formatting table");
+	
 	var data = [];
-	for(let i = 0; i < accounts.length; i++){
+	for(let i = 0; i < requests.length; i++){
 		let temp = new Object();
-		console.log(accounts[i]);
-		temp.Id = `1000${accounts[i].id}`;
-		temp.Balance = accounts[i].balance;
+		console.log(requests[i]);
+		
+		temp.Id = requests[i].reimb_id;
+		temp.LastName = requests[i].emp_id;
+		temp.DOB = requests[i].dob;
+		temp.City = requests[i].city;
+		temp.State = requests[i].state;
+		temp.Cost = requests[i].cost;
+		temp.ProjReimb = requests[i].proj_reimb;
+		temp.Format = requests[i].format_id;
+		temp.Approval = requests[i].approval_id;
+		
 		console.log(temp);
 		data.push(temp);
 	}
@@ -265,17 +280,18 @@ function login() {
 	
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
-			var user = JSON.parse(xhr.responseText);
+			var emp = JSON.parse(xhr.responseText);
 			var message = "";
-			if(user==null) {
+			if(emp==null) {
 				$('#message').show();
 				$("#message").attr("style", "display:inline");
 				message = "You have entered the wrong username and/or password. Please try again";
 				$('#message').html(message);
 			}
 			else{
+				employee = emp;
 				loadNav();
-				loadHome(user);
+				loadHome();
 			}
 		}
 	}
@@ -291,6 +307,7 @@ function logout(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			console.log("attempting to redirect");
 			window.location.replace("index.html");
+			employee = null;
 		}
 	}
 }

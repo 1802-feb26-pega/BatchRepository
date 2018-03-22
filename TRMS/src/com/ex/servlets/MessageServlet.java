@@ -9,24 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ex.service.Service;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.reimb.pojos.Employee;
-
-@WebServlet("/register")
-public class RegisterServlet extends HttpServlet{
+@WebServlet("/message")
+public class MessageServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		Service service = new Service();
-		
-		ObjectMapper mapper = new ObjectMapper();
-
-		Employee emp = mapper.readValue(req.getInputStream(), Employee.class);
-		
-		System.out.println("Register is adding " + emp.toString());
-		emp = service.addEmployee(emp);
 		
 		PrintWriter print = resp.getWriter();
 		resp.setContentType("application/json");
