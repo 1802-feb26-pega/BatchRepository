@@ -1,0 +1,18 @@
+Waterfall
+	(PADIM)
+	planning
+		understand what the overall plan is
+		why has the project started / what is the need of the project
+			we build a project to solve a problem 
+		what is the end product?
+		what parts can we develop
+		time planning
+		cost planning
+		you start with business requirements from the customer and make a plan to complete them
+	analysis
+	development
+	implementation
+	maintenance 
+	
+
+	
