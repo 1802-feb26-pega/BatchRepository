@@ -1,0 +1,36 @@
+<div class="jumbotron container form-control" >
+	<h1>Make a New Request</h1><br>
+	
+	<p>Event Type</p><br>
+	<select id="requestsType" class="form-control">
+		<option value="Class">Class</option>
+		<option value="Presentation">Presentation</option>
+		<option value="Training">Training</option>
+		<option value="Certification">Certification</option>
+	</select><br>
+	<p>Grading Format</p><br>
+	<select id="requestsGradingFormat" class="form-control">
+		<option value="default">default</option>
+		<option value="cutoff">cutoff</option>
+		<option value="presentation">presentation</option>
+		<option value="approval email">approval email</option>
+	</select><br>
+	<input type="date" id="requestsDate"><br>
+	
+	<input type="hidden" id="employeeId" value="1">
+	<input type="text" id="street" placeholder="street"><br>
+	<input type="text" id="city" placeholder="city"><br>
+	<input type="text" id="state" placeholder="state"><br>
+	<input type="text" id="zip" placeholder="zip"><br>
+	
+	<input type="text" id="requestsCost" placeholder="Cost of Event" class="form-control"><br>
+	<textarea id="requestsDescription" name="message" rows="10" cols="30">Event Description</textarea><br>
+	<textarea id="requestsJustification" name="message" rows="10" cols="30">Justification</textarea><br>
+	<input type="text" id="requestsDaysMissed" placeholder="Days Missed (optional)" class="form-control"><br><br>
+	<input type="file" id="attachments" name="attachments" accept="/*">
+	<input type="hidden" id="requestsAttachments" value="none">
+	
+	<button class="btn btn-submit" id="makeRequest">Submit</button>
+	<p class="danger" id="message"></p>
+
+</div>
