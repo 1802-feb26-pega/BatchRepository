@@ -1,11 +1,11 @@
 package com.trms.pojos;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Event {
 	private int eventId;
-	private Date dateCreated;
-	private Date dateScheduled;
+	private Timestamp dateCreated;
+	private Timestamp dateScheduled;
 	private String eventLocation;
 	private int eventCost;
 	private int eventTypeId;
@@ -15,7 +15,7 @@ public class Event {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Event(Date dateScheduled, String eventLocation, int eventCost, int eventTypeId, int employeeId) {
+	public Event(Timestamp dateScheduled, String eventLocation, int eventCost, int eventTypeId, int employeeId) {
 		super();
 		this.dateScheduled = dateScheduled;
 		this.eventLocation = eventLocation;
@@ -29,16 +29,16 @@ public class Event {
 	public void setEventId(int eventId) {
 		this.eventId = eventId;
 	}
-	public Date getDateCreated() {
+	public Timestamp getDateCreated() {
 		return dateCreated;
 	}
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(Timestamp dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	public Date getDateScheduled() {
+	public Timestamp getDateScheduled() {
 		return dateScheduled;
 	}
-	public void setDateScheduled(Date dateScheduled) {
+	public void setDateScheduled(Timestamp dateScheduled) {
 		this.dateScheduled = dateScheduled;
 	}
 	public String getEventLocation() {

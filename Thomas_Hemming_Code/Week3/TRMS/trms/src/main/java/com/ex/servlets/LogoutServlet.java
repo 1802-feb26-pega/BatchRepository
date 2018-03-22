@@ -15,16 +15,16 @@ public class LogoutServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("in logout servlet");
-		HttpSession session = req.getSession(false);
 		
+		
+		HttpSession session = req.getSession(false);
 		if(session != null){
 			session.removeAttribute("employee");
 			session.invalidate();
 			System.out.println("Session invalidated!");
 		}
-		
-		
 		resp.sendRedirect("index.html");
+		
 	
 	}
 }

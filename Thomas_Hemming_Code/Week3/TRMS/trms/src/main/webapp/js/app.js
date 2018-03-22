@@ -1,7 +1,4 @@
-/**
- * 
- */
-var employee;
+
 
 window.onload = function(){ //1 
 	loadLanding();
@@ -19,9 +16,7 @@ function loadLanding(){ //1
 			$('#pass').keydown(function(event){
 				var keypressed = event.keyCode || event.which;
 				if(keypressed == 13)  login();
-			}); //submit upon pressing enter from password input
-			//$('#register').on('click', loadRegister);
-			// after text is loaded, add event listeners/functionality to view
+			});
 		}
 	}
 }
@@ -40,7 +35,7 @@ function login(){
 
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
-			employee = JSON.parse(xhr.responseText);
+			var employee = JSON.parse(xhr.responseText);
 			var message = "";
 			if(employee==null) {
 				$('#message').show();
@@ -49,8 +44,8 @@ function login(){
 				$('#message').html(message);
 			}
 			else{
-				//alert("success");
-				loadNav();
+
+				loadNav(employee);
 				loadHome(employee);
 			}
 		}
@@ -64,7 +59,6 @@ function logout(){
 	xhr.send();
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
-			employee = null;
 			console.log("attempting to redirect");
 			window.location.replace("index.html");
 		}
@@ -73,24 +67,174 @@ function logout(){
 
 }
 
-function loadNav(){
+
+function loadNav(employee){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "loadnav.view" , true);
 	xhr.send();
 
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
+
 			$('#navbar').html(xhr.responseText);
 			$('#mybrand').on('click', loadHome);
-			
+			$('#home').on('click', loadHome);
 			$('#logout').on('click',logout);
 			$('#events').on('click', loadEmployeeEvents);
-			
-			
-			
-			//$('#home').on('click', loadHome());
+
+			console.log(employee.position);
+			if(employee.position>1){
+				$('#approvals').show();
+				$('#approvals').on('click', loadApprovals);
+			}
+			else{
+				$('#approvals').hide();
+			}
 		}
 	}
+}
+
+function loadEmployeeReimbursements(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadEmployeeReimbursements.view", true);
+	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+			getEmployeeReimbursements();
+		}
+	}
+}
+
+function getEmployeeReimbursements(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "reimbursements" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var reimbursements = JSON.parse(xhr.responseText);
+			if(reimbursements.length == 0){
+				console.log("you have no reimbursements");
+				$('#view').html("You have no reimbursements")
+			}
+			else{
+				console.log("testing----");
+
+				console.log(reimbursements);
+				var data = formatEmpReTable(reimbursements);
+
+				$('#reimbursementTable').DataTable({
+					data : data,
+					columns: [
+						{data : "reimbursementId" },
+						{data : "employeeId" },
+						{data : "eventId"},
+						{data : "justification" },
+						{data : "requestedAmount" },
+						{data : "alternateAmount"},
+						{data : "reStatus"}
+						]
+				});
+				console.log("this should have worked");
+				$('#reimbursementTable').show();
+			}
+		}
+	}
+}
+
+
+function formatEmpReTable(reimbursements){
+	console.log("formatting table");
+	var data = [];
+	for(let i = 0; i < reimbursements.length; i++){
+		let temp = new Object();
+		console.log(reimbursements[i]);
+		console.log(reimbursements[i]);
+		temp.reimbursementId = `000${reimbursements[i].reimbursementId}`;
+		temp.employeeId = reimbursements[i].employeeId;
+		temp.eventId = reimbursements[i].eventId;;
+		temp.justification = reimbursements[i].justification;
+		temp.requestedAmount = `$${reimbursements[i].requestedAmount}`;
+		temp.alternateAmount = `$${reimbursements[i].alternateAmount}`;
+		temp.reStatus = reimbursements[i].reStatus;
+
+		console.log(temp);
+		data.push(temp);
+	}
+	console.log(data);
+	return data;
+}
+
+function loadApprovals(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "loadApprovals.view", true);
+	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			$('#view').html(xhr.responseText);
+
+			getPendingReimbursements();
+
+		}
+	}
+}
+
+function getPendingReimbursements(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "apprReimbursements" , true);
+	xhr.send();
+
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var reimbursements = JSON.parse(xhr.responseText);
+			if(reimbursements.length == 0){
+				console.log("you have no events");
+				$('#view').html("No reimbursements awaiting approval");
+			}
+			else{
+				console.log("testing----");
+
+				console.log(reimbursements);
+				var data = formatReTable(reimbursements);
+
+				$('#reimbursementAppTable').DataTable({
+					data : data,
+					columns: [
+						{data : "reimbursementId" },
+						{data : "employeeId" },
+						{data : "eventId"},
+						{data : "justification" },
+						{data : "requestedAmount" }
+						]
+				});
+				console.log("this should have worked");
+				$('#reimbursementAppTable').show();
+			}
+		}
+	}
+}
+
+
+function formatReTable(reimbursements){
+	console.log("formatting table");
+	var data = [];
+	for(let i = 0; i < reimbursements.length; i++){
+		let temp = new Object();
+		console.log(reimbursements[i]);
+		temp.reimbursementId = `000${reimbursements[i].reimbursementId}`;
+		temp.employeeId = reimbursements[i].employeeId;
+		temp.eventId = reimbursements[i].eventId;;
+		temp.justification = reimbursements[i].justification;
+		temp.requestedAmount = `$${reimbursements[i].requestedAmount}`;
+
+		console.log(temp);
+		data.push(temp);
+	}
+	console.log(data);
+	return data;
 }
 
 
@@ -104,88 +248,113 @@ function loadHome(employee){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
-			//document.getElementById('view').innerHTML(xhr.responseText);
-			
-			$('#name').html(employee.firstname);
+
+			$('#firstname').val(employee.firstname);
+			$('#lastname').val(employee.lastname);
 			
 			$('#cost').keypress(function(e){
 				if(e.which != 8 && e.which !=0 && (e.which < 48 || e.which > 57)){
 					return false;
 				}
 			});
-			
-			//set expected reimbursement amount
 			$('#cost').keyup(function(){
 				console.log("keyup");
 				switch($('#event-type').val()){
-					case "1" : coverage = 0.8;		break;
-					case "2" : coverage = 0.6;		break;
-					case "3" : coverage = 0.75;		break;
-					case "4" : coverage = 1;		break;
-					case "5" : coverage = 0.9;		break;
+					case "1" : coverage = 0.8;break;
+					case "2" : coverage = 0.6;break;
+					case "3" : coverage = 0.75;break;
+					case "4" : coverage = 1;break;
+					case "5" : coverage = 0.9;break;
 					case "6" : coverage = 0.3;
 				}
 				console.log(coverage);
-				$('#requested-amount').val('$'+(parseInt($('#cost').val())*coverage).toFixed(2));
+				$('#requested-amount').val((parseInt($('#cost').val())*coverage).toFixed(2));
 			});
-			
-			//set expected reimbursement amount
 			$('#event-type').on('change',function(){
 				console.log("keyup");
 				switch($('#event-type').val()){
-					case "1" : coverage = 0.8;		break;
-					case "2" : coverage = 0.6;		break;
-					case "3" : coverage = 0.75;		break;
-					case "4" : coverage = 1;		break;
-					case "5" : coverage = 0.9;		break;
+					case "1" : coverage = 0.8;break;
+					case "2" : coverage = 0.6;break;
+					case "3" : coverage = 0.75;break;
+					case "4" : coverage = 1;break;
+					case "5" : coverage = 0.9;break;
 					case "6" : coverage = 0.3;
 				}
 				console.log(coverage);
-				$('#requested-amount').val('$'+(parseInt($('#cost').val())*coverage).toFixed(2));
+				$('#requested-amount').val((parseInt($('#cost').val())*coverage).toFixed(2));
 			});
-			//$('#view').hide();
-			$('#submitReimbursement').click(submit);
+
+			$('#submitReimbursement').click(function(){submitReimbursement(employee)});
+
 		}
 	}
 }
 
-function submit(){
+function toTimeStamp(strDate){
+	var datum = Date.parse(strDate);
+	return datum/1000;
+}
+
+function submitReimbursement(employee){
 	console.log("submit");
 	var superApp = 0;
 	var depHeadApp = 0;
-	var coverage;
 	
-	var id = $('#id').val();
-	var date = ($('#date').val()).add($('#time').val());
+	var date = toTimeStamp(($('#date').val()+' '+$('#time').val()));
 	var location= $('#location').val();
 	var description = $('#description').val();
 	var cost = $('#cost').val();
 	var eventTypeId = $('#event-type').val();
 	var justification = $('#justification').val();
-	
-	
 	if($('#check1').is(":checked")){
 		superApp = 1;
 	}
 	if($('#check2').is(":checked")){
 		depHeadApp = 1;
 	}
-	
-	//set projected reimbursement
-	$('#cost').keyup(function(){
-		switch($('#eventTypeId').val()){
-			case 1 : coverage = .8;		break;
-			case 2 : coverage = .6;		break;
-			case 3 : coverage = .75;	break;
-			case 4 : coverage = 1;		break;
-			case 5 : coverage = .9;		break;
-			case 6 : coverage = .3;
-		}
-		$('#requested-amount').val($('#cost').val()*coverage);
-	});
-	
 	var requestedAmount = $('#requested-amount').val();
+
+	var eventForm = {
+			dateScheduled: date, 
+			eventLocation: location, 
+
+			eventCost: cost,
+			eventTypeId: eventTypeId,
+			employeeId: employee.employeeId
+	};
 	
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "submitEvent", true);
+	xhr.send(JSON.stringify(eventForm));
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			console.log(xhr.responseText);
+			var json = JSON.parse(xhr.responseText);
+			console.log(json);
+			var eventId = json.eventId;
+			console.log(employee.employeeId);
+			var reForm = {
+					employeeId: employee.employeeId,
+					eventId: eventId,
+					justification: justification,
+					superApp: superApp,
+					depHeadApp: depHeadApp,
+					requestedAmount: parseInt(requestedAmount)
+			};
+
+			var rxhr = new XMLHttpRequest();
+			rxhr.open("POST", "submitRe", true);
+			rxhr.send(JSON.stringify(reForm));
+			
+			rxhr.onreadystatechange = function(){
+
+				if(rxhr.readyState == 4 && rxhr.status == 200){
+					loadEmployeeEvents();
+				}
+			}
+		}
+	}
 }
 
 function loadEmployeeEvents(){
@@ -196,7 +365,7 @@ function loadEmployeeEvents(){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			$('#view').html(xhr.responseText);
-			
+
 			getEmployeeEvents();
 
 		}
@@ -217,7 +386,7 @@ function getEmployeeEvents(){
 			}
 			else{
 				console.log("testing----");
-				//	accounts = JSON.stringify("data") + ":" + accounts;
+
 				console.log(events);
 				var data = formatTable(events);
 

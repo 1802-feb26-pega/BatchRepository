@@ -1,21 +1,23 @@
-<!-- <h2 id="welcome-header" style="text-align:center">
-	Welcome, <span id="name"></span>!
-</h2> <!-- -->
+<h2 id="welcome-header" style="text-align:center">
+	
+</h2>
 
 <div id="attachGrades"></div>
 <div class="container jumbotron">
-	<form>
-		<h1>Request Form</h1>
-		<div class="form-group">
-			<input type="text" class="form-control" id="id" placeholder="Enter your first name">
-		</div>
-		<br>
+
+		<h1>Add Event Form</h1>
+
 		<div class="form-group">
 			<h3>Event Information</h3>
 			<input type="date" class="form-control" id="date">
 			<br>
-			<!-- <input type="time" class="form-control" id="time"> -->
-			<input type="text" class="form-control" id="location" placeholder="Enter a location">
+			<input type="time" class="form-control" id="time">
+			<br>
+			<input type="text" class="form-control" id="location" placeholder="location">
+			<br>
+			<input type="text" class="form-control" id="description" placeholder="description">
+			<br>
+			<input type="number" class="form-control" id="cost" placeholder="cost">
 			<br>
 			<select id="event-type" class="custom-select">
 				<option value="1" selected>University Course</option>
@@ -27,31 +29,11 @@
 			</select>
 			<br>
 			<br>
-			<input type="number" class="form-control" id="cost" placeholder="Enter projected cost">
 			<br>
-			<input type="text" class="form-control" id="description" placeholder="Enter a description">
 		</div>
-		<br>
-		<br>
-		<br>
-		<textarea name="message" rows="5" cols="80" class="form-control" placeholder="Justification"></textarea>
-		<!-- <input type="text" class="form-control" id="justification" placeholder="Justification">  -->
-		<!--  <div class="custom-file">
-			<input type="file" class="custom-file-input" id="customFile">
-			<label class="custom-file-label" for="customFile">Choose file</label>
-		</div> -->
-		<!-- <div class="custom-control custom-checkbox">
-			<input type="checkbox" class="custom-control-input" id="check1">
-			<label class="custom-control-label" for="check1">Direct Supervisor Approval</label>
-		</div>
-		<div class="custom-control custom-checkbox">
-			<input type="checkbox" class="custom-control-input" id="check2">
-			<label class="custom-control-label" for="check2">Department Head Approval</label>
-		</div> -->
-		<!--  <br>
-		<input type="text" id="requested-amount" class="form-control" placeholder="Projected Reimbursement" readonly>
-		<br> -->
+		<textarea name="message" rows="5" cols="80" id="justification" class="form-control" placeholder="justification"></textarea>
+
 		<br>
 		<button class="btn btn-primary" id="submitReimbursement">Submit</button>
-	</form>
+
 </div>

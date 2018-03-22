@@ -21,18 +21,19 @@ public class LoadViewServlet extends HttpServlet{
 	
 	static String process(HttpServletRequest req, HttpServletResponse resp) {
 		switch(req.getRequestURI()) {
-		
 		case("/trms/loadlanding.view") :
 			return "partials/login.html";
-		
 		case("/trms/loadnav.view") :
 			return "partials/navbar.html";
-		
 		case("/trms/loadhome.view") :
 			return "partials/home.html";
-		
+		case("/trms/loadApprovals.view") :
+			return "partials/approve.html";
 		case("/trms/loadEmployeeEvents.view") :
 			return "partials/events.html";
+		case("/trms/loadEmployeeReimbursements.view") :
+			return "partials/reimbursements.html";
+
 			
 		
 		}

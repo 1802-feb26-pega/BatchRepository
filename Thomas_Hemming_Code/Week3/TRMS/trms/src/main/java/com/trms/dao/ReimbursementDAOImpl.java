@@ -21,7 +21,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 					+ "(employee_id, event_id, justification, super_app, dephead_appr, benco_appr, requested_amount) "
 					+ "values(?, ?, ?, ?, ?, ?, ? )";
 			String [] key = new String[1];
-			key[0] = "u_id";
+			key[0] = "re_id";
 			PreparedStatement ps = conn.prepareStatement(sql, key);
 			ps.setInt(1, employeeId);
 			ps.setInt(2, eventId);
@@ -29,12 +29,13 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			ps.setInt(4, superApp);
 			ps.setInt(5, depHeadApp);
 			ps.setInt(6, benCoApp);
-			ps.setInt(6, requestedAmount);
+			ps.setInt(7, requestedAmount);
 
 			ps.executeUpdate();
 			int id = 0;
 			ResultSet pk = ps.getGeneratedKeys();
-			while(pk.next()){
+			
+			while(pk.next()) {
 				id = pk.getInt(1);
 			}
 

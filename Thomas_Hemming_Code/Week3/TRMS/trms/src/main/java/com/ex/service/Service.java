@@ -20,16 +20,10 @@ public class Service {
 	
 	public Employee login(String username, String password) {
 		Employee employee = empDao.getEmployeeByUsername(username);
-		System.out.println(employee);
-		
 		if(employee== null) return null;
-		
-		System.out.println("got past null check");
-		
-		if (employee.getPassword().equals(password)) {
+		else if (employee.getPassword().equals(password)) {
 			return employee;
 		}
-		
 		else return null;
 	}
 	
@@ -50,5 +44,12 @@ public class Service {
 	
 	public ArrayList<Event> getEvents (Employee e){
 		return empDao.getEventsByEmployee(e);
+	}
+	
+	public ArrayList<Reimbursement> getReimbursementsByPending(){
+		return empDao.getReimbursementsByPending();
+	}
+	public ArrayList<Reimbursement> getReimbursementsByEmployee(Employee e){
+		return empDao.getReimbursementsByEmployee(e);
 	}
 }

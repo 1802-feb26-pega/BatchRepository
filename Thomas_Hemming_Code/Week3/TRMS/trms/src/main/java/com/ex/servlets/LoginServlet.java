@@ -37,23 +37,25 @@ public class LoginServlet extends HttpServlet {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		//3. Convert received JSON string into appropriate object
+		
 		String[] employeeInfo = mapper.readValue(json, String[].class);
 		String username = employeeInfo[0];
 		String password = employeeInfo[1];
-		
 		
 		Employee employee = service.login(username, password);
 		PrintWriter out = resp.getWriter();
 		resp.setContentType("application/json");
 		
 		if(employee!= null) {
-			String employeeJSON = mapper.writeValueAsString(employee);
-			
-			HttpSession session = req.getSession();
-			session.setAttribute("employee", employee);
-			
-			out.write(employeeJSON);
-		} else {
+		String employeeJSON = mapper.writeValueAsString(employee);
+		
+		HttpSession session = req.getSession();
+		session.setAttribute("employee", employee);
+		
+		out.write(employeeJSON);
+		
+		}
+		else {
 			out.write("null"); //null as JSON string
 		}
 		

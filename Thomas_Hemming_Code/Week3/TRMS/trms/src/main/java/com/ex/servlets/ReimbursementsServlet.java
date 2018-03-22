@@ -12,32 +12,33 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.trms.pojos.Event;
+import com.trms.pojos.Reimbursement;
 import com.trms.pojos.Employee;
 import com.ex.service.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebServlet("/events")
-public class EventsServlet extends HttpServlet{
+@WebServlet("/reimbursements")
+public class ReimbursementsServlet extends HttpServlet{
 	
 	static Service service = new Service();
 
 	//get events per employee
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("IN Events -- GET");
+		System.out.println("IN Reimbursements -- GET");
 		HttpSession session = req.getSession();
 		Employee employee = (Employee) session.getAttribute("employee"); // get logged user from session
 		
 		System.out.println(employee.toString());
 		
-		ArrayList<Event> events = service.getEvents(employee);
+		ArrayList<Reimbursement> reimbursements = service.getReimbursementsByEmployee(employee);
 		
 		ObjectMapper mapper = new ObjectMapper();
-		String eventString = mapper.writeValueAsString(events);
+		String reimbursementString = mapper.writeValueAsString(reimbursements);
 		
 		PrintWriter out = resp.getWriter();
 		resp.setContentType("application/json");
-		out.write(eventString);
+		out.write(reimbursementString);
 		
 
 	}

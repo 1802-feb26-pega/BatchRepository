@@ -7,41 +7,53 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import com.trms.pojos.Employee;
 import com.trms.pojos.Event;
+import com.trms.pojos.Reimbursement;
 import com.trms.util.ConnectionFactory;
 
 public class EventDAOImpl implements EventDAO {
 
 	@Override
-	public Event addEvent(Date date, String location, int cost, int typeId, int employeeId) {
+	public Event addEvent(Timestamp date, String location, int cost, int typeId, int employeeId) {
 		try(Connection conn  = ConnectionFactory
 				.getInstance().getConnection();){
 			conn.setAutoCommit(false);
 
 			String sql = "insert into event "
-					+ "(date_scheduled, event_location, event_cost, event_type_id, employee_id) "
-					+ "values(?, ?, ?, ?, ? )";
+					   + "(date_scheduled, event_location, event_cost, event_type_id, employee_id) "
+					   + "values(?, ?, ?, ?, ? )";
 			String [] key = new String[1];
-			key[0] = "u_id";
+			key[0] = "event_id";
+			System.out.println("got to addEvent:");
 			PreparedStatement ps = conn.prepareStatement(sql, key);
-			ps.setDate(1, date);
+			ps.setTimestamp(1, date);
+			System.out.println("date: " + date);
 			ps.setString(2, location);
+			System.out.println("location: " + location);
 			ps.setInt(3, cost);
+			System.out.println("cost: " + cost);
 			ps.setInt(4, typeId);
+			System.out.println("type id: " + typeId);
+			if (employeeId == 0) {
+				employeeId = 1; //hacky fix so things don't break
+			}
 			ps.setInt(5, employeeId);
+			System.out.println("employee id: " + employeeId);
 
 			ps.executeUpdate();
 			int id = 0;
 			ResultSet pk = ps.getGeneratedKeys();
+			
 			while(pk.next()){
 				id = pk.getInt(1);
 			}
 
 			conn.commit();
-			Event event = new Event(date, location, cost, typeId, employeeId);
+			Event event = new Event(date, location, cost, id, employeeId);
 			event.setEventId(id);
 			return event;
 
@@ -69,7 +81,7 @@ public class EventDAOImpl implements EventDAO {
 			
 			while(rs.next()) {
 				Event temp = new Event();
-				temp.setDateScheduled(rs.getDate(1));
+				temp.setDateScheduled(rs.getTimestamp(1));
 				temp.setEventLocation(rs.getString(2));
 				temp.setEventCost(rs.getInt(3));
 				temp.setEventTypeId(rs.getInt(4));
@@ -111,7 +123,4 @@ public class EventDAOImpl implements EventDAO {
 		//TODO
     	return null;
     }
-	
-	
-
 }
